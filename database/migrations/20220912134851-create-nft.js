@@ -1,12 +1,17 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('NFTs', {
+    await queryInterface.createTable('nfts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+      },
+      uuid: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
       },
       name: {
         type: Sequelize.STRING,
@@ -29,15 +34,41 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
+      status: {
+        type: Sequelize.ENUM([
+          'queued',
+          'approved',
+          'rejected',
+          'expired',
+          'deleted',
+          'minted',
+        ]),
+        allowNull: false,
+      },
       collection_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: {
-            tableName: 'Collections',
+            tableName: 'collections',
             schema: 'public',
           },
           key: 'id',
         },
+      },
+      owner_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'users',
+            schema: 'public',
+          },
+          key: 'id',
+        },
+      },
+      deleted_at: {
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
@@ -50,6 +81,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('NFTs');
+    await queryInterface.dropTable('nfts');
   },
 };

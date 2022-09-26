@@ -9,15 +9,26 @@ import {
   IsDate,
   IsUrl,
   AllowNull,
+  DataType,
 } from 'sequelize-typescript';
+import { User } from '../user/user.model';
 import { Collection } from '../collection/collection.model';
+import { NftStatus } from './utils';
 
-@Table
+@Table({
+  freezeTableName: true,
+  tableName: 'nfts',
+})
 export class NFT extends Model {
   @PrimaryKey
   @Unique
   @Column
   id: number;
+
+  @AllowNull(false)
+  @Unique
+  @Column
+  uuid: string;
 
   @AllowNull(false)
   @Column
@@ -39,10 +50,25 @@ export class NFT extends Model {
   @Column
   expiration_date: Date;
 
+  @AllowNull(false)
+  @Column(DataType.ENUM('queued', 'approved', 'rejected', 'expired', 'deleted'))
+  status: NftStatus;
+
   @Column
   @ForeignKey(() => Collection)
   collection_id: number;
 
   @BelongsTo(() => Collection)
   collection: Collection;
+
+  @AllowNull(false)
+  @Column
+  @ForeignKey(() => User)
+  owner_id: number;
+
+  @BelongsTo(() => User)
+  owner: User;
+
+  @Column
+  deleted_at: Date;
 }

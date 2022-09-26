@@ -13,13 +13,16 @@ import {
 import { Collection } from 'src/collection/collection.model';
 import { User } from '../user/user.model';
 
-@Table
+@Table({
+  freezeTableName: true,
+  tableName: 'farms',
+})
 export class Farm extends Model {
-  // @Unique
-  // @PrimaryKey
-  // @AutoIncrement
-  // @Column
-  // id: number;
+  @Unique
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  id: number;
 
   @AllowNull(false)
   @Column
@@ -49,6 +52,7 @@ export class Farm extends Model {
   @Column
   maintenance_fee: number;
 
+  @AllowNull(false)
   @Column
   @ForeignKey(() => User)
   owner_id: number;
@@ -58,4 +62,7 @@ export class Farm extends Model {
 
   @HasMany(() => Collection)
   collections: Collection[];
+
+  @Column
+  deleted_at: Date;
 }

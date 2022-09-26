@@ -8,10 +8,15 @@ import {
   PrimaryKey,
   IsEmail,
   AutoIncrement,
+  DataType,
 } from 'sequelize-typescript';
 import { Farm } from '../farm/farm.model';
+import { Role } from './roles';
 
-@Table
+@Table({
+  freezeTableName: true,
+  tableName: 'users',
+})
 export class User extends Model {
   @PrimaryKey
   @Unique
@@ -33,11 +38,11 @@ export class User extends Model {
   @AllowNull(false)
   @Unique
   @Column
-  hashedPass: string;
+  hashed_pass: string;
 
   @AllowNull(false)
-  @Column
-  role: string;
+  @Column(DataType.ENUM('super_admin', 'farm_admin'))
+  role: Role;
 
   @Column
   cudos_address: string;

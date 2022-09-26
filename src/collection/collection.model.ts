@@ -8,11 +8,17 @@ import {
   HasMany,
   PrimaryKey,
   Unique,
+  DataType,
 } from 'sequelize-typescript';
+import { User } from '../user/user.model';
 import { Farm } from '../farm/farm.model';
 import { NFT } from '../nft/nft.model';
+import { CollectionStatus } from './utils';
 
-@Table
+@Table({
+  freezeTableName: true,
+  tableName: 'collections',
+})
 export class Collection extends Model {
   @Unique
   @PrimaryKey
@@ -31,6 +37,10 @@ export class Collection extends Model {
   @Column
   hashing_power: number;
 
+  @AllowNull(false)
+  @Column(DataType.ENUM('queued', 'approved', 'rejected', 'issued', 'deleted'))
+  status: CollectionStatus;
+
   @Column
   @ForeignKey(() => Farm)
   farm_id: number;
@@ -38,6 +48,17 @@ export class Collection extends Model {
   @BelongsTo(() => Farm)
   farm: Farm;
 
+  @AllowNull(false)
+  @Column
+  @ForeignKey(() => User)
+  owner_id: number;
+
+  @BelongsTo(() => User)
+  owner: User;
+
   @HasMany(() => NFT)
   nfts: NFT[];
+
+  @Column
+  deleted_at: Date;
 }

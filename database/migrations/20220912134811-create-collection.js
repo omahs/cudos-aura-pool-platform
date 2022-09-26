@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Collections', {
+    await queryInterface.createTable('collections', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -20,15 +20,39 @@ module.exports = {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },
+      status: {
+        type: Sequelize.ENUM([
+          'queued',
+          'approved',
+          'rejected',
+          'issued',
+          'deleted',
+        ]),
+      },
       farm_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: {
-            tableName: 'Farms',
+            tableName: 'farms',
             schema: 'public',
           },
           key: 'id',
         },
+      },
+      owner_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'users',
+            schema: 'public',
+          },
+          key: 'id',
+        },
+      },
+      deleted_at: {
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
@@ -41,6 +65,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Collections');
+    await queryInterface.dropTable('collections');
   },
 };
