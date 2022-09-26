@@ -56,13 +56,14 @@ export class UserService {
   async createFarmAdmin(createUserDto: CreateUserDto): Promise<User> {
     const password = this.generateRandomPassword(12);
     const salt = this.generateSalt();
-    const hashedPass = this.generateHashedPass(password, salt);
+    const hashed_pass = this.generateHashedPass(password, salt);
 
     const user = {
       email: createUserDto.email,
       salt,
-      hashedPass,
+      hashed_pass,
       role: 'farm_admin',
+      is_active: true,
     };
 
     const farmAdmin = await User.create(user);
@@ -76,8 +77,8 @@ export class UserService {
     return this.userModel.findAll();
   }
 
-  getUser(email: string): Promise<User> {
-    const user = this.userModel.findOne({
+  async getUser(email: string): Promise<User> {
+    const user = await this.userModel.findOne({
       where: {
         email,
       },

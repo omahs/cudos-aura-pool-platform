@@ -21,11 +21,12 @@ export class AuthService {
 
     const hashedPass = this.userService.generateHashedPass(password, user.salt);
 
-    if (user.hashedPass !== hashedPass) {
+    if (user.hashed_pass !== hashedPass) {
       throw new UnauthorizedException();
     }
 
     const result = {
+      id: user.id,
       email: user.email,
       role: user.role,
       cudos_address: user.cudos_address,

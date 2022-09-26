@@ -3,7 +3,7 @@ import RequestWithUser from '../interfaces/requestWithUser.interface';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { Role } from '../../user/roles';
 
-const RoleGuard = (role: Role): Type<CanActivate> => {
+const RoleGuard = (roles: Role[]): Type<CanActivate> => {
   class RoleGuardMixin extends JwtAuthGuard {
     async canActivate(context: ExecutionContext) {
       await super.canActivate(context);
@@ -11,7 +11,7 @@ const RoleGuard = (role: Role): Type<CanActivate> => {
       const request = context.switchToHttp().getRequest<RequestWithUser>();
       const user = request.user;
 
-      return user.role === role;
+      return roles.includes(user.role);
     }
   }
 

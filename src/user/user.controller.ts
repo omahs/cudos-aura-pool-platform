@@ -28,7 +28,7 @@ export class UserController {
     return this.userService.findOne();
   }
 
-  @UseGuards(RoleGuard(Role.SUPER_ADMIN))
+  @UseGuards(RoleGuard([Role.SUPER_ADMIN]))
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.createFarmAdmin(createUserDto);
