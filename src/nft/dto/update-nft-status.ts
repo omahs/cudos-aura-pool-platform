@@ -1,5 +1,5 @@
 import { NftStatus } from '../utils';
 
-export class UpdateNFTDto {
+export class UpdateNFTStatusDto {
   status: NftStatus;
 }
