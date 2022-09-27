@@ -21,6 +21,26 @@ export class CollectionService {
     return collection;
   }
 
+  async findByOwnerId(id: number): Promise<Collection[]> {
+    const collections = await this.collectionModel.findAll({
+      where: {
+        owner_id: id,
+      },
+    });
+
+    return collections;
+  }
+
+  async findByFarmId(id: number): Promise<Collection[]> {
+    const collections = await this.collectionModel.findAll({
+      where: {
+        farm_id: id,
+      },
+    });
+
+    return collections;
+  }
+
   async createOne(
     createCollectionDto: CreateCollectionDto,
     owner_id: number,

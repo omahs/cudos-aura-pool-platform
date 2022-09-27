@@ -26,6 +26,17 @@ export class NFTService {
         collection_id: id,
       },
     });
+
+    return nfts;
+  }
+
+  async findByOwnerId(id: number): Promise<NFT[]> {
+    const nfts = await this.nftModel.findAll({
+      where: {
+        owner_id: id,
+      },
+    });
+
     return nfts;
   }
 
