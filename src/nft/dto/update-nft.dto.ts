@@ -1,5 +1,7 @@
-import { NftStatus } from '../utils';
-
 export class UpdateNFTDto {
-  status: NftStatus;
+  name: string;
+  uri: string;
+  data: string;
+  hashing_power: number;
+  expiration_date: Date;
 }

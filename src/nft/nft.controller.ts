@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import RoleGuard from 'src/auth/guards/role.guard';
 import { Role } from 'src/user/roles';
@@ -22,21 +23,22 @@ export class NFTController {
   constructor(private nftService: NFTService) {}
 
   @Get()
-  async findAll(): Promise<any[]> {
+  async findAll(): Promise<NFT[]> {
     return this.nftService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<any> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<NFT> {
     return this.nftService.findOne(id);
   }
 
   @UseGuards(RoleGuard([Role.FARM_ADMIN]))
   @Post()
-  async create(@Body() createNFTDto: CreateNFTDto): Promise<NFT> {
-    const createdNft = await this.nftService.createOne(createNFTDto);
-
-    return createdNft;
+  async create(
+    @Request() req,
+    @Body() createNFTDto: CreateNFTDto,
+  ): Promise<NFT> {
+    return await this.nftService.createOne(createNFTDto, req.user.id);
   }
 
   @UseGuards(RoleGuard([Role.SUPER_ADMIN, Role.FARM_ADMIN]))

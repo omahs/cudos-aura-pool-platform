@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { Collection } from './collection.model';
+import { CollectionStatus } from './utils';
 
 @Injectable()
 export class CollectionService {
@@ -47,6 +48,7 @@ export class CollectionService {
   ): Promise<Collection> {
     const collection = this.collectionModel.create({
       ...createCollectionDto,
+      status: CollectionStatus.QUEUED,
       owner_id,
     });
 
@@ -55,7 +57,7 @@ export class CollectionService {
 
   async updateOne(
     id: number,
-    updateCollectionDto: Partial<Collection>,
+    updateCollectionDto: Partial<UpdateCollectionDto>,
   ): Promise<Collection> {
     const [count, [collection]] = await this.collectionModel.update(
       updateCollectionDto,
@@ -68,9 +70,26 @@ export class CollectionService {
     return collection;
   }
 
+  async updateStatus(
+    id: number,
+    status: CollectionStatus,
+  ): Promise<Collection> {
+    const [count, [collection]] = await this.collectionModel.update(
+      {
+        status,
+      },
+      {
+        where: { id },
+        returning: true,
+      },
+    );
+
+    return collection;
+  }
+
   async deleteOne(id: number): Promise<Collection> {
     const [count, [collection]] = await this.collectionModel.update(
-      { deleted_at: new Date() },
+      { deleted_at: new Date(), status: CollectionStatus.DELETED },
       {
         where: {
           id,

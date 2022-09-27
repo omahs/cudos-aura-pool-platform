@@ -50,20 +50,19 @@ export class FarmController {
     @Request() req,
     @Body() createFarmDto: CreateFarmDto,
   ): Promise<Farm> {
-    const farm = await this.farmService.createOne(createFarmDto, req.user.id);
-
-    return farm;
+    return this.farmService.createOne(createFarmDto, req.user.id);
   }
 
   @UseGuards(RoleGuard([Role.FARM_ADMIN, Role.SUPER_ADMIN]), IsOwnerGuard)
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateFarmDto: UpdateFarmDto,
+    @Body() updateFarmDto: Partial<UpdateFarmDto>,
   ): Promise<Farm> {
     return this.farmService.updateOne(id, updateFarmDto);
   }
 
+  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsOwnerGuard)
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<Farm> {
     return this.farmService.deleteOne(id);

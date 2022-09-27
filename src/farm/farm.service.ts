@@ -43,7 +43,10 @@ export class FarmService {
     return farm;
   }
 
-  async updateOne(id: number, updateFarmDto: Partial<Farm>): Promise<Farm> {
+  async updateOne(
+    id: number,
+    updateFarmDto: Partial<UpdateFarmDto>,
+  ): Promise<Farm> {
     const [count, [farm]] = await this.farmModel.update(updateFarmDto, {
       where: { id },
       returning: true,
