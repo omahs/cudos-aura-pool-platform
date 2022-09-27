@@ -10,6 +10,8 @@ import {
   AutoIncrement,
   DataType,
 } from 'sequelize-typescript';
+import { Collection } from '../collection/collection.model';
+import { NFT } from '../nft/nft.model';
 import { Farm } from '../farm/farm.model';
 import { Role } from './roles';
 
@@ -55,4 +57,10 @@ export class User extends Model {
 
   @HasMany(() => Farm)
   farms: Farm[];
+
+  @HasMany(() => Collection)
+  collections: Collection[];
+
+  @HasMany(() => NFT)
+  nfts: NFT[];
 }

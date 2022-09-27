@@ -19,13 +19,13 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  async findAll(): Promise<any[]> {
+  async findAll(): Promise<User[]> {
     return this.userService.findAll();
   }
 
-  @Get(':id')
-  async findOne(): Promise<any> {
-    return this.userService.findOne();
+  @Get(':email')
+  async findOne(@Param() email: string): Promise<User> {
+    return this.userService.findOne(email);
   }
 
   @UseGuards(RoleGuard([Role.SUPER_ADMIN]))
@@ -34,11 +34,11 @@ export class UserController {
     return this.userService.createFarmAdmin(createUserDto);
   }
 
-  @Put(':id')
+  @Put(':email')
   async update(
-    @Param('id') id: string,
+    @Param('email') email: string,
     @Body() updateUserDto: UpdateUserDto,
-  ): Promise<void> {
-    return this.userService.updateOne();
+  ): Promise<User> {
+    return this.userService.updateOne(email, updateUserDto);
   }
 }

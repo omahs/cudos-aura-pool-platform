@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer';
 import * as crypto from 'crypto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.model';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -77,12 +78,24 @@ export class UserService {
     return this.userModel.findAll();
   }
 
-  async getUser(email: string): Promise<User> {
+  async findOne(email: string): Promise<User> {
     const user = await this.userModel.findOne({
       where: {
         email,
       },
     });
+
+    return user;
+  }
+
+  async updateOne(
+    email: string,
+    updateUserDto: Partial<UpdateUserDto>,
+  ): Promise<User> {
+    const [count, [user]] = await this.userModel.update(
+      { updateUserDto },
+      { where: { email }, returning: true },
+    );
 
     return user;
   }
