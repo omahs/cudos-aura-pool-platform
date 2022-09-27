@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Put,
@@ -12,6 +13,7 @@ import RoleGuard from 'src/auth/guards/role.guard';
 import { Role } from 'src/user/roles';
 import { CreateNFTDto } from './dto/create-nft.dto';
 import { UpdateNFTDto } from './dto/update-nft.dto';
+import { UpdateNFTStatusDto } from './dto/update-nft-status';
 import { NFT } from './nft.model';
 import { NFTService } from './nft.service';
 
@@ -25,8 +27,8 @@ export class NFTController {
   }
 
   @Get(':id')
-  async findOne(): Promise<any> {
-    return this.nftService.findOne();
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<any> {
+    return this.nftService.findOne(id);
   }
 
   @UseGuards(RoleGuard([Role.FARM_ADMIN]))
@@ -40,18 +42,18 @@ export class NFTController {
   @UseGuards(RoleGuard([Role.SUPER_ADMIN, Role.FARM_ADMIN]))
   @Put(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateNFTDto: UpdateNFTDto,
-  ): Promise<void> {
-    return this.nftService.updateOne();
+  ): Promise<NFT> {
+    return this.nftService.updateOne(id, updateNFTDto);
   }
 
   @UseGuards(RoleGuard([Role.SUPER_ADMIN]))
   @Patch(':id')
   async updateStatus(
-    @Param('id') id: string,
-    @Body() updateStatusDto: UpdateStatusDto,
-  ): Promise<void> {
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateStatusDto: UpdateNFTStatusDto,
+  ): Promise<NFT> {
     return this.nftService.updateStatus(id, updateStatusDto.status);
   }
 }

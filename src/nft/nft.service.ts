@@ -44,18 +44,20 @@ export class NFTService {
   }
 
   async updateOne(id: number, updateNFTDto: UpdateNFTDto): Promise<NFT> {
-    const [updatedCount] = await this.nftModel.update(updateNFTDto, {
+    const [count, [nft]] = await this.nftModel.update(updateNFTDto, {
       where: { id },
+      returning: true,
     });
 
-    return updatedCount;
+    return nft;
   }
 
   async updateStatus(id: number, status: NftStatus): Promise<NFT> {
-    const nft = this.nftModel.update(
+    const [count, [nft]] = await this.nftModel.update(
       { status },
       {
         where: { id },
+        returning: true,
       },
     );
 
