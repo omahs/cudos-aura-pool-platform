@@ -10,6 +10,8 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { CollectionService } from '../collection/collection.service';
+import { Collection } from '../collection/collection.model';
 import RoleGuard from '../auth/guards/role.guard';
 import { Role } from '../user/roles';
 import { CreateFarmDto } from './dto/create-farm.dto';
@@ -20,7 +22,10 @@ import { IsOwnerGuard } from './guards/is-owner.guard';
 
 @Controller('farm')
 export class FarmController {
-  constructor(private farmService: FarmService) {}
+  constructor(
+    private farmService: FarmService,
+    private collectionService: CollectionService,
+  ) {}
 
   @Get()
   async findAll(): Promise<Farm[]> {
@@ -30,6 +35,13 @@ export class FarmController {
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<Farm> {
     return this.farmService.findOne(id);
+  }
+
+  @Get(':id/collections')
+  async findCollections(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Collection[]> {
+    return this.collectionService.findByFarmId(id);
   }
 
   @UseGuards(RoleGuard([Role.FARM_ADMIN]))
