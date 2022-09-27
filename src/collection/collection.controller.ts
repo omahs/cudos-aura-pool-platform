@@ -1,34 +1,51 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Request,
+} from '@nestjs/common';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { CollectionService } from './collection.service';
+import { Collection } from './collection.model';
 
 @Controller('collection')
 export class CollectionController {
   constructor(private collectionService: CollectionService) {}
 
   @Get()
-  async findAll(): Promise<any[]> {
+  async findAll(): Promise<Collection[]> {
     return this.collectionService.findAll();
   }
 
   @Get(':id')
-  async findOne(): Promise<any> {
-    return this.collectionService.findOne();
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Collection> {
+    return this.collectionService.findOne(id);
   }
 
   @Post()
   async create(
+    @Request() req,
     @Body() createCollectionDto: CreateCollectionDto,
-  ): Promise<void> {
-    return this.collectionService.createOne();
+  ): Promise<Collection> {
+    return this.collectionService.createOne(createCollectionDto, req.user.id);
   }
 
   @Put(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateCollectionDto: UpdateCollectionDto,
-  ): Promise<void> {
-    return this.collectionService.updateOne();
+  ): Promise<Collection> {
+    return this.collectionService.updateOne(id, updateCollectionDto);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<Collection> {
+    return this.collectionService.deleteOne(id);
   }
 }
