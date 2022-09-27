@@ -8,5 +8,6 @@ import { NFT } from './nft.model';
   imports: [SequelizeModule.forFeature([NFT])],
   providers: [NFTService],
   controllers: [NFTController],
+  exports: [SequelizeModule],
 })
 export class NFTModule {}
