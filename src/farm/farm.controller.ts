@@ -48,12 +48,12 @@ export class FarmController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateFarmDto: UpdateFarmDto,
-  ): Promise<string> {
-    return 'This is accesable';
+  ): Promise<Farm> {
+    return this.farmService.updateOne(id, updateFarmDto);
   }
 
   @Delete(':id')
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
-    return 'This is accesable';
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<Farm> {
+    return this.farmService.deleteOne(id);
   }
 }
