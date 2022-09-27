@@ -34,7 +34,7 @@ export class FarmService {
   }
 
   async updateOne(id: number, updateFarmDto: Partial<Farm>): Promise<Farm> {
-    const [updatedRows, [farm]] = await this.farmModel.update(updateFarmDto, {
+    const [count, [farm]] = await this.farmModel.update(updateFarmDto, {
       where: { id },
       returning: true,
     });
@@ -43,7 +43,7 @@ export class FarmService {
   }
 
   async deleteOne(id: number): Promise<Farm> {
-    const [updatedRows, [farm]] = await this.farmModel.update(
+    const [count, [farm]] = await this.farmModel.update(
       { deleted_at: new Date() },
       {
         where: {

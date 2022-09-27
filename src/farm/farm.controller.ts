@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -48,6 +49,11 @@ export class FarmController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateFarmDto: UpdateFarmDto,
   ): Promise<string> {
+    return 'This is accesable';
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
     return 'This is accesable';
   }
 }
