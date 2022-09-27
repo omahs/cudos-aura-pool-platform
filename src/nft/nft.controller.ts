@@ -9,6 +9,7 @@ import {
   Put,
   UseGuards,
   Request,
+  Delete,
 } from '@nestjs/common';
 import RoleGuard from 'src/auth/guards/role.guard';
 import { Role } from 'src/user/roles';
@@ -17,6 +18,7 @@ import { UpdateNFTDto } from './dto/update-nft.dto';
 import { UpdateNFTStatusDto } from './dto/update-nft-status';
 import { NFT } from './nft.model';
 import { NFTService } from './nft.service';
+import { IsOwnerGuard } from './guards/is-owner.guard';
 
 @Controller('nft')
 export class NFTController {
@@ -38,10 +40,10 @@ export class NFTController {
     @Request() req,
     @Body() createNFTDto: CreateNFTDto,
   ): Promise<NFT> {
-    return await this.nftService.createOne(createNFTDto, req.user.id);
+    return this.nftService.createOne(createNFTDto, req.user.id);
   }
 
-  @UseGuards(RoleGuard([Role.SUPER_ADMIN, Role.FARM_ADMIN]))
+  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsOwnerGuard)
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -51,11 +53,17 @@ export class NFTController {
   }
 
   @UseGuards(RoleGuard([Role.SUPER_ADMIN]))
-  @Patch(':id')
+  @Patch(':id/status')
   async updateStatus(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateStatusDto: UpdateNFTStatusDto,
+    @Body() updateNftStatusDto: UpdateNFTStatusDto,
   ): Promise<NFT> {
-    return this.nftService.updateStatus(id, updateStatusDto.status);
+    return this.nftService.updateStatus(id, updateNftStatusDto.status);
+  }
+
+  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsOwnerGuard)
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<NFT> {
+    return this.nftService.deleteOne(id);
   }
 }

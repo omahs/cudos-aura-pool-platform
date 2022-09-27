@@ -53,7 +53,7 @@ export class FarmController {
     return this.farmService.createOne(createFarmDto, req.user.id);
   }
 
-  @UseGuards(RoleGuard([Role.FARM_ADMIN, Role.SUPER_ADMIN]), IsOwnerGuard)
+  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsOwnerGuard)
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
