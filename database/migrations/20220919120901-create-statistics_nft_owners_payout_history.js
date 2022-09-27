@@ -35,7 +35,7 @@ module.exports = {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },
-      payout_history_id: {
+      nft_payout_history_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
