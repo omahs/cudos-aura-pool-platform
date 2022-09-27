@@ -74,10 +74,6 @@ export class UserService {
     return farmAdmin;
   }
 
-  findAll(): Promise<User[]> {
-    return this.userModel.findAll();
-  }
-
   async findOne(email: string): Promise<User> {
     const user = await this.userModel.findOne({
       where: {

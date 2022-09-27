@@ -18,11 +18,6 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get()
-  async findAll(): Promise<User[]> {
-    return this.userService.findAll();
-  }
-
   @Get(':email')
   async findOne(@Param() email: string): Promise<User> {
     return this.userService.findOne(email);

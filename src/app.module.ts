@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
@@ -13,13 +12,13 @@ import { FarmModule } from './farm/farm.module';
   imports: [
     AuthModule,
     UserModule,
+    FarmModule,
+    CollectionModule,
     NFTModule,
     StatisticsModule,
-    CollectionModule,
-    FarmModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
+      host: '127.0.0.1',
       port: 5432,
       username: 'postgres',
       password: 'postgres',
@@ -28,7 +27,6 @@ import { FarmModule } from './farm/farm.module';
       synchronize: true,
     }),
   ],
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
