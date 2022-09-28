@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Put,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -30,8 +31,25 @@ export class CollectionController {
   ) {}
 
   @Get()
-  async findAll(): Promise<Collection[]> {
-    return this.collectionService.findAll();
+  async findAll(
+    @Query('owner_id') owner_id: number,
+    @Query('farm_id') farm_id: number,
+  ): Promise<Collection[]> {
+    let result = await this.collectionService.findAll();
+
+    if (owner_id) {
+      result = result.filter(
+        (collection: Collection) => collection.owner_id === owner_id,
+      );
+    }
+
+    if (farm_id) {
+      result = result.filter(
+        (collection: Collection) => collection.farm_id === farm_id,
+      );
+    }
+
+    return result;
   }
 
   @Get(':id')
