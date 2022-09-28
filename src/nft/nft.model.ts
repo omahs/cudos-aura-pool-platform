@@ -46,6 +46,10 @@ export class NFT extends Model {
   hashing_power: number;
 
   @AllowNull(false)
+  @Column
+  price: number;
+
+  @AllowNull(false)
   @IsDate
   @Column
   expiration_date: Date;

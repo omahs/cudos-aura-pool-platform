@@ -30,6 +30,10 @@ module.exports = {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },
+      price: {
+        type: Sequelize.DECIMAL,
+        allowNull: false,
+      },
       expiration_date: {
         type: Sequelize.DATE,
         allowNull: false,
