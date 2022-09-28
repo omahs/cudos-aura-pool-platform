@@ -10,6 +10,7 @@ import {
   UseGuards,
   Request,
   Delete,
+  Query,
 } from '@nestjs/common';
 import RoleGuard from 'src/auth/guards/role.guard';
 import { Role } from 'src/user/roles';
@@ -25,8 +26,21 @@ export class NFTController {
   constructor(private nftService: NFTService) {}
 
   @Get()
-  async findAll(): Promise<NFT[]> {
-    return this.nftService.findAll();
+  async findAll(
+    @Query('owner_id') owner_id: number,
+    @Query('collection_id') collection_id: number,
+  ): Promise<NFT[]> {
+    let result = await this.nftService.findAll();
+
+    if (owner_id) {
+      result = result.filter((nft: NFT) => nft.owner_id === owner_id);
+    }
+
+    if (collection_id) {
+      result = result.filter((nft: NFT) => nft.collection_id === collection_id);
+    }
+
+    return result;
   }
 
   @Get(':id')
