@@ -19,7 +19,7 @@ export class UserService {
       '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     const array = new Uint32Array(length);
-    // global.crypto.getRandomValues(array);
+    crypto.webcrypto.getRandomValues(array);
 
     for (let i = 0; i < length; i++) {
       password += chars[array[i] % chars.length];
