@@ -1,5 +1,6 @@
 export class UpdateFarmDto {
   name: string;
+  description: string;
   sub_account_name: string;
   location: string;
   initial_hash_rate: number;

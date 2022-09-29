@@ -12,6 +12,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      description: {
+        type: Sequelize.STRING,
+      },
       sub_account_name: {
         type: Sequelize.STRING,
         allowNull: false,

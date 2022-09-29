@@ -29,6 +29,9 @@ export class Collection extends Model {
   @Column
   name: string;
 
+  @Column
+  description: string;
+
   @AllowNull(false)
   @Column
   denom: string;
@@ -36,6 +39,14 @@ export class Collection extends Model {
   @AllowNull(false)
   @Column
   hashing_power: number;
+
+  @AllowNull(false)
+  @Column
+  royalties: number;
+
+  @AllowNull
+  @Column
+  payout_address: number;
 
   @AllowNull(false)
   @Column(DataType.ENUM('queued', 'approved', 'rejected', 'issued', 'deleted'))

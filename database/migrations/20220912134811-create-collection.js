@@ -12,12 +12,23 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      description: {
+        type: Sequelize.STRING,
+      },
       denom: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       hashing_power: {
         type: Sequelize.DECIMAL,
+        allowNull: false,
+      },
+      royalties: {
+        type: Sequelize.DECIMAL,
+        allowNull: false,
+      },
+      payout_address: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       status: {

@@ -28,6 +28,9 @@ export class Farm extends Model {
   @Column
   name: string;
 
+  @Column
+  description: string;
+
   @AllowNull(false)
   @Column
   sub_account_name: string;

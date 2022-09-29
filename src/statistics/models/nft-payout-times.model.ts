@@ -28,9 +28,11 @@ export class NftPayoutTimes extends Model {
   @BelongsTo(() => NFT)
   nft: NFT;
 
+  @AllowNull(false)
   @Column
   time: number;
 
+  @AllowNull(false)
   @Column
   amount: number;
 }

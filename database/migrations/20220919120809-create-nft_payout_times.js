@@ -21,10 +21,12 @@ module.exports = {
         },
       },
       time: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
+        allowNull: false,
       },
       amount: {
         type: Sequelize.DECIMAL,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
