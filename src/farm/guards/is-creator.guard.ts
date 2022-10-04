@@ -2,12 +2,12 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import RequestWithUser from '../../auth/interfaces/requestWithUser.interface';
-import { NFT } from '../nft.model';
-import { NFTService } from '../nft.service';
+import { Farm } from '../farm.model';
+import { FarmService } from '../farm.service';
 
 @Injectable()
-export class IsOwnerGuard extends JwtAuthGuard implements CanActivate {
-  constructor(private nftService: NFTService) {
+export class IsCreatorGuard extends JwtAuthGuard implements CanActivate {
+  constructor(private farmService: FarmService) {
     super();
   }
 
@@ -20,10 +20,10 @@ export class IsOwnerGuard extends JwtAuthGuard implements CanActivate {
     if (!user || !params) return false;
 
     const userId = user.id;
-    const nftId = parseInt(params.id);
+    const farmId = parseInt(params.id);
 
-    return this.nftService
-      .findOne(nftId)
-      .then((nft: NFT) => nft.owner_id === userId);
+    return this.farmService
+      .findOne(farmId)
+      .then((farm: Farm) => farm.creator_id === userId);
   }
 }

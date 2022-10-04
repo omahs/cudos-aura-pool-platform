@@ -19,7 +19,7 @@ import { UpdateNFTDto } from './dto/update-nft.dto';
 import { UpdateNFTStatusDto } from './dto/update-nft-status';
 import { NFT } from './nft.model';
 import { NFTService } from './nft.service';
-import { IsOwnerGuard } from './guards/is-owner.guard';
+import { IsCreatorGuard } from './guards/is-creator.guard';
 
 @Controller('nft')
 export class NFTController {
@@ -27,13 +27,13 @@ export class NFTController {
 
   @Get()
   async findAll(
-    @Query('owner_id') owner_id: number,
-    @Query('collection_id') collection_id: number,
+    @Query('creator_id', ParseIntPipe) creator_id: number,
+    @Query('collection_id', ParseIntPipe) collection_id: number,
   ): Promise<NFT[]> {
     let result = await this.nftService.findAll();
 
-    if (owner_id) {
-      result = result.filter((nft: NFT) => nft.owner_id === owner_id);
+    if (creator_id) {
+      result = result.filter((nft: NFT) => nft.creator_id === creator_id);
     }
 
     if (collection_id) {
@@ -57,7 +57,7 @@ export class NFTController {
     return this.nftService.createOne(createNFTDto, req.user.id);
   }
 
-  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsOwnerGuard)
+  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -75,7 +75,7 @@ export class NFTController {
     return this.nftService.updateStatus(id, updateNftStatusDto.status);
   }
 
-  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsOwnerGuard)
+  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<NFT> {
     return this.nftService.deleteOne(id);

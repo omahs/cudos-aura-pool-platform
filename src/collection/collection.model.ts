@@ -44,9 +44,9 @@ export class Collection extends Model {
   @Column
   royalties: number;
 
-  @AllowNull
+  @AllowNull(false)
   @Column
-  payout_address: number;
+  maintenance_fee: number;
 
   @AllowNull(false)
   @Column(DataType.ENUM('queued', 'approved', 'rejected', 'issued', 'deleted'))
@@ -62,10 +62,10 @@ export class Collection extends Model {
   @AllowNull(false)
   @Column
   @ForeignKey(() => User)
-  owner_id: number;
+  creator_id: number;
 
   @BelongsTo(() => User)
-  owner: User;
+  creator: User;
 
   @HasMany(() => NFT)
   nfts: NFT[];

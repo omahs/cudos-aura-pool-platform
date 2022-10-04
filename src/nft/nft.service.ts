@@ -31,10 +31,10 @@ export class NFTService {
     return nfts;
   }
 
-  async findByOwnerId(id: number): Promise<NFT[]> {
+  async findByCreatorId(id: number): Promise<NFT[]> {
     const nfts = await this.nftModel.findAll({
       where: {
-        owner_id: id,
+        creator_id: id,
       },
     });
 
@@ -46,11 +46,14 @@ export class NFTService {
     return nft;
   }
 
-  async createOne(createNFTDto: CreateNFTDto, owner_id: number): Promise<NFT> {
+  async createOne(
+    createNFTDto: CreateNFTDto,
+    creator_id: number,
+  ): Promise<NFT> {
     const nft = this.nftModel.create({
       ...createNFTDto,
       uuid: uuid(),
-      owner_id,
+      creator_id,
       status: NftStatus.QUEUED,
     });
 

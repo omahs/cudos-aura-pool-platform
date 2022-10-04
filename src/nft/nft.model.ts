@@ -68,10 +68,10 @@ export class NFT extends Model {
   @AllowNull(false)
   @Column
   @ForeignKey(() => User)
-  owner_id: number;
+  creator_id: number;
 
   @BelongsTo(() => User)
-  owner: User;
+  creator: User;
 
   @Column
   deleted_at: Date;

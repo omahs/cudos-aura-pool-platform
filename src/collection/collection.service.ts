@@ -22,10 +22,10 @@ export class CollectionService {
     return collection;
   }
 
-  async findByOwnerId(id: number): Promise<Collection[]> {
+  async findByCreatorId(id: number): Promise<Collection[]> {
     const collections = await this.collectionModel.findAll({
       where: {
-        owner_id: id,
+        creator_id: id,
       },
     });
 
@@ -44,12 +44,12 @@ export class CollectionService {
 
   async createOne(
     createCollectionDto: CreateCollectionDto,
-    owner_id: number,
+    creator_id: number,
   ): Promise<Collection> {
     const collection = this.collectionModel.create({
       ...createCollectionDto,
       status: CollectionStatus.QUEUED,
-      owner_id,
+      creator_id,
     });
 
     return collection;

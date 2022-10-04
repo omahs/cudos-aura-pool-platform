@@ -41,10 +41,6 @@ export class Farm extends Model {
 
   @AllowNull(false)
   @Column
-  initial_hash_rate: number;
-
-  @AllowNull(false)
-  @Column
   btc_wallet: string;
 
   @AllowNull(false)
@@ -58,10 +54,10 @@ export class Farm extends Model {
   @AllowNull(false)
   @Column
   @ForeignKey(() => User)
-  owner_id: number;
+  creator_id: number;
 
   @BelongsTo(() => User)
-  owner: User;
+  creator: User;
 
   @HasMany(() => Collection)
   collections: Collection[];

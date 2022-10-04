@@ -6,7 +6,7 @@ import { Collection } from '../collection.model';
 import { CollectionService } from '../collection.service';
 
 @Injectable()
-export class IsOwnerGuard extends JwtAuthGuard implements CanActivate {
+export class IsCreatorGuard extends JwtAuthGuard implements CanActivate {
   constructor(private collectionService: CollectionService) {
     super();
   }
@@ -24,6 +24,6 @@ export class IsOwnerGuard extends JwtAuthGuard implements CanActivate {
 
     return this.collectionService
       .findOne(collectionId)
-      .then((collection: Collection) => collection.owner_id === userId);
+      .then((collection: Collection) => collection.creator_id === userId);
   }
 }

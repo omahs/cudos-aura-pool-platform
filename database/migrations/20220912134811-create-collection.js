@@ -27,8 +27,8 @@ module.exports = {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },
-      payout_address: {
-        type: Sequelize.STRING,
+      maintenance_fee: {
+        type: Sequelize.DECIMAL,
         allowNull: false,
       },
       status: {
@@ -51,7 +51,7 @@ module.exports = {
           key: 'id',
         },
       },
-      owner_id: {
+      creator_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

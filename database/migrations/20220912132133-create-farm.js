@@ -23,17 +23,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      initial_hash_rate: {
-        type: Sequelize.DECIMAL,
-        allowNull: false,
-      },
       btc_wallet: { type: Sequelize.STRING, allowNull: false },
       default_btc_payout_address: { type: Sequelize.STRING, allowNull: false },
       maintenance_fee: {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },
-      owner_id: {
+      creator_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

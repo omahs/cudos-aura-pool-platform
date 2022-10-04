@@ -18,7 +18,7 @@ import { CreateFarmDto } from './dto/create-farm.dto';
 import { UpdateFarmDto } from './dto/update-farm.dto';
 import { Farm } from './farm.model';
 import { FarmService } from './farm.service';
-import { IsOwnerGuard } from './guards/is-owner.guard';
+import { IsCreatorGuard } from './guards/is-creator.guard';
 
 @Controller('farm')
 export class FarmController {
@@ -53,7 +53,7 @@ export class FarmController {
     return this.farmService.createOne(createFarmDto, req.user.id);
   }
 
-  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsOwnerGuard)
+  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -62,7 +62,7 @@ export class FarmController {
     return this.farmService.updateOne(id, updateFarmDto);
   }
 
-  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsOwnerGuard)
+  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<Farm> {
     return this.farmService.deleteOne(id);

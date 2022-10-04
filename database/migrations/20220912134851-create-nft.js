@@ -60,7 +60,7 @@ module.exports = {
           key: 'id',
         },
       },
-      owner_id: {
+      creator_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

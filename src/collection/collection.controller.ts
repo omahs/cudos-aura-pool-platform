@@ -20,7 +20,7 @@ import { NFTService } from '../nft/nft.service';
 import { NFT } from 'src/nft/nft.model';
 import RoleGuard from 'src/auth/guards/role.guard';
 import { Role } from 'src/user/roles';
-import { IsOwnerGuard } from './guards/is-owner.guard';
+import { IsCreatorGuard } from './guards/is-creator.guard';
 import { UpdateCollectionStatusDto } from './dto/update-collection-status.dto';
 
 @Controller('collection')
@@ -32,14 +32,14 @@ export class CollectionController {
 
   @Get()
   async findAll(
-    @Query('owner_id') owner_id: number,
+    @Query('creator_id') creator_id: number,
     @Query('farm_id') farm_id: number,
   ): Promise<Collection[]> {
     let result = await this.collectionService.findAll();
 
-    if (owner_id) {
+    if (creator_id) {
       result = result.filter(
-        (collection: Collection) => collection.owner_id === owner_id,
+        (collection: Collection) => collection.creator_id === creator_id,
       );
     }
 
@@ -71,7 +71,7 @@ export class CollectionController {
     return this.collectionService.createOne(createCollectionDto, req.user.id);
   }
 
-  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsOwnerGuard)
+  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -92,7 +92,7 @@ export class CollectionController {
     );
   }
 
-  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsOwnerGuard)
+  @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<Collection> {
     return this.collectionService.deleteOne(id);

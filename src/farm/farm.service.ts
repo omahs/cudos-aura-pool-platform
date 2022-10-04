@@ -21,10 +21,10 @@ export class FarmService {
     return farm;
   }
 
-  async findByOwnerId(id: number): Promise<Farm[]> {
+  async findByCreatorId(id: number): Promise<Farm[]> {
     const farms = await this.farmModel.findAll({
       where: {
-        owner_id: id,
+        creator_id: id,
       },
     });
 
@@ -33,11 +33,11 @@ export class FarmService {
 
   async createOne(
     createFarmDto: CreateFarmDto,
-    owner_id: number,
+    creator_id: number,
   ): Promise<Farm> {
     const farm = this.farmModel.create({
       ...createFarmDto,
-      owner_id,
+      creator_id,
     });
 
     return farm;
