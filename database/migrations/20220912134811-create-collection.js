@@ -15,7 +15,7 @@ module.exports = {
       description: {
         type: Sequelize.STRING,
       },
-      denom: {
+      denom_id: {
         type: Sequelize.STRING,
         allowNull: false,
       },

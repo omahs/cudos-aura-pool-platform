@@ -12,13 +12,10 @@ module.exports = {
       token_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: {
-            tableName: 'nfts',
-            schema: 'public',
-          },
-          key: 'id',
-        },
+      },
+      denom_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       time: {
         type: Sequelize.BIGINT,

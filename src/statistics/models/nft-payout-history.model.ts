@@ -23,11 +23,11 @@ export class NftPayoutHistory extends Model {
 
   @AllowNull(false)
   @Column
-  @ForeignKey(() => NFT)
   token_id: number;
 
-  @BelongsTo(() => NFT)
-  nft: NFT;
+  @AllowNull(false)
+  @Column
+  denom_id: string;
 
   @Column
   payout_period_start: number;

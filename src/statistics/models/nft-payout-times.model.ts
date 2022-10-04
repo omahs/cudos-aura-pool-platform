@@ -22,11 +22,11 @@ export class NftPayoutTimes extends Model {
 
   @AllowNull(false)
   @Column
-  @ForeignKey(() => NFT)
   token_id: number;
 
-  @BelongsTo(() => NFT)
-  nft: NFT;
+  @AllowNull(false)
+  @Column
+  denom_id: string;
 
   @AllowNull(false)
   @Column

@@ -34,7 +34,7 @@ export class Collection extends Model {
 
   @AllowNull(false)
   @Column
-  denom: string;
+  denom_id: string;
 
   @AllowNull(false)
   @Column
