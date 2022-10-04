@@ -1,7 +1,7 @@
 export class CreateCollectionDto {
   name: string;
   description: string;
-  denom: string;
+  denom_id: string;
   hashing_power: number;
   royalties: number;
   maintenance_fee: number;
