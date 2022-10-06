@@ -15646,12 +15646,12 @@ export type Vote_Option_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['vote_option']>>;
 };
 
-export type CollectionQueryVariables = Exact<{
+export type MarketplaceCollectionQueryVariables = Exact<{
   denom_id?: InputMaybe<Scalars['String']>;
   creator?: InputMaybe<Scalars['String']>;
 }>;
 
-export type CollectionQuery = {
+export type MarketplaceCollectionQuery = {
   marketplace_collection: Array<{
     __typename?: 'marketplace_collection';
     mint_royalties: string;
@@ -15664,9 +15664,9 @@ export type CollectionQuery = {
   }>;
 };
 
-export type NftsQueryVariables = Exact<{ [key: string]: never }>;
+export type MarketplaceNftQueryVariables = Exact<{ [key: string]: never }>;
 
-export type NftsQuery = {
+export type MarketplaceNftQuery = {
   marketplace_nft: Array<{
     __typename?: 'marketplace_nft';
     denom_id: string;
@@ -15691,8 +15691,8 @@ export type NftsQuery = {
   }>;
 };
 
-export const CollectionDocument = gql`
-  query Collection($denom_id: String, $creator: String) {
+export const MarketplaceCollectionDocument = gql`
+  query MarketplaceCollection($denom_id: String, $creator: String) {
     marketplace_collection(
       where: {
         denom_id: { _eq: $denom_id }
@@ -15710,8 +15710,8 @@ export const CollectionDocument = gql`
     }
   }
 `;
-export const NftsDocument = gql`
-  query Nfts {
+export const MarketplaceNftDocument = gql`
+  query MarketplaceNft {
     marketplace_nft {
       denom_id
       creator
@@ -15754,31 +15754,33 @@ export function getSdk(
   withWrapper: SdkFunctionWrapper = defaultWrapper,
 ) {
   return {
-    Collection(
-      variables?: CollectionQueryVariables,
+    MarketplaceCollection(
+      variables?: MarketplaceCollectionQueryVariables,
       requestHeaders?: Dom.RequestInit['headers'],
-    ): Promise<CollectionQuery> {
+    ): Promise<MarketplaceCollectionQuery> {
       return withWrapper(
         (wrappedRequestHeaders) =>
-          client.request<CollectionQuery>(CollectionDocument, variables, {
-            ...requestHeaders,
-            ...wrappedRequestHeaders,
-          }),
-        'Collection',
+          client.request<MarketplaceCollectionQuery>(
+            MarketplaceCollectionDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        'MarketplaceCollection',
         'query',
       );
     },
-    Nfts(
-      variables?: NftsQueryVariables,
+    MarketplaceNft(
+      variables?: MarketplaceNftQueryVariables,
       requestHeaders?: Dom.RequestInit['headers'],
-    ): Promise<NftsQuery> {
+    ): Promise<MarketplaceNftQuery> {
       return withWrapper(
         (wrappedRequestHeaders) =>
-          client.request<NftsQuery>(NftsDocument, variables, {
-            ...requestHeaders,
-            ...wrappedRequestHeaders,
-          }),
-        'Nfts',
+          client.request<MarketplaceNftQuery>(
+            MarketplaceNftDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        'MarketplaceNft',
         'query',
       );
     },
