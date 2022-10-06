@@ -1,0 +1,12 @@
+overwrite: true
+config:
+  skipTypeNameForRoot: true
+generates:
+  ./src/graphql/types.ts:
+    documents:
+      - './src/**/*.graphql'
+    schema: http://34.68.222.131:8080/v1/graphql
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-graphql-request'

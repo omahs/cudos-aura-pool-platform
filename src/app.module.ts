@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
@@ -7,6 +8,7 @@ import { NFTModule } from './nft/nft.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { CollectionModule } from './collection/collection.module';
 import { FarmModule } from './farm/farm.module';
+import { GraphqlModule } from './graphql/graphql.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { FarmModule } from './farm/farm.module';
       autoLoadModels: true,
       synchronize: true,
     }),
+    GraphqlModule,
+    ConfigModule.forRoot(),
   ],
   providers: [AppService],
 })

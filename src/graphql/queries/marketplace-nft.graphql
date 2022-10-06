@@ -1,0 +1,24 @@
+query MarketplaceNft {
+  marketplace_nft {
+    denom_id
+    creator
+    id
+    price
+    token_id
+    transaction {
+      memo
+    }
+    transaction_hash
+    nft_nft {
+      burned
+      data_json
+      data_text
+      denom_id
+      name
+      owner
+      sender
+      uri
+      transaction_hash
+    }
+  }
+}
