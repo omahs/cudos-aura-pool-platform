@@ -1,5 +1,7 @@
-query MarketplaceNft {
-  marketplace_nft {
+query MarketplaceNft($denom_id: String, $owner: String) {
+  marketplace_nft(
+    where: { denom_id: { _eq: $denom_id }, owner: { _eq: $owner } }
+  ) {
     denom_id
     creator
     id

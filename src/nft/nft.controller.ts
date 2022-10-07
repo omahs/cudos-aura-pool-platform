@@ -20,31 +20,36 @@ import { UpdateNFTStatusDto } from './dto/update-nft-status';
 import { NFT } from './nft.model';
 import { NFTService } from './nft.service';
 import { IsCreatorGuard } from './guards/is-creator.guard';
+import { NftFilters, MarketplaceNftFilters } from './utils';
+import { ParseNftQueryPipe } from './pipes/nft-query.pipe';
+import { GraphqlService } from 'src/graphql/graphql.service';
+import { MarketplaceNftQuery } from 'src/graphql/types';
 
 @Controller('nft')
 export class NFTController {
-  constructor(private nftService: NFTService) {}
+  constructor(
+    private nftService: NFTService,
+    private graphqlService: GraphqlService,
+  ) {}
 
   @Get()
   async findAll(
-    @Query('creator_id', ParseIntPipe) creator_id: number,
-    @Query('collection_id', ParseIntPipe) collection_id: number,
+    @Query(ParseNftQueryPipe) filters: Partial<NftFilters>,
   ): Promise<NFT[]> {
-    let result = await this.nftService.findAll();
-
-    if (creator_id) {
-      result = result.filter((nft: NFT) => nft.creator_id === creator_id);
-    }
-
-    if (collection_id) {
-      result = result.filter((nft: NFT) => nft.collection_id === collection_id);
-    }
+    const result = await this.nftService.findAll(filters);
 
     return result;
   }
 
+  @Get('minted')
+  async findMinted(
+    @Query() filters: Partial<MarketplaceNftFilters>,
+  ): Promise<MarketplaceNftQuery> {
+    return this.graphqlService.fetchNft(filters);
+  }
+
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<NFT> {
+  async findOne(@Param('id', ParseIntPipe) id: string): Promise<NFT> {
     return this.nftService.findOne(id);
   }
 
@@ -60,7 +65,7 @@ export class NFTController {
   @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id') id: string,
     @Body() updateNFTDto: UpdateNFTDto,
   ): Promise<NFT> {
     return this.nftService.updateOne(id, updateNFTDto);
@@ -69,7 +74,7 @@ export class NFTController {
   @UseGuards(RoleGuard([Role.SUPER_ADMIN]))
   @Patch(':id/status')
   async updateStatus(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id') id: string,
     @Body() updateNftStatusDto: UpdateNFTStatusDto,
   ): Promise<NFT> {
     return this.nftService.updateStatus(id, updateNftStatusDto.status);
@@ -77,7 +82,7 @@ export class NFTController {
 
   @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Delete(':id')
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<NFT> {
+  async delete(@Param('id') id: string): Promise<NFT> {
     return this.nftService.deleteOne(id);
   }
 }

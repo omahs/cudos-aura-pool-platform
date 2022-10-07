@@ -20,7 +20,7 @@ export class IsCreatorGuard extends JwtAuthGuard implements CanActivate {
     if (!user || !params) return false;
 
     const userId = user.id;
-    const nftId = parseInt(params.id);
+    const nftId = params.id;
 
     return this.nftService
       .findOne(nftId)

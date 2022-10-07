@@ -6,3 +6,15 @@ export const enum NftStatus {
   DELETED = 'deleted',
   MINTED = 'minted',
 }
+
+export type NftFilters = {
+  limit: number;
+  creator_id: number;
+  collection_id: number;
+  status: NftStatus;
+};
+
+export type MarketplaceNftFilters = {
+  denom_id: string;
+  owner: string;
+};
