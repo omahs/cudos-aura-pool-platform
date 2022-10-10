@@ -31,11 +31,6 @@ export class NFT extends Model {
   id: string;
 
   @AllowNull(false)
-  @Unique
-  @Column
-  uuid: string;
-
-  @AllowNull(false)
   @Column
   name: string;
 

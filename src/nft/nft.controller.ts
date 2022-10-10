@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Put,
@@ -11,6 +10,7 @@ import {
   Request,
   Delete,
   Query,
+  NotFoundException,
 } from '@nestjs/common';
 import RoleGuard from 'src/auth/guards/role.guard';
 import { Role } from 'src/user/roles';
@@ -20,10 +20,11 @@ import { UpdateNFTStatusDto } from './dto/update-nft-status';
 import { NFT } from './nft.model';
 import { NFTService } from './nft.service';
 import { IsCreatorGuard } from './guards/is-creator.guard';
-import { NftFilters, MarketplaceNftFilters } from './utils';
+import { NftFilters, MarketplaceNftFilters, NftStatus } from './utils';
 import { ParseNftQueryPipe } from './pipes/nft-query.pipe';
 import { GraphqlService } from 'src/graphql/graphql.service';
 import { MarketplaceNftQuery } from 'src/graphql/types';
+import { CheckStatusDto } from './dto/check-status.dto';
 
 @Controller('nft')
 export class NFTController {
@@ -48,8 +49,23 @@ export class NFTController {
     return this.graphqlService.fetchNft(filters);
   }
 
+  @Put('minted/check-status')
+  async mint(@Body() checkStatusDto: CheckStatusDto): Promise<NFT> {
+    const { tx_hash } = checkStatusDto;
+
+    const { uuid } = await this.graphqlService.getMintedNftUuid(tx_hash);
+
+    return this.nftService.updateStatus(uuid, NftStatus.MINTED);
+  }
+
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: string): Promise<NFT> {
+  async findOne(@Param('id') id: string): Promise<NFT> {
+    const nft = await this.nftService.findOne(id);
+
+    if (!nft) {
+      throw new NotFoundException();
+    }
+
     return this.nftService.findOne(id);
   }
 

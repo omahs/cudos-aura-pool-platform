@@ -15664,7 +15664,10 @@ export type MarketplaceCollectionQuery = {
   }>;
 };
 
-export type MarketplaceNftQueryVariables = Exact<{ [key: string]: never }>;
+export type MarketplaceNftQueryVariables = Exact<{
+  denom_id?: InputMaybe<Scalars['String']>;
+  owner?: InputMaybe<Scalars['String']>;
+}>;
 
 export type MarketplaceNftQuery = {
   marketplace_nft: Array<{
@@ -15691,6 +15694,21 @@ export type MarketplaceNftQuery = {
   }>;
 };
 
+export type GetNftByTxHashQueryVariables = Exact<{
+  tx_hash: Scalars['String'];
+}>;
+
+export type GetNftByTxHashQuery = {
+  nft_nft: Array<{
+    __typename?: 'nft_nft';
+    transaction: {
+      __typename?: 'transaction';
+      memo?: string | null;
+      success: boolean;
+    };
+  }>;
+};
+
 export const MarketplaceCollectionDocument = gql`
   query MarketplaceCollection($denom_id: String, $creator: String) {
     marketplace_collection(
@@ -15711,8 +15729,8 @@ export const MarketplaceCollectionDocument = gql`
   }
 `;
 export const MarketplaceNftDocument = gql`
-  query MarketplaceNft {
-    marketplace_nft {
+  query MarketplaceNft($denom_id: String, $owner: String) {
+    marketplace_nft(where: { denom_id: { _eq: $denom_id } }) {
       denom_id
       creator
       id
@@ -15732,6 +15750,20 @@ export const MarketplaceNftDocument = gql`
         sender
         uri
         transaction_hash
+      }
+    }
+  }
+`;
+export const GetNftByTxHashDocument = gql`
+  query GetNftByTxHash($tx_hash: String!) {
+    nft_nft(
+      where: {
+        transaction: { hash: { _eq: $tx_hash }, success: { _eq: true } }
+      }
+    ) {
+      transaction {
+        memo
+        success
       }
     }
   }
@@ -15781,6 +15813,21 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders },
           ),
         'MarketplaceNft',
+        'query',
+      );
+    },
+    GetNftByTxHash(
+      variables: GetNftByTxHashQueryVariables,
+      requestHeaders?: Dom.RequestInit['headers'],
+    ): Promise<GetNftByTxHashQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetNftByTxHashQuery>(
+            GetNftByTxHashDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        'GetNftByTxHash',
         'query',
       );
     },

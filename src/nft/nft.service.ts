@@ -42,8 +42,7 @@ export class NFTService {
   }
 
   async findOne(id: string): Promise<NFT> {
-    const nft = await this.nftModel.findByPk(id);
-    return nft;
+    return this.nftModel.findByPk(id);
   }
 
   async createOne(
@@ -74,7 +73,7 @@ export class NFTService {
 
   async updateStatus(id: string, status: NftStatus): Promise<NFT> {
     const [count, [nft]] = await this.nftModel.update(
-      { status, deleted_at: new Date() },
+      { status },
       {
         where: { id },
         returning: true,
