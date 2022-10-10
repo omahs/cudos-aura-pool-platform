@@ -97,7 +97,6 @@ module.exports = function (options, webpack) {
         module: {
             rules: [{
                 test: /\.css$/,
-                exclude: [/node_modules/],
                 use: [
                     MiniCssExtractPlugin.loader,
                     {

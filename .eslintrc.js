@@ -81,7 +81,9 @@ module.exports = {
             "tsx": "never"
         } ],
         "import/prefer-default-export": "off",
-        "max-classes-per-file": "off"
+        "max-classes-per-file": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"]
     },
     "settings": {
         "import/resolver": {

@@ -1,0 +1,31 @@
+@media (min-width: 1001px) {
+
+    .Table.TableMobile {
+        display: none;
+    }
+
+}
+
+.Table .TableBool {
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    background: var( --color-bright-red);
+}
+
+.Table .TableBool.Active {
+    background: var(--color-green);
+}
+
+.Table .TableCell .CellBold {
+    font-weight: 700;
+}
+
+@media (max-width: 1000px) {
+
+    .Table.TableDesktop {
+        display: none;
+    }
+
+}
