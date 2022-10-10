@@ -109,31 +109,36 @@ html.OverflowHidden {
     overflow:hidden;
 }
 
-.Heading1 {
-    font-size: 50px; font-weight: 700;
+.H1 {
+    font-family: 'Poppins'; font-size: 32px; line-height: 130%; letter-spacing: -3%;
 }
 
-.Heading2 {
-    font-size: 30px; font-weight: 700;
-    line-height: 45px;
+.H2 {
+    font-size: 32px;
 }
 
-.Heading3 {
-    font-size: 25px; font-weight: 700;
-    line-height: 38px;
+.H2_1 {
+    font-size: 24px;
 }
 
-.Heading4 {
-    font-size: 20px; font-weight: 700;
-    line-height: 30px;
+.H3 {
+    font-size: 18px;
 }
 
-.Heading5 {
-    font-size: 22px;
+.B1 {
+    font-size: 18px;
 }
 
-.Heading6 {
+.B2 {
     font-size: 14px;
+}
+
+.B3 {
+    font-size: 12px;
+}
+
+.B4 {
+    font-size: 10px;
 }
 
 @media (max-width: 749px) {
