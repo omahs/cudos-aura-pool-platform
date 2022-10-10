@@ -4,7 +4,7 @@ import MuiTooltip, { TooltipProps } from '@mui/material/Tooltip';
 
 import '../styles/tooltip.css';
 
-const Tooltip = (props: TooltipProps) => {
+export default function Tooltip(props: TooltipProps) {
 
     return (
         <MuiTooltip
@@ -19,5 +19,3 @@ const Tooltip = (props: TooltipProps) => {
     )
 
 }
-
-export default Tooltip;
