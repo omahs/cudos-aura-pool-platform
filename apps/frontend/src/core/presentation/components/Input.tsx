@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 
 import S from '../../utilities/Main';
 
-import { TextField, FormControl, TextFieldProps } from '@mui/material';
+import { TextField, FormControl, TextFieldProps, InputLabel } from '@mui/material';
 import '../styles/input.css';
 
 export enum InputType {
@@ -12,16 +12,10 @@ export enum InputType {
     PHONE,
 }
 
-export enum InputMargin {
-    NORMAL = 'normal',
-    DENSE = 'dense',
-}
-
 type Props = TextFieldProps & {
     className?: string;
     inputType?: InputType;
     decimalLength?: number;
-    margin?: InputMargin;
     readOnly?: boolean;
     onChange?: null | ((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | string) => boolean | void);
     stretch?: boolean;
@@ -62,13 +56,12 @@ export default function Input({ className, inputType, decimalLength, margin, rea
 
     return (
         <div className={`Input ${className} ${cssClassStretch} ${cssClassGray} ${S.CSS.getClassName(readOnly, 'ReadOnly')}`}>
-            <FormControl variant='standard' margin={margin}>
-                <TextField
-                    {...props}
-                    onChange={onChange !== null && readOnly !== true ? onChangeHandler : undefined}
-                    margin={margin}
-                    variant='standard' />
-            </FormControl>
+            <TextField
+                {...props}
+                hiddenLabel = { false }
+                onChange={onChange !== null && readOnly !== true ? onChangeHandler : undefined}
+                margin='dense'
+                variant='standard' />
         </div>
     )
 }
@@ -77,7 +70,6 @@ Input.defaultProps = {
     className: '',
     inputType: InputType.TEXT,
     decimalLength: 4,
-    margin: InputMargin.NORMAL,
     readOnly: false,
     onChange: null,
     stretch: false,

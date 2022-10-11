@@ -3,14 +3,8 @@ import { Select as MuiSelect, SelectProps, InputLabel, FormControl, SelectChange
 import SvgArrowDown from '@mui/icons-material/ArrowDownward';
 import '../styles/select.css';
 
-export enum SelectMargin {
-    NORMAL = 'normal',
-    DENSE = 'dense',
-}
-
 type Props = SelectProps & {
     className?: string;
-    margin?: SelectMargin;
     onChange?: (value: any) => (boolean | void);
     label?: string;
     readOnly?: boolean;
@@ -64,12 +58,12 @@ export default function Select({ className, margin, onChange, label, readOnly, .
 
     return (
         <div className = { `Select ${className}` }>
-            <FormControl variant = 'outlined' margin = { margin }>
+            <FormControl variant = 'standard' margin = { 'dense' }>
 
                 <InputLabel
                     error = { props.error }
-                    variant = { 'outlined' }
-                    margin = { margin } >
+                    variant = { 'standard' }
+                    margin = { 'dense' } >
                     { label }
                 </InputLabel>
                 <MuiSelect
@@ -79,11 +73,15 @@ export default function Select({ className, margin, onChange, label, readOnly, .
                     onClose = { onClose }
                     open = { open }
                     IconComponent = { SvgArrowDown }
-                    margin = { margin }
+                    margin = { 'dense' }
                     MenuProps = {{
                         disableScrollLock: true,
+                        PopoverClasses: {
+                            root: 'AppSelectRoot',
+                            paper: 'AppSelectPaper',
+                        },
                     }}
-                    variant = { 'outlined' } />
+                    variant = { 'standard' } />
 
             </FormControl>
         </div>
@@ -92,7 +90,6 @@ export default function Select({ className, margin, onChange, label, readOnly, .
 
 Select.defaultProps = {
     className: '',
-    margin: SelectMargin.DENSE,
     onChange: undefined,
     label: '',
     readOnly: false,

@@ -14,10 +14,25 @@
 
     --transition-duration: 0.4s;
 
+    --color-input-text: #000;
+    --color-input-border: #000;
+    --color-input-border-focused: #aaa;
+    --color-input-gray-out: #888;
+    --color-input-label: #000;
+    --color-input-label-focused: #aaa;
+
+    --color-select-icon: #000;
+    --color-select-icon-focused: #aaa;
+    --color-select-highlight: rgba(0, 0, 0, 0.1);
+
     --color-datepicker-foreground: var(--color-primary);
     --color-datepicker-background: #fff;
     --color-datepicker-content-background: var(--color-gray);
     --color-datepicker-selected: var(--color-primary);
+
+    --color-popover-text: #000;
+    --color-popover-border: transparent;
+    --color-popover-background: #fff;
 
     /* theme */
     /* --color-input-text: var(--color-gray-000);

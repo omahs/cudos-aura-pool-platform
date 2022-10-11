@@ -9,7 +9,7 @@ export default class AutocompleteOption {
         }
 
         this.value = value;
-        this.label = label;
+        this.label = typeof (label) === 'number' ? label.toString() : label;
     }
 
 }

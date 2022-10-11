@@ -7,7 +7,6 @@ import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import AlertStore from '../../../../core/presentation/stores/AlertStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import TableStore from '../../../../core/presentation/stores/TableStore';
-import TableRow from '../../../../core/entities/TableRow';
 
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 
@@ -29,6 +28,8 @@ import AcUnitIcon from '@mui/icons-material/AcUnit';
 import '../styles/ui-kit-page.css';
 import ExampleModal from './ExampleModal';
 import ExampleModalStore from '../stores/ExampleModalStore';
+import Autocomplete from '../../../../core/presentation/components/Autcomplete';
+import AutocompleteOption from '../../../../core/entities/AutocompleteOption';
 
 type Props = {
     appStore?: AppStore
@@ -195,6 +196,52 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                     <div className={'B2'}>Body 2</div>
                     <div className={'B3'}>Body 3</div>
                     <div className={'B4'}>Body 4</div>
+                </div>
+
+                <div className = { 'FeatureBox' } >
+                    <label>Inputs</label>
+                    <div className = { 'InputsGrid' } >
+                        <Input label = { 'input label 2' } placeholder = { 'placeholder' } />
+                        <Input label = { ' ' } disabled = { true } />
+                        <Input label = { 'input with error' } error = { true } />
+                        <Input label = { ' ' } gray = { true } disabled = { true } />
+                    </div>
+                    <div className = { 'InputsGrid' } >
+                        <Select label = { 'input label 2' } placeholder = { 'placeholder' }>
+                            <MenuItem value = { 1 } >1</MenuItem>
+                            <MenuItem value = { 2 } >2</MenuItem>
+                        </Select>
+                        <Select label = { ' ' } disabled = { true }>
+                            <MenuItem value = { 1 } >1</MenuItem>
+                            <MenuItem value = { 2 } >2</MenuItem>
+                        </Select>
+                        <Select label = { 'input with error' } error = { true }>
+                            <MenuItem value = { 1 } >1</MenuItem>
+                            <MenuItem value = { 2 } >2</MenuItem>
+                        </Select>
+                    </div>
+                    <div className = { 'InputsGrid' } >
+                        <Autocomplete
+                            label = { 'Label' }
+                            options = { [
+                                new AutocompleteOption(1, 1),
+                                new AutocompleteOption(2, 2),
+                            ] } />
+                        <Autocomplete
+                            label = { ' ' }
+                            error = { true }
+                            options = { [
+                                new AutocompleteOption(1, 1),
+                                new AutocompleteOption(2, 2),
+                            ] } />
+                        <Autocomplete
+                            label = { ' ' }
+                            multiple = { true }
+                            options = { [
+                                new AutocompleteOption(1, 1),
+                                new AutocompleteOption(2, 2),
+                            ] } />
+                    </div>
                 </div>
 
                 <div className = { 'FeatureBox' }>
