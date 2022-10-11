@@ -1,3 +1,4 @@
+import S from '../utilities/Main';
 import TableCell from './TableCell';
 
 export default class TableRow {

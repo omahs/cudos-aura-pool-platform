@@ -1,126 +1,117 @@
 /* global TR */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import AlertStore from '../../../common/js/stores/AlertStore';
-import PopupConnectWalletsStore from '../../../common/js/stores/PopupConnectWalletsStore';
+// import PageHeader from '../components-inc/PageHeader';
+// import PageFooter from '../components-inc/PageFooter';
+import ExploreCollectionsStore from '../stores/ExploreCollectionsStore';
 
-import PageComponent from '../../../common/js/components-pages/PageComponent';
-import ContextPageComponent, { ContextPageComponentProps } from './common/ContextPageComponent';
-import PageHeader from '../components-inc/PageHeader';
-import PageFooter from '../components-inc/PageFooter';
-import ExploreCollectionsStore from '../../../common/js/stores/ExploreCollectionsStore';
+import SearchIcon from '@mui/icons-material/Search';
 
-import S from '../../../common/js/utilities/Main';
+import Input, { InputType } from '../../../../core/presentation/components/Input';
+import { InputAdornment } from '@mui/material';
+import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import TopCollections from '../components/TopCollections';
 
-import SvgSearch from '../../../common/svg/search.svg';
+import S from '../../../../core/utilities/Main';
+import '../styles/page-explore-collections-component.css';
+import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
+import { useNavigate } from 'react-router-dom';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
-import './../../css/components-pages/page-explore-collections-component.css';
-import Input, { InputType } from '../../../common/js/components-inc/Input';
-import { InputAdornment } from '@material-ui/core';
-import TopCollections from '../components-inc/TopCollections';
-import Button from '../../../common/js/components-inc/Button';
-import Actions from '../../../common/js/components-inc/Actions';
-
-interface Props extends ContextPageComponentProps {
-    alertStore: AlertStore,
-    popupConnectWalletsStore: PopupConnectWalletsStore,
-    exploreCollectionsStore: ExploreCollectionsStore
+interface Props {
+    exploreCollectionsStore?: ExploreCollectionsStore
 }
 
-interface State {
-}
+function ExploreCollectionsPageComponent({ exploreCollectionsStore }: Props) {
 
-export default class ExploreCollectionsPageComponent extends ContextPageComponent<Props, State> {
+    const navigate = useNavigate();
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-        }
+    const onClickSeeAllNfts = () => {
+        navigate(AppRoutes.EXPLORE_NFTS);
     }
 
-    componentDidMount(): void {
-        super.componentDidMount();
+    useEffect(
+        () => {
+            exploreCollectionsStore.innitialLoad();
+        },
+        [],
+    );
 
-        this.props.exploreCollectionsStore.innitialLoad();
-    }
-
-    static layout() {
-        const MobXComponent = inject('appStore', 'alertStore', 'walletStore', 'exploreCollectionsStore')(observer(ExploreCollectionsPageComponent));
-        PageComponent.layout(<MobXComponent />);
-    }
-
-    getPageLayoutComponentCssClassName() {
-        return 'PageExploreCollections';
-    }
-
-    renderContent() {
-        const store = this.props.exploreCollectionsStore;
-        return (
-            <>
-                <div className={'PageContent'} >
-                    <PageHeader />
-                    <div className={'ExploreColelctions FlexColumn'}>
-                        <div className={'PageHeading Heading1'}>Explore NFT Collections</div>
+    return (
+        <PageLayoutComponent
+            className = { 'PageExploreCollections' }
+            modals = { [
+            ] } >
+            <div className={'PageContent'} >
+                {/* <PageHeader /> */}
+                <div className={'ExploreColelctions FlexColumn'}>
+                    <div className={'PageHeading H1 Bold'}>Explore NFT Collections</div>
+                    <div className={'Grid'}>
+                        <div></div>
                         <Input
                             inputType={InputType.TEXT}
                             className={'SearchBar'}
-                            value = {store.searchString}
-                            onChange = { store.changeSearchString }
+                            value = { exploreCollectionsStore.searchString }
+                            onChange = { exploreCollectionsStore.changeSearchString }
                             placeholder = {'Search Collections, Farms and accounts'}
                             InputProps={{
                                 startAdornment: <InputAdornment position="start" >
-                                    <div className={'SVG Icon'} dangerouslySetInnerHTML={{ __html: SvgSearch }}/>
+                                    <SearchIcon/>
                                 </InputAdornment>,
                             }}
                         />
-                        <div className={'CategoriesRow FlexRow'}>
-                            {store.categories.map((category, index) => <div
-                                key={index}
-                                onClick={() => store.selectCategory(index)}
-                                className={`CategoryName Pointer ${S.CSS.getActiveClassName(store.selectedCategoryIndex === index)}`}
-                            >
-                                {category}
-                            </div>)
-                            }
-                        </div>
+                        <div></div>
                     </div>
-                    <Actions
-                        layout={Actions.LAYOUT_ROW_CENTER}
-                        height={Actions.HEIGHT_48}
-                    >
-                        {/* TODO: redirect */}
-                        <Button
-                            padding={Button.PADDING_24}
-                            type={Button.TYPE_ROUNDED}
+                    <div className={'CategoriesRow FlexRow'}>
+                        {exploreCollectionsStore.categories.map((category, index) => <div
+                            key={index}
+                            onClick={() => exploreCollectionsStore.selectCategory(index)}
+                            className={`CategoryName Clickable ${S.CSS.getActiveClassName(exploreCollectionsStore.selectedCategoryIndex === index)}`}
                         >
-                            See All NFTs
-                        </Button>
-                    </Actions>
-                    <TopCollections
-                        selectedTopCollectionPeriod={store.selectedTopCollectionPeriod}
-                        cudosPriceChangeDisplay={store.cudosPriceChangeDisplay()}
-                        cudosPriceUsd={store.cudosPrice}
-                        topCollectionPreviews={store.topCollectionPreviews}
-                        changeTopCollectionPeriod={store.changeTopCollectionPeriod}
-                    />
-                    <Actions
-                        layout={Actions.LAYOUT_ROW_CENTER}
-                        height={Actions.HEIGHT_48}
-                    >
-                        {/* TODO: redirect */}
-                        <Button
-                            padding={Button.PADDING_24}
-                            type={Button.TYPE_ROUNDED}
-                        >
-                            See All Collections
-                        </Button>
-                    </Actions>
-                    <PageFooter />
+                            {category}
+                        </div>)
+                        }
+                    </div>
                 </div>
-            </>
-        )
-    }
+                <Actions
+                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
+                    height={ACTIONS_HEIGHT.HEIGHT_48}
+                >
+                    {/* TODO: redirect */}
+                    <Button
+                        padding={BUTTON_PADDING.PADDING_24}
+                        type={BUTTON_TYPE.ROUNDED}
+                        onClick={onClickSeeAllNfts}
+                    >
+                        See All NFTs
+                    </Button>
+                </Actions>
+                <TopCollections
+                    selectedTopCollectionPeriod={exploreCollectionsStore.selectedTopCollectionPeriod}
+                    cudosPriceChangeDisplay={exploreCollectionsStore.cudosPriceChangeDisplay()}
+                    cudosPriceUsd={exploreCollectionsStore.cudosPrice}
+                    topCollectionPreviews={exploreCollectionsStore.topCollectionPreviews}
+                    changeTopCollectionPeriod={exploreCollectionsStore.changeTopCollectionPeriod}
+                />
+                <Actions
+                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
+                    height={ACTIONS_HEIGHT.HEIGHT_48}
+                >
+                    {/* TODO: redirect */}
+                    <Button
+                        padding={BUTTON_PADDING.PADDING_24}
+                        type={BUTTON_TYPE.ROUNDED}
+                    >
+                        See All Collections
+                    </Button>
+                </Actions>
+                {/* <PageFooter /> */}
+            </div>
+        </PageLayoutComponent>
+    )
 }
+
+export default inject((stores) => stores)(observer(ExploreCollectionsPageComponent));
