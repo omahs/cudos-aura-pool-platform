@@ -13,10 +13,7 @@ export default function NftPreview({ nftPreviewModel }: Props) {
     const navigate = useNavigate();
 
     const onClickNft = () => {
-        navigate({
-            pathname: AppRoutes.NFT_VIEW,
-            search: `?nftId=${nftPreviewModel.id}`,
-        });
+        navigate(`${AppRoutes.NFT_VIEW}/${nftPreviewModel.id}`);
     }
 
     return (

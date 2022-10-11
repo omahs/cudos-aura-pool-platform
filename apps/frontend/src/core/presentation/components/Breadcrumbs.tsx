@@ -3,6 +3,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import '../styles/breadcrumbs.css';
+import { useNavigate, useNavigation } from 'react-router-dom';
 
 interface Crumb {
     name: string;
@@ -10,26 +11,31 @@ interface Crumb {
 }
 
 interface Props {
-    onClickback: () => void;
     crumbs: Crumb[];
 }
 
-export default function Breadcrumbs({ crumbs, onClickback }: Props) {
+export default function Breadcrumbs({ crumbs }: Props) {
     const lastCrumb = crumbs[crumbs.length - 1];
     const slicedCrumbds = crumbs.slice(0, -1);
 
+    const navigate = useNavigate();
+
+    const onClickBack = () => {
+        navigate(-1);
+    };
+
     return (
         <div className={'BreadCrumbs FlexRow'}>
-            <div className={'BackButton FlexRow Pointer'} onClick={onClickback}>
+            <div className={'BackButton FlexRow Clickable'} onClick={onClickBack}>
                 <ArrowBackIcon />
-                <div>Back</div>
+                <div className={'B2 SemiBold'}>Back</div>
             </div>
-            <div className={'Crumbs FlexRow'}>
+            <div className={'Crumbs FlexRow B2 Bold'}>
                 {slicedCrumbds.map((crumb: Crumb, index: number) => <div key={index} className={'CrumbBox FlexRow'}>
-                    <div className={'Crumb Pointer'} onClick={crumb.onClick}>{crumb.name}</div>
+                    <div className={'Crumb Clickable'} onClick={crumb.onClick}>{crumb.name}</div>
                     <ArrowForwardIosIcon />
                 </div>)}
-                <div className={'LastCrumb Pointer'} onClick={lastCrumb.onClick}>{lastCrumb.name}</div>
+                <div className={'LastCrumb Clickable'} onClick={lastCrumb.onClick}>{lastCrumb.name}</div>
             </div>
         </div>
     )

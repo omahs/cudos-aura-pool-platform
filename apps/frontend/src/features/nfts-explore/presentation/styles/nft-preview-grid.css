@@ -16,7 +16,7 @@
 }
 
 .NftModelsViewerTable .GridHeader .GridLayoutButtons .SVG {
-    background-color: var(--color-gray-light);
+    background-color: var(--color-gray-095);
     fill: var(--color-gray-dark);
     border-radius: 8px;
     padding: 5px;

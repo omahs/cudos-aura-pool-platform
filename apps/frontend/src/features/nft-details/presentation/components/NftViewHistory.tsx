@@ -6,7 +6,7 @@ import SvgEthereum from '../../../../public/assets/vectors/ethereum-logo.svg';
 
 import '../styles/nft-view-history.css'
 import { ALIGN_CENTER, ALIGN_LEFT } from '../../../../core/presentation/components/TableDesktop';
-import { TableState } from '../../../../core/presentation/stores/TableStore';
+import TableStore, { TableState } from '../../../../core/presentation/stores/TableStore';
 import Table from '../../../../core/presentation/components/Table';
 import TableCell from '../../../../core/entities/TableCell';
 import TableRow from '../../../../core/entities/TableRow';
@@ -60,17 +60,17 @@ export default function NftViewHistory() {
     return (
         <div className={'NftPreviewHistory FlexColumn'}>
             <div className={'HistoryNavigation FlexRow'}>
-                <div onClick={() => setHistoryPage(PAGE_STATISTICS)} className={`NavButton Pointer ${S.CSS.getActiveClassName(historyPage === PAGE_STATISTICS)}`}>{HISTORY_PAGES[PAGE_STATISTICS]}</div>
-                <div onClick={() => setHistoryPage(PAGE_EARNINGS)} className={`NavButton Pointer ${S.CSS.getActiveClassName(historyPage === PAGE_EARNINGS)}`}>{HISTORY_PAGES[PAGE_EARNINGS]}</div>
-                <div onClick={() => setHistoryPage(PAGE_HISTORY)} className={`NavButton Pointer ${S.CSS.getActiveClassName(historyPage === PAGE_HISTORY)}`}>{HISTORY_PAGES[PAGE_HISTORY]}</div>
+                <div onClick={() => setHistoryPage(PAGE_STATISTICS)} className={`NavButton Clickable ${S.CSS.getActiveClassName(historyPage === PAGE_STATISTICS)}`}>{HISTORY_PAGES[PAGE_STATISTICS]}</div>
+                <div onClick={() => setHistoryPage(PAGE_EARNINGS)} className={`NavButton Clickable ${S.CSS.getActiveClassName(historyPage === PAGE_EARNINGS)}`}>{HISTORY_PAGES[PAGE_EARNINGS]}</div>
+                <div onClick={() => setHistoryPage(PAGE_HISTORY)} className={`NavButton Clickable ${S.CSS.getActiveClassName(historyPage === PAGE_HISTORY)}`}>{HISTORY_PAGES[PAGE_HISTORY]}</div>
             </div>
             <div className={'HistoryContainer FlexColumn'}>
                 <div className={'HistoryContainerHeader FlexRow'}>
                     <div className={'Heading3'}>{HISTORY_PAGES[historyPage]}</div>
                     <div className={`HistoryNavigation FlexRow ${S.CSS.getClassName(historyPage !== PAGE_STATISTICS, 'Hidden')}`}>
-                        <div onClick={() => setPeriodSetting(PERIOD_TODAY)} className={`NavButton Pointer ${S.CSS.getActiveClassName(periodSetting === PERIOD_TODAY)}`}>{PERIOD_SETTINGS[PERIOD_TODAY]}</div>
-                        <div onClick={() => setPeriodSetting(PERIOD_WEEK)} className={`NavButton Pointer ${S.CSS.getActiveClassName(periodSetting === PERIOD_WEEK)}`}>{PERIOD_SETTINGS[PERIOD_WEEK]}</div>
-                        <div onClick={() => setPeriodSetting(PERIOD_MONTH)} className={`NavButton Pointer ${S.CSS.getActiveClassName(periodSetting === PERIOD_MONTH)}`}>{PERIOD_SETTINGS[PERIOD_MONTH]}</div>
+                        <div onClick={() => setPeriodSetting(PERIOD_TODAY)} className={`NavButton Clickable ${S.CSS.getActiveClassName(periodSetting === PERIOD_TODAY)}`}>{PERIOD_SETTINGS[PERIOD_TODAY]}</div>
+                        <div onClick={() => setPeriodSetting(PERIOD_WEEK)} className={`NavButton Clickable ${S.CSS.getActiveClassName(periodSetting === PERIOD_WEEK)}`}>{PERIOD_SETTINGS[PERIOD_WEEK]}</div>
+                        <div onClick={() => setPeriodSetting(PERIOD_MONTH)} className={`NavButton Clickable ${S.CSS.getActiveClassName(periodSetting === PERIOD_MONTH)}`}>{PERIOD_SETTINGS[PERIOD_MONTH]}</div>
                     </div>
                 </div>
                 <div className={'HistoryDataContainer FlexColumn'}>
@@ -81,7 +81,7 @@ export default function NftViewHistory() {
                             legend={EARNINGS_TABLE_LEGEND}
                             widths={EARNINGS_TABLE_WIDTHS}
                             aligns={EARNINGS_TABLE_ALINGS}
-                            helper={new TableState(0, 4)}
+                            tableStore={new TableStore(0, [], () => {}, 5)}
                             rows={renderEarningsRows()}
                         /> : ''}
                     {historyPage === PAGE_HISTORY
@@ -90,7 +90,7 @@ export default function NftViewHistory() {
                             legend={HISTORY_TABLE_LEGEND}
                             widths={HISTORY_TABLE_WIDTHS}
                             aligns={HISTORY_TABLE_ALINGS}
-                            helper={new TableState(0, 5)}
+                            tableStore={new TableStore(0, [], () => {}, 5)}
                             rows={renderHistoryRows()}
                         /> : ''}
                 </div>

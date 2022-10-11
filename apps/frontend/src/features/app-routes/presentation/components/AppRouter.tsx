@@ -41,7 +41,7 @@ export default function AppRouter() {
                 <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPageComponent /> } />
-                <Route path = { AppRoutes.NFT_VIEW } element = { <NftViewPageComponent /> } />
+                <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPageComponent /> } />
             </Routes>
         </div>
     )

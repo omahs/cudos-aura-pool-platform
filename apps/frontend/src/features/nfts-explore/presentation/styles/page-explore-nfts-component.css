@@ -33,7 +33,7 @@ footer.PageFooter {
 .PageExploreNfts .PageContent .ExploreNfts .CategoriesRow .CategoryName {
     padding: 2px 5px;
     border-radius: 3px;
-    background-color: var(--color-gray-light);
+    background-color: var(--color-gray-095);
     font-family: 'Poppins'; font-weight: 600; font-size: 14px; line-height: 21px;
 }
 

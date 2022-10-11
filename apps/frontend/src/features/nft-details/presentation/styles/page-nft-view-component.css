@@ -32,7 +32,7 @@ footer.PageFooter {
 
 .PageNftView .PageContent .LeftLayout .PaddingColumn .DataUnderPicture {
     gap: 23px;
-    background: var(--color-gray-light);
+    background: var(--color-gray-095);
 }
 
 .PageNftView .PageContent .LeftLayout .PaddingColumn .DataUnderPicture .DataRow {
@@ -68,6 +68,11 @@ footer.PageFooter {
 
 .PageNftView .PageContent .RightLayout .OwnerRow .OwnerBox .OwnerPicture .OwnerInfo {
     gap: 15px;
+}
+
+.PageNftView .PageContent .RightLayout .CalculateRewardsNav {
+    padding: 40px;
+    justify-content: space-between;
 }
 
 .PageNftView .PageContent .RightLayout .OwnerRow .OwnerBox .OwnerPicture .OwnerInfo .AddressName {

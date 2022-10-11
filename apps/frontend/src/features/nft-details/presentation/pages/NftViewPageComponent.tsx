@@ -13,7 +13,8 @@ import Button from '../../../../core/presentation/components/Button';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import NftDetailsStore from '../stores/NftDetailsStore';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 interface Props {
     nftDetailsStore?: NftDetailsStore
@@ -21,14 +22,19 @@ interface Props {
 
 function NftViewPageComponent({ nftDetailsStore }: Props) {
 
+    const { nftId } = useParams();
+
     useEffect(
         () => {
-            const { nftId } = useParams();
-            console.log(nftId);
             nftDetailsStore.innitiate(nftId);
         },
         [],
     );
+
+    const navigate = useNavigate();
+    const onClickCalculateRewards = () => {
+        navigate(AppRoutes.REWARDS_CALCULATOR)
+    }
 
     const nft = nftDetailsStore.nftProfile;
     const collection = nftDetailsStore.collectionProfile;
@@ -56,7 +62,7 @@ function NftViewPageComponent({ nftDetailsStore }: Props) {
                                     style={{
                                         backgroundImage: `url("${nft.imageUrl}")`,
                                     }} />
-                                <div className={'BorderContainer DataUnderPicture FlexColumn'}>
+                                <div className={'BorderContainer DataUnderPicture FlexColumn B1 SemiBolc'}>
                                     <div className={'DataRow FlexRow'}>
                                         <div className={'DataLabel'}>Listing Status</div>
                                         <div className={'DataValue'}>{nft.listingStatus === S.INT_TRUE ? 'Active' : 'Not Listed'}</div>
@@ -75,30 +81,30 @@ function NftViewPageComponent({ nftDetailsStore }: Props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className={'Heading2'}>Description</div>
-                            <div className={'Description'}>{collection.description}</div>
+                            <div className={'H2 Bold'}>Description</div>
+                            <div className={'Description B1'}>{collection.description}</div>
                             <NftViewHistory />
                         </div>
                         <div className={'RightLayout FlexColumn'}>
-                            <div className={'CollectionName'}>{collection.name}</div>
-                            <div className={'Heading2 NftName'}>{nft.name}</div>
+                            <div className={'CollectionName B2 SemiBold'}>{collection.name}</div>
+                            <div className={'H2 Bold NftName'}>{nft.name}</div>
                             <div className={'FlexRow OwnerRow'}>
                                 <div className={'FlexRow OwnerBox'}>
                                     <div className={'OwnerPicture'}></div>
                                     <div className={'OwnerInfo FlexColumn'}>
-                                        <div className={'AddressName'}>Creator</div>
+                                        <div className={'AddressName B1 SemiBold'}>Creator</div>
                                         <div className={'Address'}>{nft.creatorAddress}</div>
                                     </div>
                                 </div>
                                 <div className={'FlexRow OwnerBox'}>
                                     <div className={'OwnerPicture'}></div>
                                     <div className={'OwnerInfo FlexColumn'}>
-                                        <div className={'AddressName'}>Current Owner</div>
+                                        <div className={'AddressName B1 SemiBold'}>Current Owner</div>
                                         <div className={'Address'}>{nft.currentOwnerAddress}</div>
                                     </div>
                                 </div>
                             </div>
-                            <div className={'BorderContainer FlexColumn'}>
+                            <div className={'BorderContainer FlexColumn B1 SemiBold'}>
                                 <div className={'DataRow FlexRow'}>
                                     <div className={'DataLabel'}>Hashing Power</div>
                                     {/* TODO: hash power denomination */}
@@ -126,7 +132,13 @@ function NftViewPageComponent({ nftDetailsStore }: Props) {
                                     <div className={'DataValue'}>735</div>
                                 </div>
                             </div>
-                            <div className={'BorderContainer FlexColumn'}>
+                            <div className={'FlexRow CalculateRewardsNav'}>
+                                <div className={'B3'}>You can calculate your rewards in our dynamic Calculator</div>
+                                <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}>
+                                    <Button onClick={onClickCalculateRewards}>Calculate Rewards</Button>
+                                </Actions>
+                            </div>
+                            <div className={'BorderContainer FlexColumn B1 SemiBold'}>
                                 <div className={'DataRow FlexRow'}>
                                     <div className={'DataLabel'}>Blockchain</div>
                                     <div className={'DataValue'}>CUDOS</div>
@@ -135,8 +147,8 @@ function NftViewPageComponent({ nftDetailsStore }: Props) {
                                     <div className={'DataLabel'}>Price</div>
                                     <div className={'DataValue NftPrice FlexRow'}>
                                         <div className={'SVG Icon'} dangerouslySetInnerHTML={{ __html: SvgCudos }}/>
-                                        <div className={'Heading3'}>{nft.price.toFixed(0)} CUDOS</div>
-                                        <div className={'SubPrice'}>${nft.price.multipliedBy(nftDetailsStore.cudosPrice).toFixed(2)}</div>
+                                        <div className={'H3 Bold'}>{nft.price.toFixed(0)} CUDOS</div>
+                                        <div className={'SubPrice B2 SemiBold'}>${nft.price.multipliedBy(nftDetailsStore.cudosPrice).toFixed(2)}</div>
                                     </div>
                                 </div>
                                 {/* TODO: open buy nft popup */}
@@ -147,7 +159,7 @@ function NftViewPageComponent({ nftDetailsStore }: Props) {
                         </div>
                     </div>
                     <div className={'HorizontalSeparator'}/>
-                    <div className={'Heading2'}>Collection Items</div>
+                    <div className={'H2 Bold'}>Collection Items</div>
                     {/* TODO: slider */}
                     <div className={'Slider'}>SLIDER PLACEHOLDER</div>
                     {/* <PageFooter /> */}
