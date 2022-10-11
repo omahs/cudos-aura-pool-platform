@@ -18,7 +18,6 @@ const theme01 = createTheme({
     },
 });
 
-// this is not used
 const theme02 = createTheme({
     palette: {
         primary: {
@@ -29,8 +28,8 @@ const theme02 = createTheme({
 });
 
 export enum BUTTON_TYPE {
-    ROUNDED,
-    TEXT_INLINE,
+    ROUNDED = 'contained',
+    TEXT_INLINE = 'text',
 }
 
 export enum BUTTON_COLOR {
@@ -39,15 +38,17 @@ export enum BUTTON_COLOR {
     SCHEME_3,
 }
 
+/* each member of the enum corresponds to a CSS class */
 export enum BUTTON_PADDING {
-    DEFAULT,
-    PADDING_24,
-    PADDING_48,
+    DEFAULT = '',
+    PADDING_24 = 'Padding24',
+    PADDING_48 = 'Padding48',
 }
 
+/* each member of the enum corresponds to a CSS class */
 export enum BUTTON_RADIUS {
-    DEFAULT,
-    MAX
+    DEFAULT = '',
+    MAX = 'RadiusMax'
 }
 
 type Props = {
@@ -56,10 +57,10 @@ type Props = {
     color?: BUTTON_COLOR;
     padding?: BUTTON_PADDING;
     radius?: BUTTON_RADIUS;
-    href?: string,
-    onClick?: () => void;
     disabled?: boolean;
+    href?: string,
     target?: string;
+    onClick?: () => void;
 }
 
 export default function Button({ className, type, color, padding, radius, href, onClick, disabled, target, children }: React.PropsWithChildren < Props >) {
@@ -75,16 +76,6 @@ export default function Button({ className, type, color, padding, radius, href, 
         }
     }
 
-    function muiVariant() {
-        switch (type) {
-            case BUTTON_TYPE.TEXT_INLINE:
-                return 'text';
-            case BUTTON_TYPE.ROUNDED:
-            default:
-                return 'contained';
-        }
-    }
-
     function muiTheme() {
         switch (color) {
             case BUTTON_COLOR.SCHEME_1:
@@ -95,42 +86,18 @@ export default function Button({ className, type, color, padding, radius, href, 
         }
     }
 
-    function cssPadding() {
-        switch (padding) {
-            case BUTTON_PADDING.PADDING_24:
-                return 'Padding24';
-            case BUTTON_PADDING.PADDING_48:
-                return 'Padding48';
-            default:
-                return S.Strings.EMPTY;
-        }
-    }
-
-    function cssRadius() {
-        switch (radius) {
-            case BUTTON_RADIUS.MAX:
-                return 'Radius30';
-            case BUTTON_RADIUS.DEFAULT:
-            default:
-                return S.Strings.EMPTY;
-        }
-    }
-
     return (
         <ThemeProvider theme={theme01} >
             <ThemeProvider theme={muiTheme()} >
                 <MuiButton
                     disabled={disabled}
-                    className={`Button Transition ${cssPadding()} ${cssRadius()} ${className}`}
+                    className={`Button Transition ${padding} ${radius} ${className}`}
                     onClick={onClick}
-                    variant={muiVariant()}
+                    variant={type}
                     color={cssMuiClassColor()}
                     href={href}
                     target={target} >
-
-                    <div className={'ButtonContent FlexRow'} >
-                        {children}
-                    </div>
+                    <div className={'ButtonContent FlexRow'} > {children} </div>
                 </MuiButton>
             </ThemeProvider>
         </ThemeProvider>
@@ -140,11 +107,12 @@ export default function Button({ className, type, color, padding, radius, href, 
 
 Button.defaultProps = {
     className: '',
+    type: BUTTON_TYPE.ROUNDED,
     color: BUTTON_COLOR.SCHEME_1,
-    padding: BUTTON_PADDING.PADDING_24,
+    padding: BUTTON_PADDING.DEFAULT,
     radius: BUTTON_RADIUS.DEFAULT,
-    href: undefined,
-    onClick: undefined,
     disabled: false,
+    href: undefined,
     target: undefined,
+    onClick: undefined,
 };

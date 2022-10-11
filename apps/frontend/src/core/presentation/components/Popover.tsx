@@ -19,26 +19,26 @@ export default function Popover(props: PopoverProps) {
             document.removeEventListener('touchmove', onPreventableScroll);
             document.removeEventListener('scroll', onUnpreventableScroll);
         }
-    }, [])
+    });
 
-    const onPreventableScroll = (e) => {
+    function onPreventableScroll(e) {
         if (props.open === true) {
             e.stopPropagation();
             e.preventDefault();
         }
     }
 
-    const onUnpreventableScroll = (e) => {
+    function onUnpreventableScroll(e) {
         if (props.open === true) {
             props.onClose(e, 'backdropClick');
         }
     }
 
-    const onEntered = () => {
+    function onEntered() {
         ref.current.querySelector('.MuiPopover-paper').addEventListener('wheel', S.stopPropagation);
     }
 
-    const onExit = () => {
+    function onExit() {
         ref.current.querySelector('.MuiPopover-paper').removeEventListener('wheel', S.stopPropagation);
     }
 
@@ -48,8 +48,10 @@ export default function Popover(props: PopoverProps) {
             ref = { ref }
             disableScrollLock = { true }
             className = { 'Popover' }
-            onEntered = { onEntered }
-            onExit = { onExit } >
+            TransitionProps = { {
+                onEntered,
+                onExit,
+            } } >
             { props.children }
         </MuiPopover>
     )

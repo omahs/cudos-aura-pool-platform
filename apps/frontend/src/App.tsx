@@ -15,11 +15,13 @@ import CollectionStorageRepo from './features/collections-marketplace/data/repo/
 import ExploreCollectionsStore from './features/collections-marketplace/presentation/stores/ExploreCollectionsStore';
 import NftPreviewsGridStore from './features/nfts-explore/presentation/stores/NftPreviewsGridStore';
 import NftStorageRepo from './features/nfts-explore/data/repo/NftStorageRepo';
-import NftDetailsStore from './features/nft-details/presentation/stores/NftDetailsStore';
+import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModalStore';
 import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
+import NftDetailsStore from './features/nft-details/presentation/stores/NftDetailsStore';
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
+const exampleModalStore = new ExampleModalStore();
 
 const bitcoinRepo = new BitcoinStorageRepo();
 const cudosRepo = new CudosStorageRepo();
@@ -45,9 +47,11 @@ const App = () => {
             <Provider
                 appStore = { appStore }
                 alertStore = { alertStore }
+                exampleModalStore = { exampleModalStore }
                 rewardsCalculatorStore = { rewardsCalculatorStore }
                 exploreCollectionsStore = { exploreCollectionsStore }
-                nftPreviewsGridStore = { nftPreviewsGridStore }>
+                nftPreviewsGridStore = { nftPreviewsGridStore }
+                nftDetailsStore = { nftDetailsStore }>
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

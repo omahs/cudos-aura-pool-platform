@@ -81,7 +81,7 @@ footer.PageFooter {
 
 .RewardsCalculator .LayoutContainer .DataContainer .BtcPriceContainer .SubHeading {
     font-weight: 700; font-size: 18px; line-height: 145%;
-    color: var(--color-gray-dark);
+    color: var(--color-gray-060);
 }
 
 .RewardsCalculator .LayoutContainer .DataContainer .FarmDataContainer {
@@ -120,5 +120,5 @@ footer.PageFooter {
 
 .RewardsCalculator .LayoutContainer .DataContainer .RewardsEstimateContainer .Discretion {
     font-weight: 700; font-size: 12px; line-height: 145%;
-    color: var(--color-gray-dark);
+    color: var(--color-gray-060);
 }

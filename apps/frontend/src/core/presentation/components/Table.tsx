@@ -44,11 +44,11 @@ export default function Table(props: Props) {
 
 }
 
-export function row(cells: TableCell[], rowClassNameName: string = S.Strings.EMPTY) {
+export function createTableRow(cells: TableCell[], rowClassNameName: string = S.Strings.EMPTY) {
     return new TableRow(cells, rowClassNameName);
 }
 
-export function cell(content: any, sortValue: any = null) {
+export function createTableCell(content: any, sortValue: any = null) {
 
     if (sortValue === null) {
         sortValue = content;
@@ -57,11 +57,11 @@ export function cell(content: any, sortValue: any = null) {
     return new TableCell(content, sortValue);
 }
 
-export function cellString(content: string, className = S.Strings.EMPTY) {
+export function createTableCellString(content: string, className = S.Strings.EMPTY) {
 
     const cellNode = (
         <span className = { `Dots ${className}` } title = { content } > { content } </span>
     );
 
-    return cell(cellNode, content);
+    return createTableCell(cellNode, content);
 }

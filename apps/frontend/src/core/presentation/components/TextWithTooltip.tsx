@@ -2,6 +2,7 @@ import React from 'react';
 
 import SvgInfo from '@mui/icons-material/InfoOutlined';
 import Tooltip from './Tooltip';
+import Svg from './Svg';
 
 import '../styles/text-with-tooltip.css';
 
@@ -15,11 +16,16 @@ export default function TextWithTooltip({ className, text, tooltipText }: Props)
 
     return (
         <div className={`FlexRow TextWithTooltip ${className}`}>
-            <div className={'TooltipText'}>{text}</div>
+            <div className={'TooltipText'} > {text} </div>
             <Tooltip title = { tooltipText } >
-                {/* <div className={'SVG Icon'} dangerouslySetInnerHTML={{ __html: SvgInfo }}/> */}
-                <SvgInfo />
+                <Svg svg = { SvgInfo } />
             </Tooltip>
         </div>
     );
+}
+
+TextWithTooltip.defaultProps = {
+    className: '',
+    text: '',
+    tooltipText: '',
 }

@@ -1,7 +1,6 @@
 .Actions {
     display:flex; align-items:center;
     flex:0 0 auto;
-    /* padding: 10px; */
 }
 
 .Actions.Center {
@@ -51,11 +50,6 @@
     height:75px;
 }
 
-/* .Actions.Row.Auto {
-    padding-top:7px;
-    padding-bottom:7px;
-} */
-
 .Actions.Column {
     width:100%;
     flex-direction:column;
@@ -96,11 +90,6 @@
 .Actions.Column.H75 > .Button, .Actions.Column.H75 .InheritActions > .Button {
     height:75px;
 }
-
-/* .Actions.Column.Auto > .Button, .Actions.Column.Auto .InheritActions > .Button {
-    padding-top:7px;
-    padding-bottom:7px;
-} */
 
 .Actions.Column.Left {
     align-items:flex-start;

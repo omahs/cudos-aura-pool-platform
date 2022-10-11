@@ -12,7 +12,7 @@ import '../styles/page-layout-component.css';
 
 type Props = {
     className?: string;
-    modals?: any[],
+    modals?: any | any[],
     alert?: React.Component | null,
 }
 

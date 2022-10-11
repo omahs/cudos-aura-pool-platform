@@ -9,13 +9,13 @@
     box-sizing: border-box !important;
 }
 
-.Button .SVG.ButtonSvg {
+.Button .SVG {
     width: 16px; height: 16px;
     margin-right: 8px;
 }
 
-.Button.Radius30 {
-    border-radius: 30px !important;
+.Button.RadiusMax {
+    border-radius: 128px !important;
 }
 
 .Button.Padding24 {
@@ -24,12 +24,4 @@
 
 .Button.Padding48 {
     padding: 0 48px;
-}
-
-.Button.Padding82 {
-    padding: 0 82px;
-}
-
-.Button.Padding96 {
-    padding: 0 96px;
 }

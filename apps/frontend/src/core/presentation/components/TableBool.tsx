@@ -2,6 +2,8 @@ import React from 'react';
 
 import S from '../../utilities/Main';
 
+import '../styles/table-bool.css';
+
 enum TableBoolValue {
     TRUE = S.INT_TRUE,
     FALSE = S.INT_FALSE,
