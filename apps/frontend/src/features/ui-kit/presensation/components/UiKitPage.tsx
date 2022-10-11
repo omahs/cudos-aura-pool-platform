@@ -17,11 +17,11 @@ import { MenuItem } from '@mui/material'
 import Tooltip from '../../../../core/presentation/components/Tooltip';
 import TextWithTooltip from '../../../../core/presentation/components/TextWithTooltip';
 
-interface Props {
+type Props = {
     alertStore?: AlertStore;
 }
 
-const UiKitPage = (props: Props) => {
+function UiKitPage({ alertStore }: Props) {
     const navigate = useNavigate();
 
     const onClickNavigate = () => {
@@ -29,7 +29,7 @@ const UiKitPage = (props: Props) => {
     }
 
     const onClickShowAlert = () => {
-        props.alertStore.show('Alert');
+        alertStore.show('Alert');
     }
 
     return (
@@ -87,4 +87,4 @@ const UiKitPage = (props: Props) => {
 
 }
 
-export default inject('alertStore')(observer(UiKitPage));
+export default inject((stores) => stores)(observer(UiKitPage));

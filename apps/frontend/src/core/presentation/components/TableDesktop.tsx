@@ -4,20 +4,20 @@ import { observer } from 'mobx-react';
 import S from '../../utilities/Main';
 
 import TableStore from '../stores/TableStore';
-import Paging from './TablePaging';
+import TablePaging from './TablePaging';
 import Scrollable from './Scrollable';
-import { TableRow } from './Table';
+import TableRow from '../../entities/TableRow';
 
 import ArrowDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowUpIcon from '@mui/icons-material/ArrowDropUp';
 import '../styles/table-desktop.css';
 
-export interface TableDesktopProps {
+export type TableDesktopProps = {
     className?: string;
     widths: string[];
     legend: string[];
     aligns?: number[];
-    helper: TableStore;
+    tableStore: TableStore;
     rows: TableRow[];
     columnsOrderMap?: Map < number, number >;
     onChangeColumnsOrderIndex?: (oldIndex: number, newIndex: number) => void;
@@ -31,18 +31,15 @@ export const ALIGN_LEFT = 1;
 export const ALIGN_CENTER = 2;
 export const ALIGN_RIGHT = 3;
 
-const TableDesktop = (props: TableDesktopProps) => {
+const TableDesktop = ({ className, widths, legend, aligns, tableStore, rows, columnsOrderMap, onChangeColumnsOrderIndex, onClickRow, onClickLegend, showPaging, contentScrollable }: TableDesktopProps) => {
 
-    const getCellStyle = (index: number) => {
-        const widths = props.widths;
-
+    function getCellStyle(index: number) {
         return {
             'width': widths[index],
         };
     }
 
-    const getCellAlign = (index: number) => {
-        const aligns = props.aligns;
+    function getCellAlign(index: number) {
         if (aligns === null) {
             return S.Strings.EMPTY;
         }
@@ -58,49 +55,48 @@ const TableDesktop = (props: TableDesktopProps) => {
         }
     }
 
-    const onClickLegendCell = (index: number) => {
-        const helper = props.helper;
-        if (helper.isTableSortIndexClickable(index) === false) {
+    function onClickLegendCell(index: number) {
+        if (tableStore.isTableSortIndexClickable(index) === false) {
             return;
         }
 
-        const sortKey = helper.getTableSortKey(index);
-        if (Math.abs(helper.tableState.sortKey) === sortKey) {
-            helper.updateTableSortDirection();
+        const sortKey = tableStore.getTableSortKey(index);
+        if (Math.abs(tableStore.tableState.sortKey) === sortKey) {
+            tableStore.updateTableSortDirection();
         } else {
-            helper.updateTableSort(sortKey);
+            tableStore.updateTableSort(sortKey);
         }
 
-        if (props.onClickLegend !== null) {
-            props.onClickLegend(helper.tableState.sortKey, index);
-        }
-    }
-
-    const onClickRow = (rowIndex: number) => {
-        if (props.onClickRow !== null) {
-            props.onClickRow(rowIndex);
+        if (onClickLegend !== null) {
+            onClickLegend(tableStore.tableState.sortKey, index);
         }
     }
 
-    const onLegendDragStart = (i: number, e) => {
+    function onClickRowHandler(rowIndex: number) {
+        if (onClickRow !== null) {
+            onClickRow(rowIndex);
+        }
+    }
+
+    function onLegendDragStart(i: number, e) {
         e.dataTransfer.setData('index', i);
     }
 
-    const onLegendDragEnter = (e) => {
+    function onLegendDragEnter(e) {
         e.preventDefault();
     }
 
-    const onLegendDragLeave = (e) => {
+    function onLegendDragLeave(e) {
         hideDropCursor(e);
     }
 
-    const onLegendDragOver = (e) => {
+    function onLegendDragOver(e) {
         e.preventDefault();
         showDropCursor(e);
         positionDropCursor(e);
     }
 
-    const onDrop = (i: number, e) => {
+    function onDrop(i: number, e) {
         hideDropCursor(e);
 
         const oldIndex = parseInt(e.dataTransfer.getData('index'));
@@ -115,15 +111,12 @@ const TableDesktop = (props: TableDesktopProps) => {
             newIndex = isLeftPartOfTheCell(e) === true ? i - 1 : i;
         }
 
-        if (props.onChangeColumnsOrderIndex !== null) {
-            props.onChangeColumnsOrderIndex(oldIndex, newIndex);
+        if (onChangeColumnsOrderIndex !== null) {
+            onChangeColumnsOrderIndex(oldIndex, newIndex);
         }
     }
 
-    const renderLegend = () => {
-        const helper = props.helper
-        const legend = props.legend;
-        const columnsOrderMap = props.columnsOrderMap;
+    function renderLegend() {
         const legendRow = [];
 
         for (let k = 0; k < legend.length; ++k) {
@@ -132,15 +125,15 @@ const TableDesktop = (props: TableDesktopProps) => {
             legendRow.push((
                 <div
                     key = { i }
-                    className = { `TableCell FlexRow ${getCellAlign(i)} ${S.CSS.getClassName(helper.isTableSortIndexClickable(i), 'Clickable')} ${S.CSS.getClassName(helper.getTableSortIndex() === i, 'Sorted')}` }
+                    className = { `TableCell FlexRow ${getCellAlign(i)} ${S.CSS.getClassName(tableStore.isTableSortIndexClickable(i), 'Clickable')} ${S.CSS.getClassName(tableStore.getTableSortIndex() === i, 'Sorted')}` }
                     style = { getCellStyle(i) }
-                    onClick = { onClickLegendCell.bind(this, i) }
+                    onClick = { onClickLegendCell.bind(null, i) }
                     draggable = { draggable }
-                    onDragStart = { draggable === false ? undefined : onLegendDragStart.bind(this, k) }
+                    onDragStart = { draggable === false ? undefined : onLegendDragStart.bind(null, k) }
                     onDragEnter = { draggable === false ? undefined : onLegendDragEnter }
                     onDragLeave = { draggable === false ? undefined : onLegendDragLeave }
                     onDragOver = { draggable === false ? undefined : onLegendDragOver }
-                    onDrop = { draggable === false ? undefined : onDrop.bind(this, k) } >
+                    onDrop = { draggable === false ? undefined : onDrop.bind(null, k) } >
 
                     { legend[i] }
                     { renderSortArrow(i) }
@@ -154,27 +147,23 @@ const TableDesktop = (props: TableDesktopProps) => {
         )
     }
 
-    const renderSortArrow = (index: number) => {
-        const helper = props.helper;
-        const sortIndex = helper.getTableSortIndex();
+    function renderSortArrow(index: number) {
+        const sortIndex = tableStore.getTableSortIndex();
         if (sortIndex !== index) {
             return null;
         }
 
-        return helper.tableState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
+        return tableStore.tableState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
     }
 
-    const renderRows = () => {
-        const rows = props.rows;
+    function renderRows() {
         if (rows.length === 0) {
             return (
                 <div className = { 'Empty FlexSingleCenter' } > Няма намерени резултати </div>
             );
         }
 
-        const helper = props.helper;
-        const columnsOrderMap = props.columnsOrderMap;
-        const tableSortIndex = helper.getTableSortIndex();
+        const tableSortIndex = tableStore.getTableSortIndex();
         const resultRows = [];
 
         for (let i = 0; i < rows.length; ++i) {
@@ -190,11 +179,11 @@ const TableDesktop = (props: TableDesktopProps) => {
                 ))
             }
             resultRows.push((
-                <div key = { i } className = { `TableRow Transition ${row.rowClassName} ` } onClick = { onClickRow.bind(this, i) } > { resultRow } </div>
+                <div key = { i } className = { `TableRow Transition ${row.rowClassName} ` } onClick = { onClickRow.bind(null, i) } > { resultRow } </div>
             ));
         }
 
-        if (props.contentScrollable === true) {
+        if (contentScrollable === true) {
             return (
                 <Scrollable classNameContent = { 'FlexColumn' }>{resultRows}</Scrollable>
             );
@@ -204,11 +193,11 @@ const TableDesktop = (props: TableDesktopProps) => {
     }
 
     return (
-        <div className = { `Table TableDesktop ${S.CSS.getClassName(props.contentScrollable, 'ContentScrollable')} ${props.className}` } >
+        <div className = { `Table TableDesktop ${S.CSS.getClassName(contentScrollable, 'ContentScrollable')} ${className}` } >
             { renderLegend() }
             { renderRows() }
-            { props.showPaging === true && (
-                <Paging helper = { props.helper } />
+            { showPaging === true && (
+                <TablePaging tableStore = { tableStore } />
             ) }
         </div>
     )
@@ -216,13 +205,13 @@ const TableDesktop = (props: TableDesktopProps) => {
 }
 
 TableDesktop.defaultProps = {
-    'className': S.Strings.EMPTY,
-    'aligns': null,
-    'onClickRow': null,
-    'showPaging': true,
-    'contentScrollable': false,
-    'columnsOrderMap': null,
-    'onChangeColumnsOrderIndex': null,
+    className: S.Strings.EMPTY,
+    aligns: null,
+    onClickRow: null,
+    showPaging: true,
+    contentScrollable: false,
+    columnsOrderMap: null,
+    onChangeColumnsOrderIndex: null,
 };
 
 export default observer(TableDesktop);

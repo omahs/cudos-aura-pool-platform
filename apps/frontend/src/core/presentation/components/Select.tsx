@@ -4,11 +4,11 @@ import SvgArrowDown from '@mui/icons-material/ArrowDownward';
 import '../styles/select.css';
 
 export enum SelectMargin {
-    NORMAL,
-    DENSE,
+    NORMAL = 'normal',
+    DENSE = 'dense',
 }
 
-interface Props extends SelectProps {
+type Props = SelectProps & {
     className?: string;
     margin?: SelectMargin;
     onChange?: (value: any) => (boolean | void);
@@ -16,7 +16,7 @@ interface Props extends SelectProps {
     readOnly?: boolean;
 }
 
-export default function Select(props: Props) {
+export default function Select({ className, margin, onChange, label, readOnly, ...props }: Props) {
 
     const [open, setOpen] = useState(false);
 
@@ -32,61 +32,49 @@ export default function Select(props: Props) {
         }
     }, [])
 
-    const onChange = (e: SelectChangeEvent<unknown>) => {
-        if (props.onChange !== undefined) {
-            props.onChange(e.target.value);
+    function onChangeHandler(e: SelectChangeEvent<unknown>) {
+        if (onChange !== undefined) {
+            onChange(e.target.value);
         }
     }
 
-    const onPreventableScroll = (e) => {
+    function onPreventableScroll(e) {
         if (open === true) {
             e.stopPropagation();
             e.preventDefault();
         }
     }
 
-    const onUnpreventableScroll = () => {
+    function onUnpreventableScroll() {
         if (open === true) {
             onClose();
         }
     }
 
-    function getMargin() {
-        switch (props.margin) {
-            case SelectMargin.DENSE:
-                return 'dense';
-            case SelectMargin.NORMAL:
-            default:
-                return 'none';
-        }
-    }
-
-    const onOpen = () => {
+    function onOpen() {
         setOpen(true);
     }
 
-    const onClose = () => {
+    function onClose() {
         setOpen(false);
         setTimeout(() => {
             document.activeElement.blur();
         }, 0);
     }
 
-    const margin = getMargin();
-
     return (
-        <div className = { `Select ${props.className}` }>
+        <div className = { `Select ${className}` }>
             <FormControl variant = 'outlined' margin = { margin }>
 
                 <InputLabel
                     error = { props.error }
                     variant = { 'outlined' }
                     margin = { margin } >
-                    { props.label }
+                    { label }
                 </InputLabel>
                 <MuiSelect
                     { ...props }
-                    onChange = { props.onChange !== null && props.readOnly !== true ? onChange : undefined }
+                    onChange = { onChange !== null && readOnly !== true ? onChangeHandler : undefined }
                     onOpen = { onOpen }
                     onClose = { onClose }
                     open = { open }
@@ -100,4 +88,12 @@ export default function Select(props: Props) {
             </FormControl>
         </div>
     )
+}
+
+Select.defaultProps = {
+    className: '',
+    margin: SelectMargin.DENSE,
+    onChange: undefined,
+    label: '',
+    readOnly: false,
 }

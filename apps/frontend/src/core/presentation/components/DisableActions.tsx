@@ -8,15 +8,15 @@ import AppStore from '../stores/AppStore';
 
 import '../styles/disable-actions.css';
 
-interface Props {
+type Props = {
     appStore?: AppStore;
 }
 
-const DisableActions = (props: Props) => {
+function DisableActions({ appStore }: Props) {
 
     return (
         <div
-            className = { `DisableActions Transition ActiveVisibilityHidden${S.CSS.getActiveClassName(props.appStore.hasDisabledActions())}` }
+            className = { `DisableActions Transition ActiveVisibilityHidden${S.CSS.getActiveClassName(appStore.hasDisabledActions())}` }
             onClick = { S.stopPropagation } >
             <label className = { 'Transition' } ></label>
         </div>

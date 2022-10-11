@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
+import { observer } from 'mobx-react';
 
+import TableRow from '../../entities/TableRow';
 import S from '../../utilities/Main';
 import TableStore from '../stores/TableStore';
 
-import { TableRow } from './Table';
-import Paging from './TablePaging';
+import TablePaging from './TablePaging';
 import Popover from './Popover';
 
 import ArrowDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowUpIcon from '@mui/icons-material/ArrowDropUp';
 import '../styles/table-mobile.css';
-import { observer } from 'mobx-react';
 
-export interface TableMobileProps {
+export type TableMobileProps = {
     className?: string;
     legend: any[];
-    helper: TableStore;
+    tableStore: TableStore;
     rows: TableRow[];
     onClickRow?: (i: number) => void,
     onClickLegend?: (sortKey: number, i: number) => void;
@@ -25,12 +25,12 @@ export interface TableMobileProps {
     showPaging?: boolean,
 }
 
-const TableMobile = (props: TableMobileProps) => {
+function TableMobile({ className, legend, tableStore, rows, onClickRow, onClickLegend, firstRowActionIndex, lastRowActionIndex, itemsSize, showPaging }: TableMobileProps) {
 
     const [sortDropDownOpened, setSortDropDownOpened] = useState(false);
     const [sortDropDownAnchor, setSortDropDownAnchor] = useState(null);
 
-    const onToggleSortDropDown = (e) => {
+    function onToggleSortDropDown(e) {
         if (sortDropDownOpened === false) {
             setSortDropDownAnchor(e.target);
         }
@@ -38,50 +38,47 @@ const TableMobile = (props: TableMobileProps) => {
         e.stopPropagation();
     }
 
-    const onCloseSortDropDown = (e) => {
+    function onCloseSortDropDown(e) {
         setSortDropDownOpened(false);
         if (e !== undefined) {
             e.stopPropagation();
         }
     }
 
-    const onClickLegendCell = (index: number) => {
-        const helper = props.helper;
-        if (helper.isTableSortIndexClickable(index) === false) {
+    function onClickLegendCell(index: number) {
+        if (tableStore.isTableSortIndexClickable(index) === false) {
             return;
         }
 
-        const sortKey = helper.getTableSortKey(index);
-        if (Math.abs(helper.tableState.sortKey) === sortKey) {
-            helper.updateTableSortDirection();
+        const sortKey = tableStore.getTableSortKey(index);
+        if (Math.abs(tableStore.tableState.sortKey) === sortKey) {
+            tableStore.updateTableSortDirection();
         } else {
-            helper.updateTableSort(sortKey);
+            tableStore.updateTableSort(sortKey);
         }
 
-        if (props.onClickLegend !== null) {
-            props.onClickLegend(helper.tableState.sortKey, index);
-        }
-    }
-
-    const onClickRow = (rowIndex: number) => {
-        if (props.onClickRow !== null) {
-            props.onClickRow(rowIndex);
+        if (onClickLegend !== null) {
+            onClickLegend(tableStore.tableState.sortKey, index);
         }
     }
 
-    const renderLegend = () => {
-        const helper = props.helper
-        const legend = props.legend;
-        const tableSortIndex = helper.getTableSortIndex();
+    function onClickRowHandler(rowIndex: number) {
+        if (onClickRow !== null) {
+            onClickRow(rowIndex);
+        }
+    }
+
+    function renderLegend() {
+        const tableSortIndex = tableStore.getTableSortIndex();
         const sortOptions = [];
 
         for (let i = 0; i < legend.length; ++i) {
-            if (helper.isTableSortIndexClickable(i) === false) {
+            if (tableStore.isTableSortIndexClickable(i) === false) {
                 continue;
             }
 
             sortOptions.push((
-                <div key = { i } onClick = { onClickLegendCell.bind(this, i) } >
+                <div key = { i } onClick = { onClickLegendCell.bind(null, i) } >
                     { legend[i] }
                 </div>
             ));
@@ -128,26 +125,24 @@ const TableMobile = (props: TableMobileProps) => {
         )
     }
 
-    const renderSortArrow = (index: number) => {
-        const helper = props.helper;
-        const sortIndex = helper.getTableSortIndex();
+    function renderSortArrow(index: number) {
+        const sortIndex = tableStore.getTableSortIndex();
         if (sortIndex !== index) {
             return null;
         }
 
-        return helper.tableState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
+        return tableStore.tableState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
     }
 
-    const renderRows = () => {
-        const rows = props.rows;
+    function renderRows() {
         if (rows.length === 0) {
             return (
                 <div className = { 'Empty FlexSingleCenter' } > Няма намерени резултати </div>
             );
         }
 
-        const itemsSize = props.itemsSize === S.NOT_EXISTS ? props.legend.length : props.itemsSize;
         const resultRows = [];
+        itemsSize = itemsSize === S.NOT_EXISTS ? legend.length : itemsSize;
 
         for (let i = 0; i < rows.length; ++i) {
             const cells = rows[i].cells;
@@ -159,8 +154,8 @@ const TableMobile = (props: TableMobileProps) => {
                         className = { 'TableCell FlexRow' } >
 
                         <div> { cells[0].content } </div>
-                        { props.firstRowActionIndex !== S.NOT_EXISTS && (
-                            <div> { cells[props.firstRowActionIndex].content } </div>
+                        { firstRowActionIndex !== S.NOT_EXISTS && (
+                            <div> { cells[firstRowActionIndex].content } </div>
                         )}
 
                     </div>
@@ -173,7 +168,7 @@ const TableMobile = (props: TableMobileProps) => {
                         key = { j }
                         className = { 'TableCell FlexRow' } >
 
-                        <div> { props.legend[j] } </div>
+                        <div> { legend[j] } </div>
                         <div> { cells[j].content } </div>
 
                     </div>
@@ -181,7 +176,7 @@ const TableMobile = (props: TableMobileProps) => {
             }
 
             resultRows.push((
-                <div key = { i } className = { `TableRow Transition ${rows[i].rowClassName} ` } onClick = { onClickRow.bind(this, i) } > { resultRow } </div>
+                <div key = { i } className = { `TableRow Transition ${rows[i].rowClassName} ` } onClick = { onClickRowHandler.bind(null, i) } > { resultRow } </div>
             ));
         }
 
@@ -189,11 +184,11 @@ const TableMobile = (props: TableMobileProps) => {
     }
 
     return (
-        <div className = { `Table TableMobile ${props.className}` } >
+        <div className = { `Table TableMobile ${className}` } >
             { renderLegend() }
             { renderRows() }
-            { props.showPaging === true && (
-                <Paging helper = { props.helper } />
+            { showPaging === true && (
+                <TablePaging tableStore = { tableStore } />
             ) }
         </div>
     )
@@ -201,12 +196,13 @@ const TableMobile = (props: TableMobileProps) => {
 }
 
 TableMobile.defaultProps = {
-    'className': S.Strings.EMPTY,
-    'onClickRow': null,
-    'firstRowActionIndex': S.NOT_EXISTS,
-    'lastRowActionIndex': S.NOT_EXISTS,
-    'itemsSize': S.NOT_EXISTS,
-    'showPaging': true,
+    className: S.Strings.EMPTY,
+    onClickRow: null,
+    onClickLegend: null,
+    firstRowActionIndex: S.NOT_EXISTS,
+    lastRowActionIndex: S.NOT_EXISTS,
+    itemsSize: S.NOT_EXISTS,
+    showPaging: true,
 };
 
 export default observer(TableMobile);

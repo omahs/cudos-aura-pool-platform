@@ -5,13 +5,13 @@ import { observer } from 'mobx-react';
 import S from '../../utilities/Main';
 import ModalStore from '../stores/ModalStore';
 
-import SvgClose from '../../../public/assets/vectors/modal-close.svg';
+import SvgClose from '../vectors/modal-close.svg';
 import '../styles/modal-window.css';
 
 const outerClose = false;
 let modalCounter = 0;
 
-export interface ModalWindowProps {
+export type ModalWindowProps = {
     className?: string;
     hasClose?: boolean;
     isRemovable?: boolean;

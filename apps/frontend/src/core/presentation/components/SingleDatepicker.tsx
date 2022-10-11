@@ -8,12 +8,12 @@ import { Input } from '@mui/material';
 
 import SvgClose from '@mui/icons-material/Close';
 
-interface Props extends ReactDatePickerProps {
+type Props = ReactDatePickerProps & {
     emptyDateString?: string;
     error?: boolean,
 }
 
-const SingleDatepicker = (props: Props) => {
+export default function SingleDatepicker({ emptyDateString, error, ...props }: Props) {
 
     const isDateValid = () => {
         return props.selected !== null;
@@ -46,7 +46,7 @@ const SingleDatepicker = (props: Props) => {
             ]}
             customInput = {
                 <Input
-                    error = { props.error }
+                    error = { error }
                     { ...renderInputProps() } />
             }
         />
@@ -56,9 +56,8 @@ const SingleDatepicker = (props: Props) => {
 
 SingleDatepicker.defaultProps = {
     emptyDateString: S.Strings.EMPTY,
+    error: false,
 };
-
-export default SingleDatepicker;
 
 function setTime(hours, minutes): Date {
     const date = new Date();

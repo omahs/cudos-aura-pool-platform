@@ -9,7 +9,7 @@ import Datepicker from './Datepicker';
 import SvgClose from '@mui/icons-material/Close';
 import '../styles/range-datepicker.css'
 
-interface Props extends ReactDatePickerProps {
+type Props = ReactDatePickerProps & {
     datepickerState: RangeDatepickerState;
     dateRangeFormat?: string;
     emptyDateString?: string;
@@ -18,37 +18,37 @@ interface Props extends ReactDatePickerProps {
     className?: string;
 }
 
-const RangeDatepicker = (props: Props) => {
+export default function RangeDatepicker({ datepickerState, dateRangeFormat, emptyDateString, onChange, label, className, ...props }: Props) {
 
-    const [datepickerOpen, setDatepickerOpen] = useState(props.datepickerState.open);
+    const [datepickerOpen, setDatepickerOpen] = useState(datepickerState.open);
 
-    const onChangeOpen = () => {
+    function onChangeOpen() {
         setDatepickerOpen(!datepickerOpen);
     }
 
-    const onChange = (dates) => {
+    function onChangeHandler(dates) {
         const [start, end] = dates;
         const open = end === null;
 
         const startTime = isDateValid(start) ? start.getTime() : S.NOT_EXISTS;
         const endTime = isDateValid(end) ? end.getTime() : S.NOT_EXISTS;
 
-        props.onChange(startTime, endTime);
+        onChange(startTime, endTime);
 
         setDatepickerOpen(open);
     }
 
-    const isDateValid = (date) => {
+    function isDateValid(date) {
         return date !== null && date !== S.NOT_EXISTS;
     }
 
-    const formatDate = (date) => {
+    function formatDate(date) {
         if (isDateValid(date) === true) {
-            return moment(new Date(date)).format(props.dateRangeFormat);
+            return moment(new Date(date)).format(dateRangeFormat);
         }
 
-        if (props.emptyDateString !== S.Strings.EMPTY) {
-            return props.emptyDateString;
+        if (emptyDateString !== S.Strings.EMPTY) {
+            return emptyDateString;
         }
 
         return (
@@ -56,37 +56,36 @@ const RangeDatepicker = (props: Props) => {
         )
     }
 
-    const onClickClearDates = (e) => {
-        props.onChange(S.NOT_EXISTS, S.NOT_EXISTS);
+    function onClickClearDates(e) {
+        onChange(S.NOT_EXISTS, S.NOT_EXISTS);
         setDatepickerOpen(false);
         e.stopPropagation();
     }
 
-    const { className, ...innerProps } = props;
     return (
         <Datepicker
-            {...innerProps}
+            {...props}
             selectsRange = { true }
             popperClassName = { 'RangeDatepickerPopper' }
             wrapperClassName = { `RangeDatepickerWrapper ${S.CSS.getClassName(props.disabled, 'Disabled')}` }
             onInputClick = {onChangeOpen}
             onClickOutside = {onChangeOpen}
             open = {datepickerOpen}
-            startDate = {isDateValid(props.datepickerState.startDate) ? new Date(props.datepickerState.startDate) : null}
-            endDate = {isDateValid(props.datepickerState.endDate) ? new Date(props.datepickerState.endDate) : null}
-            onChange = {onChange}
+            startDate = {isDateValid(datepickerState.startDate) ? new Date(datepickerState.startDate) : null}
+            endDate = {isDateValid(datepickerState.endDate) ? new Date(datepickerState.endDate) : null}
+            onChange = {onChangeHandler}
             customInput = {
                 <fieldset className={'DatePickerInput FlexRow FlexSplit'}>
-                    { props.label !== S.Strings.EMPTY && (
+                    { label !== S.Strings.EMPTY && (
                         <>
-                            <legend className = {'DatePickerFieldLabel'}>{ props.label }</legend>
+                            <legend className = {'DatePickerFieldLabel'}>{ label }</legend>
                         </>
                     )}
                     <div className={'DatePickerSmallLetters'}>от</div>
-                    <div className={'DatePickerInputText'}> { formatDate(props.datepickerState.startDate) } </div>
+                    <div className={'DatePickerInputText'}> { formatDate(datepickerState.startDate) } </div>
                     <div className={'DatePickerSmallLetters'}>до</div>
-                    <div className={'DatePickerInputText'}> { formatDate(props.datepickerState.endDate) } </div>
-                    {isDateValid(props.datepickerState.startDate)
+                    <div className={'DatePickerInputText'}> { formatDate(datepickerState.endDate) } </div>
+                    {isDateValid(datepickerState.startDate)
                         ? <div onClick={onClickClearDates} className={'DateClearButton StartRight SVG Clickable'}>
                             <SvgClose />
                         </div> : ''}
@@ -103,8 +102,6 @@ RangeDatepicker.defaultProps = {
     label: S.Strings.EMPTY,
     className: S.Strings.EMPTY,
 };
-
-export default RangeDatepicker;
 
 export class RangeDatepickerState {
 

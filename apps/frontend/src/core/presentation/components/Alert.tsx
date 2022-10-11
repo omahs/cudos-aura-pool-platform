@@ -7,15 +7,13 @@ import AlertStore from '../stores/AlertStore';
 
 import '../styles/alert.css';
 
-interface Props {
+type Props = {
     alertStore?: AlertStore;
 }
 
-const Alert = (props: Props) => {
+function Alert({ alertStore }: Props) {
 
-    const onClickPositive = () => {
-        const { alertStore } = props;
-
+    function onClickPositive() {
         let handled: boolean | void = false;
         if (alertStore.positiveListener !== null) {
             handled = alertStore.positiveListener();
@@ -26,9 +24,7 @@ const Alert = (props: Props) => {
         }
     }
 
-    const onClickNegative = () => {
-        const { alertStore } = props;
-
+    function onClickNegative() {
         let handled: boolean | void = false;
         if (alertStore.negativeListener !== null) {
             handled = alertStore.negativeListener();
@@ -39,9 +35,7 @@ const Alert = (props: Props) => {
         }
     }
 
-    const onClickNeutral = () => {
-        const { alertStore } = props;
-
+    function onClickNeutral() {
         let handled: boolean | void = false;
         if (alertStore.neutralListener !== null) {
             handled = alertStore.neutralListener();
@@ -51,8 +45,6 @@ const Alert = (props: Props) => {
             alertStore.hide();
         }
     }
-
-    const { alertStore } = props;
 
     return (
         <div className = { `AlertWrapper Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(alertStore.isVisible())}` } >

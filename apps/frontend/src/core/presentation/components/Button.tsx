@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { createTheme, ThemeProvider, Button as MuiButton } from '@mui/material';
 
 import S from '../../utilities/Main';
@@ -50,7 +50,7 @@ export enum BUTTON_RADIUS {
     MAX
 }
 
-interface Props {
+type Props = {
     className?: string;
     type?: BUTTON_TYPE;
     color?: BUTTON_COLOR;
@@ -62,10 +62,10 @@ interface Props {
     target?: string;
 }
 
-export default function Button(props: Props) {
+export default function Button({ className, type, color, padding, radius, href, onClick, disabled, target, children }: React.PropsWithChildren < Props >) {
 
     function cssMuiClassColor() {
-        switch (props.color) {
+        switch (color) {
             case BUTTON_COLOR.SCHEME_2:
                 return 'secondary';
             case BUTTON_COLOR.SCHEME_1:
@@ -76,7 +76,7 @@ export default function Button(props: Props) {
     }
 
     function muiVariant() {
-        switch (props.type) {
+        switch (type) {
             case BUTTON_TYPE.TEXT_INLINE:
                 return 'text';
             case BUTTON_TYPE.ROUNDED:
@@ -86,7 +86,7 @@ export default function Button(props: Props) {
     }
 
     function muiTheme() {
-        switch (props.color) {
+        switch (color) {
             case BUTTON_COLOR.SCHEME_1:
             case BUTTON_COLOR.SCHEME_2:
                 return theme01;
@@ -96,7 +96,7 @@ export default function Button(props: Props) {
     }
 
     function cssPadding() {
-        switch (props.padding) {
+        switch (padding) {
             case BUTTON_PADDING.PADDING_24:
                 return 'Padding24';
             case BUTTON_PADDING.PADDING_48:
@@ -107,7 +107,7 @@ export default function Button(props: Props) {
     }
 
     function cssRadius() {
-        switch (props.radius) {
+        switch (radius) {
             case BUTTON_RADIUS.MAX:
                 return 'Radius30';
             case BUTTON_RADIUS.DEFAULT:
@@ -115,22 +115,21 @@ export default function Button(props: Props) {
                 return S.Strings.EMPTY;
         }
     }
-    const className = `Button Transition ${cssPadding()} ${cssRadius()} ${props.className}`;
 
     return (
         <ThemeProvider theme={theme01} >
             <ThemeProvider theme={muiTheme()} >
                 <MuiButton
-                    disabled={props.disabled}
-                    className={className}
-                    onClick={props.onClick}
+                    disabled={disabled}
+                    className={`Button Transition ${cssPadding()} ${cssRadius()} ${className}`}
+                    onClick={onClick}
                     variant={muiVariant()}
                     color={cssMuiClassColor()}
-                    href={props.href}
-                    target={props.target} >
+                    href={href}
+                    target={target} >
 
                     <div className={'ButtonContent FlexRow'} >
-                        {props.children}
+                        {children}
                     </div>
                 </MuiButton>
             </ThemeProvider>
@@ -138,3 +137,14 @@ export default function Button(props: Props) {
 
     );
 }
+
+Button.defaultProps = {
+    className: '',
+    color: BUTTON_COLOR.SCHEME_1,
+    padding: BUTTON_PADDING.PADDING_24,
+    radius: BUTTON_RADIUS.DEFAULT,
+    href: undefined,
+    onClick: undefined,
+    disabled: false,
+    target: undefined,
+};

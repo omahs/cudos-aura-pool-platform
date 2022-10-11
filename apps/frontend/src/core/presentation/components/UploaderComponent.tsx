@@ -1,27 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
 import S from '../../utilities/Main';
-import Uploader from '../../utilities/Uploader';
+import UploaderHelper from '../../helpers/UploaderHelper';
 
-interface Props {
+type Props = {
     className?: string;
     id: any;
     params: any;
 }
 
-const UploaderComponent = (props: Props) => {
+export default function UploaderComponent({ className, id, params }: Props) {
     const inputRef = useRef < HTMLInputElement >(null);
     const [initedId, setInitedId] = useState(null);
     const [uploader, setUploader] = useState(null);
 
     useEffect(() => {
-        let uploaderCache: Uploader = uploader;
-        if (uploaderCache === null || props.id !== initedId) {
-            const params = Object.assign(props.params, {
+        let uploaderCache: UploaderHelper = uploader;
+        if (uploaderCache === null || id !== initedId) {
+            uploaderCache = UploaderHelper.newInstance(Object.assign(params, {
                 'node': inputRef.current,
-            });
-            uploaderCache = Uploader.newInstance(params);
+            }));
             setUploader(uploaderCache);
-            setInitedId(props.id);
+            setInitedId(id);
         } else {
             uploaderCache.connect();
         }
@@ -32,11 +31,9 @@ const UploaderComponent = (props: Props) => {
     });
 
     return (
-        <input ref = { inputRef } className = { props.className } type = { 'file' } />
+        <input ref = { inputRef } className = { className } type = { 'file' } />
     );
 }
-
-export default UploaderComponent;
 
 UploaderComponent.defaultProps = {
     'className': S.Strings.EMPTY,

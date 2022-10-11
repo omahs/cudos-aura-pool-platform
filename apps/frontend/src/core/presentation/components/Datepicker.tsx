@@ -1,13 +1,13 @@
 // version 3.0.0
 import React from 'react';
 
-import 'react-datepicker/dist/react-datepicker.css';
-import '../styles/datepicker.css'
-
 import ReactDatepicker, { ReactDatePickerProps } from 'react-datepicker';
 import enGb from 'date-fns/locale/en-GB';
 
-const Datepicker = (props: ReactDatePickerProps) => {
+import 'react-datepicker/dist/react-datepicker.css';
+import '../styles/datepicker.css'
+
+export default function Datepicker(props: ReactDatePickerProps) {
 
     return (
         <div>
@@ -16,5 +16,3 @@ const Datepicker = (props: ReactDatePickerProps) => {
     )
 
 }
-
-export default Datepicker;

@@ -4,18 +4,18 @@ import S from '../../utilities/Main';
 
 import '../styles/scrollable.css';
 
-interface Props {
+type Props = {
     className?: string;
     classNameContent?: string;
 }
 
-const Scrollable = (props: React.PropsWithChildren < Props >) => {
+export default function Scrollable({ className, classNameContent, children }: React.PropsWithChildren < Props >) {
 
     return (
-        <div className = { `${props.className} Scrollable` } >
+        <div className = { `${className} Scrollable` } >
             <div className = { 'ScrollableWrapper' } >
-                <div className = { `ScrollableContent Scrolls ${props.classNameContent}` } >
-                    {props.children}
+                <div className = { `ScrollableContent Scrolls ${classNameContent}` } >
+                    {children}
                 </div>
             </div>
         </div>
@@ -27,5 +27,3 @@ Scrollable.defaultProps = {
     className: S.Strings.EMPTY,
     classNameContent: S.Strings.EMPTY,
 };
-
-export default Scrollable;
