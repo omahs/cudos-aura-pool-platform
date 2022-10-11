@@ -1,0 +1,11 @@
+.Table .TableBool {
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    background: var( --color-red);
+}
+
+.Table .TableBool.Active {
+    background: var(--color-green);
+}

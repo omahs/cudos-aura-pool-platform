@@ -15,9 +15,11 @@ import CollectionStorageRepo from './features/marketplace-collections/data/repo/
 import ExploreCollectionsStore from './features/marketplace-collections/presentation/stores/ExploreCollectionsStore';
 import NftPreviewsGridStore from './features/explore-nfts/presentation/stores/NftPreviewsGridStore';
 import NftStorageRepo from './features/explore-nfts/data/repo/NftStorageRepo';
+import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModalStore';
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
+const exampleModalStore = new ExampleModalStore();
 
 const bitcoinRepo = new BitcoinStorageRepo();
 const miningFarmRepo = new MiningFarmStorageRepo();
@@ -41,6 +43,7 @@ const App = () => {
             <Provider
                 appStore = { appStore }
                 alertStore = { alertStore }
+                exampleModalStore = { exampleModalStore }
                 rewardsCalculatorStore = { rewardsCalculatorStore }
                 exploreCollectionsStore = { exploreCollectionsStore }
                 nftPreviewsGridStore = { nftPreviewsGridStore }>

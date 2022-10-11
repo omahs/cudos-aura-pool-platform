@@ -6,6 +6,8 @@ import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 import AlertStore from '../../../../core/presentation/stores/AlertStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
+import TableStore from '../../../../core/presentation/stores/TableStore';
+import TableRow from '../../../../core/entities/TableRow';
 
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 
@@ -20,17 +22,21 @@ import TextWithTooltip from '../../../../core/presentation/components/TextWithTo
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Popover from '../../../../core/presentation/components/Popover';
 import UploaderComponent from '../../../../core/presentation/components/UploaderComponent';
+import Table, { createTableCellString, createTableRow } from '../../../../core/presentation/components/Table';
 
 import SvgLogo from '../vectors/info.svg';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import '../styles/ui-kit-page.css';
+import ExampleModal from './ExampleModal';
+import ExampleModalStore from '../stores/ExampleModalStore';
 
 type Props = {
     appStore?: AppStore
     alertStore?: AlertStore;
+    exampleModalStore?: ExampleModalStore;
 }
 
-function UiKitPage({ appStore, alertStore }: Props) {
+function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
     const navigate = useNavigate();
     const [popoverOpen, setPopoverOpen] = useState(false);
     const [popoverAnchor, setPopupAnchor] = useState(null);
@@ -88,11 +94,18 @@ function UiKitPage({ appStore, alertStore }: Props) {
         setPopupAnchor(null);
     }
 
+    function showModal() {
+        exampleModalStore.showSignal('modal content');
+    }
+
     return (
         <PageLayoutComponent
             className = { 'UiKitPage' }
-            modals = { [
-            ] } >
+            modals = {
+                <>
+                    <ExampleModal />,
+                </>
+            } >
 
             <div className = { 'AppContent' } >
                 <div className = { 'UiKit' } >Ui Kit Preview</div>
@@ -106,6 +119,11 @@ function UiKitPage({ appStore, alertStore }: Props) {
                     <label>Alert</label>
                     <div onClick = { onClickShowSimpleAlert } className = { 'Clickable' }>Show simple alert</div>
                     <div onClick = { onClickShowComplexAlert } className = { 'Clickable' }>Show complex alert</div>
+                </div>
+
+                <div className = { 'FeatureBox' } >
+                    <label>Modal</label>
+                    <div onClick = { showModal } >Show modal</div>
                 </div>
 
                 <div className = { 'FeatureBox' }>
@@ -167,6 +185,18 @@ function UiKitPage({ appStore, alertStore }: Props) {
                     </div>
                 </div>
 
+                <div className = { 'FeatureBox' } >
+                    <label>Headings</label>
+                    <div className={'H1'}>Heading 1</div>
+                    <div className={'H2'}>Heading 2</div>
+                    <div className={'H2_1'}>Heading 2.1</div>
+                    <div className={'H3'}>Heading 3</div>
+                    <div className={'B1'}>Body 1</div>
+                    <div className={'B2'}>Body 2</div>
+                    <div className={'B3'}>Body 3</div>
+                    <div className={'B4'}>Body 4</div>
+                </div>
+
                 <div className = { 'FeatureBox' }>
                     <label>Buttons</label>
                     <Actions>
@@ -204,6 +234,28 @@ function UiKitPage({ appStore, alertStore }: Props) {
                         </Button>
                     </Actions>
                 </div>
+
+                <div className = { 'FeatureBox' }>
+                    <label>Table</label>
+                    <Table
+                        widths = { ['30%', '70%'] }
+                        legend = { ['Column1', 'Column 2'] }
+                        tableStore = { new TableStore(0, [], () => {
+                            // used to fetech new data
+                        }) }
+                        rows = { [
+                            createTableRow([
+                                createTableCellString('Row 1'),
+                                createTableCellString('Row 2'),
+                            ]),
+                            createTableRow([
+                                createTableCellString('Row 3'),
+                                createTableCellString('Row 4'),
+                            ]),
+                        ] } />
+
+                </div>
+
             </div>
 
         </PageLayoutComponent>
