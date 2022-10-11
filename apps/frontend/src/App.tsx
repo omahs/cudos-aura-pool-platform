@@ -11,17 +11,20 @@ import AlertStore from './core/presentation/stores/AlertStore';
 import RewardsCalculatorStore from './features/rewards-calculator/presentation/stores/RewardsCalculatorStore';
 import BitcoinStorageRepo from './features/bitcoin-data/data/repo/BitcoinStorageRepo';
 import MiningFarmStorageRepo from './features/mining-farm/data/repo/MiningFarmStorageRepo';
-import CollectionStorageRepo from './features/marketplace-collections/data/repo/CollectionStorageRepo';
-import ExploreCollectionsStore from './features/marketplace-collections/presentation/stores/ExploreCollectionsStore';
-import NftPreviewsGridStore from './features/explore-nfts/presentation/stores/NftPreviewsGridStore';
-import NftStorageRepo from './features/explore-nfts/data/repo/NftStorageRepo';
+import CollectionStorageRepo from './features/collections-marketplace/data/repo/CollectionStorageRepo';
+import ExploreCollectionsStore from './features/collections-marketplace/presentation/stores/ExploreCollectionsStore';
+import NftPreviewsGridStore from './features/nfts-explore/presentation/stores/NftPreviewsGridStore';
+import NftStorageRepo from './features/nfts-explore/data/repo/NftStorageRepo';
 import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModalStore';
+import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
+import NftDetailsStore from './features/nft-details/presentation/stores/NftDetailsStore';
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
 const exampleModalStore = new ExampleModalStore();
 
 const bitcoinRepo = new BitcoinStorageRepo();
+const cudosRepo = new CudosStorageRepo();
 const miningFarmRepo = new MiningFarmStorageRepo();
 const collectionRepo = new CollectionStorageRepo();
 const nftRepo = new NftStorageRepo(collectionRepo);
@@ -29,6 +32,7 @@ const nftRepo = new NftStorageRepo(collectionRepo);
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinRepo, miningFarmRepo);
 const exploreCollectionsStore = new ExploreCollectionsStore(collectionRepo);
 const nftPreviewsGridStore = new NftPreviewsGridStore(nftRepo, collectionRepo);
+const nftDetailsStore = new NftDetailsStore(nftRepo, cudosRepo, bitcoinRepo);
 
 const App = () => {
 
@@ -46,7 +50,8 @@ const App = () => {
                 exampleModalStore = { exampleModalStore }
                 rewardsCalculatorStore = { rewardsCalculatorStore }
                 exploreCollectionsStore = { exploreCollectionsStore }
-                nftPreviewsGridStore = { nftPreviewsGridStore }>
+                nftPreviewsGridStore = { nftPreviewsGridStore }
+                nftDetailsStore = { nftDetailsStore }>
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

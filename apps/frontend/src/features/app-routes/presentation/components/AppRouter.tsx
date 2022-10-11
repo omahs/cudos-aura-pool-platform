@@ -8,8 +8,9 @@ import UiKitPage from '../../../ui-kit/presensation/components/UiKitPage';
 
 import '../styles/app-router.css';
 import RewardsCalculatorPageComponent from '../../../rewards-calculator/presentation/pages/RewardsCalculatorPageComponent';
-import ExploreCollectionsPageComponent from '../../../marketplace-collections/presentation/pages/ExploreCollectionsPageComponent';
-import ExploreNftsPageComponent from '../../../explore-nfts/presentation/pages/ExploreNftsPageComponent';
+import ExploreCollectionsPageComponent from '../../../collections-marketplace/presentation/pages/ExploreCollectionsPageComponent';
+import ExploreNftsPageComponent from '../../../nfts-explore/presentation/pages/ExploreNftsPageComponent';
+import NftViewPageComponent from '../../../nft-details/presentation/pages/NftViewPageComponent';
 
 export default function AppRouter() {
 
@@ -40,6 +41,7 @@ export default function AppRouter() {
                 <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPageComponent /> } />
+                <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPageComponent /> } />
             </Routes>
         </div>
     )

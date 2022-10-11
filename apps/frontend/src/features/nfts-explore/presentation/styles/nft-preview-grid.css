@@ -1,0 +1,32 @@
+.NftModelsViewerTable .GridHeader {
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.NftModelsViewerTable .GridHeader .FilterHeader {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+.NftModelsViewerTable .GridHeader .FlexRow {
+    justify-content: space-between;
+}
+
+.NftModelsViewerTable .GridHeader .GridLayoutButtons {    
+    gap: 20px;
+}
+
+.NftModelsViewerTable .GridHeader .GridLayoutButtons .SVG {
+    background-color: var(--color-gray-095);
+    fill: var(--color-gray-dark);
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.NftModelsViewerTable .GridHeader .GridLayoutButtons .SVG.Active {
+    fill: #000;
+}
+
+.NftModelsViewerTable .NftPreviewsGrid {
+    gap: 20px;
+    flex-grow: 1;
+}
