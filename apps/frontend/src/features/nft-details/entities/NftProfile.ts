@@ -43,12 +43,12 @@ export default class NftProfile {
         }
     }
 
-    static fromJson(json): NftPreviewModel {
+    static fromJson(json): NftProfile {
         if (json === null) {
             return null;
         }
 
-        const model = new NftPreviewModel();
+        const model = new NftProfile();
 
         model.id = json.id ?? model.id;
         model.name = json.name ?? model.name;

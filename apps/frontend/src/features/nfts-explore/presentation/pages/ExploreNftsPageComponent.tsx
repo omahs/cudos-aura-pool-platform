@@ -29,7 +29,7 @@ function ExploreNftsPageComponent({ nftPreviewsGridStore }: Props) {
             <div className={'PageContent'} >
                 {/* <PageHeader /> */}
                 <div className={'ExploreNfts FlexColumn'}>
-                    <div className={'PageHeading Heading1'}>Explore NFTs</div>
+                    <div className={'PageHeading H1 Bold'}>Explore NFTs</div>
                     <Input
                         inputType={InputType.TEXT}
                         className={'SearchBar'}
@@ -46,7 +46,7 @@ function ExploreNftsPageComponent({ nftPreviewsGridStore }: Props) {
                         {nftPreviewsGridStore.categories.map((category, index) => <div
                             key={index}
                             onClick={() => nftPreviewsGridStore.selectCategory(index)}
-                            className={`CategoryName Pointer ${S.CSS.getActiveClassName(nftPreviewsGridStore.selectedCategoryIndex === index)}`}
+                            className={`CategoryName Clickable B2 SemiBold ${S.CSS.getActiveClassName(nftPreviewsGridStore.selectedCategoryIndex === index)}`}
                         >
                             {category}
                         </div>)

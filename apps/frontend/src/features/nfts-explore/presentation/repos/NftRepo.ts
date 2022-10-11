@@ -1,7 +1,7 @@
-import CollectionProfile from '../../../marketplace-collections/entities/CollectionProfile';
+import CollectionProfile from '../../../collections-marketplace/entities/CollectionProfile';
 import MiningFarmModel from '../../../mining-farm/entities/MiningFarmModel';
 import NftPreviewModel from '../../entities/NftPreviewModel';
-import NftProfile from '../../entities/NftProfile';
+import NftProfile from '../../../nft-details/entities/NftProfile';
 
 export default interface NftRepo {
 

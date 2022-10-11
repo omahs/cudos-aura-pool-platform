@@ -5,4 +5,5 @@ export default class AppRoutes {
     static REWARDS_CALCULATOR = '/rewards-calculator';
     static EXPLORE_COLLECTIONS = '/explore-collections';
     static EXPLORE_NFTS = '/explore-nfts';
+    static NFT_VIEW = '/nft-view';
 }

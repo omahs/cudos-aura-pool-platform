@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import TableStore from '../../../../core/presentation/stores/TableStore';
 import S from '../../../../core/utilities/Main';
-import CollectionRepo from '../../../marketplace-collections/presentation/repos/CollectionRepo';
+import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
 import NftPreviewModel from '../../entities/NftPreviewModel';
 import NftRepo from '../repos/NftRepo';
 
@@ -103,6 +103,10 @@ export default class NftPreviewsGridStore {
 
     getItemsPerPage() {
         return this.tableHelper.tableState.itemsPerPage;
+    }
+
+    getItemCount() {
+        return this.tableHelper.tableState.total;
     }
 
     getGridSettingClass() {

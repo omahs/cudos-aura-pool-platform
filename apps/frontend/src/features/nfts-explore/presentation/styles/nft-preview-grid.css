@@ -3,6 +3,10 @@
     margin-bottom: 25px;
 }
 
+.NftModelsViewerTable .GridHeader .FilterHeader {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
 .NftModelsViewerTable .GridHeader .FlexRow {
     justify-content: space-between;
 }

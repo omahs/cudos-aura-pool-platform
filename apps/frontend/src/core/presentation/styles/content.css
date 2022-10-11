@@ -112,6 +112,10 @@ html.OverflowHidden {
     font-weight: 600;
 }
 
+.Medium {
+    font-weight: 500;
+}
+
 .H1 {
     font-family: 'Poppins'; font-size: 32px; line-height: 130%; letter-spacing: -3%;
 }

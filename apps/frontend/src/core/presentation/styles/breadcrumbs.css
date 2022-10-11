@@ -1,0 +1,27 @@
+.BreadCrumbs {
+    gap: 40px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+    padding: 24px;
+}
+
+.BreadCrumbs .BackButton {
+    gap: 10px;
+}
+
+.BreadCrumbs .Crumbs {
+    padding: 12px;
+    background: var(--color-gray-light);
+    border-radius: 10px;
+    gap: 12px;
+    color: var(--color-gray-dark);
+}
+
+.BreadCrumbs .Crumbs .CrumbBox {
+    gap: 12px;
+}
+
+.BreadCrumbs .LastCrumb {
+    color: #000;
+}

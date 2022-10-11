@@ -31,8 +31,7 @@ function NftPreviewsGrid(props: Props) {
     return (
         <div
             className={'NftModelsViewerTable'}><div className={'GridHeader FlexColumn'}>
-                <div className={'Heading2'}>Collection Items</div>
-                <div className={'FlexRow FlexGrow'}>
+                <div className={'Grid FilterHeader'}>
                     <Select
                         className={'SortBySelect'}
                         onChange={store.setSortByIndex}
@@ -43,7 +42,7 @@ function NftPreviewsGrid(props: Props) {
                         )}
                     </Select>
                     <Actions
-                        layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
+                        layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
                         height={ACTIONS_HEIGHT.HEIGHT_48}
                     >
                         {/* TODO: show all filters */}
@@ -56,14 +55,14 @@ function NftPreviewsGrid(props: Props) {
                     </Actions>
                 </div>
                 <div className={'FlexRow FlexGrow'}>
-                    <div className={'TotalItems'}>{store.getItemsPerPage()} Items</div>
+                    <div className={'TotalItems B2 SemiBold'}>{store.getItemCount()} Items</div>
                     <div className={'GridLayoutButtons'}>
                         <GridViewIcon
-                            className={`SVG Icon Pointer ${S.CSS.getActiveClassName(store.checkIsGridSettingSelected(NftPreviewsGridStore.GRID_SETTING_LOOSE))}`}
+                            className={`SVG Icon Clickable ${S.CSS.getActiveClassName(store.checkIsGridSettingSelected(NftPreviewsGridStore.GRID_SETTING_LOOSE))}`}
                             onClick={() => store.setGridSettingAndPreviewCount(NftPreviewsGridStore.GRID_SETTING_LOOSE)}
                         />
                         <GridOnIcon
-                            className={`SVG Icon Pointer ${S.CSS.getActiveClassName(store.checkIsGridSettingSelected(NftPreviewsGridStore.GRID_SETTING_DENSE))}`}
+                            className={`SVG Icon Clickable ${S.CSS.getActiveClassName(store.checkIsGridSettingSelected(NftPreviewsGridStore.GRID_SETTING_DENSE))}`}
                             onClick={() => store.setGridSettingAndPreviewCount(NftPreviewsGridStore.GRID_SETTING_DENSE)}
                         />
                     </div>

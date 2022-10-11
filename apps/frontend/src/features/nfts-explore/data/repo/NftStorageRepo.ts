@@ -1,11 +1,11 @@
 import S from '../../../../core/utilities/Main';
 import StorageHelper from '../../../../core/helpers/StorageHelper';
-import CollectionPreview from '../../../marketplace-collections/entities/CollectionPreview';
-import CollectionProfile from '../../../marketplace-collections/entities/CollectionProfile';
-import CollectionRepo from '../../../marketplace-collections/presentation/repos/CollectionRepo';
+import CollectionPreview from '../../../collections-marketplace/entities/CollectionPreview';
+import CollectionProfile from '../../../collections-marketplace/entities/CollectionProfile';
+import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
 import MiningFarmModel from '../../../mining-farm/entities/MiningFarmModel';
 import NftPreviewModel from '../../entities/NftPreviewModel';
-import NftProfile from '../../entities/NftProfile';
+import NftProfile from '../../../nft-details/entities/NftProfile';
 import NftRepo from '../../presentation/repos/NftRepo';
 
 export default class NftStorageRepo implements NftRepo {
@@ -36,7 +36,7 @@ export default class NftStorageRepo implements NftRepo {
                                 && (collectionId === S.Strings.EMPTY || json.collectionId === collectionId),
                 )
                 .map((json) => {
-                    json.name = collections.find((collection: CollectionPreview) => collection.id === json.collectionId).name;
+                    json.collectionName = collections.find((collection: CollectionPreview) => collection.id === json.collectionId).name;
                     return NftPreviewModel.fromJson(json);
                 });
 
