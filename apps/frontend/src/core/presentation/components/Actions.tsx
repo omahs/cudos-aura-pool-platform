@@ -24,8 +24,8 @@ export enum ACTIONS_HEIGHT {
 
 type Props = {
     className?: string;
-    height?: number;
-    layout?: number;
+    height?: ACTIONS_HEIGHT;
+    layout?: ACTIONS_LAYOUT;
 }
 
 export default function Actions({ className, height, layout, children }: React.PropsWithChildren < Props >) {

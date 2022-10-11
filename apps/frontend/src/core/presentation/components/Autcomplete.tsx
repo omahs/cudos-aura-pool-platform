@@ -1,26 +1,11 @@
+import React from 'react';
 import { FormControl, Popper, TextField } from '@mui/material';
 import MuiAutocomplete, { AutocompleteProps } from '@mui/material/Autocomplete';
-import React from 'react';
 
 import S from '../../utilities/Main';
+import AutocompleteOption from '../../entities/AutocompleteOption';
 
 import '../styles/autcomplete.css';
-
-export class AutocompleteOption {
-
-    value: any;
-    label: any;
-
-    constructor(value: any, label: any = null) {
-        if (label === null) {
-            label = value;
-        }
-
-        this.value = value;
-        this.label = label;
-    }
-
-}
 
 export enum AutocompleteMargin {
     NORMAL = 1,
@@ -35,7 +20,7 @@ type Props = AutocompleteProps < AutocompleteOption, true, true, false > & {
     readOnly?: boolean;
 }
 
-function Autocomplete({ className, readOnly, error, label, ...props }: Props) {
+export default function Autocomplete({ className, readOnly, error, label, ...props }: Props) {
 
     function onChange(event, value, reason) {
         props.onChange(value, event, reason);
@@ -90,8 +75,6 @@ Autocomplete.defaultProps = {
     margin: AutocompleteMargin.DENSE,
     readOnly: false,
 };
-
-export default Autocomplete;
 
 function AutocompletePopper(props) {
 
