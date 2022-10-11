@@ -5,7 +5,7 @@ import MuiPopover, { PopoverProps } from '@mui/material/Popover';
 
 import '../styles/popover.css';
 
-const Popover = (props: PopoverProps) => {
+export default function Popover(props: PopoverProps) {
 
     const ref = useRef(null);
 
@@ -66,5 +66,3 @@ Popover.defaultProps = {
         horizontal: 'center',
     },
 };
-
-export default Popover;

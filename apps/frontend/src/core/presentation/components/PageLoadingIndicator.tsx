@@ -8,14 +8,14 @@ import LoadingIndicator from './LoadingIndicator';
 
 import '../styles/page-loading-indicator.css';
 
-interface Props {
+type Props = {
     appStore?: AppStore;
 }
 
-const PageLoadingIndicator = (props: Props) => {
+function PageLoadingIndicator({ appStore }: Props) {
 
     return (
-        <div className = { `PageLoadingIndicator FlexSingleCenter Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(props.appStore.hasLoading())}` }>
+        <div className = { `PageLoadingIndicator FlexSingleCenter Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(appStore.hasLoading())}` }>
             <LoadingIndicator margin = { 'auto' } />
         </div>
     )

@@ -10,7 +10,8 @@ import Autocomplete, { AutocompleteOption } from '../../../../core/presentation/
 
 import '../styles/not-found-page.css';
 
-const NotFoundPage = () => {
+export default function NotFoundPage() {
+
     const navigate = useNavigate();
     const [range, setRange] = useState(new RangeDatepickerState(Date.now() - 1000000, Date.now(), false));
     const [single, setSingle] = useState(new Date());
@@ -46,5 +47,3 @@ const NotFoundPage = () => {
     )
 
 }
-
-export default NotFoundPage;

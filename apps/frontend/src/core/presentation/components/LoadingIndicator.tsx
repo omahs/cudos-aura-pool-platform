@@ -1,32 +1,31 @@
 import React from 'react';
+import { CSSProperties } from '@mui/material/styles/createMixins';
 
-import S from '../../utilities/Main';
-
-import SvgLoading from '../../../public/assets/vectors/loading.svg';
+import SvgLoading from '../vectors/loading.svg';
 import '../styles/loading-indicator.css';
 
-interface Props {
+type Props = {
     className?: string;
-    margin: string;
+    margin?: string;
     size?: string;
 }
 
-const LoadingIndicator = (props: Props) => {
+export default function LoadingIndicator({ className, margin, size }: Props) {
 
     const style = {
-        'marginTop': props.margin,
-        'marginBottom': props.margin,
+        'marginTop': margin,
+        'marginBottom': margin,
     };
-    const svgStyle = {};
+    const svgStyle: CSSProperties = {};
 
-    if (props.size !== null) {
-        svgStyle.width = props.size;
-        svgStyle.height = props.size;
+    if (size !== null) {
+        svgStyle.width = size;
+        svgStyle.height = size;
     }
 
     return (
         <div
-            className = { `LoadingIndicator FlexSingleCenter ${props.className}` }
+            className = { `LoadingIndicator FlexSingleCenter ${className}` }
             style = { style } >
 
             <div className = { 'SVG Size' } style = { svgStyle } dangerouslySetInnerHTML = {{ __html: SvgLoading }} />
@@ -36,9 +35,8 @@ const LoadingIndicator = (props: Props) => {
 
 }
 
-export default LoadingIndicator;
-
 LoadingIndicator.defaultProps = {
-    className: S.Strings.EMPTY,
+    className: '',
+    margin: 'auto',
     size: null,
 }

@@ -1,6 +1,8 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
-import { TextField, FormControl, TextFieldProps } from '@mui/material';
+import React, { ChangeEvent } from 'react';
+
 import S from '../../utilities/Main';
+
+import { TextField, FormControl, TextFieldProps } from '@mui/material';
 import '../styles/input.css';
 
 export enum InputType {
@@ -11,35 +13,33 @@ export enum InputType {
 }
 
 export enum InputMargin {
-    NORMAL,
-    DENSE,
+    NORMAL = 'normal',
+    DENSE = 'dense',
 }
 
-interface Props extends TextFieldProps {
+type Props = TextFieldProps & {
     className?: string;
     inputType?: InputType;
     decimalLength?: number;
     margin?: InputMargin;
     readOnly?: boolean;
     onChange?: null | ((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | string) => boolean | void);
-    onFocus?: () => void | boolean;
-    onBlur?: () => void | boolean;
     stretch?: boolean;
     gray?: boolean;
 }
 
-export default function Input(props: Props) {
+export default function Input({ className, inputType, decimalLength, margin, readOnly, onChange, stretch, gray, ...props }: Props) {
 
     /* listeners */
-    const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        switch (props.inputType) {
+    function onChangeHandler(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        switch (inputType) {
             case InputType.INTEGER:
                 if (filterInteger(event.target.value) === false) {
                     return;
                 }
                 break;
             case InputType.REAL:
-                if (filterReal(event.target.value, props.decimalLength) === false) {
+                if (filterReal(event.target.value, decimalLength) === false) {
                     return;
                 }
                 break;
@@ -52,37 +52,36 @@ export default function Input(props: Props) {
                 break;
         }
 
-        if (props.onChange !== null) {
-            props.onChange(event.target.value);
+        if (onChange !== null) {
+            onChange(event.target.value);
         }
     }
 
-    function getMargin() {
-        switch (props.margin) {
-            case InputMargin.DENSE:
-                return 'dense';
-            case InputMargin.NORMAL:
-            default:
-                return 'normal';
-        }
-    }
-
-    const margin = getMargin();
-    const { stretch, className, gray, ...propsMore } = props;
     const cssClassStretch = S.CSS.getClassName(stretch, 'InputStretch');
     const cssClassGray = S.CSS.getClassName(gray, 'InputGray');
+
     return (
-        <div className={`Input ${className} ${cssClassStretch} ${cssClassGray} ${S.CSS.getClassName(props.readOnly, 'ReadOnly')}`}>
+        <div className={`Input ${className} ${cssClassStretch} ${cssClassGray} ${S.CSS.getClassName(readOnly, 'ReadOnly')}`}>
             <FormControl variant='standard' margin={margin}>
                 <TextField
-                    {...propsMore}
-                    onChange={props.onChange !== null && props.readOnly !== true ? onChange : undefined}
+                    {...props}
+                    onChange={onChange !== null && readOnly !== true ? onChangeHandler : undefined}
                     margin={margin}
-                    variant='standard'
-                />
+                    variant='standard' />
             </FormControl>
         </div>
     )
+}
+
+Input.defaultProps = {
+    className: '',
+    inputType: InputType.TEXT,
+    decimalLength: 4,
+    margin: InputMargin.NORMAL,
+    readOnly: false,
+    onChange: null,
+    stretch: false,
+    gray: false,
 }
 
 function filterInteger(value: string) {

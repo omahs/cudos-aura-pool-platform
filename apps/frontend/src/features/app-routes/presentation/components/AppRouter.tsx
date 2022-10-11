@@ -9,7 +9,8 @@ import UiKitPage from '../../../ui-kit/presensation/components/UiKitPage';
 import '../styles/app-router.css';
 import RewardsCalculatorPageComponent from '../../../rewards-calculator/presentation/pages/RewardsCalculatorPageComponent';
 
-const AppRouter = () => {
+export default function AppRouter() {
+
     const location = useLocation();
     const [displayLocation, setDisplayLocation] = useState(location);
     const [transitionStage, setTransistionStage] = useState('PageTransitionIn');
@@ -20,7 +21,7 @@ const AppRouter = () => {
         }
     }, [location, displayLocation]);
 
-    const onRouterTransitionEnd = () => {
+    function onRouterTransitionEnd() {
         if (transitionStage === 'PageTransitionOut') {
             setTransistionStage('PageTransitionIn');
             setDisplayLocation(location);
@@ -39,5 +40,3 @@ const AppRouter = () => {
         </div>
     )
 }
-
-export default AppRouter;

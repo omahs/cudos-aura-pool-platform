@@ -1,5 +1,5 @@
-// version 3.6.3
-export default class Uploader {
+// version 3.7.0
+export default class UploaderHelper {
 
     static isSupported() {
         if (typeof (FileReader) === 'undefined' || typeof (FileList) === 'undefined') {
@@ -18,27 +18,13 @@ export default class Uploader {
     }
 
     static newInstance(params) {
-        if (Uploader.isSupported() === false) {
+        if (UploaderHelper.isSupported() === false) {
             console.error('Browser is  not suported. Please update to latest version of chrome/firefox/opera/safari or Internet Explorer 10 or newer');
             return null;
         }
 
-        // if (params.id === undefined && params.node === undefined) {
-        //     console.error('You have to set \'id\' or \'node\' attribute in Uploader constructor');
-        //     return null;
-        // }
-
-        // if (params.controller === undefined) {
-        //     console.error('You have to set \'controller\' attribute in Uploader constructor');
-        //     return null;
-        // }
-
-        return new UploaderImpl(params);
+        return new UploaderHelper(params);
     }
-
-}
-
-class UploaderImpl {
 
     constructor(params) {
         if (params.id !== undefined) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 
 import S from '../../utilities/Main';
 import TableStore from '../stores/TableStore';
@@ -8,30 +9,29 @@ import SvgArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 import '../styles/table-paging.css';
 
-interface Props {
-    helper: TableStore;
+type Props = {
+    tableStore: TableStore;
     noVerticalPadding: boolean,
     noHorizontalPadding: boolean,
 }
 
-const TablePaging = (props: Props) => {
+function TablePaging({ tableStore, noVerticalPadding, noHorizontalPadding }: Props) {
 
-    const renderPreviousNode = () => {
+    function renderPreviousNode() {
         return (
             <div className = { 'SVG Size IconArrow' } ><SvgArrowLeft /></div>
         )
     }
 
-    const renderNextNode = () => {
+    function renderNextNode() {
         return (
             <div className = { 'SVG Size IconArrow' } ><SvgArrowRight /></div>
         )
     }
 
-    const renderPageNode = (key: number, text: string | React.ReactNode | number, active: boolean, page: number) => {
+    function renderPageNode(key: number, text: string | React.ReactNode | number, active: boolean, page: number) {
         const onClickHandler = page === S.NOT_EXISTS ? undefined : () => {
-            const helper = props.helper;
-            helper.updateTablePage(page * props.helper.tableState.itemsPerPage);
+            tableStore.updateTablePage(page * tableStore.tableState.itemsPerPage);
         };
 
         return (
@@ -46,8 +46,7 @@ const TablePaging = (props: Props) => {
         );
     }
 
-    const helper = props.helper;
-    const tableState = helper.tableState;
+    const tableState = tableStore.tableState;
 
     const pageOffset = 2;
     const cntPage = Math.floor(tableState.from / tableState.itemsPerPage);
@@ -99,7 +98,7 @@ const TablePaging = (props: Props) => {
     }
 
     return (
-        <div className = { `TablePaging ${S.CSS.getClassName(props.noVerticalPadding, 'NoVerticalPadding')} ${S.CSS.getClassName(props.noHorizontalPadding, 'NoHorizontalPadding')}` } > { result } </div>
+        <div className = { `TablePaging ${S.CSS.getClassName(noVerticalPadding, 'NoVerticalPadding')} ${S.CSS.getClassName(noHorizontalPadding, 'NoHorizontalPadding')}` } > { result } </div>
     );
 
 }
@@ -109,4 +108,4 @@ TablePaging.defaultProps = {
     noHorizontalPadding: false,
 };
 
-export default TablePaging;
+export default observer(TablePaging);

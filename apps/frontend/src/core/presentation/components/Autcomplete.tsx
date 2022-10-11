@@ -28,20 +28,20 @@ export enum AutocompleteMargin {
     NONE = 3,
 }
 
-interface Props extends AutocompleteProps < AutocompleteOption, true, true, false > {
+type Props = AutocompleteProps < AutocompleteOption, true, true, false > & {
     label?: string;
     error?: boolean;
     margin?: AutocompleteMargin;
     readOnly?: boolean;
 }
 
-const Autocomplete = (props: Props) => {
+function Autocomplete({ className, readOnly, error, label, ...props }: Props) {
 
-    const onChange = (event, value, reason) => {
+    function onChange(event, value, reason) {
         props.onChange(value, event, reason);
     }
 
-    const getMargin = () => {
+    function getMargin() {
         switch (props.margin) {
             case AutocompleteMargin.DENSE:
                 return 'dense';
@@ -53,23 +53,21 @@ const Autocomplete = (props: Props) => {
         }
     }
 
-    const getOptionLabel = (option: AutocompleteOption) => {
+    function getOptionLabel(option: AutocompleteOption) {
         return option.label;
     }
 
-    const isOptionEqualToValue = (option: AutocompleteOption, value: AutocompleteOption) => {
+    function isOptionEqualToValue(option: AutocompleteOption, value: AutocompleteOption) {
         return option.value === value.value;
     }
 
-    const margin = getMargin();
-    const { className, readOnly, error, label, ...innerProps } = props;
     return (
         <div className = { `Autocomplete ${className} ${S.CSS.getClassName(readOnly, 'ReadOnly')}` } >
-            <FormControl variant = { 'outlined' } margin = { margin } >
+            <FormControl variant = { 'outlined' } margin = { getMargin() } >
                 <MuiAutocomplete
-                    {...innerProps}
+                    {...props}
                     PopperComponent = { AutocompletePopper }
-                    onChange = { props.onChange !== null && props.readOnly !== true ? onChange : null }
+                    onChange = { props.onChange !== null && readOnly !== true ? onChange : null }
                     getOptionLabel = { getOptionLabel }
                     isOptionEqualToValue = { isOptionEqualToValue }
                     renderInput = { (params) => (
@@ -85,14 +83,17 @@ const Autocomplete = (props: Props) => {
 }
 
 Autocomplete.defaultProps = {
-    'className': S.Strings.EMPTY,
-    'margin': AutocompleteMargin.DENSE,
-    'filterSelectedOptions': true,
+    className: '',
+    filterSelectedOptions: true,
+    label: '',
+    error: false,
+    margin: AutocompleteMargin.DENSE,
+    readOnly: false,
 };
 
 export default Autocomplete;
 
-const AutocompletePopper = (props) => {
+function AutocompletePopper(props) {
 
     return (
         <Popper id = { 'autocomplete-popper' } {...props} />

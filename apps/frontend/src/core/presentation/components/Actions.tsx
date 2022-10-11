@@ -22,17 +22,16 @@ export enum ACTIONS_HEIGHT {
    HEIGHT_75,
 }
 
-interface Props {
+type Props = {
     className?: string;
     height?: number;
     layout?: number;
-    children: React.ReactChildren[];
 }
 
-export default function Actions(props: Props) {
+export default function Actions({ className, height, layout, children }: React.PropsWithChildren < Props >) {
 
     function cssClassHeight() {
-        switch (props.height) {
+        switch (height) {
             case ACTIONS_HEIGHT.HEIGHT_36:
                 return 'H36';
             case ACTIONS_HEIGHT.HEIGHT_42:
@@ -52,7 +51,7 @@ export default function Actions(props: Props) {
     }
 
     function cssClassLayout() {
-        switch (props.layout) {
+        switch (layout) {
             case ACTIONS_LAYOUT.LAYOUT_ROW_CENTER:
                 return 'Row Center';
             case ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT:
@@ -72,8 +71,15 @@ export default function Actions(props: Props) {
     }
 
     return (
-        <div className={`Actions ${cssClassHeight()} ${cssClassLayout()} ${props.className}`} >
-            {props.children}
+        <div className={`Actions ${cssClassHeight()} ${cssClassLayout()} ${className}`} >
+            {children}
         </div>
     );
+
+}
+
+Actions.defaultProps = {
+    className: '',
+    height: ACTIONS_HEIGHT.HEIGHT_32,
+    layout: ACTIONS_LAYOUT.LAYOUT_ROW_LEFT,
 }

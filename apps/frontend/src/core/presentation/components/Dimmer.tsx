@@ -8,13 +8,13 @@ import AppStore from '../stores/AppStore';
 
 import '../styles/dimmer.css';
 
-interface Props {
+type Props = {
     appStore?: AppStore;
 }
 
-const Dimmer = (props: Props) => {
+function Dimmer({ appStore }: Props) {
     return (
-        <div className = { `Dim Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(props.appStore.hasDimmer())}` } />
+        <div className = { `Dim Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(appStore.hasDimmer())}` } />
     );
 }
 

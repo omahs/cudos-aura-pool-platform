@@ -10,23 +10,23 @@ import '../styles/content.css';
 import '../styles/fonts.css';
 import '../styles/page-layout-component.css';
 
-interface Props {
+type Props = {
     className?: string;
     modals?: any[],
     alert?: React.Component | null,
 }
 
-const PageLayoutComponent = (props: React.PropsWithChildren < Props >) => {
+export default function PageLayoutComponent({ className, modals, alert, children }: React.PropsWithChildren < Props >) {
     return (
-        <div className = { `ReactBody ${props.className}` } >
+        <div className = { `ReactBody ${className}` } >
 
             <div className = { 'Page Transition' } >
-                { props.children }
+                { children }
             </div>
 
             <Dimmer />
-            { props.modals }
-            { props.alert }
+            { modals }
+            { alert }
             <DisableActions />
             <PageLoadingIndicator />
         </div>
@@ -38,5 +38,3 @@ PageLayoutComponent.defaultProps = {
     modals: null,
     alert: <Alert />,
 };
-
-export default PageLayoutComponent;
