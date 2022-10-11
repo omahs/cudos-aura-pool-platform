@@ -103,6 +103,14 @@ html.OverflowHidden {
     overflow:hidden;
 }
 
+.Bold {
+    font-weight: 700;
+}
+
+.SemiBold {
+    font-weight: 600;
+}
+
 .H1 {
     font-family: 'Poppins'; font-size: 32px; line-height: 130%; letter-spacing: -3%;
 }

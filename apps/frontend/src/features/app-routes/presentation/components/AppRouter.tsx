@@ -8,6 +8,8 @@ import UiKitPage from '../../../ui-kit/presensation/components/UiKitPage';
 
 import '../styles/app-router.css';
 import RewardsCalculatorPageComponent from '../../../rewards-calculator/presentation/pages/RewardsCalculatorPageComponent';
+import ExploreCollectionsPageComponent from '../../../marketplace-collections/presentation/pages/ExploreCollectionsPageComponent';
+import ExploreNftsPageComponent from '../../../explore-nfts/presentation/pages/ExploreNftsPageComponent';
 
 export default function AppRouter() {
 
@@ -36,6 +38,8 @@ export default function AppRouter() {
                 <Route path = { AppRoutes.HOME } element = { <UiKitPage /> } />
                 <Route path = { AppRoutes.NOT_FOUND } element = { <NotFoundPage /> } />
                 <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPageComponent /> } />
+                <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPageComponent /> } />
+                <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPageComponent /> } />
             </Routes>
         </div>
     )

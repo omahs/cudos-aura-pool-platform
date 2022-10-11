@@ -1,5 +1,4 @@
 
-
 header.PageHeader {
     padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
     background: transparent;
@@ -10,35 +9,35 @@ footer.PageFooter {
     margin-top: auto;
 }
 
-.PageExploreCollections .PageContent{
-    padding: 0 70px;
+.PageExploreNfts .PageContent {
+    padding: 72px;
 }
 
-.PageExploreCollections .ExploreColelctions {
+.PageExploreNfts .PageContent .ExploreNfts {
     align-items: center;
 }
 
-.PageExploreCollections .ExploreColelctions .PageHeading {
+.PageExploreNfts .PageContent .ExploreNfts .PageHeading {
     margin-bottom: 40px;   
 }
 
-.PageExploreCollections .ExploreColelctions .SearchBar {
+.PageExploreNfts .PageContent .ExploreNfts .SearchBar {
     margin-bottom: 40px;
 }
 
-.PageExploreCollections .ExploreColelctions .CategoriesRow {
+.PageExploreNfts .PageContent .ExploreNfts .CategoriesRow {
     gap: 20px;
     margin-bottom: 100px;
 }
 
-.PageExploreCollections .ExploreColelctions .CategoriesRow .CategoryName {
+.PageExploreNfts .PageContent .ExploreNfts .CategoriesRow .CategoryName {
     padding: 2px 5px;
     border-radius: 3px;
-    background-color: var(--color-gray-095);
+    background-color: var(--color-gray-light);
     font-family: 'Poppins'; font-weight: 600; font-size: 14px; line-height: 21px;
 }
 
-.PageExploreCollections .ExploreColelctions .CategoriesRow .CategoryName.Active {
+.PageExploreNfts .PageContent .ExploreNfts .CategoriesRow .CategoryName.Active {
     background-color: #000;
     color: #fff;
 }

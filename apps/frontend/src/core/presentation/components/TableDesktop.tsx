@@ -179,7 +179,7 @@ const TableDesktop = ({ className, widths, legend, aligns, tableStore, rows, col
                 ))
             }
             resultRows.push((
-                <div key = { i } className = { `TableRow Transition ${row.rowClassName} ` } onClick = { onClickRow.bind(null, i) } > { resultRow } </div>
+                <div key = { i } className = { `TableRow Transition ${row.rowClassName} ` } onClick = { onClickRowHandler.bind(null, i) } > { resultRow } </div>
             ));
         }
 
