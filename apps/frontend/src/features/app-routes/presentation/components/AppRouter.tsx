@@ -7,6 +7,7 @@ import NotFoundPage from '../../../not-found/presensation/components/NotFoundPag
 import UiKitPage from '../../../ui-kit/presensation/components/UiKitPage';
 
 import '../styles/app-router.css';
+import RewardsCalculatorPageComponent from '../../../rewards-calculator/presentation/pages/RewardsCalculatorPageComponent';
 
 const AppRouter = () => {
     const location = useLocation();
@@ -33,6 +34,7 @@ const AppRouter = () => {
             <Routes location = { displayLocation } >
                 <Route path = { AppRoutes.HOME } element = { <UiKitPage /> } />
                 <Route path = { AppRoutes.NOT_FOUND } element = { <NotFoundPage /> } />
+                <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPageComponent /> } />
             </Routes>
         </div>
     )

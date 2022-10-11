@@ -1,0 +1,40 @@
+
+
+header.PageHeader {
+    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
+    background: transparent;
+}
+
+footer.PageFooter {
+    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
+    margin-top: auto;
+}
+
+.PageExploreCollections .ExploreColelctions {
+    align-items: center;
+}
+
+.PageExploreCollections .ExploreColelctions .PageHeading {
+    margin-bottom: 40px;   
+}
+
+.PageExploreCollections .ExploreColelctions .SearchBar {
+    margin-bottom: 40px;
+}
+
+.PageExploreCollections .ExploreColelctions .CategoriesRow {
+    gap: 20px;
+    margin-bottom: 100px;
+}
+
+.PageExploreCollections .ExploreColelctions .CategoriesRow .CategoryName {
+    padding: 2px 5px;
+    border-radius: 3px;
+    background-color: var(--color-gray-light);
+    font-family: 'Poppins'; font-weight: 600; font-size: 14px; line-height: 21px;
+}
+
+.PageExploreCollections .ExploreColelctions .CategoriesRow .CategoryName.Active {
+    background-color: #000;
+    color: #fff;
+}

@@ -8,9 +8,14 @@ import AppStore from './core/presentation/stores/AppStore';
 
 import AppRouter from './features/app-routes/presentation/components/AppRouter';
 import AlertStore from './core/presentation/stores/AlertStore';
+import RewardsCalculatorStore from './features/rewards-calculator/presentation/stores/RewardsCalculatorStore';
+import BitcoinStorageRepo from './features/bitcoin-data/data/repo/BitcoinStorageRepo';
+import MiningFarmStorageRepo from './features/mining-farm/data/repo/MiningFarmStorageRepo';
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
+
+const rewardsCalculatorStore = new RewardsCalculatorStore(new BitcoinStorageRepo(), new MiningFarmStorageRepo());
 
 const App = () => {
 
@@ -24,7 +29,8 @@ const App = () => {
         <StrictMode>
             <Provider
                 appStore = { appStore }
-                alertStore = { alertStore } >
+                alertStore = { alertStore }
+                rewardsCalculatorStore = { rewardsCalculatorStore } >
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>
