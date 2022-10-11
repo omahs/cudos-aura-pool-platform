@@ -7,6 +7,7 @@ import ModalStore from '../stores/ModalStore';
 
 import SvgClose from '../vectors/modal-close.svg';
 import '../styles/modal-window.css';
+import Svg from './Svg';
 
 const outerClose = false;
 let modalCounter = 0;
@@ -76,10 +77,10 @@ const ModalWindow = (props: React.PropsWithChildren < ModalWindowProps >) => {
         }
 
         return (
-            <div
-                className = { 'Close SVG Clickable' }
+            <Svg
+                className = { 'Close Clickable' }
                 onClick = { onClickClose }
-                dangerouslySetInnerHTML = {{ __html: SvgClose }} />
+                svg = { SvgClose } />
         )
     }
 

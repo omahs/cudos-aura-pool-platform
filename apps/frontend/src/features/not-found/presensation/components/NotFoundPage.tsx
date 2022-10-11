@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import AutocompleteOption from '../../../../core/entities/AutocompleteOption';
 
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import SingleDatepicker from '../../../../core/presentation/components/SingleDatepicker';
 import RangeDatepicker, { RangeDatepickerState } from '../../../../core/presentation/components/RangeDatepicker';
-import Autocomplete, { AutocompleteOption } from '../../../../core/presentation/components/Autcomplete';
+import Autocomplete from '../../../../core/presentation/components/Autcomplete';
 
 import '../styles/not-found-page.css';
 

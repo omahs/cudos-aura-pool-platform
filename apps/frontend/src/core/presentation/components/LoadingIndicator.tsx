@@ -1,6 +1,7 @@
 import React from 'react';
 import { CSSProperties } from '@mui/material/styles/createMixins';
 
+import Svg from './Svg';
 import SvgLoading from '../vectors/loading.svg';
 import '../styles/loading-indicator.css';
 
@@ -28,7 +29,7 @@ export default function LoadingIndicator({ className, margin, size }: Props) {
             className = { `LoadingIndicator FlexSingleCenter ${className}` }
             style = { style } >
 
-            <div className = { 'SVG Size' } style = { svgStyle } dangerouslySetInnerHTML = {{ __html: SvgLoading }} />
+            <Svg style = { svgStyle } svg = { SvgLoading } />
 
         </div>
     );
