@@ -83,8 +83,8 @@ export default class UploaderHelper {
             if (params.position !== undefined) {
                 this.inputN.parentNode.style.position = params.position;
             } else {
-                params.position = window.getComputedStyle(this.inputN.parentNode).getPropertyValue('position');
-                if (params.position !== 'absolute' && params.position !== 'fixed') {
+                const position = window.getComputedStyle(this.inputN.parentNode).getPropertyValue('position');
+                if (position !== 'absolute' && position !== 'fixed') {
                     this.inputN.parentNode.style.position = 'relative';
                 }
             }
@@ -386,6 +386,8 @@ export default class UploaderHelper {
         if (this.onReadFileAsBase64 !== null) {
             await this.onReadFileAsBase64(result, filename, fileType, this.files, this.filePointer);
         }
+
+        this.nextUpload();
     }
 
     initProgressWindow() {

@@ -30,7 +30,7 @@ export default function Select({ className, margin, onChange, label, readOnly, .
             document.removeEventListener('touchmove', onPreventableScroll);
             document.removeEventListener('scroll', onUnpreventableScroll);
         }
-    }, [])
+    });
 
     function onChangeHandler(e: SelectChangeEvent<unknown>) {
         if (onChange !== undefined) {

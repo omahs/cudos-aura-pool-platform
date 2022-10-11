@@ -1,31 +1,52 @@
 import React, { HTMLAttributes } from 'react';
+import { SvgIconTypeMap } from '@mui/material';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 import '../styles/svg.css';
 
-enum Size {
+export enum SvgSize {
     DEFAULT,
     CUSTOM
 }
 
+type MuiSvgIcon = OverridableComponent < SvgIconTypeMap < {}, 'svg' > > & { muiName: string; };
+
 type Props = HTMLAttributes < HTMLDivElement > & {
     className?: string;
-    svg: string,
-    size?: Size,
+    svg: string | MuiSvgIcon,
+    size?: SvgSize,
 }
 
-export default function Svg({ className, size, svg, ...props }: Props) {
+const Svg = React.forwardRef(({ className, size, svg, ...props }: Props, ref) => {
 
-    const cssSize = size === Size.DEFAULT ? '' : 'Size';
+    const cssSize = size === SvgSize.DEFAULT ? '' : 'Size';
+
+    if (typeof (svg) === 'string') {
+        return (
+            <div
+                { ...props }
+                ref = { ref }
+                className = { `SVG ${cssSize} ${className}` }
+                dangerouslySetInnerHTML = {{ __html: svg as string }} />
+        )
+    }
 
     return (
         <div
             { ...props }
-            className = { `SVG ${cssSize} ${className}` }
-            dangerouslySetInnerHTML = {{ __html: svg }} />
+            ref = { ref }
+            className = { `SVG ${cssSize} ${className}` }>
+            { React.createElement(svg) }
+        </div>
     )
 
-}
+});
+
+Svg.displayName = 'Svg';
 
 Svg.defaultProps = {
-    size: Size.DEFAULT,
+    className: '',
+    size: SvgSize.DEFAULT,
 }
+
+export default Svg;

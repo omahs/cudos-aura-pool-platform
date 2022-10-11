@@ -1,16 +1,16 @@
 :root {
-    --color-primary: #52A6F8;
-    --color-primary-light: rgba(82, 166, 248, 0.1);
-    --color-secondary: #636D8F;
-    --color-dark: #1b2031;
-    --color-gray-light: #F6F9FE;
-    --color-gray-light-02: #E0E2E9;
-    --color-gray-dark: #999FB1;
-    --color-purple: rgba(99, 109, 143, 0.2);
+    --color-primary: #000;
+    --color-primary-light: rgba(0, 0, 0, 0.5);
+    --color-secondary: #888;
+    --color-gray-000: #000;
+    --color-gray-060: #E0E2E9;
+    --color-gray-090: #E0E2E9;
+    --color-gray-095: #F6F9FE;
+    --color-gray-100: #fff;
     --color-red: #EA6161;
     --color-green: #65B48F;
 
-    --color-body-background: linear-gradient(296.82deg, rgba(246, 249, 254, 0) 0%, rgba(246, 249, 254, 0.86) 63.54%, #F6F9FE 100%);
+    --color-body-background: #fff;
 
     --transition-duration: 0.4s;
 
@@ -20,26 +20,26 @@
     --color-datepicker-selected: var(--color-primary);
 
     /* theme */
-    /* --color-input-text: var(--color-dark);
-    --color-input-label: var(--color-dark);
+    /* --color-input-text: var(--color-gray-000);
+    --color-input-label: var(--color-gray-000);
     --color-input-focused: #262b31;
-    --color-input-border: var(--color-gray-dark);
+    --color-input-border: var(--color-gray-060);
     --color-input-border-hover: #262b31;
-    --color-input-background: var(--color-gray-light);
+    --color-input-background: var(--color-gray-095);
     --color-input-background-focused: var(--color-primary-light); */
-    /* --color-select-icon: var(--color-gray-dark);
+    /* --color-select-icon: var(--color-gray-060);
     --color-select-icon-focused: #262b31;
     --color-select-highlight: rgba(0, 0, 0, 0.1);
     --color-select-multi-item-color: #fff;
     --color-select-multi-item-background: #9FB0C5;
     --color-select-multi-delete-icon: #fff; */
 /* 
-    --color-popover-text: var(--color-dark);
+    --color-popover-text: var(--color-gray-000);
     --color-popover-border: transparent;
     --color-popover-background: #fff;
     --color-popover-shadow: rgba(27, 32, 49, 0.1); */
-    /* --color-tooltip-text: var(--color-gray-dark);
-    --color-tooltip-border: var(--color-gray-dark);
+    /* --color-tooltip-text: var(--color-gray-060);
+    --color-tooltip-border: var(--color-gray-060);
     --color-tooltip-background: #fff; */
 
     /* --color-checkbox-fill: #fff;
@@ -50,19 +50,18 @@
     --color-modal-background: #fff;
     /* theme */
 
-    --mobile-spacing: 24px;
-    --desktop-spacing: 24px;
+    --item-spacing: 24px;
 }
 
 html {
-	color:var(--color-dark);
+	color:var(--color-gray-000);
     font-family:Poppins, OpenSans, sans-serif; font-weight:400; font-size:14px;
     scroll-behavior: smooth;
-    background:var(--color-body-background);
 }
 
 body {
     min-width:calc(1200px + 48px);
+    background:var(--color-body-background);
 }
 
 .ReactEntryPoint {
@@ -89,14 +88,14 @@ img.CoverNode {
 }
 
 /* Site */
-.SiteContent {
-    width:100%; min-width:calc(1200px + 2 * var(--desktop-spacing)); max-width:calc(1600px + 2 *  var(--desktop-spacing));
+.AppContent {
+    width:100%; min-width:calc(1200px + 2 * var(--item-spacing)); max-width:calc(1600px + 2 *  var(--item-spacing));
     box-sizing:border-box;
-    padding-left:var(--desktop-spacing); padding-right:var(--desktop-spacing);
+    padding-left:var(--item-spacing); padding-right:var(--item-spacing);
     margin-left:auto; margin-right:auto;
 }
 
-.SiteContent.SmallContent {
+.AppContent.SmallContent {
     width:370px; min-width:auto;
 }
 

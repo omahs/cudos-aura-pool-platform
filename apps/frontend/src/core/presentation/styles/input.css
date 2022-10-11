@@ -31,7 +31,7 @@
     color: var(--color-input-text);
     padding: 11px !important;
     border-radius: 5px;
-    border: 2px solid var(--color-gray-light-02);
+    border: 2px solid var(--color-gray-090);
     transition: border-color var(--transition-duration);
 }
 
