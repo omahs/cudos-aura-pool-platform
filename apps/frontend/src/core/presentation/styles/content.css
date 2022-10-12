@@ -33,7 +33,7 @@
 
     --color-datepicker-foreground: var(--color-primary);
     --color-datepicker-background: #fff;
-    --color-datepicker-content-background: var(--color-gray);
+    --color-datepicker-content-background: #fff;
     --color-datepicker-selected: var(--color-primary);
 
     --color-popover-text: #000;
@@ -44,13 +44,13 @@
     --color-tooltip-border: var(--color-gray-060);
     --color-tooltip-background: #fff;
 
-    --color-modal-background: #fff;
-    /* theme */
-
-    /* --color-checkbox-fill: #fff;
+    --color-checkbox-fill: #fff;
     --color-checkbox-background: var(--color-primary);
     --color-checkbox-border: #7D87AA;
-    --color-checkbox-border-active:  var(--color-primary); */   
+    --color-checkbox-border-active:  var(--color-primary);  
+
+    --color-modal-background: #fff;
+    /* theme */
 }
 
 html {

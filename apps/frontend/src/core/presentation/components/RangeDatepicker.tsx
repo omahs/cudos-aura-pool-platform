@@ -66,8 +66,8 @@ export default function RangeDatepicker({ datepickerState, dateRangeFormat, empt
         <Datepicker
             {...props}
             selectsRange = { true }
-            popperClassName = { 'RangeDatepickerPopper' }
-            wrapperClassName = { `RangeDatepickerWrapper ${S.CSS.getClassName(props.disabled, 'Disabled')}` }
+            // popperClassName = { 'RangeDatepickerPopper' }
+            wrapperClassName = { `RangeDatepickerWrapper ${S.CSS.getClassName(props.disabled, 'Disabled')} ${className}` }
             onInputClick = {onChangeOpen}
             onClickOutside = {onChangeOpen}
             open = {datepickerOpen}
@@ -90,8 +90,7 @@ export default function RangeDatepicker({ datepickerState, dateRangeFormat, empt
                             <SvgClose />
                         </div> : ''}
                 </fieldset>
-            }
-        />
+            } />
     )
 
 }

@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 
 import S from '../../utilities/Main';
 
-import { TextField, FormControl, TextFieldProps, InputLabel } from '@mui/material';
+import { TextField, TextFieldProps } from '@mui/material';
 import '../styles/input.css';
 
 export enum InputType {
@@ -20,10 +20,10 @@ type Props = TextFieldProps & {
     onChange?: null | ((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | string) => boolean | void);
     stretch?: boolean;
     gray?: boolean;
+    defaultOnChangeParameter?: boolean,
 }
 
-export default function Input({ className, inputType, decimalLength, margin, readOnly, onChange, stretch, gray, ...props }: Props) {
-
+const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly, onChange, stretch, gray, defaultOnChangeParameter, ...props }: Props, ref) => {
     /* listeners */
     function onChangeHandler(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         switch (inputType) {
@@ -47,7 +47,7 @@ export default function Input({ className, inputType, decimalLength, margin, rea
         }
 
         if (onChange !== null) {
-            onChange(event.target.value);
+            onChange(defaultOnChangeParameter === true ? event : event.target.value);
         }
     }
 
@@ -55,7 +55,7 @@ export default function Input({ className, inputType, decimalLength, margin, rea
     const cssClassGray = S.CSS.getClassName(gray, 'InputGray');
 
     return (
-        <div className={`Input ${className} ${cssClassStretch} ${cssClassGray} ${S.CSS.getClassName(readOnly, 'ReadOnly')}`}>
+        <div ref = { ref } className={`Input ${className} ${cssClassStretch} ${cssClassGray} ${S.CSS.getClassName(readOnly, 'ReadOnly')}`}>
             <TextField
                 {...props}
                 hiddenLabel = { false }
@@ -64,7 +64,9 @@ export default function Input({ className, inputType, decimalLength, margin, rea
                 variant='standard' />
         </div>
     )
-}
+});
+
+Input.displayName = 'Input';
 
 Input.defaultProps = {
     className: '',
@@ -74,7 +76,10 @@ Input.defaultProps = {
     onChange: null,
     stretch: false,
     gray: false,
+    defaultOnChangeParameter: false,
 }
+
+export default Input;
 
 function filterInteger(value: string) {
     if (value.length === 0) {

@@ -19,8 +19,8 @@ type TableBoolProps = {
 function TableBool({ className, positiveLabel, negativeLabel, value }: TableBoolProps) {
 
     return (
-        <div className = { `TableBool ${className} ${S.CSS.getActiveClassName(value === S.INT_TRUE)}` } >
-            { value === S.INT_TRUE ? positiveLabel : negativeLabel }
+        <div className = { `TableBool ${className} ${S.CSS.getActiveClassName(value === TableBoolValue.TRUE)}` } >
+            { value === TableBoolValue.TRUE ? positiveLabel : negativeLabel }
         </div>
     )
 

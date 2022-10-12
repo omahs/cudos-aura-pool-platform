@@ -9,11 +9,11 @@ import Input from './Input';
 import SvgClose from '@mui/icons-material/Close';
 
 type Props = ReactDatePickerProps & {
-    emptyDateString?: string;
+    label?: string;
     error?: boolean,
 }
 
-export default function SingleDatepicker({ emptyDateString, error, ...props }: Props) {
+export default function SingleDatepicker({ label, error, ...props }: Props) {
 
     const isDateValid = () => {
         return props.selected !== null;
@@ -46,15 +46,17 @@ export default function SingleDatepicker({ emptyDateString, error, ...props }: P
             ]}
             customInput = {
                 <Input
+                    defaultOnChangeParameter = { true }
+                    label = { label }
                     error = { error }
-                    { ...renderInputProps() } />
+                    InputProps = { renderInputProps() } />
             } />
     )
 
 }
 
 SingleDatepicker.defaultProps = {
-    emptyDateString: S.Strings.EMPTY,
+    label: S.Strings.EMPTY,
     error: false,
 };
 

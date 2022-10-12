@@ -25,6 +25,7 @@ import Table, { createTableCellString, createTableRow } from '../../../../core/p
 
 import SvgLogo from '../vectors/info.svg';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
+import Checkbox from '../../../../core/presentation/components/Checkbox';
 import '../styles/ui-kit-page.css';
 import ExampleModal from './ExampleModal';
 import ExampleModalStore from '../stores/ExampleModalStore';
@@ -32,6 +33,7 @@ import Autocomplete from '../../../../core/presentation/components/Autcomplete';
 import AutocompleteOption from '../../../../core/entities/AutocompleteOption';
 import SingleDatepicker from '../../../../core/presentation/components/SingleDatepicker';
 import RangeDatepicker, { RangeDatepickerState } from '../../../../core/presentation/components/RangeDatepicker';
+import S from '../../../../core/utilities/Main';
 
 type Props = {
     appStore?: AppStore
@@ -49,6 +51,7 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
     const [autocompleteMultiValue, setAutocompleteMultiValue] = useState([]);
     const [singleDatepickerValue, setSingleDatepickerValue] = useState(new Date());
     const [rangeDatepickerValue, setRangeDatepickerValue] = useState(new RangeDatepickerState(Date.now() - 100000000, Date.now()));
+    const [checkboxValue, setCheckboxValue] = useState(S.INT_FALSE);
 
     function onClickNavigate() {
         navigate(AppRoutes.NOT_FOUND);
@@ -289,13 +292,21 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                     </div>
                     <div className = { 'InputsGrid' } >
                         <SingleDatepicker
+                            label = { 'name of the field' }
                             selected = { singleDatepickerValue }
                             onChange = { setSingleDatepickerValue } />
                         <RangeDatepicker
+                            label = { 'Name of the field range' }
                             datepickerState = { rangeDatepickerValue }
                             onChange = { (startDate, endDate) => {
                                 setRangeDatepickerValue(new RangeDatepickerState(startDate, endDate))
                             } } />
+                    </div>
+                    <div className = { 'InputsGrid' } >
+                        <Checkbox
+                            label = { 'name of the field' }
+                            value = { checkboxValue }
+                            onChange = { setCheckboxValue } />
                     </div>
                 </div>
 
