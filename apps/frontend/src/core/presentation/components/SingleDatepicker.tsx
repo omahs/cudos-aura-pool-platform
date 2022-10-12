@@ -4,7 +4,7 @@ import { ReactDatePickerProps } from 'react-datepicker';
 import S from '../../utilities/Main';
 
 import Datepicker from './Datepicker';
-import { Input } from '@mui/material';
+import Input from './Input';
 
 import SvgClose from '@mui/icons-material/Close';
 
@@ -48,8 +48,7 @@ export default function SingleDatepicker({ emptyDateString, error, ...props }: P
                 <Input
                     error = { error }
                     { ...renderInputProps() } />
-            }
-        />
+            } />
     )
 
 }

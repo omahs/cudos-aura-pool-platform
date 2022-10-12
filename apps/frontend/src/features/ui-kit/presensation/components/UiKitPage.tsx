@@ -30,6 +30,8 @@ import ExampleModal from './ExampleModal';
 import ExampleModalStore from '../stores/ExampleModalStore';
 import Autocomplete from '../../../../core/presentation/components/Autcomplete';
 import AutocompleteOption from '../../../../core/entities/AutocompleteOption';
+import SingleDatepicker from '../../../../core/presentation/components/SingleDatepicker';
+import RangeDatepicker, { RangeDatepickerState } from '../../../../core/presentation/components/RangeDatepicker';
 
 type Props = {
     appStore?: AppStore
@@ -41,6 +43,12 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
     const navigate = useNavigate();
     const [popoverOpen, setPopoverOpen] = useState(false);
     const [popoverAnchor, setPopupAnchor] = useState(null);
+    const [inputValue, setInputValue] = useState('');
+    const [selectValue, setSelectValue] = useState('');
+    const [autocompleteSingleValue, setAutocompleteSingleValue] = useState(null);
+    const [autocompleteMultiValue, setAutocompleteMultiValue] = useState([]);
+    const [singleDatepickerValue, setSingleDatepickerValue] = useState(new Date());
+    const [rangeDatepickerValue, setRangeDatepickerValue] = useState(new RangeDatepickerState(Date.now() - 100000000, Date.now()));
 
     function onClickNavigate() {
         navigate(AppRoutes.NOT_FOUND);
@@ -201,21 +209,50 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                 <div className = { 'FeatureBox' } >
                     <label>Inputs</label>
                     <div className = { 'InputsGrid' } >
-                        <Input label = { 'input label 2' } placeholder = { 'placeholder' } />
-                        <Input label = { ' ' } disabled = { true } />
-                        <Input label = { 'input with error' } error = { true } />
-                        <Input label = { ' ' } gray = { true } disabled = { true } />
+                        <Input
+                            label = { 'input label 2' }
+                            placeholder = { 'placeholder' }
+                            value = { inputValue }
+                            onChange = { setInputValue } />
+                        <Input
+                            label = { ' ' }
+                            disabled = { true }
+                            value = { inputValue }
+                            onChange = { setInputValue } />
+                        <Input
+                            label = { 'input with error' }
+                            error = { true }
+                            value = { inputValue }
+                            onChange = { setInputValue } />
+                        <Input
+                            label = { ' ' }
+                            gray = { true }
+                            disabled = { true }
+                            value = { inputValue }
+                            onChange = { setInputValue } />
                     </div>
                     <div className = { 'InputsGrid' } >
-                        <Select label = { 'input label 2' } placeholder = { 'placeholder' }>
+                        <Select
+                            label = { 'input label 2' }
+                            placeholder = { 'placeholder' }
+                            value = { selectValue }
+                            onChange = { setSelectValue } >
                             <MenuItem value = { 1 } >1</MenuItem>
                             <MenuItem value = { 2 } >2</MenuItem>
                         </Select>
-                        <Select label = { ' ' } disabled = { true }>
+                        <Select
+                            label = { ' ' }
+                            disabled = { true }
+                            value = { selectValue }
+                            onChange = { setSelectValue } >
                             <MenuItem value = { 1 } >1</MenuItem>
                             <MenuItem value = { 2 } >2</MenuItem>
                         </Select>
-                        <Select label = { 'input with error' } error = { true }>
+                        <Select
+                            label = { 'input with error' }
+                            error = { true }
+                            value = { selectValue }
+                            onChange = { setSelectValue } >
                             <MenuItem value = { 1 } >1</MenuItem>
                             <MenuItem value = { 2 } >2</MenuItem>
                         </Select>
@@ -226,21 +263,39 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                             options = { [
                                 new AutocompleteOption(1, 1),
                                 new AutocompleteOption(2, 2),
-                            ] } />
+                            ] }
+                            value = { autocompleteSingleValue }
+                            onChange = { setAutocompleteSingleValue } />
                         <Autocomplete
                             label = { ' ' }
                             error = { true }
                             options = { [
                                 new AutocompleteOption(1, 1),
                                 new AutocompleteOption(2, 2),
-                            ] } />
+                            ] }
+                            value = { autocompleteSingleValue }
+                            onChange = { setAutocompleteSingleValue } />
                         <Autocomplete
                             label = { ' ' }
                             multiple = { true }
+                            placeholder = { 'autocomplete with multiple options' }
                             options = { [
-                                new AutocompleteOption(1, 1),
-                                new AutocompleteOption(2, 2),
-                            ] } />
+                                new AutocompleteOption(1, 'Some long text that 1'),
+                                new AutocompleteOption(2, 'Some long text that 2'),
+                                new AutocompleteOption(3, 'Some long text that 3'),
+                            ] }
+                            value = { autocompleteMultiValue }
+                            onChange = { setAutocompleteMultiValue } />
+                    </div>
+                    <div className = { 'InputsGrid' } >
+                        <SingleDatepicker
+                            selected = { singleDatepickerValue }
+                            onChange = { setSingleDatepickerValue } />
+                        <RangeDatepicker
+                            datepickerState = { rangeDatepickerValue }
+                            onChange = { (startDate, endDate) => {
+                                setRangeDatepickerValue(new RangeDatepickerState(startDate, endDate))
+                            } } />
                     </div>
                 </div>
 
