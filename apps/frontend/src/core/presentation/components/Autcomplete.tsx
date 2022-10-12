@@ -1,12 +1,14 @@
 import React from 'react';
-import { FormControl, Popper } from '@mui/material';
 import MuiAutocomplete, { AutocompleteProps } from '@mui/material/Autocomplete';
 
 import S from '../../utilities/Main';
 import AutocompleteOption from '../../entities/AutocompleteOption';
-
-import '../styles/autcomplete.css';
 import Input from './Input';
+import Svg from './Svg';
+
+import SvgClear from '@mui/icons-material/Clear';
+import SvgArrowDown from '@mui/icons-material/ArrowDownward';
+import '../styles/autcomplete.css';
 
 type Props = AutocompleteProps < AutocompleteOption, true, true, false > & {
     label?: string;
@@ -24,20 +26,22 @@ export default function Autocomplete({ className, readOnly, error, label, ...pro
 
     return (
         <div className = { `Autocomplete ${className} ${S.CSS.getClassName(readOnly, 'ReadOnly')}` } >
-            {/* <FormControl variant = { 'outlined' } margin = { 'dense' } > */}
             <MuiAutocomplete
                 {...props}
-                PopperComponent = { AutocompletePopper }
+                clearIcon = { <AutocompleteClearIcon /> }
+                popupIcon = { <AutocompletePopupIcon /> }
                 onChange = { props.onChange !== null && readOnly !== true ? onChange : null }
                 getOptionLabel = { getOptionLabel }
                 isOptionEqualToValue = { isOptionEqualToValue }
+                classes = { {
+                    popper: 'AppAutocompletePopup',
+                } }
                 renderInput = { (params) => (
                     <Input
                         { ...params }
                         label = { label }
                         error = { error } />
                 )} />
-            {/* </FormControl> */}
         </div>
     );
 }
@@ -58,10 +62,18 @@ function isOptionEqualToValue(option: AutocompleteOption, value: AutocompleteOpt
     return option.value === value.value;
 }
 
-function AutocompletePopper(props) {
+function AutocompleteClearIcon(props) {
 
     return (
-        <Popper id = { 'autocomplete-popper' } {...props} />
-    );
+        <Svg {...props} svg = { SvgClear } />
+    )
+
+}
+
+function AutocompletePopupIcon(props) {
+
+    return (
+        <Svg {...props} svg = { SvgArrowDown } />
+    )
 
 }

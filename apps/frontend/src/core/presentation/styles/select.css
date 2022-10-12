@@ -63,10 +63,6 @@
     right: 14px;
 }
 
-.Select .MuiInputBase-root.Mui-focused .MuiSelect-icon {
-    color: var(--color-select-icon-focused);
-}
-
 /* MuiSelect */
 .AppSelectRoot {
     z-index: 4096 !important;
