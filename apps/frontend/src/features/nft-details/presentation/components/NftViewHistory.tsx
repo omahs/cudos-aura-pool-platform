@@ -6,11 +6,12 @@ import SvgEthereum from '../../../../public/assets/vectors/ethereum-logo.svg';
 
 import '../styles/nft-view-history.css'
 import { ALIGN_CENTER, ALIGN_LEFT } from '../../../../core/presentation/components/TableDesktop';
-import TableStore, { TableState } from '../../../../core/presentation/stores/TableStore';
+import TableStore from '../../../../core/presentation/stores/TableStore';
 import Table from '../../../../core/presentation/components/Table';
 import TableCell from '../../../../core/entities/TableCell';
 import TableRow from '../../../../core/entities/TableRow';
 import TextWithTooltip from '../../../../core/presentation/components/TextWithTooltip';
+import Svg from '../../../../core/presentation/components/Svg';
 
 const PAGE_STATISTICS = 0;
 const PAGE_EARNINGS = 1;
@@ -121,14 +122,14 @@ function renderHistoryRows() {
         const cells = [];
         cells.push(new TableCell(<div className={'RowLegend'}>{HISTORY_ROW_LEGEND[i]}</div>, 0))
         cells.push(new TableCell(<div className={'FlexRow HistoryPrice'}>
-            <div className={'SVG Icon'} dangerouslySetInnerHTML={{ __html: SvgEthereum }}/>
+            <Svg svg={SvgEthereum} />
             1.65 ETH
         </div>, 0))
         cells.push(new TableCell(<div>Harley</div>, 0))
         cells.push(new TableCell(<div>IDK</div>, 0))
         cells.push(new TableCell(<div>
             3 months ago
-            <LaunchIcon />
+            <Svg svg={LaunchIcon} />
         </div>, 0))
 
         rows.push(new TableRow(cells));

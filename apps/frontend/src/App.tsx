@@ -10,7 +10,7 @@ import AppRouter from './features/app-routes/presentation/components/AppRouter';
 import AlertStore from './core/presentation/stores/AlertStore';
 import RewardsCalculatorStore from './features/rewards-calculator/presentation/stores/RewardsCalculatorStore';
 import BitcoinStorageRepo from './features/bitcoin-data/data/repo/BitcoinStorageRepo';
-import MiningFarmStorageRepo from './features/mining-farm/data/repo/MiningFarmStorageRepo';
+import MiningFarmStorageRepo from './features/mining-farm-view/data/repo/MiningFarmStorageRepo';
 import CollectionStorageRepo from './features/collections-marketplace/data/repo/CollectionStorageRepo';
 import ExploreCollectionsStore from './features/collections-marketplace/presentation/stores/ExploreCollectionsStore';
 import NftPreviewsGridStore from './features/nfts-explore/presentation/stores/NftPreviewsGridStore';
@@ -18,6 +18,8 @@ import NftStorageRepo from './features/nfts-explore/data/repo/NftStorageRepo';
 import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModalStore';
 import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
 import NftDetailsStore from './features/nft-details/presentation/stores/NftDetailsStore';
+import CollectionViewPageStore from './features/collection-details/presentation/stores/CollectionViewPageStore';
+import FarmViewPageStore from './features/mining-farm-view/presentation/stores/FarmViewPageStore';
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
@@ -33,6 +35,8 @@ const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinRepo, miningFar
 const exploreCollectionsStore = new ExploreCollectionsStore(collectionRepo);
 const nftPreviewsGridStore = new NftPreviewsGridStore(nftRepo, collectionRepo);
 const nftDetailsStore = new NftDetailsStore(nftRepo, cudosRepo, bitcoinRepo);
+const collectionViewPageStore = new CollectionViewPageStore(collectionRepo);
+const farmViewPageStore = new FarmViewPageStore(miningFarmRepo);
 
 const App = () => {
 
@@ -51,7 +55,9 @@ const App = () => {
                 rewardsCalculatorStore = { rewardsCalculatorStore }
                 exploreCollectionsStore = { exploreCollectionsStore }
                 nftPreviewsGridStore = { nftPreviewsGridStore }
-                nftDetailsStore = { nftDetailsStore }>
+                nftDetailsStore = { nftDetailsStore }
+                collectionViewPageStore = { collectionViewPageStore }
+                farmViewPageStore = { farmViewPageStore } >
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

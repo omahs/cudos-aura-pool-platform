@@ -32,7 +32,7 @@ export default function SingleDatepicker({ emptyDateString, error, ...props }: P
         return {
             'endAdornment': (
                 <div className={'DateClearButton StartRight SVG Clickable'} onClick = { onClickClear } >
-                    <SvgClose />
+                    <Svg svg={SvgClose} />
                 </div>
             ),
         }

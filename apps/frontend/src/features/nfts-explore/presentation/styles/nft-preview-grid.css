@@ -12,17 +12,17 @@
 }
 
 .NftModelsViewerTable .GridHeader .GridLayoutButtons {    
-    gap: 20px;
+    gap: 10px;
 }
 
-.NftModelsViewerTable .GridHeader .GridLayoutButtons .SVG {
-    background-color: var(--color-gray-095);
-    fill: var(--color-gray-dark);
+.NftModelsViewerTable .GridHeader .GridLayoutButtons .MuiSvgIcon-root {
+    background-color: var(--color-gray-090);
+    fill: var(--color-gray-030);
     border-radius: 8px;
     padding: 5px;
 }
 
-.NftModelsViewerTable .GridHeader .GridLayoutButtons .SVG.Active {
+.NftModelsViewerTable .GridHeader .GridLayoutButtons .Active .MuiSvgIcon-root{
     fill: #000;
 }
 

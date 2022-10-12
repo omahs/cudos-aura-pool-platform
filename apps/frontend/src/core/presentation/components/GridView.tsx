@@ -9,7 +9,7 @@ import Select from '../../../../core/presentation/components/Select';
 import SingleRowTable from '../../../../core/presentation/components/SingleRowTable';
 import TableDesktop, { ALIGN_CENTER } from '../../../../core/presentation/components/TableDesktop';
 import NftPreviewModel from '../../entities/NftPreviewModel'
-import NftPreviewsGridStore from '../stores/NftPreviewsGridStore';
+import NftPreviewsGridStore from '../stores/GridViewStore';
 import '../styles/nft-preview-grid.css';
 
 import GridViewIcon from '@mui/icons-material/GridView';
@@ -19,7 +19,7 @@ import S from '../../../../core/utilities/Main';
 import Svg from '../../../../core/presentation/components/Svg';
 
 interface Props {
-    nftPreviewsGridStore?: NftPreviewsGridStore;
+    gridViewStore?: GridViewStore;
 }
 
 function NftPreviewsGrid(props: Props) {

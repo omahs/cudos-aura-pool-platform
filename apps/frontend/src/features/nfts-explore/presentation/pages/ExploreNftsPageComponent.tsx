@@ -14,6 +14,7 @@ import { InputAdornment } from '@mui/material';
 import NftPreviewsGrid from '../components/NftPreviewsGrid';
 import NftPreviewsGridStore from '../stores/NftPreviewsGridStore';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
+import Svg from '../../../../core/presentation/components/Svg';
 
 interface Props {
     nftPreviewsGridStore?: NftPreviewsGridStore;
@@ -38,7 +39,7 @@ function ExploreNftsPageComponent({ nftPreviewsGridStore }: Props) {
                         placeholder = {'Search Collections, Farms and accounts'}
                         InputProps={{
                             startAdornment: <InputAdornment position="start" >
-                                <SearchIcon />
+                                <Svg svg={SearchIcon} />
                             </InputAdornment>,
                         }}
                     />

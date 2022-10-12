@@ -3,7 +3,7 @@ import StorageHelper from '../../../../core/helpers/StorageHelper';
 import CollectionPreview from '../../../collections-marketplace/entities/CollectionPreview';
 import CollectionProfile from '../../../collections-marketplace/entities/CollectionProfile';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
-import MiningFarmModel from '../../../mining-farm/entities/MiningFarmModel';
+import MiningFarmModel from '../../../mining-farm-view/entities/MiningFarmModel';
 import NftPreviewModel from '../../entities/NftPreviewModel';
 import NftProfile from '../../../nft-details/entities/NftProfile';
 import NftRepo from '../../presentation/repos/NftRepo';
