@@ -12,8 +12,8 @@ import {
   Query,
   NotFoundException,
 } from '@nestjs/common';
-import RoleGuard from 'src/auth/guards/role.guard';
-import { Role } from 'src/user/roles';
+import RoleGuard from '../auth/guards/role.guard';
+import { Role } from '../user/roles';
 import { CreateNFTDto } from './dto/create-nft.dto';
 import { UpdateNFTDto } from './dto/update-nft.dto';
 import { UpdateNFTStatusDto } from './dto/update-nft-status';
@@ -22,15 +22,20 @@ import { NFTService } from './nft.service';
 import { IsCreatorGuard } from './guards/is-creator.guard';
 import { NftFilters, MarketplaceNftFilters, NftStatus } from './utils';
 import { ParseNftQueryPipe } from './pipes/nft-query.pipe';
-import { GraphqlService } from 'src/graphql/graphql.service';
-import { MarketplaceNftQuery } from 'src/graphql/types';
+import { GraphqlService } from '../graphql/graphql.service';
+import { MarketplaceNftQuery } from '../graphql/types';
 import { CheckStatusDto } from './dto/check-status.dto';
+import { CollectionService } from '../collection/collection.service';
+import { CollectionStatus } from '../collection/utils';
+import { Collection } from '../collection/collection.model';
+import { filter } from 'rxjs';
 
 @Controller('nft')
 export class NFTController {
   constructor(
     private nftService: NFTService,
     private graphqlService: GraphqlService,
+    private collectionService: CollectionService,
   ) {}
 
   @Get()
@@ -46,7 +51,14 @@ export class NFTController {
   async findMinted(
     @Query() filters: Partial<MarketplaceNftFilters>,
   ): Promise<MarketplaceNftQuery> {
-    return this.graphqlService.fetchNft(filters);
+    const collections = await this.collectionService.findAll({
+      status: CollectionStatus.APPROVED,
+    });
+    const denom_ids = collections.map(
+      (collection: Collection) => collection.denom_id,
+    );
+
+    return this.graphqlService.fetchNft({ denom_ids: denom_ids });
   }
 
   @Put('minted/check-status')
@@ -75,6 +87,14 @@ export class NFTController {
     @Request() req,
     @Body() createNFTDto: CreateNFTDto,
   ): Promise<NFT> {
+    const collection = await this.collectionService.findOne(
+      createNFTDto.collection_id,
+    );
+
+    if (!collection) {
+      throw new NotFoundException('Collection does not exist');
+    }
+
     return this.nftService.createOne(createNFTDto, req.user.id);
   }
 

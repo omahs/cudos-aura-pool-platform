@@ -15,6 +15,6 @@ export type NftFilters = {
 };
 
 export type MarketplaceNftFilters = {
-  denom_id: string;
-  owner: string;
+  denom_ids: string[];
+  tx_hash: string;
 };
