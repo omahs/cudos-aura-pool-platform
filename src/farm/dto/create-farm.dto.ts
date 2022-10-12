@@ -43,5 +43,5 @@ export class CreateFarmDto {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({ required: true, example: 20 })
-  maintanance_fee: number;
+  maintenance_fee_in_btc: number;
 }
