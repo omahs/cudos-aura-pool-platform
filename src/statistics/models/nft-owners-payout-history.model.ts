@@ -5,7 +5,8 @@ import {
   PrimaryKey,
   Unique,
   AllowNull,
-  HasMany,
+  ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript';
 import { NftPayoutHistory } from './nft-payout-history.model';
 
@@ -42,8 +43,9 @@ export class NftOwnersPayoutHistory extends Model {
 
   @AllowNull(false)
   @Column
+  @ForeignKey(() => NftPayoutHistory)
   nft_payout_history_id: number;
 
-  @HasMany(() => NftPayoutHistory)
+  @BelongsTo(() => NftPayoutHistory)
   nft_payout_history: NftPayoutHistory[];
 }

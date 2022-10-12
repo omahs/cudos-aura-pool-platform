@@ -23,9 +23,19 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      btc_wallet: { type: Sequelize.STRING, allowNull: false },
-      default_btc_payout_address: { type: Sequelize.STRING, allowNull: false },
-      maintenance_fee: {
+      address_for_receiving_rewards_from_pool: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      leftover_reward_payout_address: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      maintenance_fee_payout_address: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      maintenance_fee_in_btc: {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },

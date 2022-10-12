@@ -33,6 +33,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      maintenance_fee: {
+        type: Sequelize.DECIMAL,
+        allowNull: false,
+      },
+      cudo_part_of_maintenance_fee: {
+        type: Sequelize.DECIMAL,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
