@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { Collection } from './collection.model';
-import { CollectionStatus } from './utils';
+import { CollectionFilters, CollectionStatus } from './utils';
 
 @Injectable()
 export class CollectionService {
@@ -12,13 +12,20 @@ export class CollectionService {
     private collectionModel: typeof Collection,
   ) {}
 
-  async findAll(): Promise<Collection[]> {
-    const collections = await this.collectionModel.findAll();
+  async findAll(filters: Partial<CollectionFilters>): Promise<Collection[]> {
+    const collections = await this.collectionModel.findAll({
+      where: { ...filters },
+    });
     return collections;
   }
 
   async findOne(id: number): Promise<Collection> {
     const collection = await this.collectionModel.findByPk(id);
+
+    if (!collection) {
+      throw new NotFoundException();
+    }
+
     return collection;
   }
 

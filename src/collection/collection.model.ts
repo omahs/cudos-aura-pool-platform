@@ -9,6 +9,7 @@ import {
   PrimaryKey,
   Unique,
   DataType,
+  AutoIncrement,
 } from 'sequelize-typescript';
 import { User } from '../user/user.model';
 import { Farm } from '../farm/farm.model';
@@ -22,6 +23,7 @@ import { CollectionStatus } from './utils';
 export class Collection extends Model {
   @Unique
   @PrimaryKey
+  @AutoIncrement
   @Column
   id: number;
 

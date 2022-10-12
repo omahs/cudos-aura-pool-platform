@@ -17,11 +17,13 @@ import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { CollectionService } from './collection.service';
 import { Collection } from './collection.model';
 import { NFTService } from '../nft/nft.service';
-import { NFT } from 'src/nft/nft.model';
-import RoleGuard from 'src/auth/guards/role.guard';
-import { Role } from 'src/user/roles';
+import { NFT } from '../nft/nft.model';
+import RoleGuard from '../auth/guards/role.guard';
+import { Role } from '../user/roles';
 import { IsCreatorGuard } from './guards/is-creator.guard';
 import { UpdateCollectionStatusDto } from './dto/update-collection-status.dto';
+import { CollectionFilters } from './utils';
+import { ParseCollectionQueryPipe } from './pipes/collection-query.pipe';
 
 @Controller('collection')
 export class CollectionController {
@@ -32,24 +34,9 @@ export class CollectionController {
 
   @Get()
   async findAll(
-    @Query('creator_id') creator_id: number,
-    @Query('farm_id') farm_id: number,
+    @Query(ParseCollectionQueryPipe) filters: Partial<CollectionFilters>,
   ): Promise<Collection[]> {
-    let result = await this.collectionService.findAll();
-
-    if (creator_id) {
-      result = result.filter(
-        (collection: Collection) => collection.creator_id === creator_id,
-      );
-    }
-
-    if (farm_id) {
-      result = result.filter(
-        (collection: Collection) => collection.farm_id === farm_id,
-      );
-    }
-
-    return result;
+    return this.collectionService.findAll(filters);
   }
 
   @Get(':id')
