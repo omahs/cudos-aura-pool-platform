@@ -7,6 +7,7 @@ import Datepicker from './Datepicker';
 import Input from './Input';
 
 import SvgClose from '@mui/icons-material/Close';
+import Svg from './Svg';
 
 type Props = ReactDatePickerProps & {
     label?: string;
