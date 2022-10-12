@@ -15665,8 +15665,7 @@ export type MarketplaceCollectionQuery = {
 };
 
 export type MarketplaceNftQueryVariables = Exact<{
-  denom_id?: InputMaybe<Scalars['String']>;
-  owner?: InputMaybe<Scalars['String']>;
+  denom_ids?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 export type MarketplaceNftQuery = {
@@ -15729,8 +15728,8 @@ export const MarketplaceCollectionDocument = gql`
   }
 `;
 export const MarketplaceNftDocument = gql`
-  query MarketplaceNft($denom_id: String, $owner: String) {
-    marketplace_nft(where: { denom_id: { _eq: $denom_id } }) {
+  query MarketplaceNft($denom_ids: [String!]) {
+    marketplace_nft(where: { denom_id: { _in: $denom_ids } }) {
       denom_id
       creator
       id

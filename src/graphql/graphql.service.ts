@@ -21,6 +21,7 @@ export class GraphqlService {
   ): Promise<MarketplaceNftQuery> {
     const res = await this.httpService.axiosRef.post(process.env.GRAPHQL_URL, {
       query: print(MarketplaceNftDocument),
+      variables: { ...filters },
     });
 
     return res.data;
