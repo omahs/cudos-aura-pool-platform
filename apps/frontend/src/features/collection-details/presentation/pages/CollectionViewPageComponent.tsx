@@ -12,22 +12,24 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import CollectionViewPageStore from '../stores/CollectionViewPageStore';
 import { useParams } from 'react-router-dom';
 import Svg from '../../../../core/presentation/components/Svg';
+import NftPreviewsGridStore from '../../../nfts-explore/presentation/stores/NftPreviewsGridStore';
 
 interface Props {
     collectionViewPageStore?: CollectionViewPageStore
+    nftPreviewsGridStore?: NftPreviewsGridStore
 }
 
-function CollectionViewPageComponent({ collectionViewPageStore }: Props) {
+function CollectionViewPageComponent({ collectionViewPageStore, nftPreviewsGridStore }: Props) {
 
+    const collectionProfile = collectionViewPageStore.collectionProfile;
     const { collectionId } = useParams();
     useEffect(
         () => {
-            collectionViewPageStore.innitiate(collectionId);
+            collectionViewPageStore.innitiate(collectionId, nftPreviewsGridStore);
         },
         [],
     );
 
-    const collectionProfile = collectionViewPageStore.collectionProfile;
 
     // TODO: get crumbs from router
     const crumbs = [

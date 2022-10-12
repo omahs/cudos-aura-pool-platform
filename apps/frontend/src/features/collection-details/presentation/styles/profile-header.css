@@ -5,7 +5,7 @@
     height: 300px;
     width: 100%;
     border-radius: 20px;
-    margin-bottom: 40px;
+    margin: 40px 0;
 }
 
 .ProfileHeader.CoverPicture .ProfilePicture {

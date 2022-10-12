@@ -157,7 +157,7 @@ html:not(.Touchable) .HoverHiddenTrigger:hover .HoverHidden {
 
 .BorderContainer{
     padding: 24px;
-    border: 1px solid var(--color-gray-095);
+    border: 1px solid var(--color-gray-060);
     border-radius: 20px;
 }
 

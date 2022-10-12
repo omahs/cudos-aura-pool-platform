@@ -8,4 +8,5 @@ export default class AppRoutes {
     static NFT_VIEW = '/nft-view';
     static COLLECTION_VIEW = '/collection-view';
     static FARM_VIEW = '/farm-view';
+    static USER_PROFILE = '/profile';
 }

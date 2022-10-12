@@ -38,7 +38,7 @@ function FarmViewPageComponent({appStore, farmViewPageStore}: Props) {
     const crumbs = [
         { name: 'Marketplace', onClick: () => {} },
         { name: 'Collection Details', onClick: () => {} },
-        { name: `Farm Owner: ${farm.name}`, onClick: () => {} },
+        { name: `Farm Owner: ${farm ? farm.name : ''}`, onClick: () => {} },
     ]
 
     return (

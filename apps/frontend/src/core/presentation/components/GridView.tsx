@@ -1,100 +1,54 @@
-import { MenuItem } from '@mui/material';
-import { inject, observer } from 'mobx-react';
 import React, { useEffect } from 'react'
-import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
-import NftPreview from './NftPreview';
-import Select from '../../../../core/presentation/components/Select';
-import SingleRowTable from '../../../../core/presentation/components/SingleRowTable';
-import TableDesktop, { ALIGN_CENTER } from '../../../../core/presentation/components/TableDesktop';
-import NftPreviewModel from '../../entities/NftPreviewModel'
-import NftPreviewsGridStore from '../stores/GridViewStore';
-import '../styles/nft-preview-grid.css';
+import LoadingIndicator from '../../../core/presentation/components/LoadingIndicator';
+import SingleRowTable from '../../../core/presentation/components/SingleRowTable';
+import '../styles/grid-view.css';
 
 import GridViewIcon from '@mui/icons-material/GridView';
 import GridOnIcon from '@mui/icons-material/GridOn';
 
-import S from '../../../../core/utilities/Main';
-import Svg from '../../../../core/presentation/components/Svg';
+import S from '../../../core/utilities/Main';
+import Svg from '../../../core/presentation/components/Svg';
+import GridViewStore, { GRID_SETTING } from '../stores/GridViewStore';
+import { ALIGN_CENTER } from './TableDesktop';
+import { observer } from 'mobx-react';
 
 interface Props {
-    gridViewStore?: GridViewStore;
+    gridViewStore: GridViewStore;
+    defaultContent: React.ReactNode;
 }
 
-function NftPreviewsGrid(props: Props) {
+function GridView({ gridViewStore, defaultContent, children }: React.PropsWithChildren < Props >) {
     useEffect(() => {
-        props.nftPreviewsGridStore.innitialLoad();
+        gridViewStore.resetDefaults();
     }, [])
 
-    const store = props.nftPreviewsGridStore;
-
     return (
-        <div
-            className={'NftModelsViewerTable'}><div className={'GridHeader FlexColumn'}>
-                <div className={'Grid FilterHeader'}>
-                    <Select
-                        className={'SortBySelect'}
-                        onChange={store.setSortByIndex}
-                        value={store.selectedSortIndex}
-                    >
-                        {NftPreviewsGridStore.TABLE_KEYS.map(
-                            (key: string, index: number) => <MenuItem key={index} value={index}>{key}</MenuItem>,
-                        )}
-                    </Select>
-                    <Actions
-                        layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                        height={ACTIONS_HEIGHT.HEIGHT_48}
-                    >
-                        {/* TODO: show all filters */}
-                        <Button
-                            padding={BUTTON_PADDING.PADDING_24}
-                            type={BUTTON_TYPE.ROUNDED}
-                        >
-            All Filters
-                        </Button>
-                    </Actions>
-                </div>
-                <div className={'FlexRow FlexGrow'}>
-                    <div className={'TotalItems B2 SemiBold'}>{store.getItemCount()} Items</div>
-                    <div className={'GridLayoutButtons FlexRow'}>
-                        <Svg svg={GridViewIcon}
-                            className={`Clickable ${S.CSS.getActiveClassName(store.checkIsGridSettingSelected(NftPreviewsGridStore.GRID_SETTING_LOOSE))}`}
-                            onClick={() => store.setGridSettingAndPreviewCount(NftPreviewsGridStore.GRID_SETTING_LOOSE)}
-                        />
-                        <Svg svg={GridOnIcon}
-                            className={`Clickable ${S.CSS.getActiveClassName(store.checkIsGridSettingSelected(NftPreviewsGridStore.GRID_SETTING_DENSE))}`}
-                            onClick={() => store.setGridSettingAndPreviewCount(NftPreviewsGridStore.GRID_SETTING_DENSE)}
-                        />
-                    </div>
+        <div className={'GridView'}>
+            <div className={'GridHeader FlexRow FlexGrow'}>
+                <div className={'TotalItems B2 SemiBold'}>{gridViewStore.getItemCount()} Items</div>
+                <div className={'GridLayoutButtons FlexRow'}>
+                    <Svg svg={GridViewIcon}
+                        className={`Clickable ${S.CSS.getActiveClassName(gridViewStore.checkIsGridSettingSelected(GRID_SETTING.LOOSE))}`}
+                        onClick={() => gridViewStore.setGridSettingAndPreviewCount(GRID_SETTING.LOOSE)}
+                    />
+                    <Svg svg={GridOnIcon}
+                        className={`Clickable ${S.CSS.getActiveClassName(gridViewStore.checkIsGridSettingSelected(GRID_SETTING.DENSE))}`}
+                        onClick={() => gridViewStore.setGridSettingAndPreviewCount(GRID_SETTING.DENSE)}
+                    />
                 </div>
             </div>
-            <SingleRowTable
-                legend={['']}
-                widths={['100%']}
-                aligns={[ALIGN_CENTER]}
-                tableStore={store.tableHelper}
-                content={
-                    <>
-                        { store.isFetchingNfts === true
-                            ? (
-                                <LoadingIndicator margin={'16px'}/>
-                            ) : (
-                                <div className={`NftPreviewsGrid Grid ${store.getGridSettingClass()}`}>
-                                    {store.nftPreviews.map(
-                                        (nftPreviewModel: NftPreviewModel, index: number) => <NftPreview
-                                            key={index}
-                                            nftPreviewModel={nftPreviewModel}
-                                        />,
-                                    )}
-                                </div>
-                            )
-                        }
-                    </>
-                }
-                noRowsContent={<div className={'NoNfts'}>No Nfts found.</div>} />
+            { gridViewStore.isFetching === true
+                ? <LoadingIndicator margin={'16px'}/>
+                : <SingleRowTable
+                    legend={['']}
+                    widths={['100%']}
+                    aligns={[ALIGN_CENTER]}
+                    tableStore={gridViewStore.tableStore}
+                    content={<div className={`PreviewsGrid Grid ${gridViewStore.getGridSettingClass()}`}>{children}</div>}
+                    noRowsContent={defaultContent}
+                /> }
         </div>
     )
 }
 
-export default inject('nftPreviewsGridStore')(observer(NftPreviewsGrid));
+export default observer(GridView);

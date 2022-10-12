@@ -17,6 +17,38 @@ export default class NftStorageRepo implements NftRepo {
         this.collectionRepo = collectionRepo;
     }
 
+    getNftsByOwnerAddressSortedPaginated(
+        ownerAddress: string,
+        sortKey: string,
+        start: number,
+        size: number,
+        callback: (nftPreviews: NftPreviewModel[], total: number) => void,
+    ) {
+        const nftPreviewJsons = this.storageHelper.nftsJson
+            .filter(
+                (json) => {
+                    console.log(json)
+                    console.log(ownerAddress)
+
+                    return json.currentOwnerAddress === ownerAddress
+                },
+            )
+
+        const nftPreviewModels = nftPreviewJsons.map((json) => NftPreviewModel.fromJson(json));
+
+        const sortedNftPreviewModels = nftPreviewModels.sort((a: NftPreviewModel, b: NftPreviewModel) => {
+            switch (sortKey.toLowerCase()) {
+                case 'price':
+                    return a.price.comparedTo(b.price)
+                case 'name':
+                default:
+                    return a.name.localeCompare(b.name)
+            }
+        });
+
+        callback(sortedNftPreviewModels.slice(start, start + size), sortedNftPreviewModels.length);
+    }
+
     getNftsByCategoryAndSearchSortedPaginated(
         collectionId: string,
         search: string,

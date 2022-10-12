@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, observable } from 'mobx';
 import TableStore from './TableStore';
 import S from '../../utilities/Main';
 
@@ -25,7 +25,6 @@ export default class GridViewStore {
         this.looseColumnCount = looseColumnCount;
         this.denseColumnCount = denseColumnCount;
         this.maxRows = maxRows;
-
         this.tableStore = new TableStore(S.NOT_EXISTS, [], fetchCallback, looseColumnCount * maxRows);
 
         this.resetDefaults();
@@ -40,7 +39,6 @@ export default class GridViewStore {
 
     setGridSettingAndPreviewCount(setting: number) {
         this.gridSetting = setting;
-
         switch (setting) {
             case GRID_SETTING.DENSE:
                 this.tableStore.tableState.itemsPerPage = this.denseColumnCount * this.maxRows

@@ -10,4 +10,6 @@ export default interface CollectionRepo {
     getAllCollections(callback: (collections: CollectionPreview[]) => void);
 
     getCollectionProfile(collectionId: string, callback: (collection: CollectionProfile) => void);
+
+    getCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number, callBack: (collectionPreviews: CollectionPreview[], total: number) => void);
 }

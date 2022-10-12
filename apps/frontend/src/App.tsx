@@ -20,6 +20,8 @@ import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
 import NftDetailsStore from './features/nft-details/presentation/stores/NftDetailsStore';
 import CollectionViewPageStore from './features/collection-details/presentation/stores/CollectionViewPageStore';
 import FarmViewPageStore from './features/mining-farm-view/presentation/stores/FarmViewPageStore';
+import UserProfilePageStore from './features/user-profile/presentation/stores/UserProfilePageStore';
+import UserProfileStorageRepo from './features/user-profile/data/repo/UserProfileStorageRepo';
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
@@ -30,13 +32,15 @@ const cudosRepo = new CudosStorageRepo();
 const miningFarmRepo = new MiningFarmStorageRepo();
 const collectionRepo = new CollectionStorageRepo();
 const nftRepo = new NftStorageRepo(collectionRepo);
+const userProfileRepo = new UserProfileStorageRepo(collectionRepo);
 
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinRepo, miningFarmRepo);
 const exploreCollectionsStore = new ExploreCollectionsStore(collectionRepo);
 const nftPreviewsGridStore = new NftPreviewsGridStore(nftRepo, collectionRepo);
 const nftDetailsStore = new NftDetailsStore(nftRepo, cudosRepo, bitcoinRepo);
 const collectionViewPageStore = new CollectionViewPageStore(collectionRepo);
-const farmViewPageStore = new FarmViewPageStore(miningFarmRepo);
+const farmViewPageStore = new FarmViewPageStore(miningFarmRepo, collectionRepo);
+const userProfilePageStore = new UserProfilePageStore(nftRepo, userProfileRepo, bitcoinRepo);
 
 const App = () => {
 
@@ -57,7 +61,8 @@ const App = () => {
                 nftPreviewsGridStore = { nftPreviewsGridStore }
                 nftDetailsStore = { nftDetailsStore }
                 collectionViewPageStore = { collectionViewPageStore }
-                farmViewPageStore = { farmViewPageStore } >
+                farmViewPageStore = { farmViewPageStore } 
+                userProfilePageStore = { userProfilePageStore }>
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

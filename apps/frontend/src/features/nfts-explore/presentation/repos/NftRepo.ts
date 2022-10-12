@@ -5,6 +5,14 @@ import NftProfile from '../../../nft-details/entities/NftProfile';
 
 export default interface NftRepo {
 
+    getNftsByOwnerAddressSortedPaginated(
+        ownerAddress: string,
+        sortKey: string,
+        start: number,
+        size: number,
+        callback: (nftPreviews: NftPreviewModel[], total: number) => void,
+    );
+
     getNftsByCategoryAndSearchSortedPaginated(
         collectionId: string,
         search: string,

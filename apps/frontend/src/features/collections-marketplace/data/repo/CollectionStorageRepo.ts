@@ -40,4 +40,20 @@ export default class CollectionStorageRepo implements CollectionRepo {
         callback(collection);
     }
 
+    getCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number, callback: (collectionPreviews: CollectionPreview[], total: number) => void) {
+        const collectionJsons = this.storageHelper.collectionsJson.filter((json) => json.farmId === farmId);
+        const collections = collectionJsons.map((json) => CollectionPreview.fromJson(json));
+
+        const sortedcollections = collections.sort((a: CollectionPreview, b: CollectionPreview) => {
+            switch (sortKey.toLowerCase()) {
+                case 'price':
+                    return a.price.comparedTo(b.price)
+                case 'name':
+                default:
+                    return a.name.localeCompare(b.name)
+            }
+        });
+
+        callback(sortedcollections.slice(from, from + count), sortedcollections.length);
+    }
 }

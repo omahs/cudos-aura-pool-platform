@@ -3,7 +3,7 @@ const VERSION = 1;
 
 const collectionDescription = 'DigiDaigaku is a collection of 2022 unique characters developed by Limit Break, a company founded by world famous game designers Gabriel Leydon and Halbert Nakagawa.  Currently, DigiDaigaku characters live in a mysterious world unknown to outsiders, but in time, exciting details about their world will be revealed. /n Learn more about the project at: https://digidaigaku.com and https://twitter.com/DigiDaigaku'
 const collectionProfileImgUrl = 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200';
-const collectionCoverPictureUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Red-rumped_Agouti_%2817380318590%29.jpg/1920px-Red-rumped_Agouti_%2817380318590%29.jpg';
+const collectionCoverPictureUrl = 'https://static.dw.com/image/62450424_303.jpeg';
 const collectionOwnerAddress = 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lktde3g6';
 
 const miningFarmsJson = [
@@ -12,6 +12,10 @@ const miningFarmsJson = [
     jsonMiningFarm('3', 'Razorlabs Farm Inc', collectionDescription, collectionOwnerAddress, 30, 3, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
     jsonMiningFarm('4', 'Limechain Farm Inc', collectionDescription, collectionOwnerAddress, 8, 10, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
     jsonMiningFarm('5', 'Cudos Farm Inc', collectionDescription, collectionOwnerAddress, 100, 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
+];
+
+const userProfilesJson = [
+    jsonUserProfile('1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
 const bitcoinDataJson = jsonBitcoinData(23336, 53.3, 6.25, '29794407589312');
@@ -101,6 +105,7 @@ export default class StorageHelper {
     nftsJson: any[];
     collectionsJson: any[];
     categoriesJson: string[];
+    userProfilesJson: any[];
 
     constructor() {
         this.version = VERSION;
@@ -109,6 +114,7 @@ export default class StorageHelper {
         this.nftsJson = nftsJson;
         this.collectionsJson = collectionsJson;
         this.categoriesJson = categoriesJson;
+        this.userProfilesJson = userProfilesJson;
     }
 
     static getSingletonInstance() {
@@ -152,6 +158,19 @@ function jsonMiningFarm(id, name, description, ownerAddress, powerCost, poolFee,
         powerCost,
         poolFee,
         powerConsumptionPerTh,
+        profileImgurl,
+        coverImgUrl,
+    };
+}
+
+function jsonUserProfile(id, name, address, totalBtcEarned, totalHashPower, timestampJoined, profileImgurl, coverImgUrl) {
+    return {
+        id,
+        name,
+        address,
+        totalBtcEarned,
+        totalHashPower,
+        timestampJoined,
         profileImgurl,
         coverImgUrl,
     };

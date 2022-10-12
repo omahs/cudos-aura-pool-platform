@@ -13,6 +13,7 @@ import ExploreNftsPageComponent from '../../../nfts-explore/presentation/pages/E
 import NftViewPageComponent from '../../../nft-details/presentation/pages/NftViewPageComponent';
 import CollectionViewPageComponent from '../../../collection-details/presentation/pages/CollectionViewPageComponent';
 import FarmViewPageComponent from '../../../mining-farm-view/presentation/pages/FarmViewPageComponent';
+import UserProfilePageComponent from '../../../user-profile/presentation/pages/UserProfilePageComponent';
 
 export default function AppRouter() {
 
@@ -43,6 +44,7 @@ export default function AppRouter() {
                 <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPageComponent /> } />
+                <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePageComponent /> } />
                 <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPageComponent /> } />
                 <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPageComponent /> } />
                 <Route path = { `${AppRoutes.FARM_VIEW}/:farmId` } element = { <FarmViewPageComponent /> } />
