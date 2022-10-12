@@ -3,7 +3,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import '../styles/breadcrumbs.css';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Svg from './Svg';
 
 interface Crumb {
     name: string;
@@ -27,13 +28,13 @@ export default function Breadcrumbs({ crumbs }: Props) {
     return (
         <div className={'BreadCrumbs FlexRow'}>
             <div className={'BackButton FlexRow Clickable'} onClick={onClickBack}>
-                <ArrowBackIcon />
+                <Svg svg={ArrowBackIcon} />
                 <div className={'B2 SemiBold'}>Back</div>
             </div>
             <div className={'Crumbs FlexRow B2 Bold'}>
                 {slicedCrumbds.map((crumb: Crumb, index: number) => <div key={index} className={'CrumbBox FlexRow'}>
                     <div className={'Crumb Clickable'} onClick={crumb.onClick}>{crumb.name}</div>
-                    <ArrowForwardIosIcon />
+                    <Svg svg={ArrowForwardIosIcon} />
                 </div>)}
                 <div className={'LastCrumb Clickable'} onClick={lastCrumb.onClick}>{lastCrumb.name}</div>
             </div>

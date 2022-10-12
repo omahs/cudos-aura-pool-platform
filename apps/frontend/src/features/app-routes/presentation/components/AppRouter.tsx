@@ -11,6 +11,8 @@ import RewardsCalculatorPageComponent from '../../../rewards-calculator/presenta
 import ExploreCollectionsPageComponent from '../../../collections-marketplace/presentation/pages/ExploreCollectionsPageComponent';
 import ExploreNftsPageComponent from '../../../nfts-explore/presentation/pages/ExploreNftsPageComponent';
 import NftViewPageComponent from '../../../nft-details/presentation/pages/NftViewPageComponent';
+import CollectionViewPageComponent from '../../../collection-details/presentation/pages/CollectionViewPageComponent';
+import FarmViewPageComponent from '../../../mining-farm-view/presentation/pages/FarmViewPageComponent';
 
 export default function AppRouter() {
 
@@ -42,6 +44,8 @@ export default function AppRouter() {
                 <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPageComponent /> } />
                 <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPageComponent /> } />
+                <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPageComponent /> } />
+                <Route path = { `${AppRoutes.FARM_VIEW}/:farmId` } element = { <FarmViewPageComponent /> } />
             </Routes>
         </div>
     )

@@ -1,3 +1,4 @@
+import Svg from '../../../../core/presentation/components/Svg';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SvgCudosLogo from '../../../../public/assets/vectors/cudos-logo.svg';
@@ -29,7 +30,7 @@ export default function NftPreview({ nftPreviewModel }: Props) {
             <div className={'HashPower H4 Medium'}>{nftPreviewModel.hashPower}</div>
             <div className={'Priceheading B2 SemiBold'}>Price</div>
             <div className={'PriceRow FlexRow'}>
-                <div className={'SVG Icon'} dangerouslySetInnerHTML={{ __html: SvgCudosLogo }}/>
+                <Svg svg={SvgCudosLogo}/>
                 <div className={'Price H4 Bold'}>{nftPreviewModel.price.toFixed(0)} CUDOS</div>
             </div>
         </div>

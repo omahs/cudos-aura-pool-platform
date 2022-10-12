@@ -22,9 +22,11 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 
 import S from '../../../../core/utilities/Main';
 import '../styles/page-rewards-calculator-component.css';
-import MiningFarmModel from '../../../mining-farm/entities/MiningFarmModel';
-import Autocomplete, { AutocompleteOption } from '../../../../core/presentation/components/Autcomplete';
+import MiningFarmModel from '../../../mining-farm-view/entities/MiningFarmModel';
+import Autocomplete from '../../../../core/presentation/components/Autcomplete';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import AutocompleteOption from '../../../../core/entities/AutocompleteOption';
+import Svg from '../../../../core/presentation/components/Svg';
 
 interface Props {
     rewardsCalculatorStore?: RewardsCalculatorStore
@@ -131,7 +133,7 @@ function RewardsCalculatorPageComponent({ rewardsCalculatorStore }: Props) {
                                     InputProps={{
                                         endAdornment: <InputAdornment position="end" >
                                             <div className={'FlexRow EnableEditButton Pointer'} onClick={toggleDifficultyEdit}>
-                                                <DriveFileRenameOutlineIcon/>
+                                                <Svg svg={DriveFileRenameOutlineIcon} />
                                             </div>
                                         </InputAdornment>,
                                     }}
@@ -143,7 +145,7 @@ function RewardsCalculatorPageComponent({ rewardsCalculatorStore }: Props) {
                                     type={BUTTON_TYPE.ROUNDED}
                                     onClick={rewardsCalculatorStore.resetDefaults}
                                 >
-                                    <ReplayIcon/>
+                                    <Svg svg={ReplayIcon}/>
                                     Reset values
                                 </Button>
                             </Actions>
@@ -155,8 +157,8 @@ function RewardsCalculatorPageComponent({ rewardsCalculatorStore }: Props) {
                                     <div className={'PriceChange FlexRow'}>
                                         <div className={'PriceText'}>{rewardsCalculatorStore.getPriceChangeFormated()}</div>
                                         {bitcoinPriceChange >= 0
-                                            ? <ArrowOutwardIcon/>
-                                            : <SouthEastIcon/>
+                                            ? <Svg svg={ArrowOutwardIcon}/>
+                                            : <Svg svg={SouthEastIcon}/>
                                         }
                                     </div>
                                 </div>

@@ -8,6 +8,7 @@ import Datepicker from './Datepicker';
 
 import SvgClose from '@mui/icons-material/Close';
 import '../styles/range-datepicker.css'
+import Svg from './Svg';
 
 type Props = ReactDatePickerProps & {
     datepickerState: RangeDatepickerState;
@@ -87,7 +88,7 @@ export default function RangeDatepicker({ datepickerState, dateRangeFormat, empt
                     <div className={'DatePickerInputText'}> { formatDate(datepickerState.endDate) } </div>
                     {isDateValid(datepickerState.startDate)
                         ? <div onClick={onClickClearDates} className={'DateClearButton StartRight SVG Clickable'}>
-                            <SvgClose />
+                            <Svg svg={SvgClose} />
                         </div> : ''}
                 </fieldset>
             } />

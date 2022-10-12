@@ -2,60 +2,48 @@
 
 import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
-
-import AlertStore from '../../../common/js/stores/AlertStore';
-import PopupConnectWalletsStore from '../../../common/js/stores/PopupConnectWalletsStore';
-
-import PageComponent from '../../../common/js/components-pages/PageComponent';
-import ContextPageComponent, { ContextPageComponentProps } from './common/ContextPageComponent';
-import PageHeader from '../components-inc/PageHeader';
-import PageFooter from '../components-inc/PageFooter';
-import S from '../../../common/js/utilities/Main';
-
-import SvgCopy from '../../../common/svg/copy.svg';
-import './../../css/components-pages/page-collection-view-component.css';
-import NftPreviewsGrid from '../components-inc/NftPreviewsGrid';
-import ProfileHeader from '../../../common/js/components-inc/ProfileHeader';
-import ProjectUtils from '../../../common/js/ProjectUtils';
-import Breadcrumbs from '../components-inc/Breadcrumbs';
-import CollectionProfile from '../../../common/js/models/CollectionProfile';
-import CollectionsApi from '../../../common/js/api/CollectionsApi';
-import PageLayoutComponent from 'apps/frontend/src/core/presentation/components/PageLayoutComponent';
+import LaunchIcon from '@mui/icons-material/Launch';
+import '../styles/page-collection-view-component.css';
+import NftPreviewsGrid from '../../../nfts-explore/presentation/components/NftPreviewsGrid';
+import ProfileHeader from '../components/ProfileHeader';
+import ProjectUtils from '../../../../core/utilities/ProjectUtils';
+import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
+import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import CollectionViewPageStore from '../stores/CollectionViewPageStore';
+import { useParams } from 'react-router-dom';
+import Svg from '../../../../core/presentation/components/Svg';
 
-interface Props extends ContextPageComponentProps {
+interface Props {
     collectionViewPageStore?: CollectionViewPageStore
 }
 
-function CollectionViewPageComponent({collectionViewPageStore}: Props) {
+function CollectionViewPageComponent({ collectionViewPageStore }: Props) {
 
-    // TODO: get id from path
+    const { collectionId } = useParams();
     useEffect(
-        () => { 
-            collectionViewPageStore.innitiate("1");
-        });
-            nftDetailsStore.innitiate(nftId);
+        () => {
+            collectionViewPageStore.innitiate(collectionId);
         },
         [],
     );
 
-        const collectionProfile = this.state.collectionProfile;
+    const collectionProfile = collectionViewPageStore.collectionProfile;
 
-        // TODO: get crumbs from router
-        const crumbs = [
-            { name: 'Marketplace', onClick: () => {} },
-            { name: 'Collection Details', onClick: () => {} },
-        ]
+    // TODO: get crumbs from router
+    const crumbs = [
+        { name: 'Marketplace', onClick: () => {} },
+        { name: 'Collection Details', onClick: () => {} },
+    ]
 
-        return (
-            collectionProfile === null ? ''
-                :<PageLayoutComponent
+    return (
+        collectionProfile === null ? ''
+            : <PageLayoutComponent
                 className = { 'PageCollectionView' }
                 modals = { [
                 ] } >
                 <div className={'PageContent'} >
-                    <PageHeader />
-                    <Breadcrumbs crumbs={crumbs} onClickback={() => {}}/>
+                    {/* <PageHeader /> */}
+                    <Breadcrumbs crumbs={crumbs} />
                     <ProfileHeader coverPictureUrl={collectionProfile.coverImgUrl} profilePictureUrl={collectionProfile.profileImgurl} />
                     <div className={'Heading2 CollectionHeadingName'}>{collectionProfile.name}</div>
                     <div className={'ProfileInfo Grid'}>
@@ -94,9 +82,8 @@ function CollectionViewPageComponent({collectionViewPageStore}: Props) {
                                 <div className={'CollectionInfoLabel'}>Address</div>
                                 <div className={'CollectionInfoValue'}>
                                     {collectionProfile.ownerAddress}
-                                    <div
-                                        className={'SVG Icon Pointer '}
-                                        dangerouslySetInnerHTML={{ __html: SvgCopy }}
+                                    <Svg svg={LaunchIcon}
+                                        className={'SVG Icon Clickable '}
                                         onClick={() => ProjectUtils.copyText(collectionProfile.ownerAddress)}
                                     />
                                 </div>
@@ -105,12 +92,11 @@ function CollectionViewPageComponent({collectionViewPageStore}: Props) {
                     </div>
                     <NftPreviewsGrid
                     />
-                    <PageFooter />
+                    {/* <PageFooter /> */}
                 </div>
-                </PageLayoutComponent> 
+            </PageLayoutComponent>
 
-        )
-    }
+    )
 }
 
 export default inject((stores) => stores)(observer(CollectionViewPageComponent));

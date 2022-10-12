@@ -20,6 +20,7 @@ import '../styles/page-explore-collections-component.css';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import Svg from '../../../../core/presentation/components/Svg';
 
 interface Props {
     exploreCollectionsStore?: ExploreCollectionsStore
@@ -59,7 +60,7 @@ function ExploreCollectionsPageComponent({ exploreCollectionsStore }: Props) {
                             placeholder = {'Search Collections, Farms and accounts'}
                             InputProps={{
                                 startAdornment: <InputAdornment position="start" >
-                                    <SearchIcon/>
+                                    <Svg svg={SearchIcon}/>
                                 </InputAdornment>,
                             }}
                         />

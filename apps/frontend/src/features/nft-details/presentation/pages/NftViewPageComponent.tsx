@@ -15,6 +15,7 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import NftDetailsStore from '../stores/NftDetailsStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import Svg from '../../../../core/presentation/components/Svg';
 
 interface Props {
     nftDetailsStore?: NftDetailsStore
@@ -146,7 +147,7 @@ function NftViewPageComponent({ nftDetailsStore }: Props) {
                                 <div className={'DataRow FlexRow'}>
                                     <div className={'DataLabel'}>Price</div>
                                     <div className={'DataValue NftPrice FlexRow'}>
-                                        <div className={'SVG Icon'} dangerouslySetInnerHTML={{ __html: SvgCudos }}/>
+                                        <Svg svg={SvgCudos}/>
                                         <div className={'H3 Bold'}>{nft.price.toFixed(0)} CUDOS</div>
                                         <div className={'SubPrice B2 SemiBold'}>${nft.price.multipliedBy(nftDetailsStore.cudosPrice).toFixed(2)}</div>
                                     </div>
