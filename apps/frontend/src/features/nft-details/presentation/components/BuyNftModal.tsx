@@ -19,10 +19,6 @@ type Props = {
 function BuyNftModal({ resellNft, buyNftModalStore }: Props) {
     const nft = buyNftModalStore.nft;
 
-    function onClickViewItem() {
-        buyNftModalStore.hide();
-    }
-
     function onClickResellNft() {
         buyNftModalStore.hide();
         resellNft();
@@ -98,7 +94,7 @@ function BuyNftModal({ resellNft, buyNftModalStore }: Props) {
                             >Resell NFT</Button>
                             <Button
                                 radius={BUTTON_RADIUS.DEFAULT}
-                                onClick={onClickViewItem}
+                                onClick={buyNftModalStore.hide}
                             >View Item</Button>
                         </Actions>
                     </div> : ''}

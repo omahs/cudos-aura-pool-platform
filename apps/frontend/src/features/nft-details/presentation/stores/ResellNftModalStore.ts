@@ -58,7 +58,7 @@ export default class ResellNftModalStore extends ModalStore {
         this.nft = nft;
         this.cudosPrice = cudosPrice;
         this.collectionName = collectionName;
-        this.modalStage = ModalStage.PREVIEW;
+        this.modalStage = ModalStage.FAIL;
         this.price = 0;
         this.priceDisplay = '0';
         this.autoPay = S.INT_FALSE;
@@ -115,6 +115,10 @@ export default class ResellNftModalStore extends ModalStore {
 
     isStageSuccess(): boolean {
         return this.modalStage === ModalStage.SUCCESS;
+    }
+
+    isStageFail(): boolean {
+        return this.modalStage === ModalStage.FAIL;
     }
 
     getTxLink(): string {
