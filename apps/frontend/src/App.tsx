@@ -22,6 +22,9 @@ import CollectionViewPageStore from './features/collection-details/presentation/
 import FarmViewPageStore from './features/mining-farm-view/presentation/stores/FarmViewPageStore';
 import UserProfilePageStore from './features/user-profile/presentation/stores/UserProfilePageStore';
 import UserProfileStorageRepo from './features/user-profile/data/repo/UserProfileStorageRepo';
+import WalletStore from './features/ledger/presentation/stores/WalletStore';
+import BuyNftModal from './features/nft-details/presentation/components/BuyNftModal';
+import BuyNftModalStore from './features/nft-details/presentation/stores/BuyNftModalStore';
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
@@ -32,7 +35,7 @@ const cudosRepo = new CudosStorageRepo();
 const miningFarmRepo = new MiningFarmStorageRepo();
 const collectionRepo = new CollectionStorageRepo();
 const nftRepo = new NftStorageRepo(collectionRepo);
-const userProfileRepo = new UserProfileStorageRepo(collectionRepo);
+const userProfileRepo = new UserProfileStorageRepo();
 
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinRepo, miningFarmRepo);
 const exploreCollectionsStore = new ExploreCollectionsStore(collectionRepo);
@@ -41,6 +44,8 @@ const nftDetailsStore = new NftDetailsStore(nftRepo, cudosRepo, bitcoinRepo);
 const collectionViewPageStore = new CollectionViewPageStore(collectionRepo);
 const farmViewPageStore = new FarmViewPageStore(miningFarmRepo, collectionRepo);
 const userProfilePageStore = new UserProfilePageStore(nftRepo, userProfileRepo, bitcoinRepo);
+const walletStore = new WalletStore();
+const buyNftModalStore = new BuyNftModalStore(cudosRepo);
 
 const App = () => {
 
@@ -55,14 +60,16 @@ const App = () => {
             <Provider
                 appStore = { appStore }
                 alertStore = { alertStore }
+                walletStore = { walletStore }
                 exampleModalStore = { exampleModalStore }
                 rewardsCalculatorStore = { rewardsCalculatorStore }
                 exploreCollectionsStore = { exploreCollectionsStore }
                 nftPreviewsGridStore = { nftPreviewsGridStore }
                 nftDetailsStore = { nftDetailsStore }
                 collectionViewPageStore = { collectionViewPageStore }
-                farmViewPageStore = { farmViewPageStore } 
-                userProfilePageStore = { userProfilePageStore }>
+                farmViewPageStore = { farmViewPageStore }
+                userProfilePageStore = { userProfilePageStore }
+                buyNftModalStore = { buyNftModalStore }>
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

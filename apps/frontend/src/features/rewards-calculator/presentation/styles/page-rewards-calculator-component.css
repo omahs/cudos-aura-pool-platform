@@ -1,19 +1,6 @@
-.PageRewardsCalculator {
-    --page-spacing-h: 72px;
-}
-
-header.PageHeader {
-    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
-    background: transparent;
-}
-
-footer.PageFooter {
-    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
-    margin-top: auto;
-}
 
 .RewardsCalculator {
-    padding: 72px;
+    padding: 70px var(--page-spacing-h);
 }
 
 .RewardsCalculatorHeading {

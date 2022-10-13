@@ -27,9 +27,6 @@ export default class NftStorageRepo implements NftRepo {
         const nftPreviewJsons = this.storageHelper.nftsJson
             .filter(
                 (json) => {
-                    console.log(json)
-                    console.log(ownerAddress)
-
                     return json.currentOwnerAddress === ownerAddress
                 },
             )

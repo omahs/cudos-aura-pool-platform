@@ -1,9 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-// import PageHeader from '../components-inc/PageHeader';
-// import PageFooter from '../components-inc/PageFooter';
-
 import S from '../../../../core/utilities/Main';
 
 import SearchIcon from '@mui/icons-material/Search';
@@ -15,6 +12,8 @@ import NftPreviewsGrid from '../components/NftPreviewsGrid';
 import NftPreviewsGridStore from '../stores/NftPreviewsGridStore';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import Svg from '../../../../core/presentation/components/Svg';
+import PageHeader from '../../../header/presentation/components/PageHeader';
+import PageFooter from '../../../footer/presentation/components/PageFooter';
 
 interface Props {
     nftPreviewsGridStore?: NftPreviewsGridStore;
@@ -27,8 +26,8 @@ function ExploreNftsPageComponent({ nftPreviewsGridStore }: Props) {
             className = { 'PageExploreNfts' }
             modals = { [
             ] } >
+            <PageHeader />
             <div className={'PageContent'} >
-                {/* <PageHeader /> */}
                 <div className={'ExploreNfts FlexColumn'}>
                     <div className={'PageHeading H1 Bold'}>Explore NFTs</div>
                     <Input
@@ -56,8 +55,8 @@ function ExploreNftsPageComponent({ nftPreviewsGridStore }: Props) {
                 </div>
                 <NftPreviewsGrid
                 />
-                {/* <PageFooter /> */}
             </div>
+            <PageFooter />
         </PageLayoutComponent>
     )
 

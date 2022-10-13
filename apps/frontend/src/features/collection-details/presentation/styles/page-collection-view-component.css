@@ -1,17 +1,6 @@
 
-
-header.PageHeader {
-    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
-    background: transparent;
-}
-
-footer.PageFooter {
-    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
-    margin-top: auto;
-}
-
 .PageCollectionView .PageContent {
-    padding: 0 75px;
+    padding: 70px var(--page-spacing-h);
 }
 
 .PageCollectionView .PageContent .ProfileInfo {

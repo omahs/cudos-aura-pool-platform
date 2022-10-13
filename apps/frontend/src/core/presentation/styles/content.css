@@ -51,6 +51,8 @@
     --color-checkbox-border-active:  var(--color-primary);  
 
     --color-modal-background: #fff;
+
+    --page-spacing-h: 70px;
     /* theme */
 }
 

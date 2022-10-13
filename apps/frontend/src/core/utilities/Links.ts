@@ -1,0 +1,13 @@
+export const WEBSITE = 'https://www.cudos.org/';
+export const DISCORD = 'https://discord.com/invite/t397SKqf4u';
+export const TELEGRAM = 'https://t.me/cudostelegram';
+export const TWITTER = 'https://twitter.com/CUDOS_';
+export const GITHUB = 'https://github.com/CudoVentures';
+export const REDDIT = 'https://www.reddit.com/r/CUDOS/';
+export const LINKEDIN = 'https://www.linkedin.com/company/cudos1/';
+export const FACEBOOK = 'https://www.facebook.com/cudos.org/';
+export const MEDIUM = 'https://cudostoken.medium.com/';
+export const SPOTIFY = 'https://open.spotify.com/show/2lZuBXJ270g7taK06tnK35';
+export const YOUTUBE = 'https://www.youtube.com/c/CUDOS';
+export const TERMS_AND_CONDITIONS = 'https://www.cudos.org/terms-and-conditions/';
+export const PRIVACY_POLICY = 'https://www.cudos.org/privacy-policy/';

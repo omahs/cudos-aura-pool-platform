@@ -4,6 +4,8 @@ import ExploreCollectionsStore from '../stores/ExploreCollectionsStore';
 import S from '../../../../core/utilities/Main';
 
 import '../styles/top-collections.css';
+import { useNavigate } from 'react-router-dom';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 interface Props {
     selectedTopCollectionPeriod: number;
@@ -14,6 +16,9 @@ interface Props {
 }
 
 export default function TopCollections(props: Props) {
+
+    const navigate = useNavigate();
+
     return (
         <div className={'TopCollectionsList'}>
             <div className={'HeadingRow Grid GridColumns3'}>
@@ -22,7 +27,7 @@ export default function TopCollections(props: Props) {
                     <div className={'PeriodButtonsRow FlexRow'}>
                         {ExploreCollectionsStore.TOP_COLLECTION_PERIODS.map((period, index) => <div
                             key={index}
-                            className={`PeriodButton Pointer B3 Semibold ${S.CSS.getActiveClassName(props.selectedTopCollectionPeriod === index)}`}
+                            className={`PeriodButton Clickable B3 Semibold ${S.CSS.getActiveClassName(props.selectedTopCollectionPeriod === index)}`}
                             onClick={() => props.changeTopCollectionPeriod(index)}
                         >
                             {period}
@@ -33,7 +38,11 @@ export default function TopCollections(props: Props) {
             </div>
             <div className={'CollectionsGrid Grid GridColumns3'}>
                 {props.topCollectionPreviews.map((collection, index) => {
-                    return <div key={index} className={'CollectionPreview'}>
+                    return <div
+                        key={index}
+                        className={'CollectionPreview Clickable'}
+                        onClick={() => navigate(`${AppRoutes.COLLECTION_VIEW}/${collection.id}`)}
+                    >
                         <div className={'PreviewIndex B2 Bold'}>{index + 1}</div>
                         <div
                             className={'PreviewImage'}
