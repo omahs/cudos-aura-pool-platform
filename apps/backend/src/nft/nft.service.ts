@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { v4 as uuid } from 'uuid';
-import { Collection } from '../collection/collection.model';
 import { CreateNFTDto } from './dto/create-nft.dto';
 import { UpdateNFTDto } from './dto/update-nft.dto';
 import { NFT } from './nft.model';
-import { NftStatus } from './utils';
+import { NftFilters, NftStatus } from './utils';
 
 @Injectable()
 export class NFTService {
@@ -14,10 +13,11 @@ export class NFTService {
     private nftModel: typeof NFT,
     ) {}
 
-    async findAll(): Promise<NFT[]> {
+    async findAll(filters: Partial<NftFilters>): Promise<NFT[]> {
         const nfts = await this.nftModel.findAll({
-            include: [Collection],
+            where: { ...filters },
         });
+
         return nfts;
     }
 
@@ -41,9 +41,8 @@ export class NFTService {
         return nfts;
     }
 
-    async findOne(id: number): Promise<NFT> {
-        const nft = await this.nftModel.findByPk(id);
-        return nft;
+    async findOne(id: string): Promise<NFT> {
+        return this.nftModel.findByPk(id);
     }
 
     async createOne(
@@ -61,7 +60,7 @@ export class NFTService {
     }
 
     async updateOne(
-        id: number,
+        id: string,
         updateNFTDto: Partial<UpdateNFTDto>,
     ): Promise<NFT> {
         const [count, [nft]] = await this.nftModel.update(updateNFTDto, {
@@ -72,9 +71,9 @@ export class NFTService {
         return nft;
     }
 
-    async updateStatus(id: number, status: NftStatus): Promise<NFT> {
+    async updateStatus(id: string, status: NftStatus): Promise<NFT> {
         const [count, [nft]] = await this.nftModel.update(
-            { status, deleted_at: new Date() },
+            { status },
             {
                 where: { id },
                 returning: true,
@@ -84,7 +83,7 @@ export class NFTService {
         return nft;
     }
 
-    async deleteOne(id: number): Promise<NFT> {
+    async deleteOne(id: string): Promise<NFT> {
         const [count, [nft]] = await this.nftModel.update(
             { deleted_at: new Date(), status: NftStatus.DELETED },
             {

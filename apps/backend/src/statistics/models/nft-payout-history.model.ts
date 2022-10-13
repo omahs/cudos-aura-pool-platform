@@ -2,13 +2,11 @@ import {
     Column,
     Model,
     Table,
-    BelongsTo,
     PrimaryKey,
     Unique,
     AllowNull,
-    ForeignKey,
+    HasMany,
 } from 'sequelize-typescript';
-import { NFT } from '../../nft/nft.model';
 import { NftOwnersPayoutHistory } from './nft-owners-payout-history.model';
 
 @Table({
@@ -42,6 +40,14 @@ export class NftPayoutHistory extends Model {
   @Column
       tx_hash: string;
 
-  @BelongsTo(() => NftOwnersPayoutHistory)
+  @AllowNull(false)
+  @Column
+      maintenance_fee: number;
+
+  @AllowNull(false)
+  @Column
+      cudo_part_of_maintenance_fee: number;
+
+  @HasMany(() => NftOwnersPayoutHistory)
       nft_owners_payout_history: NftOwnersPayoutHistory;
 }

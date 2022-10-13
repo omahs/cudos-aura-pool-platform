@@ -10,6 +10,7 @@ import {
     IsUrl,
     AllowNull,
     DataType,
+    IsUUID,
 } from 'sequelize-typescript';
 import { User } from '../user/user.model';
 import { Collection } from '../collection/collection.model';
@@ -22,13 +23,12 @@ import { NftStatus } from './utils';
 export class NFT extends Model {
   @PrimaryKey
   @Unique
-  @Column
-      id: number;
-
-  @AllowNull(false)
-  @Unique
-  @Column
-      uuid: string;
+  @IsUUID(4)
+  @Column({
+      type: DataType.UUID,
+      defaultValue: DataType.UUIDV4,
+  })
+      id: string;
 
   @AllowNull(false)
   @Column

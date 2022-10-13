@@ -9,7 +9,10 @@ import {
     Put,
     Request,
     UseGuards,
+    UsePipes,
+    ValidationPipe,
 } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { CollectionService } from '../collection/collection.service';
 import { Collection } from '../collection/collection.model';
 import RoleGuard from '../auth/guards/role.guard';
@@ -44,6 +47,7 @@ export class FarmController {
       return this.collectionService.findByFarmId(id);
   }
 
+  @ApiBearerAuth()
   @UseGuards(RoleGuard([Role.FARM_ADMIN]))
   @Post()
   async create(
@@ -53,6 +57,7 @@ export class FarmController {
       return this.farmService.createOne(createFarmDto, req.user.id);
   }
 
+  @ApiBearerAuth()
   @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Put(':id')
   async update(
@@ -62,6 +67,7 @@ export class FarmController {
       return this.farmService.updateOne(id, updateFarmDto);
   }
 
+  @ApiBearerAuth()
   @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<Farm> {

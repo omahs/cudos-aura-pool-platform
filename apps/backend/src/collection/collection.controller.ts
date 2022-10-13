@@ -22,6 +22,8 @@ import RoleGuard from '../auth/guards/role.guard';
 import { Role } from '../user/roles';
 import { IsCreatorGuard } from './guards/is-creator.guard';
 import { UpdateCollectionStatusDto } from './dto/update-collection-status.dto';
+import { CollectionFilters } from './utils';
+import { ParseCollectionQueryPipe } from './pipes/collection-query.pipe';
 
 @Controller('collection')
 export class CollectionController {
@@ -32,24 +34,9 @@ export class CollectionController {
 
   @Get()
     async findAll(
-    @Query('creator_id') creator_id: number,
-    @Query('farm_id') farm_id: number,
+    @Query(ParseCollectionQueryPipe) filters: Partial<CollectionFilters>,
     ): Promise<Collection[]> {
-        let result = await this.collectionService.findAll();
-
-        if (creator_id) {
-            result = result.filter(
-                (collection: Collection) => collection.creator_id === creator_id,
-            );
-        }
-
-        if (farm_id) {
-            result = result.filter(
-                (collection: Collection) => collection.farm_id === farm_id,
-            );
-        }
-
-        return result;
+        return this.collectionService.findAll(filters);
     }
 
   @Get(':id')

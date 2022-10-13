@@ -1,5 +1,5 @@
 import { NftStatus } from '../utils';
 
 export class UpdateNFTStatusDto {
-    status: NftStatus.APPROVED | NftStatus.REJECTED;
+    status: NftStatus.APPROVED | NftStatus.REJECTED | NftStatus.MINTED;
 }

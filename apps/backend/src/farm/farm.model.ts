@@ -41,15 +41,19 @@ export class Farm extends Model {
 
   @AllowNull(false)
   @Column
-      btc_wallet: string;
+      address_for_receiving_rewards_from_pool: string;
 
   @AllowNull(false)
   @Column
-      default_btc_payout_address: string;
+      leftover_reward_payout_address: string;
 
   @AllowNull(false)
   @Column
-      maintenance_fee: number;
+      maintenance_fee_payout_address: string;
+
+  @AllowNull(false)
+  @Column
+      maintenance_fee_in_btc: number;
 
   @AllowNull(false)
   @Column
