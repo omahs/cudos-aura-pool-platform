@@ -45,7 +45,7 @@ export default function AppRouter() {
                 <Route index = { true } element = { <ExploreCollectionsPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPageComponent /> } />
-                <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePageComponent /> } />
+                <Route path = { `${AppRoutes.USER_PROFILE}/:userAddress` } element = { <UserProfilePageComponent /> } />
                 <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPageComponent /> } />
                 <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPageComponent /> } />
                 <Route path = { `${AppRoutes.FARM_VIEW}/:farmId` } element = { <FarmViewPageComponent /> } />

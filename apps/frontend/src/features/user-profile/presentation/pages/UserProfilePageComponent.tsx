@@ -11,6 +11,7 @@ import UserProfileNfts from '../components/UserProfileNfts';
 import { Header } from '@nestjs/common';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
+import { useParams } from 'react-router-dom';
 
 interface Props {
     appStore?: AppStore
@@ -19,11 +20,12 @@ interface Props {
 }
 
 function UserProfilePageComponent({ appStore, userProfilePageStore }: Props) {
+    const { userAddress } = useParams();
 
     useEffect(() => {
         appStore.incrementLoading();
 
-        userProfilePageStore.innitiate('cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lktde3g6', () => {
+        userProfilePageStore.innitiate(userAddress, () => {
             appStore.decrementLoading();
         });
     }, [])

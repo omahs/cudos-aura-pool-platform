@@ -10,8 +10,7 @@ export default class UserProfileStorageRepo implements UserProfileRepo {
     }
     fetchProfileByAddress(address: string, callback: (UserProfileModel) => void) {
         const profileJson = this.storageHelper.userProfilesJson.find((json) => json.address === address);
-
-        callback(UserProfileModel.fromJson(profileJson));
+        callback(profileJson ? UserProfileModel.fromJson(profileJson) : null);
     }
 
 }

@@ -1,6 +1,5 @@
 import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable, observable } from 'mobx';
-import CollectionPreview from '../../../collections-marketplace/entities/CollectionPreview';
 import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
 import NftPreviewModel from '../../../nfts-explore/entities/NftPreviewModel';
 import UserProfileRepo from '../repos/UserProfileRepo';

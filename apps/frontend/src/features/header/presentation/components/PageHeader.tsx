@@ -26,8 +26,13 @@ function PageHeader({ walletStore }: Props) {
         && location.pathname !== AppRoutes.USER_PROFILE
     }
 
-    function onClickAddressMenu() {
+    function onClickAddress() {
+        navigate(`${AppRoutes.USER_PROFILE}/${walletStore.getKeplrAddress()}`)
+    }
 
+    function onClickAddressMenu(event) {
+        event.stopPropagation();
+        // TODO
     }
 
     return (
@@ -39,7 +44,7 @@ function PageHeader({ walletStore }: Props) {
 
                 {walletStore.isKeplrConnected()
                     ? <>
-                        <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(location.pathname === AppRoutes.USER_PROFILE)}`} onClick={() => navigate(AppRoutes.USER_PROFILE)}>Profile</div>
+                        <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(location.pathname === AppRoutes.USER_PROFILE)}`} onClick={onClickAddress}>Profile</div>
                         <div className={'VerticalSeparator'} />
                         <div className={'FlexRow BalanceRow B2'}>
                             <Svg svg={AccountBalanceWalletIcon} />

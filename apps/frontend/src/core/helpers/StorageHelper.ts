@@ -16,6 +16,7 @@ const miningFarmsJson = [
 
 const userProfilesJson = [
     jsonUserProfile('1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonUserProfile('1', 'NFT BOG', 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0', '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
 const bitcoinDataJson = jsonBitcoinData(23336, 53.3, 6.25, '29794407589312');
