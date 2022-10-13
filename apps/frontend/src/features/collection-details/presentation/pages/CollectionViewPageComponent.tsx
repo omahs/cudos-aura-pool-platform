@@ -13,6 +13,8 @@ import CollectionViewPageStore from '../stores/CollectionViewPageStore';
 import { useParams } from 'react-router-dom';
 import Svg from '../../../../core/presentation/components/Svg';
 import NftPreviewsGridStore from '../../../nfts-explore/presentation/stores/NftPreviewsGridStore';
+import PageHeader from '../../../header/presentation/components/PageHeader';
+import PageFooter from '../../../footer/presentation/components/PageFooter';
 
 interface Props {
     collectionViewPageStore?: CollectionViewPageStore
@@ -30,7 +32,6 @@ function CollectionViewPageComponent({ collectionViewPageStore, nftPreviewsGridS
         [],
     );
 
-
     // TODO: get crumbs from router
     const crumbs = [
         { name: 'Marketplace', onClick: () => {} },
@@ -43,8 +44,8 @@ function CollectionViewPageComponent({ collectionViewPageStore, nftPreviewsGridS
                 className = { 'PageCollectionView' }
                 modals = { [
                 ] } >
+                <PageHeader />
                 <div className={'PageContent'} >
-                    {/* <PageHeader /> */}
                     <Breadcrumbs crumbs={crumbs} />
                     <ProfileHeader coverPictureUrl={collectionProfile.coverImgUrl} profilePictureUrl={collectionProfile.profileImgurl} />
                     <div className={'Heading2 CollectionHeadingName'}>{collectionProfile.name}</div>
@@ -94,8 +95,8 @@ function CollectionViewPageComponent({ collectionViewPageStore, nftPreviewsGridS
                     </div>
                     <NftPreviewsGrid
                     />
-                    {/* <PageFooter /> */}
                 </div>
+                <PageFooter />
             </PageLayoutComponent>
 
     )

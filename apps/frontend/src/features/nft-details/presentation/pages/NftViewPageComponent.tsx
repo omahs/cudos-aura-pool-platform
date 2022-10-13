@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 
-// import PageHeader from '../components-inc/PageHeader';
-// import PageFooter from '../components-inc/PageFooter';
 import S from '../../../../core/utilities/Main';
 
 import '../styles/page-nft-view-component.css';
@@ -16,12 +14,17 @@ import NftDetailsStore from '../stores/NftDetailsStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import Svg from '../../../../core/presentation/components/Svg';
+import PageHeader from '../../../header/presentation/components/PageHeader';
+import PageFooter from '../../../footer/presentation/components/PageFooter';
+import BuyNftModalStore from '../stores/BuyNftModalStore';
+import BuyNftModal from '../components/BuyNftModal';
 
 interface Props {
     nftDetailsStore?: NftDetailsStore
+    buyNftModalStore?: BuyNftModalStore
 }
 
-function NftViewPageComponent({ nftDetailsStore }: Props) {
+function NftViewPageComponent({ nftDetailsStore, buyNftModalStore }: Props) {
 
     const { nftId } = useParams();
 
@@ -51,10 +54,13 @@ function NftViewPageComponent({ nftDetailsStore }: Props) {
         nft === null ? ''
             : <PageLayoutComponent
                 className = { 'PageNftView' }
-                modals = { [
-                ] } >
+                modals = {
+                    <>
+                        <BuyNftModal />
+                    </>
+                } >
+                <PageHeader />
                 <div className={'PageContent'} >
-                    {/* <PageHeader /> */}
                     <Breadcrumbs crumbs={crumbs} onClickback={() => {}}/>
                     <div className={'Grid GridColumns2'}>
                         <div className={'LeftLayout FlexColumn'}>
@@ -154,7 +160,7 @@ function NftViewPageComponent({ nftDetailsStore }: Props) {
                                 </div>
                                 {/* TODO: open buy nft popup */}
                                 <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
-                                    <Button>Buy now for {nft.price.toFixed(0)} CUDOS </Button>
+                                    <Button onClick={() => buyNftModalStore.showSignal(nft, nftDetailsStore.cudosPrice)}>Buy now for {nft.price.toFixed(0)} CUDOS </Button>
                                 </Actions>
                             </div>
                         </div>
@@ -163,8 +169,8 @@ function NftViewPageComponent({ nftDetailsStore }: Props) {
                     <div className={'H2 Bold'}>Collection Items</div>
                     {/* TODO: slider */}
                     <div className={'Slider'}>SLIDER PLACEHOLDER</div>
-                    {/* <PageFooter /> */}
                 </div>
+                <PageFooter />
             </PageLayoutComponent>
 
     )

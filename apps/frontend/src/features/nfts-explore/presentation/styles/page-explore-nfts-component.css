@@ -1,16 +1,6 @@
 
-header.PageHeader {
-    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
-    background: transparent;
-}
-
-footer.PageFooter {
-    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
-    margin-top: auto;
-}
-
 .PageExploreNfts .PageContent {
-    padding: 72px;
+    padding: 70px  var(--page-spacing-h);
 }
 
 .PageExploreNfts .PageContent .ExploreNfts {

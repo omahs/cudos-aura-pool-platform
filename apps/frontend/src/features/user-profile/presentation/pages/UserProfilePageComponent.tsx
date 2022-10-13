@@ -8,6 +8,9 @@ import { inject, observer } from 'mobx-react';
 import UserProfilePageStore, { PROFILE_PAGES } from '../stores/UserProfilePageStore';
 import S from '../../../../../src/core/utilities/Main';
 import UserProfileNfts from '../components/UserProfileNfts';
+import { Header } from '@nestjs/common';
+import PageHeader from '../../../header/presentation/components/PageHeader';
+import PageFooter from '../../../footer/presentation/components/PageFooter';
 
 interface Props {
     appStore?: AppStore
@@ -32,6 +35,7 @@ function UserProfilePageComponent({ appStore, userProfilePageStore }: Props) {
             className = { 'PageUserProfile' }
             modals = { [
             ] } >
+            <PageHeader />
             <div className={'PageContent'} >
                 <ProfileHeader coverPictureUrl={userProfile.coverImgUrl} profilePictureUrl={userProfile.profileImgurl} />
                 <div className={'ProfileHeaderDataRow FlexRow FlexGrow'}>
@@ -70,9 +74,10 @@ function UserProfilePageComponent({ appStore, userProfilePageStore }: Props) {
                         <div onClick={() => userProfilePageStore.setProfilePage(PROFILE_PAGES.HISTORY)} className={`NavButton Clickable ${S.CSS.getActiveClassName(userProfilePageStore.profilePage === PROFILE_PAGES.HISTORY)}`}>History</div>
                     </div>
                 </div>
-                {userProfilePageStore.profilePage === PROFILE_PAGES.NFTS 
-                ? <UserProfileNfts userProfilePageStore={userProfilePageStore}/> : ''}
-            </div>  
+                {userProfilePageStore.profilePage === PROFILE_PAGES.NFTS
+                    ? <UserProfileNfts userProfilePageStore={userProfilePageStore}/> : ''}
+            </div>
+            <PageFooter />
         </PageLayoutComponent>
     )
 

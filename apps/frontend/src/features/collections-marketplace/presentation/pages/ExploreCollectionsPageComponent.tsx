@@ -3,8 +3,6 @@
 import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 
-// import PageHeader from '../components-inc/PageHeader';
-// import PageFooter from '../components-inc/PageFooter';
 import ExploreCollectionsStore from '../stores/ExploreCollectionsStore';
 
 import SearchIcon from '@mui/icons-material/Search';
@@ -21,6 +19,8 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import Svg from '../../../../core/presentation/components/Svg';
+import PageHeader from '../../../header/presentation/components/PageHeader';
+import PageFooter from '../../../footer/presentation/components/PageFooter';
 
 interface Props {
     exploreCollectionsStore?: ExploreCollectionsStore
@@ -46,8 +46,8 @@ function ExploreCollectionsPageComponent({ exploreCollectionsStore }: Props) {
             className = { 'PageExploreCollections' }
             modals = { [
             ] } >
+            <PageHeader />
             <div className={'PageContent'} >
-                {/* <PageHeader /> */}
                 <div className={'ExploreColelctions FlexColumn'}>
                     <div className={'PageHeading H1 Bold'}>Explore NFT Collections</div>
                     <div className={'Grid'}>
@@ -109,8 +109,8 @@ function ExploreCollectionsPageComponent({ exploreCollectionsStore }: Props) {
                         See All Collections
                     </Button>
                 </Actions>
-                {/* <PageFooter /> */}
             </div>
+            <PageFooter />
         </PageLayoutComponent>
     )
 }

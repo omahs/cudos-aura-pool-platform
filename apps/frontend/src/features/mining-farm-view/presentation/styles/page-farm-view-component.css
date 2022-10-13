@@ -1,17 +1,6 @@
 
-
-header.PageHeader {
-    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
-    background: transparent;
-}
-
-footer.PageFooter {
-    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
-    margin-top: auto;
-}
-
 .PageFarmView .PageContent {
-    padding: 0 70px;
+    padding: 70px var(--page-spacing-h);
 }
 
 .PageFarmView .PageContent .Grid {

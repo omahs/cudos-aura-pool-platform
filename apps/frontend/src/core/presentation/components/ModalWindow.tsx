@@ -130,8 +130,6 @@ const ModalWindow = (props: React.PropsWithChildren < ModalWindowProps >) => {
 
 }
 
-export default observer(ModalWindow);
-
 ModalWindow.defaultProps = {
     className: S.Strings.EMPTY,
     hasClose: true,
@@ -141,3 +139,5 @@ ModalWindow.defaultProps = {
     contentPadding: true,
     contentBox: true,
 };
+
+export default observer(ModalWindow);

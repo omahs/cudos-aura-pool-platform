@@ -7,8 +7,8 @@ import { inject, observer } from 'mobx-react';
 
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
-// import PageHeader from '../../../../features/header/PageHeader';
-// import PageFooter from '../../../../features/header/PageHeader';
+import PageFooter from '../../../../features/footer/presentation/components/PageFooter';
+import PageHeader from '../../../header/presentation/components/PageHeader';
 
 import Input, { InputType } from '../../../../core/presentation/components/Input';
 import RewardsCalculatorStore from '../stores/RewardsCalculatorStore';
@@ -66,8 +66,8 @@ function RewardsCalculatorPageComponent({ rewardsCalculatorStore }: Props) {
             className = { 'PageRewardsCalculator' }
             modals = { [
             ] } >
+            <PageHeader />
             <div className={'PageContent'} >
-                {/* <PageHeader /> */}
                 <div className={'RewardsCalculator'}>
                     <div className={'FlexRow RewardsCalculatorHeading'}>
                         <div className={'H2'}>Calculate Your Potential Rewards</div>
@@ -212,8 +212,8 @@ function RewardsCalculatorPageComponent({ rewardsCalculatorStore }: Props) {
                         </div>
                     </div>
                 </div>
-                {/* <PageFooter /> */}
             </div>
+            <PageFooter />
         </PageLayoutComponent>
     )
 }

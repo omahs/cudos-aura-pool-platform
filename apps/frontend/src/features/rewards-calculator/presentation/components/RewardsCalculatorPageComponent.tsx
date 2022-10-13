@@ -1,7 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-import S from '../../../../core/utilities/Main';
 import AlertStore from '../../../../core/presentation/stores/AlertStore';
 
 import PageComponent from '../../../../core/presentation/components-pages/PageComponent';

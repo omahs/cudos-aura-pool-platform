@@ -1,5 +1,6 @@
 .TopCollectionsList .HeadingRow {
     margin-bottom: 70px;
+    margin-top: 30px;
 }
 
 .TopCollectionsList .HeadingRow .PeriodButtonsRowHolder {
@@ -27,6 +28,7 @@
     grid-template-rows: repeat(6, minmax(0, 1fr));
     grid-auto-flow: column;
     gap: 20px;
+    margin-bottom: 50px;
 }
 
 .TopCollectionsList .CollectionsGrid .CollectionPreview {
