@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { NFTService } from './nft.service';
 import { NFTController } from './nft.controller';
@@ -14,7 +14,7 @@ import { CollectionModule } from '../collection/collection.module';
         SequelizeModule.forFeature([NFT]),
         HttpModule,
         GraphqlModule,
-        CollectionModule,
+        forwardRef(() => CollectionModule),
     ],
     providers: [NFTService, GraphqlService, CollectionService],
     controllers: [NFTController],
