@@ -1,5 +1,5 @@
 import StorageHelper from '../../../../core/helpers/StorageHelper';
-import UserProfileModel from '../../entities/UserProfileModel';
+import UserProfileEntity from '../../entities/UserProfileEntity';
 import UserProfileRepo from '../../presentation/repos/UserProfileRepo';
 
 export default class UserProfileStorageRepo implements UserProfileRepo {
@@ -8,9 +8,9 @@ export default class UserProfileStorageRepo implements UserProfileRepo {
     constructor() {
         this.storageHelper = new StorageHelper();
     }
-    fetchProfileByAddress(address: string, callback: (UserProfileModel) => void) {
+    fetchProfileByAddress(address: string, callback: (userProfileentity: UserProfileEntity) => void) {
         const profileJson = this.storageHelper.userProfilesJson.find((json) => json.address === address);
-        callback(profileJson ? UserProfileModel.fromJson(profileJson) : null);
+        callback(profileJson ? UserProfileEntity.fromJson(profileJson) : null);
     }
 
 }

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import S from '../../../core/utilities/Main';
 
-export default class UserProfileModel {
+export default class UserProfileEntity {
     id: string;
     name: string;
     address: string;
@@ -35,23 +35,23 @@ export default class UserProfileModel {
         }
     }
 
-    static fromJson(json): UserProfileModel {
+    static fromJson(json): UserProfileEntity {
         if (json === null) {
             return null;
         }
 
-        const model = new UserProfileModel();
+        const entity = new UserProfileEntity();
 
-        model.id = json.id ?? model.id;
-        model.name = json.name ?? model.name;
-        model.address = json.address ?? model.address;
-        model.totalBtcEarned = new BigNumber(json.totalBtcEarned) ?? model.totalBtcEarned;
-        model.totalHashPower = Number(json.totalHashPower) ?? model.totalHashPower;
-        model.timestampJoined = Number(json.timestampJoined) ?? model.timestampJoined;
-        model.profileImgurl = json.profileImgurl ?? model.profileImgurl;
-        model.coverImgUrl = json.coverImgUrl ?? model.coverImgUrl;
+        entity.id = json.id ?? entity.id;
+        entity.name = json.name ?? entity.name;
+        entity.address = json.address ?? entity.address;
+        entity.totalBtcEarned = new BigNumber(json.totalBtcEarned) ?? entity.totalBtcEarned;
+        entity.totalHashPower = Number(json.totalHashPower) ?? entity.totalHashPower;
+        entity.timestampJoined = Number(json.timestampJoined) ?? entity.timestampJoined;
+        entity.profileImgurl = json.profileImgurl ?? entity.profileImgurl;
+        entity.coverImgUrl = json.coverImgUrl ?? entity.coverImgUrl;
 
-        return model;
+        return entity;
     }
 
 }

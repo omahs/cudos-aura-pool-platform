@@ -3,7 +3,7 @@ import { makeAutoObservable, observable } from 'mobx';
 import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
 import NftPreviewModel from '../../../nfts-explore/entities/NftPreviewModel';
 import UserProfileRepo from '../repos/UserProfileRepo';
-import UserProfileModel from '../../entities/UserProfileModel';
+import UserProfileEntity from '../../entities/UserProfileEntity';
 import S from '../../../../core/utilities/Main';
 import BitcoinRepo from '../../../bitcoin-data/presentation/repos/BitcoinRepo';
 
@@ -22,7 +22,7 @@ export default class UserProfilePageStore {
     bitcoinRepo: BitcoinRepo;
 
     @observable gridViewStore: GridViewStore;
-    userProfileModel: UserProfileModel;
+    userProfileModel: UserProfileEntity;
     selectedSortIndex: number;
     nftPreviews: NftPreviewModel[];
     bitcoinPrice: number;
