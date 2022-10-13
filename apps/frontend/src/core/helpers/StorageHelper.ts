@@ -21,7 +21,7 @@ const userProfilesJson = [
 const bitcoinDataJson = jsonBitcoinData(23336, 53.3, 6.25, '29794407589312');
 
 const nftsJson = [
-    jsonNft('1', 'Very Cool Name', '3D', '1', 4000, 12000, 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200', 1, 2002312312222, collectionOwnerAddress, collectionOwnerAddress),
+    jsonNft('1', 'Very Cool Name', '3D', '1', 4000, 12000, 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200', 0, 2002312312222, collectionOwnerAddress, 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0'),
     jsonNft('2', 'Ethereum Meme', 'Anime', '1', 4030, 15000, 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200', 1, 2002312312222, collectionOwnerAddress, collectionOwnerAddress),
     jsonNft('3', 'Cudos NFT Name', 'Art', '1', 4200, 2000, 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200', 1, 2002312312222, collectionOwnerAddress, collectionOwnerAddress),
     jsonNft('4', 'Razorlabs Name', 'Anime', '1', 4600, 12000, 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200', 1, 2002312312222, collectionOwnerAddress, collectionOwnerAddress),

@@ -1,4 +1,4 @@
-import { makeAutoObservable, makeObservable, observable } from 'mobx';
+import { action, makeAutoObservable, makeObservable, observable } from 'mobx';
 import { KeplrWallet, SigningStargateClient } from 'cudosjs';
 import S from '../../../../core/utilities/Main';
 import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
@@ -18,6 +18,7 @@ export default class WalletStore {
         makeAutoObservable(this);
     }
 
+    @action
     async connectKeplr(chosenNetwork: string): Promise<void> {
         this.keplrWallet = new KeplrWallet({
             CHAIN_ID: CHAIN_DETAILS.CHAIN_ID[chosenNetwork],
@@ -31,6 +32,7 @@ export default class WalletStore {
         makeObservable(this.keplrWallet, {
             'connected': observable,
             'accountAddress': observable,
+            'connect': action,
         });
 
         this.keplrWallet.addAddressChangeCallback(this.onChangeAccount);

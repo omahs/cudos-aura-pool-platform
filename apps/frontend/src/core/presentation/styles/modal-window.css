@@ -45,9 +45,9 @@
     scroll-behavior: smooth;
 }
 
-.ModalWindowWrapper > .ModalWindow .ModalWindowContent {
+/* .ModalWindowWrapper > .ModalWindow .ModalWindowContent {
     width: 520px; max-width: 100%;
-}
+} */
 
 .ModalWindowWrapper > .ModalWindow .ModalWindowContent.LargeContent {
     width: 1100px;

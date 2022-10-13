@@ -1,6 +1,11 @@
 import BigNumber from 'bignumber.js';
 import S from '../../../core/utilities/Main';
 
+export enum NftListinStatus {
+    NOT_LISTED,
+    LISTED
+}
+
 export default class NftProfile {
     id: string;
     name: string;

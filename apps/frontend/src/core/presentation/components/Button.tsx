@@ -47,7 +47,7 @@ export enum BUTTON_PADDING {
 
 /* each member of the enum corresponds to a CSS class */
 export enum BUTTON_RADIUS {
-    DEFAULT = '',
+    DEFAULT = 'RadiusDefault',
     MAX = 'RadiusMax'
 }
 
