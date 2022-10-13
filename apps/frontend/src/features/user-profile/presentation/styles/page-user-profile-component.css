@@ -1,0 +1,61 @@
+.PageUserProfile .PageContent {
+    margin: 0 70px;
+}
+
+.PageUserProfile .PageContent .ProfileHeaderDataRow {
+    padding: 40px 20px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.PageUserProfile .PageContent .ProfileHeaderDataRow .LeftSide{
+    gap: 25px;
+}
+
+.PageUserProfile .PageContent .ProfileHeaderDataRow .InfoBelowUserName {
+    gap: 25px;
+}
+
+.PageUserProfile .PageContent .ProfileHeaderDataRow .InfoBelowUserName .JoinDate {
+    color: var(--color-gray-030);
+}
+
+.PageUserProfile .PageContent .ProfileHeaderDataRow .RightSide {
+    gap: 25px;
+}
+
+.PageUserProfile .PageContent .ProfileHeaderDataRow .RightSide .BtcEarned {
+    gap: 25px;
+}
+
+.PageUserProfile .PageContent .ProfileHeaderDataRow .RightSide .BtcEarned .BtcValueRow {
+    gap: 10px;
+    align-items: center;
+}
+
+.PageUserProfile .PageContent .ProfileHeaderDataRow .RightSide .Gray {
+    color: var(--color-gray-030);
+}
+
+.PageUserProfile .PageContent .ProfileNavHolder{
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.PageUserProfile .PageContent .ProfileNavHolder .ProfileNav {
+    padding: 5px;
+    gap: 5px;
+    border-radius: 10px;
+    background: var(--color-gray-060);
+    flex-grow: 0;
+}
+
+.PageUserProfile .PageContent .ProfileNavHolder .ProfileNav .NavButton {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+
+.PageUserProfile .PageContent .ProfileNavHolder .ProfileNav .NavButton.Active {
+    background: #FFFFFF;
+}

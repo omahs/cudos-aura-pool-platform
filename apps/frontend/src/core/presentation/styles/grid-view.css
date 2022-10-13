@@ -1,0 +1,24 @@
+.GridView .GridHeader {
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.GridView .GridHeader .GridLayoutButtons {    
+    gap: 10px;
+}
+
+.GridView .GridHeader .GridLayoutButtons .MuiSvgIcon-root {
+    background-color: var(--color-gray-090);
+    fill: var(--color-gray-030);
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.GridView .GridHeader .GridLayoutButtons .Active .MuiSvgIcon-root{
+    fill: #000;
+}
+
+.GridView .PreviewsGrid {
+    gap: 20px;
+    flex-grow: 1;
+}

@@ -1,0 +1,229 @@
+:root {
+    --color-primary: #000;
+    --color-primary-light: rgba(0, 0, 0, 0.5);
+    --color-secondary: #888;
+    --color-gray-000: #000;
+    --color-gray-030: #808080;
+    --color-gray-060: #E0E2E9;
+    --color-gray-090: #E0E2E9;
+    --color-gray-095: #F6F9FE;
+    --color-gray-100: #fff;
+    --color-red: #EA6161;
+    --color-green: #65B48F;
+
+    --color-body-background: #fff;
+
+    --transition-duration: 0.4s;
+    --item-spacing: 24px;
+
+    /* theme */
+    --color-input-text: #000;
+    --color-input-border: #000;
+    --color-input-border-focused: #aaa;
+    --color-input-gray-out: #888;
+    --color-input-label: #000;
+    --color-input-label-focused: #aaa;
+
+    --color-select-icon: #000;
+    --color-select-highlight: rgba(0, 0, 0, 0.1);
+
+    --color-select-multi-item-color: #fff;
+    --color-select-multi-item-background: #000;
+    --color-select-multi-delete-icon: #fff;
+    --color-select-multi-delete-icon-hover: #aaa;
+
+    --color-datepicker-foreground: var(--color-primary);
+    --color-datepicker-background: #fff;
+    --color-datepicker-content-background: #fff;
+    --color-datepicker-selected: var(--color-primary);
+
+    --color-popover-text: #000;
+    --color-popover-border: transparent;
+    --color-popover-background: #fff;
+
+    --color-tooltip-text: var(--color-gray-060);
+    --color-tooltip-border: var(--color-gray-060);
+    --color-tooltip-background: #fff;
+
+    --color-checkbox-fill: #fff;
+    --color-checkbox-background: var(--color-primary);
+    --color-checkbox-border: #7D87AA;
+    --color-checkbox-border-active:  var(--color-primary);  
+
+    --color-modal-background: #fff;
+    /* theme */
+}
+
+html {
+	color:var(--color-gray-000);
+    font-family:Poppins, OpenSans, sans-serif; font-weight:400; font-size:14px;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-width:calc(1200px + 48px);
+    background:var(--color-body-background);
+}
+
+.ReactEntryPoint {
+    width:100%; height:100%;
+}
+
+.ImgCoverNode {
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
+}
+
+.ImgContainNode {
+    background-position:center;
+    background-size:contain;
+    background-repeat:no-repeat;
+}
+
+img.CoverNode {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: inherit;
+}
+
+/* Site */
+.AppContent {
+    width:100%; min-width:calc(1200px + 2 * var(--item-spacing)); max-width:calc(1600px + 2 *  var(--item-spacing));
+    box-sizing:border-box;
+    padding-left:var(--item-spacing); padding-right:var(--item-spacing);
+    margin-left:auto; margin-right:auto;
+}
+
+.AppContent.SmallContent {
+    width:370px; min-width:auto;
+}
+
+html.OverflowHidden {
+    overflow:hidden;
+}
+
+.Bold {
+    font-weight: 700;
+}
+
+.SemiBold {
+    font-weight: 600;
+}
+
+.Medium {
+    font-weight: 500;
+}
+
+.H1 {
+    font-family: 'Poppins'; font-size: 32px; line-height: 130%; letter-spacing: -3%;
+}
+
+.H2 {
+    font-size: 32px;
+}
+
+.H2_1 {
+    font-size: 24px;
+}
+
+.H3 {
+    font-size: 18px;
+}
+
+.B1 {
+    font-size: 18px;
+}
+
+.B2 {
+    font-size: 14px;
+}
+
+.B3 {
+    font-size: 12px;
+}
+
+.B4 {
+    font-size: 10px;
+}
+
+@media (max-width: 749px) {
+
+    .Heading1 {
+        font-size: 30px;
+    }
+
+    .Heading2 {
+        font-size: 24px;
+    }
+
+    .Heading3 {
+        font-size: 18px;
+    }
+
+    .Heading4 {
+        font-size: 14px;
+    }
+
+    .Heading5 {
+        font-size: 12px;
+    }
+
+    .Heading6 {
+        font-size: 5px;
+    }
+
+}
+
+/* PageContent */
+.PageContent {
+    flex: 1 1 auto;
+    display: flex; flex-direction: column;
+    position: relative;
+}
+
+.PageMarginTop {
+    margin-top:98px;
+}
+
+.PageMarginBottom {
+    margin-top:112px;
+}
+
+.Page {
+    transition-property:filter;
+}
+
+.Page.BlurModal, .Page.BlurAlert {
+    filter: blur(6px);
+}
+
+.PrimaryColor {
+    color: var(--color-primary);
+    fill: var(--color-primary);
+}
+
+/* Scrolls */
+.Scrolls {
+    scrollbar-color:var(--color-primary) transparent;
+    scrollbar-width:thin;
+}
+
+.Scrolls::-webkit-scrollbar {
+    width:6px; height:6px;
+}
+
+.Scrolls::-webkit-scrollbar-track {
+    background:none;
+}
+
+.Scrolls::-webkit-scrollbar-thumb {
+    border-radius:3px;
+    background:var(--color-primary);
+}
+
+/* Mui font fix */
+*[class*="-root"], *[class^="Mui"] {
+    font-family: inherit !important;
+}

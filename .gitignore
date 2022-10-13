@@ -2,6 +2,7 @@
 /dist
 /node_modules
 /database/config/config.json
+/src/frontend/public/webpack
 
 # Logs
 logs
@@ -35,5 +36,7 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# env variables
-.env
+
+# Config
+/config/.env
+/docker/docker.arg

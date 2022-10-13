@@ -1,0 +1,102 @@
+.Input {
+    width: 100%;
+}
+
+.Input.InputStretch {
+    align-self: stretch;
+}
+
+.Input textarea {
+    min-height: 128px;
+}
+
+.Input.InputStretch textarea {
+    height: 100% !important;
+    box-sizing: border-box;
+    overflow: auto !important;
+}
+
+.Input .MuiFormControl-root {
+    width: 100%;
+    margin: 0 !important;
+}
+
+.Input .MuiFormControl-root label + .MuiInputBase-formControl {
+    margin-top: 20px;
+}
+
+.Input .MuiInputBase-root {
+    min-height: 48px;
+    box-sizing: border-box;
+    color: var(--color-input-text);
+    padding: 0 14px !important;
+    border-radius: 8px;
+    border: 1px solid var(--color-input-border);
+    transition: border-color var(--transition-duration);
+}
+
+.Input.InputGray .MuiInputBase-root {
+    border-color: var(--color-input-gray-out);
+    background: var(--color-input-gray-out);
+}
+
+.Input .MuiInputBase-root:before, .Input .MuiInputBase-root:after {
+    display: none; /* hide border */
+}
+
+.Input .MuiInputBase-root input, .Input .MuiInputBase-root textarea {
+    height: auto;
+    font-size: 14px; font-weight: 600;
+    padding: 0;
+}
+
+.Input .MuiInputBase-root.Mui-disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Input on focus */
+.Input .MuiInputBase-root.Mui-focused {
+    border-color: var(--color-input-border-focused);
+}
+
+/* Input on error */
+.Input .MuiInputBase-root.Mui-error:not(.Mui-focused) {
+    border-color: var(--color-red);
+}
+
+/* label color default */
+.Input .MuiFormLabel-root {
+    line-height: 18px;
+    font-size: 12px; font-weight: 500;
+    color: var(--color-input-label);
+    transform: none;
+}
+
+/* label color on focus */
+.Input .MuiFormLabel-root.Mui-focused {
+    color: var(--color-input-label-focused);
+}
+
+/* label color on error */
+.Input .MuiFormLabel-root.Mui-error:not(.Mui-focused) {
+    color: var(--color-red);
+}
+
+.Input label[data-shrink=false] + .MuiInputBase-formControl input::placeholder {
+    opacity: 0.5 !important;
+}
+
+@-webkit-keyframes autofill {
+    0%, 100% {
+        color: inherit;
+        background: transparent;
+    }
+}
+
+.InputComponent input:-webkit-autofill {
+    -webkit-animation-delay: 1s;
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+    -webkit-text-fill-color: var(--color-text);
+}

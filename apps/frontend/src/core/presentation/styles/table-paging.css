@@ -1,0 +1,31 @@
+.TablePaging {
+    display: flex;
+    align-items: center; justify-content: center;
+    color: var(--color-secondary);
+    font-size: 14px;
+    padding: 12px;
+}
+
+.TablePaging.NoVerticalPadding {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.TablePaging.NoHorizontalPadding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.TablePaging .IconArrow {
+    width: 16px; height: 16px;
+}
+
+.TablePaging > div {
+    padding: 7px 12px;
+    margin: 0 4px;
+}
+
+.TablePaging > div.Active {
+    color: var(--color-primary);
+    font-weight:700;
+}

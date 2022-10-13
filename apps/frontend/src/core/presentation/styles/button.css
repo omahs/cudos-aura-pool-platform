@@ -1,0 +1,27 @@
+.Button {
+    min-width: 0 !important;
+    line-height: normal !important;
+    text-transform: none !important;
+    font-family: inherit !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+}
+
+.Button .SVG {
+    width: 16px; height: 16px;
+    margin-right: 8px;
+}
+
+.Button.RadiusMax {
+    border-radius: 128px !important;
+}
+
+.Button.Padding24 {
+    padding: 0 24px;
+}
+
+.Button.Padding48 {
+    padding: 0 48px;
+}

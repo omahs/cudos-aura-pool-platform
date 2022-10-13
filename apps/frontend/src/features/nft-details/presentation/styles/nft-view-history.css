@@ -1,0 +1,41 @@
+.NftPreviewHistory {
+    gap: 24px;
+    align-items: center;
+}
+
+.NftPreviewHistory .HistoryNavigation {
+    padding: 4px;
+    gap: 5px;
+    border-radius: 10px;
+    background: var(--color-gray-095);
+}
+
+.NftPreviewHistory .HistoryNavigation .NavButton {
+    padding: 10px;
+    color: var(--color-gray-dark);
+}
+
+.NftPreviewHistory .HistoryNavigation .NavButton.Active{
+    color: #000;
+    background: #fff;
+}
+
+.NftPreviewHistory .HistoryContainer {
+    width: 100%;
+    padding: 32px 24px;
+    border: 1px solid var(--color-gray-095);
+    border-radius: 20px;
+}
+
+.NftPreviewHistory .HistoryContainer .HistoryContainerHeader {
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.NftPreviewHistory .HistoryContainer .HistoryContainerHeader .Hidden {
+    visibility: hidden;
+}
+
+.NftPreviewHistory .HistoryContainer .HistoryContainerHeader .Hidden .HistoryDataContainer {
+    gap: 28px;
+}

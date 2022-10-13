@@ -1,0 +1,29 @@
+version: '3.1'
+
+networks:
+  shared-cudos-network:
+    name: shared-cudos-network
+
+volumes:
+  cudosdappdbdata:
+    driver: local
+
+services:
+  cudos-aura-platform-prod:
+    image: cudos-aura-platform-prod
+    container_name: cudos-aura-platform-prod
+    build:
+      dockerfile: docker/prod.dockerfile
+      context: ../
+    restart: unless-stopped
+    ports:
+      - "$HOST_PORT:$DOCKER_PORT"
+    networks:
+      - shared-cudos-network
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "128m"
+        max-file: "1"

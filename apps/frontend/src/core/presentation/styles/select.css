@@ -1,0 +1,79 @@
+.Select {
+    width: 100%;
+}
+
+.Select .MuiFormControl-root {
+    width: 100%;
+    margin: 0 !important;
+}
+
+.Select .MuiFormControl-root label + .MuiInputBase-formControl {
+    margin-top: 20px;
+}
+
+.Select .MuiInputBase-root {
+    min-height: 48px;
+    box-sizing: border-box;
+    color: var(--color-input-text);
+    padding: 0 14px !important;
+    border-radius: 8px;
+    border: 1px solid var(--color-input-border);
+    transition: border-color var(--transition-duration);
+}
+
+.Select .MuiInputBase-root:before, .Select .MuiInputBase-root:after {
+    display: none; /* hide border */
+}
+
+.Select .MuiInputBase-root.Mui-disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Input on focus */
+.Select .MuiInputBase-root.Mui-focused {
+    border-color: var(--color-input-border-focused);
+}
+
+/* Input on error */
+.Select .MuiInputBase-root.Mui-error:not(.Mui-focused) {
+    border-color: var(--color-red);
+}
+
+/* label color default */
+.Select .MuiFormLabel-root {
+    line-height: 18px;
+    font-size: 12px; font-weight: 500;
+    color: var(--color-input-label);
+    transform: none;
+}
+
+/* label color on focus */
+.Select .MuiFormLabel-root.Mui-focused {
+    color: var(--color-input-label-focused);
+}
+
+/* label color on error */
+.Select .MuiFormLabel-root.Mui-error:not(.Mui-focused) {
+    color: var(--color-red);
+}
+
+.Select .MuiInputBase-root .MuiSelect-icon {
+    color: var(--color-select-icon);
+    right: 14px;
+}
+
+/* MuiSelect */
+.AppSelectRoot {
+    z-index: 4096 !important;
+}
+
+.AppSelectRoot .AppSelectPaper {
+    color: var(--color-input-text) !important;
+    border: 1px solid var(--color-popover-border);
+    background: var(--color-popover-background) !important;
+}
+
+.AppSelectRoot .AppSelectPaper .MuiMenuItem-root.Mui-selected {
+    background: var(--color-select-highlight);
+}
