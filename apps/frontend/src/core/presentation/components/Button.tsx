@@ -1,18 +1,16 @@
 import React from 'react';
 import { createTheme, ThemeProvider, Button as MuiButton } from '@mui/material';
 
-import S from '../../utilities/Main';
-
 import '../styles/button.css';
 
 const theme01 = createTheme({
     palette: {
         primary: {
-            main: '#52A6F8',
+            main: '#000',
             contrastText: '#fff',
         },
         secondary: {
-            main: '#636D8F',
+            main: '#555',
             contrastText: '#fff',
         },
     },
@@ -21,8 +19,8 @@ const theme01 = createTheme({
 const theme02 = createTheme({
     palette: {
         primary: {
-            main: 'rgba(82, 166, 248, 0.1)',
-            contrastText: '#52A6F8',
+            main: '#999',
+            contrastText: '#fff',
         },
     },
 });
@@ -47,7 +45,8 @@ export enum BUTTON_PADDING {
 
 /* each member of the enum corresponds to a CSS class */
 export enum BUTTON_RADIUS {
-    DEFAULT = 'RadiusDefault',
+    DEFAULT = '',
+    RADIUS_16 = 'Radius16',
     MAX = 'RadiusMax'
 }
 
@@ -110,7 +109,7 @@ Button.defaultProps = {
     type: BUTTON_TYPE.ROUNDED,
     color: BUTTON_COLOR.SCHEME_1,
     padding: BUTTON_PADDING.DEFAULT,
-    radius: BUTTON_RADIUS.DEFAULT,
+    radius: BUTTON_RADIUS.RADIUS_16,
     disabled: false,
     href: undefined,
     target: undefined,

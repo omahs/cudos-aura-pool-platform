@@ -22,7 +22,7 @@
 }
 
 .Input .MuiFormControl-root label + .MuiInputBase-formControl {
-    margin-top: 20px;
+    margin-top: 24px;
 }
 
 .Input .MuiInputBase-root {
@@ -67,7 +67,7 @@
 
 /* label color default */
 .Input .MuiFormLabel-root {
-    line-height: 18px;
+    line-height: 16px;
     font-size: 12px; font-weight: 500;
     color: var(--color-input-label);
     transform: none;

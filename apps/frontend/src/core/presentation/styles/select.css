@@ -8,7 +8,7 @@
 }
 
 .Select .MuiFormControl-root label + .MuiInputBase-formControl {
-    margin-top: 20px;
+    margin-top: 24px;
 }
 
 .Select .MuiInputBase-root {
@@ -42,7 +42,7 @@
 
 /* label color default */
 .Select .MuiFormLabel-root {
-    line-height: 18px;
+    line-height: 186x;
     font-size: 12px; font-weight: 500;
     color: var(--color-input-label);
     transform: none;

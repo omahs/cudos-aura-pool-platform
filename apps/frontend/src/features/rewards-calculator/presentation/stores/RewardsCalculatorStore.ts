@@ -26,8 +26,7 @@ export default class RewardsCalculatorStore {
         this.selectedFarmIndex = S.NOT_EXISTS;
         this.bitcoinDataModel = null;
 
-        this.networkDifficultyEdit = S.Strings.EMPTY;
-        this.hashRateTh = S.NOT_EXISTS;
+        this.resetDefaults();
 
         this.miningFarmRepo = miningFarmRepo
         this.bitcoinRepo = bitcoinRepo
@@ -46,6 +45,10 @@ export default class RewardsCalculatorStore {
         this.getBitcoinData();
     }
 
+    hasNetworkDifficulty() {
+        return this.networkDifficultyEdit !== S.Strings.EMPTY;
+    }
+
     getFarmPools() {
         this.miningFarmRepo.getAllFarmgs((miningFarms: MiningFarmModel[]) => {
             this.miningFarms = miningFarms;
@@ -58,21 +61,20 @@ export default class RewardsCalculatorStore {
         });
     }
 
-    selectFarmPool = (index: any) => {
-        this.selectedFarmIndex = index.value;
-    }
-
     onEditNetworkDifficulty = (input: string) => {
         this.networkDifficultyEdit = input;
     }
 
-    changeHashRate = (input: string) => {
+    onChangeHashRate = (input: string) => {
         this.hashRateTh = Number(input);
     }
 
-    changeHashRateSlider = (event: MouseEvent, a: number) => {
+    onChangeHashRateSlider = (event: MouseEvent, value: number) => {
+        this.hashRateTh = value;
+    }
 
-        this.hashRateTh = a;
+    selectFarmPool = (index: any) => {
+        this.selectedFarmIndex = index.value;
     }
 
     calculatePowerConsumption(): number {
@@ -86,6 +88,18 @@ export default class RewardsCalculatorStore {
 
     calculateBtcToUsd(btcAmount: BigNumber): BigNumber {
         return btcAmount.multipliedBy(this.bitcoinDataModel.price);
+    }
+
+    getSelectedFarmName(): string {
+        return this.miningFarms[this.selectedFarmIndex]?.name ?? S.Strings.EMPTY;
+    }
+
+    getNetworkDifficulty() {
+        if (this.hasNetworkDifficulty() === true) {
+            return this.networkDifficultyEdit;
+        }
+
+        return this.bitcoinDataModel?.networkDifficulty ?? S.Strings.EMPTY;
     }
 
     getPriceChangeFormated(): string {
@@ -142,4 +156,5 @@ export default class RewardsCalculatorStore {
 
         return result;
     }
+
 }

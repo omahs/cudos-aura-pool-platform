@@ -2,7 +2,7 @@ import React from 'react';
 
 import SvgInfo from '@mui/icons-material/InfoOutlined';
 import Tooltip from './Tooltip';
-import Svg from './Svg';
+import Svg, { SvgSize } from './Svg';
 
 import '../styles/text-with-tooltip.css';
 
@@ -18,7 +18,7 @@ export default function TextWithTooltip({ className, text, tooltipText }: Props)
         <div className={`FlexRow TextWithTooltip ${className}`}>
             <div className={'TooltipText'} > {text} </div>
             <Tooltip title = { tooltipText } >
-                <Svg svg = { SvgInfo } />
+                <Svg className = { 'SvgTooltip' } size = { SvgSize.CUSTOM } svg = { SvgInfo } />
             </Tooltip>
         </div>
     );
