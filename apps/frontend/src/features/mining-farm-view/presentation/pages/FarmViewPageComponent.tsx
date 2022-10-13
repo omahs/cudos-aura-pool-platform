@@ -22,12 +22,10 @@ function FarmViewPageComponent({ appStore, farmViewPageStore }: Props) {
     const { farmId } = useParams();
 
     useEffect(() => {
-        appStore.incrementLoading();
-
-        farmViewPageStore.innitiate(farmId, () => {
-            appStore.decrementLoading();
+        appStore.useLoading(() => {
+            farmViewPageStore.innitiate(farmId, () => {});
         });
-    }, [])
+    }, []);
 
     const farm = farmViewPageStore.farmProfile;
 
@@ -40,11 +38,9 @@ function FarmViewPageComponent({ appStore, farmViewPageStore }: Props) {
     return (
         farm === null ? ''
             : <PageLayoutComponent
-                className = { 'PageFarmView' }
-                modals = { [
-                ] } >
+                className = { 'PageFarmView' } >
                 <PageHeader />
-                <div className={'PageContent'} >
+                <div className={'PageContent AppContent'} >
                     <Breadcrumbs crumbs={crumbs}/>
                     <ProfileHeader coverPictureUrl={farm.coverImgUrl} profilePictureUrl={farm.profileImgurl} />
                     <div className={'Heading2'}>{farm.name}</div>

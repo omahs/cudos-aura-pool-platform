@@ -34,20 +34,15 @@ function ExploreCollectionsPageComponent({ exploreCollectionsStore }: Props) {
         navigate(AppRoutes.EXPLORE_NFTS);
     }
 
-    useEffect(
-        () => {
-            exploreCollectionsStore.innitialLoad();
-        },
-        [],
-    );
+    useEffect(() => {
+        exploreCollectionsStore.innitialLoad();
+    }, []);
 
     return (
         <PageLayoutComponent
-            className = { 'PageExploreCollections' }
-            modals = { [
-            ] } >
+            className = { 'PageExploreCollections' } >
             <PageHeader />
-            <div className={'PageContent'} >
+            <div className={'PageContent AppContent'} >
                 <div className={'ExploreColelctions FlexColumn'}>
                     <div className={'PageHeading H1 Bold'}>Explore NFT Collections</div>
                     <div className={'Grid'}>
