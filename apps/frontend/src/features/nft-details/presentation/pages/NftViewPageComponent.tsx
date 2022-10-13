@@ -7,7 +7,7 @@ import '../styles/page-nft-view-component.css';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import NftViewHistory from '../components/NftViewHistory';
 import SvgCudos from '../../../../public/assets/vectors/cudos-logo.svg';
-import Button from '../../../../core/presentation/components/Button';
+import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import NftDetailsStore from '../stores/NftDetailsStore';
@@ -18,13 +18,18 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import BuyNftModalStore from '../stores/BuyNftModalStore';
 import BuyNftModal from '../components/BuyNftModal';
+import ResellNftModalStore from '../stores/ResellNftModalStore';
+import ResellNftModal from '../components/ResellNftModal';
+import WalletStore from '../../../ledger/presentation/stores/WalletStore';
 
 interface Props {
-    nftDetailsStore?: NftDetailsStore
-    buyNftModalStore?: BuyNftModalStore
+    walletStore?: WalletStore;
+    nftDetailsStore?: NftDetailsStore;
+    buyNftModalStore?: BuyNftModalStore;
+    resellNftModalStore?: ResellNftModalStore;
 }
 
-function NftViewPageComponent({ nftDetailsStore, buyNftModalStore }: Props) {
+function NftViewPageComponent({ walletStore, nftDetailsStore, buyNftModalStore, resellNftModalStore }: Props) {
 
     const { nftId } = useParams();
 
@@ -36,13 +41,18 @@ function NftViewPageComponent({ nftDetailsStore, buyNftModalStore }: Props) {
     );
 
     const navigate = useNavigate();
+
     const onClickCalculateRewards = () => {
         navigate(AppRoutes.REWARDS_CALCULATOR)
-    }
+    };
 
     const nft = nftDetailsStore.nftProfile;
     const collection = nftDetailsStore.collectionProfile;
     const farm = nftDetailsStore.miningFarm;
+
+    const onClickResellNft = () => {
+        resellNftModalStore.showSignal(nft, nftDetailsStore.cudosPrice, collection.name);
+    };
 
     // TODO: get crumbs from router
     const crumbs = [
@@ -56,12 +66,13 @@ function NftViewPageComponent({ nftDetailsStore, buyNftModalStore }: Props) {
                 className = { 'PageNftView' }
                 modals = {
                     <>
-                        <BuyNftModal />
+                        <BuyNftModal resellNft={onClickResellNft}/>
+                        <ResellNftModal />
                     </>
                 } >
                 <PageHeader />
                 <div className={'PageContent'} >
-                    <Breadcrumbs crumbs={crumbs} onClickback={() => {}}/>
+                    <Breadcrumbs crumbs={crumbs}/>
                     <div className={'Grid GridColumns2'}>
                         <div className={'LeftLayout FlexColumn'}>
                             <div className={'PaddingColumn FlexColumn'}>
@@ -75,7 +86,7 @@ function NftViewPageComponent({ nftDetailsStore, buyNftModalStore }: Props) {
                                         <div className={'DataValue'}>{nft.listingStatus === S.INT_TRUE ? 'Active' : 'Not Listed'}</div>
                                     </div>
                                     <div className={'DataRow FlexRow'}>
-                                        <div className={'DataLabel'}>Mining Farm</div>
+                                        <div className={'DataLabel'}>MBuy now for {nft.price.toFixed(0)} CUDOSining Farm</div>
                                         <div className={'DataValue'}>{farm.name}</div>
                                     </div>
                                     <div className={'DataRow FlexRow'}>
@@ -93,7 +104,7 @@ function NftViewPageComponent({ nftDetailsStore, buyNftModalStore }: Props) {
                             <NftViewHistory />
                         </div>
                         <div className={'RightLayout FlexColumn'}>
-                            <div className={'CollectionName B2 SemiBold'}>{collection.name}</div>
+                            <div className={'CollectionName B2 SemiBolBuy now for {nft.price.toFixed(0)} CUDOSd'}>{collection.name}</div>
                             <div className={'H2 Bold NftName'}>{nft.name}</div>
                             <div className={'FlexRow OwnerRow'}>
                                 <div className={'FlexRow OwnerBox'}>
@@ -155,13 +166,17 @@ function NftViewPageComponent({ nftDetailsStore, buyNftModalStore }: Props) {
                                     <div className={'DataValue NftPrice FlexRow'}>
                                         <Svg svg={SvgCudos}/>
                                         <div className={'H3 Bold'}>{nft.price.toFixed(0)} CUDOS</div>
-                                        <div className={'SubPrice B2 SemiBold'}>${nft.price.multipliedBy(nftDetailsStore.cudosPrice).toFixed(2)}</div>
+                                        <div className={'SubPrice B2 SemiBold'}>{nftDetailsStore.getNftPriceText()}</div>
                                     </div>
                                 </div>
                                 {/* TODO: open buy nft popup */}
-                                <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
-                                    <Button onClick={() => buyNftModalStore.showSignal(nft, nftDetailsStore.cudosPrice)}>Buy now for {nft.price.toFixed(0)} CUDOS </Button>
-                                </Actions>
+                                { walletStore.isKeplrConnected()
+                                    ? <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
+                                        {nftDetailsStore.isNftListed() === true
+                                            ? <Button radius={BUTTON_RADIUS.DEFAULT} onClick={() => buyNftModalStore.showSignal(nft, nftDetailsStore.cudosPrice, nftDetailsStore.collectionProfile.name)}>Buy now for {nft.price.toFixed(0)} CUDOS </Button> : ''}
+                                        {nftDetailsStore.isNftListed() === false && nftDetailsStore.isOwner(walletStore.getKeplrAddress())
+                                            ? <Button radius={BUTTON_RADIUS.DEFAULT} onClick={onClickResellNft}>Resell NFT</Button> : ''}
+                                    </Actions> : ''}
                             </div>
                         </div>
                     </div>

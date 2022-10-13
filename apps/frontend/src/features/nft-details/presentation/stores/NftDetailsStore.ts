@@ -2,10 +2,11 @@ import S from '../../../../core/utilities/Main';
 import { makeAutoObservable } from 'mobx';
 import CudosRepo from '../../../cudos-data/presentation/repos/CudosRepo';
 import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
-import NftProfile from '../../entities/NftProfile';
+import NftProfile, { NftListinStatus } from '../../entities/NftProfile';
 import CollectionProfile from '../../../collections-marketplace/entities/CollectionProfile';
 import MiningFarmModel from '../../../mining-farm/entities/MiningFarmModel';
 import BitcoinRepo from '../../../bitcoin-data/presentation/repos/BitcoinRepo';
+import { IsBtcAddress } from 'class-validator';
 
 export default class NftDetailsStore {
     nftRepo: NftRepo;
@@ -53,4 +54,19 @@ export default class NftDetailsStore {
         })
     }
 
+    getNftPriceText() {
+        if (this.isNftListed() === false) {
+            return 'Not for sale';
+        }
+
+        return `${this.nftProfile.price.multipliedBy(this.cudosPrice).toFixed(2)}`;
+    }
+
+    isNftListed() {
+        return this.nftProfile.listingStatus === NftListinStatus.LISTED;
+    }
+
+    isOwner(address: string) {
+        return this.nftProfile.currentOwnerAddress === address;
+    }
 }

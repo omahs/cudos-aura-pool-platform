@@ -23,8 +23,8 @@ import FarmViewPageStore from './features/mining-farm-view/presentation/stores/F
 import UserProfilePageStore from './features/user-profile/presentation/stores/UserProfilePageStore';
 import UserProfileStorageRepo from './features/user-profile/data/repo/UserProfileStorageRepo';
 import WalletStore from './features/ledger/presentation/stores/WalletStore';
-import BuyNftModal from './features/nft-details/presentation/components/BuyNftModal';
 import BuyNftModalStore from './features/nft-details/presentation/stores/BuyNftModalStore';
+import ResellNftModalStore from './features/nft-details/presentation/stores/ResellNftModalStore';
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
@@ -45,7 +45,8 @@ const collectionViewPageStore = new CollectionViewPageStore(collectionRepo);
 const farmViewPageStore = new FarmViewPageStore(miningFarmRepo, collectionRepo);
 const userProfilePageStore = new UserProfilePageStore(nftRepo, userProfileRepo, bitcoinRepo);
 const walletStore = new WalletStore();
-const buyNftModalStore = new BuyNftModalStore(cudosRepo);
+const buyNftModalStore = new BuyNftModalStore();
+const resellNftModalStore = new ResellNftModalStore();
 
 const App = () => {
 
@@ -69,7 +70,8 @@ const App = () => {
                 collectionViewPageStore = { collectionViewPageStore }
                 farmViewPageStore = { farmViewPageStore }
                 userProfilePageStore = { userProfilePageStore }
-                buyNftModalStore = { buyNftModalStore }>
+                buyNftModalStore = { buyNftModalStore }
+                resellNftModalStore = { resellNftModalStore }>
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>
