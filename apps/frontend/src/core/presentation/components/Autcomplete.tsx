@@ -11,7 +11,7 @@ import SvgArrowDown from '@mui/icons-material/ArrowDownward';
 import '../styles/autcomplete.css';
 
 type Props = AutocompleteProps < AutocompleteOption, true, true, false > & {
-    label?: string;
+    label?: string | React.ReactNode;
     error?: boolean;
     readOnly?: boolean;
 }

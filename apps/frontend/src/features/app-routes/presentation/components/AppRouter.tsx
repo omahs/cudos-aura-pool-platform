@@ -39,9 +39,10 @@ export default function AppRouter() {
             className={`AppRouter ${transitionStage}`}
             onAnimationEnd = { onRouterTransitionEnd } >
             <Routes location = { displayLocation } >
-                <Route path = { AppRoutes.HOME } element = { <UiKitPage /> } />
+                <Route path = { AppRoutes.UiKIt } element = { <UiKitPage /> } />
                 <Route path = { AppRoutes.NOT_FOUND } element = { <NotFoundPage /> } />
                 <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPageComponent /> } />
+                <Route index = { true } element = { <ExploreCollectionsPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPageComponent /> } />
                 <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPageComponent /> } />
                 <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePageComponent /> } />
