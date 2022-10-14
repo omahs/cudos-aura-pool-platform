@@ -29,7 +29,7 @@ import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
 import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
 
 interface Props {
-    bitcoinStore: BitcoinStore;
+    bitcoinStore?: BitcoinStore;
     rewardsCalculatorStore?: RewardsCalculatorStore
 }
 

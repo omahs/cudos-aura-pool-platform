@@ -1,5 +1,5 @@
 .PageUserProfile .PageContent {
-    margin: 70px var(--page-spacing-h);
+    padding: 70px var(--page-spacing-h);
 }
 
 .PageUserProfile .PageContent .ProfileHeaderDataRow {

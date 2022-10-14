@@ -12,7 +12,7 @@ export default class UserStorageRepo implements UserRepo {
 
     async fetchProfileByAddress(address: string): Promise < UserEntity > {
         const userJson = this.storageHelper.usersJson.find((json) => json.address === address);
-        return userJson ? UserEntity.fromJson(userJson) : null;
+        return userJson ? UserEntity.fromJson(userJson) : new UserEntity();
     }
 
 }

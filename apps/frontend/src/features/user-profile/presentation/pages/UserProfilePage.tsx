@@ -40,7 +40,7 @@ function UserProfilePage({ appStore, userProfilePageStore }: Props) {
             ) }
 
             { userEntity !== null && (
-                <div className={'PageContent'} >
+                <div className={'PageContent AppContent'} >
                     <ProfileHeader coverPictureUrl={userEntity.coverImgUrl} profilePictureUrl={userEntity.profileImgurl} />
                     <div className={'ProfileHeaderDataRow FlexRow FlexGrow'}>
                         <div className={'FlexColumn LeftSide'}>

@@ -17,7 +17,7 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 
 import Svg from '../../../../core/presentation/components/Svg';
-import '../styles/page-explore-collections-component.css';
+import '../styles/marketplace-page.css';
 
 type Props = {
     marketplaceStore?: MarketplaceStore
