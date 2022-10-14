@@ -6,7 +6,7 @@ import Select from '../../../../core/presentation/components/Select';
 import React from 'react';
 import NftPreview from '../../../nfts-explore/presentation/components/NftPreview';
 import UserProfilePageStore from '../stores/UserProfilePageStore';
-import NftProfileEntity from '../../../nft-details/entities/NftEntity';
+import NftEntity from '../../../nft-details/entities/NftEntity';
 
 interface Props {
     userProfilePageStore: UserProfilePageStore;
@@ -43,11 +43,11 @@ export default function UserProfileNfts({ userProfilePageStore }: Props) {
                 gridViewStore={userProfilePageStore.gridViewStore}
                 defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}
             >
-                {userProfilePageStore.nftProfileEntities.map(
-                    (nftProfileEntity: NftProfileEntity, index: number) => <NftPreview
+                {userProfilePageStore.nftEntities.map(
+                    (nftEntity: NftEntity, index: number) => <NftPreview
                         key={index}
-                        nftPreviewEntity={nftProfileEntity}
-                        collectionEntity={userProfilePageStore.getCollectionById(nftProfileEntity.collectionId)}
+                        nftEntity={nftEntity}
+                        collectionEntity={userProfilePageStore.getCollectionById(nftEntity.collectionId)}
                     />,
                 )}
             </GridView>

@@ -9,7 +9,7 @@ import NftPreviewsGridStore from '../stores/NftPreviewsGridStore';
 import '../styles/nft-preview-grid.css';
 
 import GridView from '../../../../core/presentation/components/GridView';
-import NftProfileEntity from '../../../nft-details/entities/NftEntity';
+import NftEntity from '../../../nft-details/entities/NftEntity';
 
 interface Props {
     nftPreviewsGridStore?: NftPreviewsGridStore;
@@ -23,15 +23,13 @@ function NftPreviewsGrid({ nftPreviewsGridStore }: Props) {
         run();
     }, [])
 
-    const store = nftPreviewsGridStore;
-
     return (
         <div className={'NftModelsViewerTable'}>
             <div className={'Grid FilterHeader'}>
                 <Select
                     className={'SortBySelect'}
-                    onChange={store.setSortByIndex}
-                    value={store.selectedSortIndex}
+                    onChange={nftPreviewsGridStore.setSortByIndex}
+                    value={nftPreviewsGridStore.selectedSortIndex}
                 >
                     {NftPreviewsGridStore.TABLE_KEYS.map(
                         (key: string, index: number) => <MenuItem key={index} value={index}>{key}</MenuItem>,
@@ -54,11 +52,11 @@ function NftPreviewsGrid({ nftPreviewsGridStore }: Props) {
                 gridViewStore={nftPreviewsGridStore.gridViewStore}
                 defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}
             >
-                {store.nftPreviews.map(
-                    (nftPreviewModel: NftProfileEntity, index: number) => <NftPreview
+                {nftPreviewsGridStore.nftEntities.map(
+                    (nftEntity: NftEntity, index: number) => <NftPreview
                         key={index}
-                        nftPreviewEntity={nftPreviewModel}
-                        collectionEntity={store.getCollectionById(nftPreviewModel.collectionId)}
+                        nftEntity={nftEntity}
+                        collectionEntity={nftPreviewsGridStore.getCollectionById(nftEntity.collectionId)}
                     />,
                 )}
             </GridView>
