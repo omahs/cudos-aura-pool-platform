@@ -36,12 +36,8 @@ export default class CollectionStorageRepo implements CollectionRepo {
     }
 
     getCollectionEntity(collectionId: string, callback: (collectionEntity: CollectionEntity) => void) {
-        const farmsJson = this.storageHelper.miningFarmsJson;
         const collectionJson = this.storageHelper.collectionsJson.find((json) => json.id === collectionId);
 
-        collectionJson.farmName = farmsJson.find((farmJson) => {
-            return farmJson.id === collectionJson.farmId
-        }).name;
         const collectionEntity = CollectionEntity.fromJson(collectionJson);
 
         callback(collectionEntity);
