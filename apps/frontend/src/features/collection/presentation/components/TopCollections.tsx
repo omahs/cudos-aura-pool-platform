@@ -1,6 +1,6 @@
 import React from 'react'
 import CollectionEntity from '../../entities/CollectionEntity';
-import ExploreCollectionsStore from '../stores/ExploreCollectionsStore';
+import MarketplaceStore from '../stores/MarketplaceStore';
 import S from '../../../../core/utilities/Main';
 
 import '../styles/top-collections.css';
@@ -25,7 +25,7 @@ export default function TopCollections({ selectedTopCollectionPeriod, cudosPrice
                 <div className={'H2 Bold'}>Top Collections</div>
                 <div className={'FlexRow PeriodButtonsRowHolder'}>
                     <div className={'PeriodButtonsRow FlexRow'}>
-                        {ExploreCollectionsStore.TOP_COLLECTION_PERIODS.map((period, index) => <div
+                        {MarketplaceStore.TOP_COLLECTION_PERIODS.map((period, index) => <div
                             key={index}
                             className={`PeriodButton Clickable B3 Semibold ${S.CSS.getActiveClassName(selectedTopCollectionPeriod === index)}`}
                             onClick={() => changeTopCollectionPeriod(index)}

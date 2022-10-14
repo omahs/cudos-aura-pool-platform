@@ -3,7 +3,7 @@ import CollectionEntity from '../../entities/CollectionEntity';
 import S from '../../../../core/utilities/Main';
 import CollectionRepo from '../repos/CollectionRepo';
 
-export default class ExploreCollectionsStore {
+export default class MarketplaceStore {
 
     static TOP_COLLECTION_PERIODS = [
         '1 Day',

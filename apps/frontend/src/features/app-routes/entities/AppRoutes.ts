@@ -4,7 +4,7 @@ export default class AppRoutes {
     static UiKIt = '/ui-kit';
     static NOT_FOUND = '/not-found';
     static REWARDS_CALCULATOR = '/rewards-calculator';
-    static EXPLORE_COLLECTIONS = '/explore-collections';
+    static MARKETPLACE = '/marketplace';
     static EXPLORE_NFTS = '/explore-nfts';
     static NFT_VIEW = '/nft-view';
     static COLLECTION_VIEW = '/collection-view';

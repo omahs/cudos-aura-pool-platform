@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import S from '../../../../core/utilities/Main';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
-import ExploreCollectionsStore from '../stores/ExploreCollectionsStore';
+import MarketplaceStore from '../stores/MarketplaceStore';
 
 import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment } from '@mui/material';
@@ -20,10 +20,10 @@ import Svg from '../../../../core/presentation/components/Svg';
 import '../styles/page-explore-collections-component.css';
 
 type Props = {
-    exploreCollectionsStore?: ExploreCollectionsStore
+    marketplaceStore?: MarketplaceStore
 }
 
-function ExploreCollectionsPage({ exploreCollectionsStore }: Props) {
+function MarkedplacePage({ marketplaceStore }: Props) {
 
     const navigate = useNavigate();
 
@@ -33,14 +33,14 @@ function ExploreCollectionsPage({ exploreCollectionsStore }: Props) {
 
     useEffect(() => {
         async function run() {
-            await exploreCollectionsStore.init();
+            await marketplaceStore.init();
         }
         run();
     }, []);
 
     return (
         <PageLayoutComponent
-            className = { 'PageExploreCollections' } >
+            className = { 'PageMarketplace' } >
             <PageHeader />
             <div className={'PageContent AppContent'} >
                 <div className={'ExploreColelctions FlexColumn'}>
@@ -48,8 +48,8 @@ function ExploreCollectionsPage({ exploreCollectionsStore }: Props) {
                     <Input
                         inputType={InputType.TEXT}
                         className={'SearchBar'}
-                        value = { exploreCollectionsStore.searchString }
-                        onChange = { exploreCollectionsStore.changeSearchString }
+                        value = { marketplaceStore.searchString }
+                        onChange = { marketplaceStore.changeSearchString }
                         placeholder = {'Search Collections, Farms and accounts'}
                         InputProps={{
                             startAdornment: <InputAdornment position="start" >
@@ -57,12 +57,12 @@ function ExploreCollectionsPage({ exploreCollectionsStore }: Props) {
                             </InputAdornment>,
                         }} />
                     <div className={'CategoriesRow FlexRow'}>
-                        { exploreCollectionsStore.categories.map((category, index) => {
+                        { marketplaceStore.categories.map((category, index) => {
                             return (
                                 <div
                                     key={index}
-                                    onClick={() => exploreCollectionsStore.selectCategory(index)}
-                                    className={`CategoryName Transition Clickable ${S.CSS.getActiveClassName(exploreCollectionsStore.selectedCategoryIndex === index)}`} >
+                                    onClick={() => marketplaceStore.selectCategory(index)}
+                                    className={`CategoryName Transition Clickable ${S.CSS.getActiveClassName(marketplaceStore.selectedCategoryIndex === index)}`} >
                                     {category}
                                 </div>
                             )
@@ -81,11 +81,11 @@ function ExploreCollectionsPage({ exploreCollectionsStore }: Props) {
                     </Button>
                 </Actions>
                 <TopCollections
-                    selectedTopCollectionPeriod={exploreCollectionsStore.selectedTopCollectionPeriod}
-                    cudosPriceChangeDisplay={exploreCollectionsStore.cudosPriceChangeDisplay()}
-                    cudosPriceUsd={exploreCollectionsStore.cudosPrice}
-                    topCollectionEntities={exploreCollectionsStore.topCollectionEntities}
-                    changeTopCollectionPeriod={exploreCollectionsStore.changeTopCollectionPeriod} />
+                    selectedTopCollectionPeriod={marketplaceStore.selectedTopCollectionPeriod}
+                    cudosPriceChangeDisplay={marketplaceStore.cudosPriceChangeDisplay()}
+                    cudosPriceUsd={marketplaceStore.cudosPrice}
+                    topCollectionEntities={marketplaceStore.topCollectionEntities}
+                    changeTopCollectionPeriod={marketplaceStore.changeTopCollectionPeriod} />
                 <Actions
                     layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
                     height={ACTIONS_HEIGHT.HEIGHT_48}>
@@ -102,4 +102,4 @@ function ExploreCollectionsPage({ exploreCollectionsStore }: Props) {
     )
 }
 
-export default inject((stores) => stores)(observer(ExploreCollectionsPage));
+export default inject((stores) => stores)(observer(MarkedplacePage));

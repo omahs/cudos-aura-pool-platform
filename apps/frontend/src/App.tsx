@@ -12,7 +12,7 @@ import RewardsCalculatorStore from './features/rewards-calculator/presentation/s
 import BitcoinStorageRepo from './features/bitcoin-data/data/repo/BitcoinStorageRepo';
 import MiningFarmStorageRepo from './features/mining-farm/data/repo/MiningFarmStorageRepo';
 import CollectionStorageRepo from './features/collection/data/repo/CollectionStorageRepo';
-import ExploreCollectionsStore from './features/collection/presentation/stores/ExploreCollectionsStore';
+import MarketplaceStore from './features/collection/presentation/stores/MarketplaceStore';
 import NftPreviewsGridStore from './features/nft/presentation/stores/NftPreviewsGridStore';
 import NftStorageRepo from './features/nft/data/repo/NftStorageRepo';
 import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModalStore';
@@ -43,7 +43,7 @@ const userRepo = new UserStorageRepo();
 
 const bitcoinStore = new BitcoinStore(bitcoinRepo);
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFarmRepo);
-const exploreCollectionsStore = new ExploreCollectionsStore(collectionRepo);
+const marketplaceStore = new MarketplaceStore(collectionRepo);
 const nftPreviewsGridStore = new NftPreviewsGridStore(nftRepo, collectionRepo);
 const nftDetailsStore = new NftDetailsStore(bitcoinStore, nftRepo, cudosRepo);
 const collectionViewPageStore = new CollectionViewPageStore(collectionRepo);
@@ -70,7 +70,7 @@ const App = () => {
                 bitcoinStore = { bitcoinStore }
                 exampleModalStore = { exampleModalStore }
                 rewardsCalculatorStore = { rewardsCalculatorStore }
-                exploreCollectionsStore = { exploreCollectionsStore }
+                marketplaceStore = { marketplaceStore }
                 nftPreviewsGridStore = { nftPreviewsGridStore }
                 nftDetailsStore = { nftDetailsStore }
                 collectionViewPageStore = { collectionViewPageStore }

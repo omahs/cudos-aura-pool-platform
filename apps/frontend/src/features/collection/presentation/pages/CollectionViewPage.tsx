@@ -10,12 +10,13 @@ import ProjectUtils from '../../../../core/utilities/ProjectUtils';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import CollectionViewPageStore from '../stores/CollectionViewPageStore';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Svg from '../../../../core/presentation/components/Svg';
 import NftPreviewsGridStore from '../../../nft/presentation/stores/NftPreviewsGridStore';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 type Props = {
     collectionViewPageStore?: CollectionViewPageStore
@@ -26,6 +27,7 @@ function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: P
 
     const collectionEntity = collectionViewPageStore.collectionEntity;
     const { collectionId } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         collectionViewPageStore.init(collectionId, nftPreviewsGridStore);
@@ -33,7 +35,7 @@ function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: P
 
     // TODO: get crumbs from router
     const crumbs = [
-        { name: 'Marketplace', onClick: () => {} },
+        { name: 'Marketplace', onClick: () => { navigate(AppRoutes.MARKETPLACE) } },
         { name: 'Collection Details', onClick: () => {} },
     ]
 

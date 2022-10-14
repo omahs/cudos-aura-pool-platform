@@ -8,7 +8,7 @@ import UiKitPage from '../../../ui-kit/presensation/components/UiKitPage';
 
 import '../styles/app-router.css';
 import RewardsCalculatorPage from '../../../rewards-calculator/presentation/pages/RewardsCalculatorPage';
-import ExploreCollectionsPage from '../../../collection/presentation/pages/ExploreCollectionsPage';
+import MarketplacePage from '../../../collection/presentation/pages/MarketplacePage';
 import ExploreNftsPage from '../../../nft/presentation/pages/ExploreNftsPage';
 import NftViewPage from '../../../nft/presentation/pages/NftViewPage';
 import CollectionViewPage from '../../../collection/presentation/pages/CollectionViewPage';
@@ -42,8 +42,8 @@ export default function AppRouter() {
                 <Route path = { AppRoutes.UiKIt } element = { <UiKitPage /> } />
                 <Route path = { AppRoutes.NOT_FOUND } element = { <NotFoundPage /> } />
                 <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPage /> } />
-                <Route index = { true } element = { <ExploreCollectionsPage /> } />
-                <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPage /> } />
+                <Route index = { true } element = { <MarketplacePage /> } />
+                <Route path = { AppRoutes.MARKETPLACE } element = { <MarketplacePage /> } />
                 <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPage /> } />
                 <Route path = { `${AppRoutes.USER_PROFILE}/:userAddress` } element = { <UserProfilePage /> } />
                 <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />

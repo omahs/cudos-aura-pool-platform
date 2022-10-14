@@ -39,7 +39,7 @@ function PageHeader({ walletStore }: Props) {
         <footer className={'PageHeader FlexRow FlexSplit'}>
             <Svg className={'SVG IconLogoWithText'} svg={ SvgAuraPoolLogo } />
             <div className={'StartRightBlock FlexRow'}>
-                <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(isLocationMarketplace())}`} onClick={() => navigate(AppRoutes.EXPLORE_COLLECTIONS)}>Marketplace</div>
+                <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(isLocationMarketplace())}`} onClick={() => navigate(AppRoutes.MARKETPLACE)}>Marketplace</div>
                 <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(location.pathname === AppRoutes.REWARDS_CALCULATOR)}`} onClick={() => navigate(AppRoutes.REWARDS_CALCULATOR)}>Rewards Calculator</div>
 
                 {walletStore.isKeplrConnected()

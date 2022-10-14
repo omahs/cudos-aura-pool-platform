@@ -21,6 +21,7 @@ interface Props {
 function FarmViewPage({ appStore, farmViewPageStore }: Props) {
 
     const { farmId } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         appStore.useLoading(() => {

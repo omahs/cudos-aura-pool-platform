@@ -1,28 +1,28 @@
 
-.PageExploreCollections .PageContent{
+.PageMarketplace .PageContent{
     padding: 70px var(--page-spacing-h);
 }
 
-.PageExploreCollections .ExploreColelctions {
+.PageMarketplace .ExploreColelctions {
     align-items: center;
 }
 
-.PageExploreCollections .ExploreColelctions .PageHeading {
+.PageMarketplace .ExploreColelctions .PageHeading {
     font-size: 64px;
     margin-bottom: 40px;   
 }
 
-.PageExploreCollections .ExploreColelctions .SearchBar {
+.PageMarketplace .ExploreColelctions .SearchBar {
     width: 420px;
     margin-bottom: 40px;
 }
 
-.PageExploreCollections .ExploreColelctions .CategoriesRow {
+.PageMarketplace .ExploreColelctions .CategoriesRow {
     gap: 25px;
     margin-bottom: 100px;
 }
 
-.PageExploreCollections .ExploreColelctions .CategoriesRow .CategoryName {
+.PageMarketplace .ExploreColelctions .CategoriesRow .CategoryName {
     padding: 4px 10px;
     border-radius: 6px;
     background-color: var(--color-gray-095);
@@ -31,7 +31,7 @@
     transition-property: background-color, color;
 }
 
-.PageExploreCollections .ExploreColelctions .CategoriesRow .CategoryName.Active {
+.PageMarketplace .ExploreColelctions .CategoriesRow .CategoryName.Active {
     background-color: #000;
     color: #fff;
 }
