@@ -31,7 +31,7 @@ interface Props {
     rewardsCalculatorStore?: RewardsCalculatorStore
 }
 
-function RewardsCalculatorPageComponent({ rewardsCalculatorStore }: Props) {
+function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
     const [networkDifficultyEditEnabled, setNetworkDifficultyEditEnabled] = useState(false);
     const navigate = useNavigate();
 
@@ -208,4 +208,4 @@ function RewardsCalculatorPageComponent({ rewardsCalculatorStore }: Props) {
     )
 }
 
-export default inject((stores) => stores)(observer(RewardsCalculatorPageComponent));
+export default inject((stores) => stores)(observer(RewardsCalculatorPage));

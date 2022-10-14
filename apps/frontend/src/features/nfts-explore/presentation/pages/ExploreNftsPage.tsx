@@ -19,7 +19,7 @@ interface Props {
     nftPreviewsGridStore?: NftPreviewsGridStore;
 }
 
-function ExploreNftsPageComponent({ nftPreviewsGridStore }: Props) {
+function ExploreNftsPage({ nftPreviewsGridStore }: Props) {
 
     return (
         <PageLayoutComponent
@@ -59,4 +59,4 @@ function ExploreNftsPageComponent({ nftPreviewsGridStore }: Props) {
 
 }
 
-export default inject((stores) => stores)(observer(ExploreNftsPageComponent));
+export default inject((stores) => stores)(observer(ExploreNftsPage));

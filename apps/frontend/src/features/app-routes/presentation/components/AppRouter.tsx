@@ -7,13 +7,13 @@ import NotFoundPage from '../../../not-found/presensation/components/NotFoundPag
 import UiKitPage from '../../../ui-kit/presensation/components/UiKitPage';
 
 import '../styles/app-router.css';
-import RewardsCalculatorPageComponent from '../../../rewards-calculator/presentation/pages/RewardsCalculatorPageComponent';
-import ExploreCollectionsPageComponent from '../../../collections-marketplace/presentation/pages/ExploreCollectionsPageComponent';
-import ExploreNftsPageComponent from '../../../nfts-explore/presentation/pages/ExploreNftsPageComponent';
-import NftViewPageComponent from '../../../nft-details/presentation/pages/NftViewPageComponent';
-import CollectionViewPageComponent from '../../../collection-details/presentation/pages/CollectionViewPageComponent';
-import FarmViewPageComponent from '../../../mining-farm-view/presentation/pages/FarmViewPageComponent';
-import UserProfilePageComponent from '../../../user-profile/presentation/pages/UserProfilePageComponent';
+import RewardsCalculatorPage from '../../../rewards-calculator/presentation/pages/RewardsCalculatorPage';
+import ExploreCollectionsPage from '../../../collections-marketplace/presentation/pages/ExploreCollectionsPage';
+import ExploreNftsPage from '../../../nfts-explore/presentation/pages/ExploreNftsPage';
+import NftViewPage from '../../../nft-details/presentation/pages/NftViewPage';
+import CollectionViewPage from '../../../collection-details/presentation/pages/CollectionViewPage';
+import FarmViewPage from '../../../mining-farm-view/presentation/pages/FarmViewPage';
+import UserProfilePage from '../../../user-profile/presentation/pages/UserProfilePage';
 
 export default function AppRouter() {
 
@@ -41,14 +41,14 @@ export default function AppRouter() {
             <Routes location = { displayLocation } >
                 <Route path = { AppRoutes.UiKIt } element = { <UiKitPage /> } />
                 <Route path = { AppRoutes.NOT_FOUND } element = { <NotFoundPage /> } />
-                <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPageComponent /> } />
-                <Route index = { true } element = { <ExploreCollectionsPageComponent /> } />
-                <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPageComponent /> } />
-                <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPageComponent /> } />
-                <Route path = { `${AppRoutes.USER_PROFILE}/:userAddress` } element = { <UserProfilePageComponent /> } />
-                <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPageComponent /> } />
-                <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPageComponent /> } />
-                <Route path = { `${AppRoutes.FARM_VIEW}/:farmId` } element = { <FarmViewPageComponent /> } />
+                <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPage /> } />
+                <Route index = { true } element = { <ExploreCollectionsPage /> } />
+                <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPage /> } />
+                <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPage /> } />
+                <Route path = { `${AppRoutes.USER_PROFILE}/:userAddress` } element = { <UserProfilePage /> } />
+                <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />
+                <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPage /> } />
+                <Route path = { `${AppRoutes.FARM_VIEW}/:farmId` } element = { <FarmViewPage /> } />
             </Routes>
         </div>
     )

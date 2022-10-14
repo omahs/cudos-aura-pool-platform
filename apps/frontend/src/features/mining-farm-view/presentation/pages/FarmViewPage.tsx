@@ -11,19 +11,20 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import { inject, observer } from 'mobx-react';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
+import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 
 interface Props {
     appStore?: AppStore
     farmViewPageStore?: FarmViewPageStore,
 }
 
-function FarmViewPageComponent({ appStore, farmViewPageStore }: Props) {
+function FarmViewPage({ appStore, farmViewPageStore }: Props) {
 
     const { farmId } = useParams();
 
     useEffect(() => {
         appStore.useLoading(() => {
-            farmViewPageStore.innitiate(farmId, () => {});
+            farmViewPageStore.init(farmId, () => {});
         });
     }, []);
 
@@ -36,10 +37,15 @@ function FarmViewPageComponent({ appStore, farmViewPageStore }: Props) {
     ]
 
     return (
-        farm === null ? ''
-            : <PageLayoutComponent
-                className = { 'PageFarmView' } >
-                <PageHeader />
+        <PageLayoutComponent
+            className = { 'PageFarmView' } >
+            <PageHeader />
+
+            { farm === null && (
+                <LoadingIndicator />
+            ) }
+
+            { farm !== null && (
                 <div className={'PageContent AppContent'} >
                     <Breadcrumbs crumbs={crumbs}/>
                     <ProfileHeader coverPictureUrl={farm.coverImgUrl} profilePictureUrl={farm.profileImgurl} />
@@ -76,10 +82,12 @@ function FarmViewPageComponent({ appStore, farmViewPageStore }: Props) {
                     <div className={'H2'}>Collections Owned</div>
                     <NftPreviewsGrid/>
                 </div>
-                <PageFooter />
-            </PageLayoutComponent>
+            ) }
+
+            <PageFooter />
+        </PageLayoutComponent>
     )
 
 }
 
-export default inject((stores) => stores)(observer(FarmViewPageComponent));
+export default inject((stores) => stores)(observer(FarmViewPage));

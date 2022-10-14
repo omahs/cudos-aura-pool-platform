@@ -28,7 +28,7 @@ export default class FarmViewPageStore {
         makeAutoObservable(this);
     }
 
-    innitiate(farmId: string, callback: () => void) {
+    init(farmId: string, callback: () => void) {
         this.selectedSortIndex = 0;
         this.farmRepo.getFarmById(farmId, (farmProfile) => {
             this.farmProfile = farmProfile;
