@@ -1,4 +1,5 @@
 import { makeAutoObservable, observable } from 'mobx';
+import GridViewState from '../../../../core/presentation/stores/GridViewState';
 import NftRepo from '../../../nft/presentation/repos/NftRepo';
 import S from '../../../../core/utilities/Main';
 import NftEntity from '../../../nft/entities/NftEntity';
