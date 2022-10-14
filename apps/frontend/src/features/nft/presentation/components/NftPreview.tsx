@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SvgCudosLogo from '../../../../public/assets/vectors/cudos-logo.svg';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import '../styles/nft-preview.css';
-import NftEntity from '../../../nft-details/entities/NftEntity';
+import NftEntity from '../../entities/NftEntity';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 
 interface Props {

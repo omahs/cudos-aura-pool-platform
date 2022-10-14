@@ -9,7 +9,7 @@ import NftPreviewsGridStore from '../stores/NftPreviewsGridStore';
 import '../styles/nft-preview-grid.css';
 
 import GridView from '../../../../core/presentation/components/GridView';
-import NftEntity from '../../../nft-details/entities/NftEntity';
+import NftEntity from '../../entities/NftEntity';
 
 interface Props {
     nftPreviewsGridStore?: NftPreviewsGridStore;

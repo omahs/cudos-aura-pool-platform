@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 import LaunchIcon from '@mui/icons-material/Launch';
 import '../styles/page-collection-view-component.css';
-import NftPreviewsGrid from '../../../nfts-explore/presentation/components/NftPreviewsGrid';
+import NftPreviewsGrid from '../../../nft/presentation/components/NftPreviewsGrid';
 import ProfileHeader from '../components/ProfileHeader';
 import ProjectUtils from '../../../../core/utilities/ProjectUtils';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
@@ -12,7 +12,7 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import CollectionViewPageStore from '../stores/CollectionViewPageStore';
 import { useParams } from 'react-router-dom';
 import Svg from '../../../../core/presentation/components/Svg';
-import NftPreviewsGridStore from '../../../nfts-explore/presentation/stores/NftPreviewsGridStore';
+import NftPreviewsGridStore from '../../../nft/presentation/stores/NftPreviewsGridStore';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';

@@ -4,9 +4,9 @@ import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentati
 import GridView from '../../../../core/presentation/components/GridView';
 import Select from '../../../../core/presentation/components/Select';
 import React from 'react';
-import NftPreview from '../../../nfts-explore/presentation/components/NftPreview';
+import NftPreview from '../../../nft/presentation/components/NftPreview';
 import UserProfilePageStore from '../stores/UserProfilePageStore';
-import NftEntity from '../../../nft-details/entities/NftEntity';
+import NftEntity from '../../../nft/entities/NftEntity';
 
 interface Props {
     userProfilePageStore: UserProfilePageStore;

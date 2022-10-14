@@ -11,17 +11,14 @@ export enum ModalStage {
     FAIL
 }
 
-export default class ResellNftModalStore extends ModalStore {
+export default class BuyNftModalStore extends ModalStore {
 
     @observable nftEntity: NftEntity;
     @observable cudosPrice: number;
-    price: number;
-    @observable priceDisplay: string;
+    @observable recipient: string;
     @observable collectionName: string;
     @observable modalStage: ModalStage;
-    @observable originalPaymentSchedule: number;
-    @observable autoPay: number;
-    txHash: string;
+    @observable txHash: string;
 
     constructor() {
         super();
@@ -33,23 +30,17 @@ export default class ResellNftModalStore extends ModalStore {
 
     resetValues() {
         this.cudosPrice = S.NOT_EXISTS;
-        this.price = S.NOT_EXISTS;
-        this.priceDisplay = S.Strings.EMPTY;
+        this.recipient = S.Strings.EMPTY;
         this.collectionName = S.Strings.EMPTY;
         this.modalStage = S.NOT_EXISTS;
-        this.autoPay = S.INT_FALSE;
-        this.originalPaymentSchedule = S.INT_FALSE;
         this.txHash = S.Strings.EMPTY;
     }
 
     nullateValues() {
         this.cudosPrice = null;
-        this.price = null;
-        this.priceDisplay = null;
+        this.recipient = null;
         this.collectionName = null;
         this.modalStage = null;
-        this.autoPay = null;
-        this.originalPaymentSchedule = null;
         this.txHash = null;
     }
 
@@ -58,11 +49,8 @@ export default class ResellNftModalStore extends ModalStore {
         this.nftEntity = nftEntity;
         this.cudosPrice = cudosPrice;
         this.collectionName = collectionName;
-        this.modalStage = ModalStage.FAIL;
-        this.price = 0;
-        this.priceDisplay = '0';
-        this.autoPay = S.INT_FALSE;
-        this.originalPaymentSchedule = S.INT_FALSE;
+        this.modalStage = ModalStage.PREVIEW;
+        this.txHash = S.Strings.EMPTY;
 
         this.show();
     }
@@ -72,30 +60,11 @@ export default class ResellNftModalStore extends ModalStore {
         super.hide();
     }
 
-    setPrice = (price: string) => {
-        this.priceDisplay = price;
-        this.price = Number(price);
+    setRecipient = (recipient: string) => {
+        this.recipient = recipient;
     }
 
     buyNft = () => {
-        this.modalStage = ModalStage.PROCESSING;
-
-        // TODO: really buy nftEntity
-
-        setTimeout(() => {
-            this.modalStage = ModalStage.SUCCESS;
-        }, 2000)
-    }
-
-    toggleAutoPay = () => {
-        this.autoPay = this.autoPay === S.INT_TRUE ? S.INT_FALSE : S.INT_TRUE;
-    }
-
-    toggleOriginalPaymentSchedule = () => {
-        this.originalPaymentSchedule = this.originalPaymentSchedule === S.INT_TRUE ? S.INT_FALSE : S.INT_TRUE;
-    }
-
-    onClickSubmitForSell = () => {
         this.modalStage = ModalStage.PROCESSING;
 
         // TODO: really buy nftEntity
@@ -103,6 +72,11 @@ export default class ResellNftModalStore extends ModalStore {
         setTimeout(() => {
             this.modalStage = ModalStage.SUCCESS;
         }, 2000)
+    }
+
+    getTxLink(): string {
+        // TODO: dynamic link geenration for all networks
+        return `${CHAIN_DETAILS.EXPLORER_URL['PRIVATE']}/${this.txHash}`
     }
 
     isStagePreview(): boolean {
@@ -120,10 +94,4 @@ export default class ResellNftModalStore extends ModalStore {
     isStageFail(): boolean {
         return this.modalStage === ModalStage.FAIL;
     }
-
-    getTxLink(): string {
-        // TODO: dynamic link geenration for all networks
-        return `${CHAIN_DETAILS.EXPLORER_URL['PRIVATE']}/${this.txHash}`
-    }
-
 }

@@ -1,6 +1,6 @@
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
-import NftEntity from '../../../nft-details/entities/NftEntity';
+import NftEntity from '../../entities/NftEntity';
 
 export default interface NftRepo {
 

@@ -13,18 +13,18 @@ import BitcoinStorageRepo from './features/bitcoin-data/data/repo/BitcoinStorage
 import MiningFarmStorageRepo from './features/mining-farm-view/data/repo/MiningFarmStorageRepo';
 import CollectionStorageRepo from './features/collection/data/repo/CollectionStorageRepo';
 import ExploreCollectionsStore from './features/collection/presentation/stores/ExploreCollectionsStore';
-import NftPreviewsGridStore from './features/nfts-explore/presentation/stores/NftPreviewsGridStore';
-import NftStorageRepo from './features/nfts-explore/data/repo/NftStorageRepo';
+import NftPreviewsGridStore from './features/nft/presentation/stores/NftPreviewsGridStore';
+import NftStorageRepo from './features/nft/data/repo/NftStorageRepo';
 import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModalStore';
 import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
-import NftDetailsStore from './features/nft-details/presentation/stores/NftDetailsStore';
+import NftDetailsStore from './features/nft/presentation/stores/NftDetailsStore';
 import CollectionViewPageStore from './features/collection/presentation/stores/CollectionViewPageStore';
 import FarmViewPageStore from './features/mining-farm-view/presentation/stores/FarmViewPageStore';
 import UserProfilePageStore from './features/user-profile/presentation/stores/UserProfilePageStore';
 import UserStorageRepo from './features/user-profile/data/repo/UserStorageRepo';
 import WalletStore from './features/ledger/presentation/stores/WalletStore';
-import BuyNftModalStore from './features/nft-details/presentation/stores/BuyNftModalStore';
-import ResellNftModalStore from './features/nft-details/presentation/stores/ResellNftModalStore';
+import BuyNftModalStore from './features/nft/presentation/stores/BuyNftModalStore';
+import ResellNftModalStore from './features/nft/presentation/stores/ResellNftModalStore';
 import StorageHelper from './core/helpers/StorageHelper';
 import BitcoinStore from './features/bitcoin-data/presentation/stores/BitcoinStore';
 

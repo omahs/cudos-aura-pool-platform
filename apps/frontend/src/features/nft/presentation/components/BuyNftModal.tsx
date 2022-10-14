@@ -2,7 +2,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 
 import ModalWindow from '../../../../core/presentation/components/ModalWindow';
-import BuyNftModalStore, { ModalStage } from '../stores/BuyNftModalStore';
+import BuyNftModalStore from '../stores/BuyNftModalStore';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
@@ -17,7 +17,7 @@ type Props = {
 }
 
 function BuyNftModal({ resellNft, buyNftModalStore }: Props) {
-    const nft = buyNftModalStore.nft;
+    const nftEntity = buyNftModalStore.nftEntity;
 
     function onClickResellNft() {
         buyNftModalStore.hide();
@@ -34,15 +34,15 @@ function BuyNftModal({ resellNft, buyNftModalStore }: Props) {
                             <div
                                 className={'NftPicture'}
                                 style={{
-                                    backgroundImage: `url("${nft.imageUrl}")`,
+                                    backgroundImage: `url("${nftEntity.imageUrl}")`,
                                 }}
                             />
                             <div className={'NftInfo FlexColumnt'}>
                                 <div className={'CollectionName B2 SemiBold Gray'}>{buyNftModalStore.collectionName}</div>
-                                <div className={'NftName H2 Bold'}>{nft.name}</div>
+                                <div className={'NftName H2 Bold'}>{nftEntity.name}</div>
                                 <div className={'Price FlexRow'}>
-                                    <div className={'H3 Bold'}>{nft.price.toFixed(0)} CUDOS</div>
-                                    <div className={'B2 SemiBold Gray'}>${nft.price.multipliedBy(buyNftModalStore.cudosPrice).toFixed(0)}</div>
+                                    <div className={'H3 Bold'}>{nftEntity.price.toFixed(0)} CUDOS</div>
+                                    <div className={'B2 SemiBold Gray'}>${nftEntity.price.multipliedBy(buyNftModalStore.cudosPrice).toFixed(0)}</div>
                                 </div>
                             </div>
                         </div>
@@ -74,11 +74,11 @@ function BuyNftModal({ resellNft, buyNftModalStore }: Props) {
                             <div
                                 className={'NftPicture'}
                                 style={{
-                                    backgroundImage: `url("${nft.imageUrl}")`,
+                                    backgroundImage: `url("${nftEntity.imageUrl}")`,
                                 }}
                             />
                             <div className={'B2 SemiBold Gray'}>{buyNftModalStore.collectionName}</div>
-                            <div className={'H2 Bold'}>{nft.name}</div>
+                            <div className={'H2 Bold'}>{nftEntity.name}</div>
                         </div>
                         <div className={'FlexRow TransactionView H3'}>
                             Transaction details

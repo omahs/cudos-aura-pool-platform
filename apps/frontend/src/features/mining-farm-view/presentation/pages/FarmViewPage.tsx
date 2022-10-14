@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import '../styles/page-farm-view-component.css';
-import NftPreviewsGrid from '../../../nfts-explore/presentation/components/NftPreviewsGrid';
+import NftPreviewsGrid from '../../../nft/presentation/components/NftPreviewsGrid';
 import ProfileHeader from '../../../collection/presentation/components/ProfileHeader';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import FarmViewPageStore from '../stores/FarmViewPageStore';

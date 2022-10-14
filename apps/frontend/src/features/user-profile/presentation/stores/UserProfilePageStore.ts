@@ -1,10 +1,10 @@
 import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable, observable } from 'mobx';
-import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
+import NftRepo from '../../../nft/presentation/repos/NftRepo';
 import UserRepo from '../repos/UserRepo';
 import UserEntity from '../../entities/UserEntity';
 import S from '../../../../core/utilities/Main';
-import NftEntity from '../../../nft-details/entities/NftEntity';
+import NftEntity from '../../../nft/entities/NftEntity';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';

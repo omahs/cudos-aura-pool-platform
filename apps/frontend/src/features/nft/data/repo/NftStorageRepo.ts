@@ -3,7 +3,7 @@ import StorageHelper from '../../../../core/helpers/StorageHelper';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
-import NftEntity from '../../../nft-details/entities/NftEntity';
+import NftEntity from '../../entities/NftEntity';
 import NftRepo from '../../presentation/repos/NftRepo';
 
 export default class NftStorageRepo implements NftRepo {

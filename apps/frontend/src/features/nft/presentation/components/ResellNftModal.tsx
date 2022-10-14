@@ -2,7 +2,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 
 import ModalWindow from '../../../../core/presentation/components/ModalWindow';
-import ResellNftModalStore, { ModalStage } from '../stores/ResellNftModalStore';
+import ResellNftModalStore from '../stores/ResellNftModalStore';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import Checkbox from '../../../../core/presentation/components/Checkbox';
@@ -20,7 +20,7 @@ type Props = {
 }
 
 function ResellNftModal({ resellNftModalStore }: Props) {
-    const nft = resellNftModalStore.nft;
+    const nftEntity = resellNftModalStore.nftEntity;
 
     return (
         <ModalWindow modalStore = { resellNftModalStore } >
@@ -41,15 +41,15 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                     <div
                         className={'NftPicture'}
                         style={{
-                            backgroundImage: `url("${nft.imageUrl}")`,
+                            backgroundImage: `url("${nftEntity.imageUrl}")`,
                         }}
                     />
                     <div className={'NftInfo FlexColumnt'}>
                         <div className={'CollectionName B2 SemiBold Gray'}>{resellNftModalStore.collectionName}</div>
-                        <div className={'NftName H2 Bold'}>{nft.name}</div>
+                        <div className={'NftName H2 Bold'}>{nftEntity.name}</div>
                         <div className={'Address FlexColumn'}>
                             <div className={'B2 SemiBold Gray'}>Current Rewards Recipient</div>
-                            <div className={'H3 Bold'}>{nft.currentOwnerAddress}</div>
+                            <div className={'H3 Bold'}>{nftEntity.currentOwnerAddress}</div>
                         </div>
                     </div>
                 </div>

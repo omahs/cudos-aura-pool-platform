@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../repos/CollectionRepo';
-import NftPreviewsGridStore from '../../../nfts-explore/presentation/stores/NftPreviewsGridStore';
+import NftPreviewsGridStore from '../../../nft/presentation/stores/NftPreviewsGridStore';
 
 export default class CollectionViewPageStore {
     collectionRepo: CollectionRepo;

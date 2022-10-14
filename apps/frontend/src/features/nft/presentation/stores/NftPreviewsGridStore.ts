@@ -3,7 +3,7 @@ import { makeAutoObservable, observable } from 'mobx';
 import S from '../../../../core/utilities/Main';
 import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import NftRepo from '../repos/NftRepo';
-import NftEntity from '../../../nft-details/entities/NftEntity';
+import NftEntity from '../../entities/NftEntity';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 
 export default class NftPreviewsGridStore {
