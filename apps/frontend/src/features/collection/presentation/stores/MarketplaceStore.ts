@@ -49,23 +49,11 @@ export default class MarketplaceStore {
         await this.cudosStore.init();
 
         this.resetDefaults();
-        this.getCategories();
-        this.getTopCollections();
+        this.categories = await this.collectionRepo.fetchCategories();
+        this.topCollectionEntities = await this.collectionRepo.fetchTopCollections(this.selectedTopCollectionPeriod);
 
         this.cudosPrice = this.cudosStore.getCudosPrice();
         this.cudosPriceChange = this.cudosStore.getBitcoinPriceChange();
-    }
-
-    getTopCollections() {
-        this.collectionRepo.getTopCollections(this.selectedTopCollectionPeriod, (collectionEntities: CollectionEntity[]) => {
-            this.topCollectionEntities = collectionEntities;
-        })
-    }
-
-    getCategories() {
-        this.collectionRepo.getCategories((categories: string[]) => {
-            this.categories = categories;
-        })
     }
 
     selectCategory(index: number) {

@@ -76,7 +76,7 @@ export default class UserProfilePageStore {
         );
 
         const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
-        this.collectionEntities = await this.collectionRepo.getCollectionsByIds(collectionIds);
+        this.collectionEntities = await this.collectionRepo.fetchCollectionsByIds(collectionIds);
         this.setNftEntities(nftEntities);
         this.gridViewStore.setTotalItems(total);
         this.gridViewStore.setIsLoading(false);

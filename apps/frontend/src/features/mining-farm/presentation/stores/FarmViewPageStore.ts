@@ -30,28 +30,25 @@ export default class FarmViewPageStore {
 
     init(farmId: string, callback: () => void) {
         this.selectedSortIndex = 0;
-        this.farmRepo.getFarmById(farmId, (farmProfile) => {
+        this.farmRepo.getFarmById(farmId, async (farmProfile) => {
             this.farmProfile = farmProfile;
 
-            this.fetchViewingModels()
+            await this.fetchViewingModels()
             callback();
         });
     }
 
-    fetchViewingModels = () => {
+    fetchViewingModels = async () => {
         this.gridViewStore.setIsLoading(true);
-        console.log(this.getSelectedKey())
-        this.collectionRepo.getCollectionsByFarmIdSortedPaginated(
+        const { collectionEntities, total } = await this.collectionRepo.fetchCollectionsByFarmIdSortedPaginated(
             this.farmProfile.id,
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
-            (collectionEntities: CollectionEntity[], total) => {
-                this.setCollectionEntities(collectionEntities);
-                this.gridViewStore.setTotalItems(total);
-                this.gridViewStore.setIsLoading(false);
-            },
-        )
+        );
+        this.setCollectionEntities(collectionEntities);
+        this.gridViewStore.setTotalItems(total);
+        this.gridViewStore.setIsLoading(false);
     }
 
     getSelectedKey() {

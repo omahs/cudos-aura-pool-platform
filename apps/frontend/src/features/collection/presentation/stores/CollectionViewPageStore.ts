@@ -24,17 +24,15 @@ export default class CollectionViewPageStore {
         makeAutoObservable(this);
     }
 
-    init(collectionId: string, nftPreviewsGridStore: NftPreviewsGridStore) {
+    async init(collectionId: string, nftPreviewsGridStore: NftPreviewsGridStore) {
         this.nftPreviewsGridStore = nftPreviewsGridStore;
         this.nftPreviewsGridStore.collectionId = collectionId;
 
-        this.collectionRepo.getCollectionEntity(collectionId, (collectionEntity) => {
-
-            this.miningFarmRepo.getFarmById(collectionEntity.farmId, (miningFarmEntity: MiningFarmEntity) => {
-                this.miningFarmEntity = miningFarmEntity;
-                this.collectionEntity = collectionEntity;
-                this.nftPreviewsGridStore.fetchViewingModels();
-            })
-        });
+        const collectionEntity = await this.collectionRepo.fetchCollectionEntity(collectionId);
+        this.miningFarmRepo.getFarmById(collectionEntity.farmId, (miningFarmEntity: MiningFarmEntity) => {
+            this.miningFarmEntity = miningFarmEntity;
+            this.collectionEntity = collectionEntity;
+            this.nftPreviewsGridStore.fetchViewingModels();
+        })
     }
 }

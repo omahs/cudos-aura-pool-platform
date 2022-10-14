@@ -50,7 +50,7 @@ export default class NftPreviewsGridStore {
     }
 
     async init() {
-        await this.getCategories();
+        this.categories = await this.collectionRepo.fetchCategories();
         await this.fetchViewingModels();
     }
 
@@ -66,7 +66,7 @@ export default class NftPreviewsGridStore {
         );
         const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
 
-        this.collectionEntities = await this.collectionRepo.getCollectionsByIds(collectionIds);
+        this.collectionEntities = await this.collectionRepo.fetchCollectionsByIds(collectionIds);
         this.setNftEntities(nftEntities);
         this.gridViewStore.setTotalItems(total);
         this.gridViewStore.setIsLoading(false);
@@ -74,12 +74,6 @@ export default class NftPreviewsGridStore {
 
     getSelectedKey() {
         return NftPreviewsGridStore.TABLE_KEYS[this.selectedSortIndex];
-    }
-
-    async getCategories() {
-        this.collectionRepo.getCategories((categories: string[]) => {
-            this.categories = categories;
-        })
     }
 
     selectCategory(index: number) {

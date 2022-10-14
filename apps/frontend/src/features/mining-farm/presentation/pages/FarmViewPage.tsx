@@ -25,8 +25,8 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        appStore.useLoading(() => {
-            farmViewPageStore.init(farmId, () => {});
+        appStore.useLoading(async () => {
+            await farmViewPageStore.init(farmId, () => {});
         });
     }, []);
 
