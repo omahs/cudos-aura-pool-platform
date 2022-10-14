@@ -1,7 +1,7 @@
-import CollectionProfile from '../../../collections-marketplace/entities/CollectionProfile';
-import MiningFarmModel from '../../../mining-farm/entities/MiningFarmModel';
-import NftPreviewModel from '../../entities/NftPreviewModel';
-import NftProfile from '../../../nft-details/entities/NftProfile';
+import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
+import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
+import NftPreviewEntity from '../../entities/NftPreviewEntity';
+import NftProfileEntity from '../../../nft-details/entities/NftProfileEntity';
 
 export default interface NftRepo {
 
@@ -10,7 +10,7 @@ export default interface NftRepo {
         sortKey: string,
         start: number,
         size: number,
-        callback: (nftPreviews: NftPreviewModel[], total: number) => void,
+        callback: (nftPreviews: NftPreviewEntity[], total: number) => void,
     );
 
     getNftsByCategoryAndSearchSortedPaginated(
@@ -20,10 +20,10 @@ export default interface NftRepo {
         sortKey: string,
         start: number,
         size: number,
-        callback: (nftPreviews: NftPreviewModel[], total: number) => void,
+        callback: (nftPreviews: NftPreviewEntity[], total: number) => void,
     );
 
     getNftProfile(
         nftId: string,
-        callback: (nftProfile: NftProfile, collectionProfile: CollectionProfile, farmView: MiningFarmModel) => void);
+        callback: (nftProfile: NftProfileEntity, collectionProfile: CollectionProfileEntity, farmView: MiningFarmEntity) => void);
 }

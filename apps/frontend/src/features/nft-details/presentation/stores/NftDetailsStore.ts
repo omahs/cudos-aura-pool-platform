@@ -2,11 +2,10 @@ import S from '../../../../core/utilities/Main';
 import { makeAutoObservable } from 'mobx';
 import CudosRepo from '../../../cudos-data/presentation/repos/CudosRepo';
 import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
-import NftProfile, { NftListinStatus } from '../../entities/NftProfile';
-import CollectionProfile from '../../../collections-marketplace/entities/CollectionProfile';
-import MiningFarmModel from '../../../mining-farm/entities/MiningFarmModel';
+import NftProfileEntity, { NftListinStatus } from '../../entities/NftProfileEntity';
+import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
+import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
 import BitcoinRepo from '../../../bitcoin-data/presentation/repos/BitcoinRepo';
-import { IsBtcAddress } from 'class-validator';
 
 export default class NftDetailsStore {
     nftRepo: NftRepo;
@@ -15,9 +14,9 @@ export default class NftDetailsStore {
 
     cudosPrice: number;
     bitcoinPrice: number;
-    nftProfile: NftProfile;
-    collectionProfile: CollectionProfile;
-    miningFarm: MiningFarmModel;
+    nftProfile: NftProfileEntity;
+    collectionProfile: CollectionProfileEntity;
+    miningFarm: MiningFarmEntity;
 
     constructor(nftRepo: NftRepo, cudosRepo: CudosRepo, bitcoinRepo: BitcoinRepo) {
         this.nftRepo = nftRepo;

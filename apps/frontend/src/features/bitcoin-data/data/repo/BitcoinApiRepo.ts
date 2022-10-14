@@ -9,8 +9,8 @@
 //         this.storageHelper = new BitcoinDataSource();
 //     }
 
-//     getBitcoinData(callback: (bitcoinData: BitcoinDataModel) => void) {
-//         const bitcoinData = BitcoinDataModel.fromJson(this.storageHelper.bitcoinDataJson);
+//     getBitcoinData(callback: (bitcoinData: BitcoinDataEntity) => void) {
+//         const bitcoinData = BitcoinDataEntity.fromJson(this.storageHelper.bitcoinDataJson);
 //         callback(bitcoinData);
 //     }
 // }

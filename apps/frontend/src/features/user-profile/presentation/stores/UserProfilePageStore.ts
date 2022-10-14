@@ -1,7 +1,7 @@
 import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable, observable } from 'mobx';
 import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
-import NftPreviewModel from '../../../nfts-explore/entities/NftPreviewModel';
+import NftPreviewEntity from '../../../nfts-explore/entities/NftPreviewEntity';
 import UserProfileRepo from '../repos/UserProfileRepo';
 import UserProfileEntity from '../../entities/UserProfileEntity';
 import S from '../../../../core/utilities/Main';
@@ -24,7 +24,7 @@ export default class UserProfilePageStore {
     @observable gridViewStore: GridViewStore;
     userProfileModel: UserProfileEntity;
     selectedSortIndex: number;
-    nftPreviews: NftPreviewModel[];
+    nftPreviews: NftPreviewEntity[];
     bitcoinPrice: number;
     profilePage: number;
 
@@ -65,7 +65,7 @@ export default class UserProfilePageStore {
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
-            (nftPreviews: NftPreviewModel[], total) => {
+            (nftPreviews: NftPreviewEntity[], total) => {
                 this.setNftPreviews(nftPreviews);
                 this.gridViewStore.setTotalItems(total);
                 this.gridViewStore.setIsLoading(false);
@@ -83,7 +83,7 @@ export default class UserProfilePageStore {
         this.fetchViewingModels();
     }
 
-    setNftPreviews(nftPreviews: NftPreviewModel[]) {
+    setNftPreviews(nftPreviews: NftPreviewEntity[]) {
         this.nftPreviews = nftPreviews;
     }
 

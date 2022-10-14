@@ -1,6 +1,6 @@
 import S from '../../../core/utilities/Main';
 
-export default class BitcoinDataModel {
+export default class BitcoinDataEntity {
     price: number;
     priceChange: number;
     blockReward: string;
@@ -22,12 +22,12 @@ export default class BitcoinDataModel {
         }
     }
 
-    static fromJson(json): BitcoinDataModel {
+    static fromJson(json): BitcoinDataEntity {
         if (json === null) {
             return null;
         }
 
-        const model = new BitcoinDataModel();
+        const model = new BitcoinDataEntity();
 
         model.price = Number(json.price) ?? model.price;
         model.priceChange = Number(json.priceChange) ?? model.priceChange;

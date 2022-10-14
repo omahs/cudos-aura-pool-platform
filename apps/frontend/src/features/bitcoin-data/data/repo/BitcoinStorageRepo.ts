@@ -1,5 +1,5 @@
 import StorageHelper from '../../../../core/helpers/StorageHelper';
-import BitcoinDataModel from '../../entities/BitcoinData';
+import BitcoinDataEntity from '../../entities/BitcoinDataEntity';
 import BitcoinRepo from '../../presentation/repos/BitcoinRepo';
 
 export default class BitcoinStorageRepo implements BitcoinRepo {
@@ -9,8 +9,8 @@ export default class BitcoinStorageRepo implements BitcoinRepo {
         this.storageHelper = new StorageHelper();
     }
 
-    getBitcoinData(callback: (bitcoinData: BitcoinDataModel) => void) {
-        const bitcoinData = BitcoinDataModel.fromJson(this.storageHelper.bitcoinDataJson);
+    getBitcoinData(callback: (bitcoinData: BitcoinDataEntity) => void) {
+        const bitcoinData = BitcoinDataEntity.fromJson(this.storageHelper.bitcoinDataJson);
         callback(bitcoinData);
     }
 }

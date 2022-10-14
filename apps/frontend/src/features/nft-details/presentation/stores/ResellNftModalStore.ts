@@ -1,7 +1,7 @@
 import S from '../../../../core/utilities/Main';
 import { action, makeObservable, observable } from 'mobx';
 import ModalStore from '../../../../core/presentation/stores/ModalStore';
-import NftProfile from '../../entities/NftProfile';
+import NftProfileEntity from '../../entities/NftProfileEntity';
 import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
 
 export enum ModalStage {
@@ -13,7 +13,7 @@ export enum ModalStage {
 
 export default class ResellNftModalStore extends ModalStore {
 
-    @observable nft: NftProfile;
+    @observable nft: NftProfileEntity;
     @observable cudosPrice: number;
     price: number;
     @observable priceDisplay: string;
@@ -54,7 +54,7 @@ export default class ResellNftModalStore extends ModalStore {
     }
 
     @action
-    showSignal(nft: NftProfile, cudosPrice: number, collectionName: string) {
+    showSignal(nft: NftProfileEntity, cudosPrice: number, collectionName: string) {
         this.nft = nft;
         this.cudosPrice = cudosPrice;
         this.collectionName = collectionName;

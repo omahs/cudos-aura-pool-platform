@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import S from '../../../core/utilities/Main';
 
-export default class CollectionProfile {
+export default class CollectionProfileEntity {
     id: string;
     farmName: string;
     name: string;
@@ -47,12 +47,12 @@ export default class CollectionProfile {
         }
     }
 
-    static fromJson(json): CollectionProfile {
+    static fromJson(json): CollectionProfileEntity {
         if (json === null) {
             return null;
         }
 
-        const model = new CollectionProfile();
+        const model = new CollectionProfileEntity();
 
         model.id = json.id ?? model.id;
         model.farmName = json.farmName ?? model.farmName;

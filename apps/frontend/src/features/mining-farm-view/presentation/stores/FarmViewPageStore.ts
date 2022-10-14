@@ -1,8 +1,8 @@
 import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
-import { makeAutoObservable, observable } from 'mobx';
-import CollectionPreview from '../../../collections-marketplace/entities/CollectionPreview';
+import { makeAutoObservable } from 'mobx';
+import CollectionPreviewEntity from '../../../collections-marketplace/entities/CollectionPreviewEntity';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
-import MiningFarmModel from '../../entities/MiningFarmModel';
+import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../repos/MiningFarmRepo';
 
 export default class FarmViewPageStore {
@@ -13,9 +13,9 @@ export default class FarmViewPageStore {
     collectionRepo: CollectionRepo;
 
     gridViewStore: GridViewStore;
-    farmProfile: MiningFarmModel;
+    farmProfile: MiningFarmEntity;
     selectedSortIndex: number;
-    collectionPreviews: CollectionPreview[];
+    collectionPreviews: CollectionPreviewEntity[];
 
     constructor(farmRepo: MiningFarmRepo, collectionRepo: CollectionRepo) {
         this.farmRepo = farmRepo;
@@ -46,7 +46,7 @@ export default class FarmViewPageStore {
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
-            (collectionPreviews: CollectionPreview[], total) => {
+            (collectionPreviews: CollectionPreviewEntity[], total) => {
                 this.setCollectionPreviews(collectionPreviews);
                 this.gridViewStore.setTotalItems(total);
                 this.gridViewStore.setIsLoading(false);
@@ -64,7 +64,7 @@ export default class FarmViewPageStore {
         this.fetchViewingModels();
     }
 
-    setCollectionPreviews(collectionPreviews: CollectionPreview[]) {
+    setCollectionPreviews(collectionPreviews: CollectionPreviewEntity[]) {
         this.collectionPreviews = collectionPreviews;
     }
 

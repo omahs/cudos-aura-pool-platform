@@ -17,12 +17,11 @@ import { Slider, InputAdornment } from '@mui/material';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import SouthEastIcon from '@mui/icons-material/SouthEast';
-import ReplayIcon from '@mui/icons-material/Replay';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 
 import S from '../../../../core/utilities/Main';
 import '../styles/page-rewards-calculator-component.css';
-import MiningFarmModel from '../../../mining-farm-view/entities/MiningFarmModel';
+import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
 import Autocomplete from '../../../../core/presentation/components/Autcomplete';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import AutocompleteOption from '../../../../core/entities/AutocompleteOption';
@@ -88,7 +87,7 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
                                     onChange={rewardsCalculatorStore.selectFarmPool}
                                     value={selectedFarmIndex === S.NOT_EXISTS ? null : new AutocompleteOption(selectedFarmIndex, selectedFarmName)}
                                     options = {
-                                        rewardsCalculatorStore.miningFarms.map((farm: MiningFarmModel, i: number) => new AutocompleteOption(i, farm.name))
+                                        rewardsCalculatorStore.miningFarms.map((farm: MiningFarmEntity, i: number) => new AutocompleteOption(i, farm.name))
                                     } />
                                 <Input
                                     label = {
