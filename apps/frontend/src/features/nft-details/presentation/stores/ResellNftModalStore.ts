@@ -1,7 +1,7 @@
 import S from '../../../../core/utilities/Main';
 import { action, makeObservable, observable } from 'mobx';
 import ModalStore from '../../../../core/presentation/stores/ModalStore';
-import NftProfileEntity from '../../entities/NftProfileEntity';
+import NftProfileEntity from '../../entities/NftEntity';
 import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
 
 export enum ModalStage {

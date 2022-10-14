@@ -4,9 +4,9 @@ import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentati
 import GridView from '../../../../core/presentation/components/GridView';
 import Select from '../../../../core/presentation/components/Select';
 import React from 'react';
-import NftPreviewEntity from '../../../nfts-explore/entities/NftPreviewEntity';
 import NftPreview from '../../../nfts-explore/presentation/components/NftPreview';
 import UserProfilePageStore from '../stores/UserProfilePageStore';
+import NftProfileEntity from '../../../nft-details/entities/NftEntity';
 
 interface Props {
     userProfilePageStore: UserProfilePageStore;
@@ -43,10 +43,11 @@ export default function UserProfileNfts({ userProfilePageStore }: Props) {
                 gridViewStore={userProfilePageStore.gridViewStore}
                 defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}
             >
-                {userProfilePageStore.nftPreviews.map(
-                    (nftPreviewModel: NftPreviewEntity, index: number) => <NftPreview
+                {userProfilePageStore.nftProfileEntities.map(
+                    (nftProfileEntity: NftProfileEntity, index: number) => <NftPreview
                         key={index}
-                        nftPreviewModel={nftPreviewModel}
+                        nftPreviewEntity={nftProfileEntity}
+                        collectionEntity={userProfilePageStore.getCollectionById(nftProfileEntity.collectionId)}
                     />,
                 )}
             </GridView>

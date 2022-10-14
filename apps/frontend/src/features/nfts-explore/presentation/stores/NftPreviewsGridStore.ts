@@ -2,8 +2,9 @@ import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable, observable } from 'mobx';
 import S from '../../../../core/utilities/Main';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
-import NftPreviewEntity from '../../entities/NftPreviewEntity';
 import NftRepo from '../repos/NftRepo';
+import NftProfileEntity from '../../../nft-details/entities/NftEntity';
+import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
 
 export default class NftPreviewsGridStore {
 
@@ -19,7 +20,8 @@ export default class NftPreviewsGridStore {
     selectedSortIndex: number;
     selectedCategoryIndex: number;
 
-    nftPreviews: NftPreviewEntity[];
+    collectionEntities: CollectionProfileEntity[];
+    nftPreviews: NftProfileEntity[];
     categories: string[];
 
     constructor(nftRepo: NftRepo, collectionRepo: CollectionRepo) {
@@ -28,6 +30,7 @@ export default class NftPreviewsGridStore {
 
         this.gridViewStore = new GridViewStore(this.fetchViewingModels, 3, 4, 6)
         this.nftPreviews = [];
+        this.collectionEntities = [];
         this.categories = [];
 
         this.resetDefaults();
@@ -43,6 +46,7 @@ export default class NftPreviewsGridStore {
         this.selectedCategoryIndex = 0;
         this.searchString = S.Strings.EMPTY;
         this.nftPreviews = [];
+        this.collectionEntities = [];
     }
 
     async innitialLoad() {
@@ -53,17 +57,23 @@ export default class NftPreviewsGridStore {
 
     fetchViewingModels = () => {
         this.gridViewStore.setIsLoading(true);
-        this.nftRepo.getNftsByCategoryAndSearchSortedPaginated(
+        this.nftRepo.getNftsByCollectionIdCategoryAndSearchSortedPaginated(
             this.collectionId,
             this.searchString,
             this.getCategoryName(),
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
-            (nftPreviews: NftPreviewEntity[], total) => {
-                this.setNftPreviews(nftPreviews);
-                this.gridViewStore.setTotalItems(total);
-                this.gridViewStore.setIsLoading(false);
+            (nftProfileEntities: NftProfileEntity[], total) => {
+                const collectionIds = nftProfileEntities.map((nftProfileEntity: NftProfileEntity) => nftProfileEntity.collectionId);
+
+                this.collectionRepo.getCollectionsByIds(collectionIds)
+                    .then((collectionEntities: CollectionProfileEntity[]) => {
+                        this.collectionEntities = collectionEntities;
+                        this.setNftPreviews(nftProfileEntities);
+                        this.gridViewStore.setTotalItems(total);
+                        this.gridViewStore.setIsLoading(false);
+                    });
             },
         )
     }
@@ -98,7 +108,13 @@ export default class NftPreviewsGridStore {
         this.fetchViewingModels();
     }
 
-    setNftPreviews(nftPreviews: NftPreviewEntity[]) {
+    setNftPreviews(nftPreviews: NftProfileEntity[]) {
         this.nftPreviews = nftPreviews;
+    }
+
+    getCollectionById(collectionId: string): CollectionProfileEntity {
+        const collectionEntity = this.collectionEntities.find((colllectionProfileEntity: CollectionProfileEntity) => colllectionProfileEntity.id === collectionId);
+
+        return collectionEntity;
     }
 }

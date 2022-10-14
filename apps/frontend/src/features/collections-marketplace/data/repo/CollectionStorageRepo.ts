@@ -28,6 +28,14 @@ export default class CollectionStorageRepo implements CollectionRepo {
         callback(collections);
     }
 
+    async getCollectionsByIds(idArray: string[]): Promise<CollectionProfileEntity[]> {
+        const collections = this.storageHelper.collectionsJson
+            .filter((json) => idArray.includes(json.id))
+            .map((json) => CollectionProfileEntity.fromJson(json));
+
+        return collections;
+    }
+
     getCollectionProfile(collectionId: string, callback: (collection: CollectionProfileEntity) => void) {
         const farms = this.storageHelper.miningFarmsJson;
         const collectionJson = this.storageHelper.collectionsJson.find((json) => json.id === collectionId);

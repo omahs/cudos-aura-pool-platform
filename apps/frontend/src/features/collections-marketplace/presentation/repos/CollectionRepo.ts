@@ -9,6 +9,8 @@ export default interface CollectionRepo {
 
     getAllCollections(callback: (collections: CollectionPreviewEntity[]) => void);
 
+    getCollectionsByIds(idArray: string[]): Promise<CollectionProfileEntity[]>;
+
     getCollectionProfile(collectionId: string, callback: (collection: CollectionProfileEntity) => void);
 
     getCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number, callBack: (collectionPreviews: CollectionPreviewEntity[], total: number) => void);
