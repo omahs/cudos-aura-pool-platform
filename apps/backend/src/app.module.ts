@@ -31,7 +31,7 @@ import { GraphqlModule } from './graphql/graphql.module';
                     username: config.get('APP_DATABASE_USER'),
                     password: config.get('APP_DATABASE_PASS'),
                     database: config.get('APP_DATABASE_DB_NAME'),
-                    autoLoadModels: true,
+                    autoLoadModels: false,
                     synchronize: true,
                 }
             },
