@@ -1,17 +1,16 @@
-import CollectionPreviewEntity from '../../entities/CollectionPreviewEntity';
-import CollectionProfileEntity from '../../entities/CollectionProfileEntity';
+import CollectionEntity from '../../entities/CollectionEntity';
 
 export default interface CollectionRepo {
 
     getCategories(callback: (categories: string[]) => void);
 
-    getTopCollections(period: number, callback: (collections: CollectionPreviewEntity[]) => void);
+    getTopCollections(period: number, callback: (collectionEntities: CollectionEntity[]) => void);
 
-    getAllCollections(callback: (collections: CollectionPreviewEntity[]) => void);
+    getAllCollections(callback: (collectionEntities: CollectionEntity[]) => void);
 
-    getCollectionsByIds(idArray: string[]): Promise<CollectionProfileEntity[]>;
+    getCollectionsByIds(idArray: string[]): Promise<CollectionEntity[]>;
 
-    getCollectionProfile(collectionId: string, callback: (collection: CollectionProfileEntity) => void);
+    getCollectionEntity(collectionId: string, callback: (collectionEntity: CollectionEntity) => void);
 
-    getCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number, callBack: (collectionPreviews: CollectionPreviewEntity[], total: number) => void);
+    getCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number, callBack: (collectionEntities: CollectionEntity[], total: number) => void);
 }

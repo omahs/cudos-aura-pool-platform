@@ -4,7 +4,7 @@ import S from '../../../../core/utilities/Main';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
 import NftRepo from '../repos/NftRepo';
 import NftEntity from '../../../nft-details/entities/NftEntity';
-import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
+import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
 
 export default class NftPreviewsGridStore {
 
@@ -20,7 +20,7 @@ export default class NftPreviewsGridStore {
     selectedSortIndex: number;
     selectedCategoryIndex: number;
 
-    collectionEntities: CollectionProfileEntity[];
+    collectionEntities: CollectionEntity[];
     nftEntities: NftEntity[];
     categories: string[];
 
@@ -64,13 +64,13 @@ export default class NftPreviewsGridStore {
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
-            (nftProfileEntities: NftEntity[], total) => {
-                const collectionIds = nftProfileEntities.map((nftProfileEntity: NftEntity) => nftProfileEntity.collectionId);
+            (nftEntities: NftEntity[], total) => {
+                const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
 
                 this.collectionRepo.getCollectionsByIds(collectionIds)
-                    .then((collectionEntities: CollectionProfileEntity[]) => {
+                    .then((collectionEntities: CollectionEntity[]) => {
                         this.collectionEntities = collectionEntities;
-                        this.setNftPreviews(nftProfileEntities);
+                        this.setNftEntities(nftEntities);
                         this.gridViewStore.setTotalItems(total);
                         this.gridViewStore.setIsLoading(false);
                     });
@@ -108,12 +108,12 @@ export default class NftPreviewsGridStore {
         this.fetchViewingModels();
     }
 
-    setNftPreviews(nftEntities: NftEntity[]) {
+    setNftEntities(nftEntities: NftEntity[]) {
         this.nftEntities = nftEntities;
     }
 
-    getCollectionById(collectionId: string): CollectionProfileEntity {
-        const collectionEntity = this.collectionEntities.find((colllectionProfileEntity: CollectionProfileEntity) => colllectionProfileEntity.id === collectionId);
+    getCollectionById(collectionId: string): CollectionEntity {
+        const collectionEntity = this.collectionEntities.find((colllectionProfileEntity: CollectionEntity) => colllectionProfileEntity.id === collectionId);
 
         return collectionEntity;
     }

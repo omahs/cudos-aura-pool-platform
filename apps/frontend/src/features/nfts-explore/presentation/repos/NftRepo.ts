@@ -1,4 +1,4 @@
-import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
+import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
 import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
 import NftEntity from '../../../nft-details/entities/NftEntity';
 
@@ -22,7 +22,7 @@ export default interface NftRepo {
         callback: (nftEntities: NftEntity[], total: number) => void,
     );
 
-    getNftProfile(
+    getNftEntity(
         nftId: string,
-        callback: (nftEntity: NftEntity, collectionProfile: CollectionProfileEntity, farmView: MiningFarmEntity) => void);
+        callback: (nftEntity: NftEntity, collectionEntity: CollectionEntity, farmView: MiningFarmEntity) => void);
 }

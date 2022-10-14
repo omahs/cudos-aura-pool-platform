@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx';
 import CudosRepo from '../../../cudos-data/presentation/repos/CudosRepo';
 import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
 import NftEntity, { NftListinStatus } from '../../entities/NftEntity';
-import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
+import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
 import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
 import BitcoinRepo from '../../../bitcoin-data/presentation/repos/BitcoinRepo';
 
@@ -15,7 +15,7 @@ export default class NftDetailsStore {
     cudosPrice: number;
     bitcoinPrice: number;
     nftEntity: NftEntity;
-    collectionProfile: CollectionProfileEntity;
+    collectionEntity: CollectionEntity;
     miningFarm: MiningFarmEntity;
 
     constructor(nftRepo: NftRepo, cudosRepo: CudosRepo, bitcoinRepo: BitcoinRepo) {
@@ -32,15 +32,15 @@ export default class NftDetailsStore {
         this.cudosPrice = S.NOT_EXISTS;
         this.bitcoinPrice = S.NOT_EXISTS;
         this.nftEntity = null;
-        this.collectionProfile = null;
+        this.collectionEntity = null;
         this.miningFarm = null;
     }
 
     init(nftId: string) {
         // TODO: gt by real id
-        this.nftRepo.getNftProfile(nftId, (nftEntity, collectionProfile, miningFarm) => {
+        this.nftRepo.getNftEntity(nftId, (nftEntity, collectionEntity, miningFarm) => {
             this.nftEntity = nftEntity;
-            this.collectionProfile = collectionProfile;
+            this.collectionEntity = collectionEntity;
             this.miningFarm = miningFarm;
         });
 

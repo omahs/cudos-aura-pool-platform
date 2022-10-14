@@ -1,6 +1,6 @@
 import S from '../../../../core/utilities/Main';
 import StorageHelper from '../../../../core/helpers/StorageHelper';
-import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
+import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
 import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
 import NftEntity from '../../../nft-details/entities/NftEntity';
@@ -73,11 +73,11 @@ export default class NftStorageRepo implements NftRepo {
         callback(sortedNftEntities.slice(start, start + size), sortedNftEntities.length);
     }
 
-    getNftProfile(nftId: string, callback: (nftEntity: NftEntity, collectionEntity: CollectionProfileEntity, farmView: MiningFarmEntity) => void) {
+    getNftEntity(nftId: string, callback: (nftEntity: NftEntity, collectionEntity: CollectionEntity, farmView: MiningFarmEntity) => void) {
         const nftJson = this.storageHelper.nftsJson.find((json) => json.id === nftId);
         const collectionJson = this.storageHelper.collectionsJson.find((json) => json.id === nftJson.collectionId);
         const farmJson = this.storageHelper.miningFarmsJson.find((json) => json.id === collectionJson.farmId);
 
-        callback(NftEntity.fromJson(nftJson), CollectionProfileEntity.fromJson(collectionJson), MiningFarmEntity.fromJson(farmJson));
+        callback(NftEntity.fromJson(nftJson), CollectionEntity.fromJson(collectionJson), MiningFarmEntity.fromJson(farmJson));
     }
 }

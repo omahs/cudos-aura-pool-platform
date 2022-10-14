@@ -81,7 +81,7 @@ function ExploreCollectionsPage({ exploreCollectionsStore }: Props) {
                     selectedTopCollectionPeriod={exploreCollectionsStore.selectedTopCollectionPeriod}
                     cudosPriceChangeDisplay={exploreCollectionsStore.cudosPriceChangeDisplay()}
                     cudosPriceUsd={exploreCollectionsStore.cudosPrice}
-                    topCollectionPreviews={exploreCollectionsStore.topCollectionPreviews}
+                    topCollectionEntities={exploreCollectionsStore.topCollectionEntities}
                     changeTopCollectionPeriod={exploreCollectionsStore.changeTopCollectionPeriod} />
                 <Actions
                     layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}

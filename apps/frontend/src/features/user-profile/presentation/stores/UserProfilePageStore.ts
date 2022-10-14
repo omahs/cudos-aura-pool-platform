@@ -6,7 +6,7 @@ import UserProfileEntity from '../../entities/UserProfileEntity';
 import S from '../../../../core/utilities/Main';
 import BitcoinRepo from '../../../bitcoin-data/presentation/repos/BitcoinRepo';
 import NftEntity from '../../../nft-details/entities/NftEntity';
-import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
+import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
 
 export enum PROFILE_PAGES {
@@ -28,7 +28,7 @@ export default class UserProfilePageStore {
     userProfileModel: UserProfileEntity;
     selectedSortIndex: number;
     nftEntities: NftEntity[];
-    collectionProfileEntities: CollectionProfileEntity[];
+    collectionEntities: CollectionEntity[];
     bitcoinPrice: number;
     profilePage: number;
 
@@ -73,9 +73,9 @@ export default class UserProfilePageStore {
             (nftEntities: NftEntity[], total) => {
                 const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
                 this.collectionRepo.getCollectionsByIds(collectionIds)
-                    .then((collectionProfileEntities: CollectionProfileEntity[]) => {
-                        this.collectionProfileEntities = collectionProfileEntities;
-                        this.setNftPreviews(nftEntities);
+                    .then((collectionEntities: CollectionEntity[]) => {
+                        this.collectionEntities = collectionEntities;
+                        this.setNftEntities(nftEntities);
                         this.gridViewStore.setTotalItems(total);
                         this.gridViewStore.setIsLoading(false);
                     })
@@ -93,7 +93,7 @@ export default class UserProfilePageStore {
         this.fetchViewingModels();
     }
 
-    setNftPreviews(nftEntities: NftEntity[]) {
+    setNftEntities(nftEntities: NftEntity[]) {
         this.nftEntities = nftEntities;
     }
 
@@ -101,8 +101,8 @@ export default class UserProfilePageStore {
         this.profilePage = page;
     }
 
-    getCollectionById(collectionId: string): CollectionProfileEntity {
-        const collectionProfileEntity = this.collectionProfileEntities.find((entity: CollectionProfileEntity) => entity.id === collectionId)
-        return collectionProfileEntity;
+    getCollectionById(collectionId: string): CollectionEntity {
+        const collectionEntity = this.collectionEntities.find((entity: CollectionEntity) => entity.id === collectionId)
+        return collectionEntity;
     }
 }
