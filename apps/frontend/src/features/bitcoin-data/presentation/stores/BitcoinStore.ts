@@ -24,4 +24,20 @@ export default class BitcoinStore {
         this.bitcointDataEntity = await this.bitcoinRepo.fetchBitcoinData();
     }
 
+    getBitcoinPrice(): number {
+        return this.bitcointDataEntity?.price ?? 0;
+    }
+
+    getBitcoinPriceChange(): number {
+        return this.bitcointDataEntity?.priceChange ?? 0;
+    }
+
+    getNetworkDifficulty(): string {
+        return this.bitcointDataEntity?.networkDifficulty ?? '';
+    }
+
+    getBlockReward(): string {
+        return this.bitcointDataEntity?.blockReward ?? '';
+    }
+
 }

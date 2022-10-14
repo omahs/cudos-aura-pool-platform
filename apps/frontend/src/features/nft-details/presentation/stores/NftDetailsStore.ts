@@ -5,12 +5,14 @@ import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
 import NftEntity, { NftListinStatus } from '../../entities/NftEntity';
 import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
 import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
-import BitcoinRepo from '../../../bitcoin-data/presentation/repos/BitcoinRepo';
+import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
 
 export default class NftDetailsStore {
+
+    bitcoinStore: BitcoinStore;
+
     nftRepo: NftRepo;
     cudosRepo: CudosRepo;
-    bitcoinRepo: BitcoinRepo;
 
     cudosPrice: number;
     bitcoinPrice: number;
@@ -18,10 +20,11 @@ export default class NftDetailsStore {
     collectionProfile: CollectionProfileEntity;
     miningFarm: MiningFarmEntity;
 
-    constructor(nftRepo: NftRepo, cudosRepo: CudosRepo, bitcoinRepo: BitcoinRepo) {
+    constructor(bitcoinStore: BitcoinStore, nftRepo: NftRepo, cudosRepo: CudosRepo) {
+        this.bitcoinStore = bitcoinStore;
+
         this.nftRepo = nftRepo;
         this.cudosRepo = cudosRepo;
-        this.bitcoinRepo = bitcoinRepo;
 
         this.resetDefaults();
 
@@ -37,6 +40,8 @@ export default class NftDetailsStore {
     }
 
     async init(nftId: string) {
+        await this.bitcoinStore.init();
+
         // TODO: gt by real id
         this.nftRepo.getNftProfile(nftId, (nftEntity, collectionProfile, miningFarm) => {
             this.nftEntity = nftEntity;
@@ -48,7 +53,7 @@ export default class NftDetailsStore {
             this.cudosPrice = cudosPrice;
         })
 
-        this.bitcoinPrice = (await this.bitcoinRepo.fetchBitcoinData()).price
+        this.bitcoinPrice = this.bitcoinStore.getBitcoinPrice();
     }
 
     getNftPriceText() {

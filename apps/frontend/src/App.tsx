@@ -42,13 +42,13 @@ const nftRepo = new NftStorageRepo(collectionRepo);
 const userProfileRepo = new UserProfileStorageRepo();
 
 const bitcoinStore = new BitcoinStore(bitcoinRepo);
-const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinRepo, miningFarmRepo);
+const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFarmRepo);
 const exploreCollectionsStore = new ExploreCollectionsStore(collectionRepo);
 const nftPreviewsGridStore = new NftPreviewsGridStore(nftRepo, collectionRepo);
-const nftDetailsStore = new NftDetailsStore(nftRepo, cudosRepo, bitcoinRepo);
+const nftDetailsStore = new NftDetailsStore(bitcoinStore, nftRepo, cudosRepo);
 const collectionViewPageStore = new CollectionViewPageStore(collectionRepo);
 const farmViewPageStore = new FarmViewPageStore(miningFarmRepo, collectionRepo);
-const userProfilePageStore = new UserProfilePageStore(nftRepo, collectionRepo, userProfileRepo, bitcoinRepo);
+const userProfilePageStore = new UserProfilePageStore(bitcoinStore, nftRepo, collectionRepo, userProfileRepo);
 const walletStore = new WalletStore();
 const buyNftModalStore = new BuyNftModalStore();
 const resellNftModalStore = new ResellNftModalStore();

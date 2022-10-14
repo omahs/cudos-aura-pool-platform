@@ -4,7 +4,6 @@ import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
 import UserProfileRepo from '../repos/UserProfileRepo';
 import UserProfileEntity from '../../entities/UserProfileEntity';
 import S from '../../../../core/utilities/Main';
-import BitcoinRepo from '../../../bitcoin-data/presentation/repos/BitcoinRepo';
 import NftEntity from '../../../nft-details/entities/NftEntity';
 import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
@@ -24,28 +23,28 @@ export default class UserProfilePageStore {
 
     nftRepo: NftRepo;
     userRepo: UserProfileRepo;
-    bitcoinRepo: BitcoinRepo;
     collectionRepo: CollectionRepo;
 
-    @observable gridViewStore: GridViewStore;
     userProfileModel: UserProfileEntity;
+    @observable gridViewStore: GridViewStore;
     selectedSortIndex: number;
     nftEntities: NftEntity[];
     collectionProfileEntities: CollectionProfileEntity[];
     bitcoinPrice: number;
     profilePage: number;
 
-    constructor(bitcoinStore: BitcoinStore, nftRepo: NftRepo, collectionRepo: CollectionRepo, userRepo: UserProfileRepo, bitcoinRepo: BitcoinRepo) {
+    constructor(bitcoinStore: BitcoinStore, nftRepo: NftRepo, collectionRepo: CollectionRepo, userRepo: UserProfileRepo) {
         this.bitcoinStore = bitcoinStore;
 
         this.nftRepo = nftRepo;
         this.userRepo = userRepo;
-        this.bitcoinRepo = bitcoinRepo;
         this.collectionRepo = collectionRepo;
 
         this.userProfileModel = null;
         this.gridViewStore = new GridViewStore(this.fetchViewingModels, 3, 4, 6)
+        this.selectedSortIndex = 0;
         this.nftEntities = [];
+        this.collectionProfileEntities = [];
         this.bitcoinPrice = S.NOT_EXISTS;
         this.profilePage = S.NOT_EXISTS;
 
@@ -65,7 +64,7 @@ export default class UserProfilePageStore {
             callback();
         });
 
-        this.bitcoinPrice = this.bitcoinStore.bitcointDataEntity.price;
+        this.bitcoinPrice = this.bitcoinStore.getBitcoinPrice();
     }
 
     fetchViewingModels = () => {
