@@ -37,6 +37,7 @@ export default class MarketplaceStore {
         this.collectionRepo = collectionRepo;
         this.nftRepo = nftRepo;
 
+        this.collectionMap = new Map < string, CollectionEntity >();
         this.topCollectionEntities = [];
         this.newNftDropsEntities = [];
         this.trendingNftEntities = [];
@@ -66,7 +67,7 @@ export default class MarketplaceStore {
         this.resetDefaults();
 
         // fetching data
-        this.getCategories();
+        this.categories = await this.collectionRepo.fetchCategories();
         await this.fetchTopCollections();
         await this.fetchNewNftDrops();
         this.fetchTrendingNfts();
@@ -78,32 +79,40 @@ export default class MarketplaceStore {
     async fetchTopCollections() {
         this.topCollectionEntities = await this.collectionRepo.fetchTopCollections(this.selectedTopCollectionPeriod);
 
-        this.topCollectionEntities.forEach((collectionEntity: CollectionEntity) => {
-            this.collectionMap.set(collectionEntity.id, collectionEntity);
-        })
+        this.addCollectionsToMap(this.topCollectionEntities);
     }
 
     async fetchNewNftDrops() {
         this.newNftDropsEntities = await this.nftRepo.fetchNewNftDrops();
 
-        const collectionIdsToFetch = this.newNftDropsEntities
-            .filter((nftEntity: NftEntity) => this.collectionMap.has(nftEntity.collectionId) === false)
-            .map((nftEntity: NftEntity) => nftEntity.collectionId);
-
-        // const fetchedCollections =
+        await this.fetchCollectionsForEntities(this.newNftDropsEntities);
     }
 
     async fetchTrendingNfts() {
         this.trendingNftEntities = await this.nftRepo.fetchTrendingNfts();
+
+        await this.fetchCollectionsForEntities(this.trendingNftEntities);
     }
 
-    getCategories() {
-        this.collectionRepo.getCategories((categories: string[]) => {
-            this.categories = categories;
+    async fetchCollectionsForEntities(nftEntities: NftEntity[]) {
+        const collectionIdsToFetch = nftEntities
+            .filter((nftEntity: NftEntity) => this.collectionMap.has(nftEntity.collectionId) === false)
+            .map((nftEntity: NftEntity) => nftEntity.collectionId);
+
+        const fetchedCollections = await this.collectionRepo.fetchCollectionsByIds(collectionIdsToFetch);
+
+        this.addCollectionsToMap(fetchedCollections);
+    }
+
+    addCollectionsToMap(collectionEntities: CollectionEntity[]) {
+        collectionEntities.forEach((collectionEntity: CollectionEntity) => {
+            this.collectionMap.set(collectionEntity.id, collectionEntity);
         })
     }
 
-    // getCollectionById
+    getCollectionById(collectionId: string) {
+        return this.collectionMap.get(collectionId);
+    }
 
     selectCategory(index: number) {
         this.selectedCategoryIndex = index;

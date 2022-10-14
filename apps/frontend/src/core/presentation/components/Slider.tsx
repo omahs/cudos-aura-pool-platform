@@ -1,14 +1,17 @@
 import React from 'react';
 import '../styles/slider.css';
 
-interface Props {
-
+type Props = {
+    className?: string;
 }
 
-export default function Slider({ children }: React.PropsWithChildren< Props >) {
+export default function Slider({ children, className }: React.PropsWithChildren< Props >) {
     return (
-        <div className={'Slider FlexRow RightShadow'}>
+        <div className={`Slider FlexRow RightShadow ${className}`}>
             {children}
         </div>
     )
+}
+Slider.defaultProps = {
+    className: '',
 }

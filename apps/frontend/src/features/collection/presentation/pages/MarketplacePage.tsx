@@ -17,10 +17,11 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 
 import Svg from '../../../../core/presentation/components/Svg';
-import '../styles/page-explore-collections-component.css';
-import Slider from 'apps/frontend/src/core/presentation/components/Slider';
+import '../styles/page-marketplace-component.css';
+import Slider from '../../../../core/presentation/components/Slider';
 import NftEntity from '../../../nft/entities/NftEntity';
 import NftPreviewInPicture from '../components/NftPreviewInPicture';
+import NftPreview from '../../../nft/presentation/components/NftPreview';
 
 type Props = {
     marketplaceStore?: MarketplaceStore
@@ -46,7 +47,7 @@ function MarkedplacePage({ marketplaceStore }: Props) {
             className = { 'PageMarketplace' } >
             <PageHeader />
             <div className={'PageContent AppContent'} >
-                <div className={'ExploreColelctions FlexColumn'}>
+                <div className={'ExploreCollections FlexColumn'}>
                     <div className={'PageHeading H1 Bold'}>Explore NFT Collections</div>
                     <Input
                         inputType={InputType.TEXT}
@@ -72,8 +73,17 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                         }) }
                     </div>
                 </div>
-                <Slider>
-                    {marketplaceStore.newNftDropsEntities.map((nftEntity: NftEntity, index: number) => <NftPreviewInPicture
+                <div className={'H2 Bold'}>New Hash Rate NFT Drops</div>
+                <Slider className={'NewNftDrops'}>
+                    {marketplaceStore.newNftDropsEntities.slice(0, 4).map((nftEntity: NftEntity, index: number) => <NftPreviewInPicture
+                        key={index}
+                        nftEntity={nftEntity}
+                        collectionEntity={marketplaceStore.getCollectionById(nftEntity.collectionId)}
+                    />)}
+                </Slider>
+                <div className={'H2 Bold'}>Trending NFTs</div>
+                <Slider className={'TrendingNfts'}>
+                    {marketplaceStore.trendingNftEntities.slice(0, 4).map((nftEntity: NftEntity, index: number) => <NftPreview
                         key={index}
                         nftEntity={nftEntity}
                         collectionEntity={marketplaceStore.getCollectionById(nftEntity.collectionId)}

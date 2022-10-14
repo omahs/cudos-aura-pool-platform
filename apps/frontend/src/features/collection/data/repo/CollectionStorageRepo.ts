@@ -1,5 +1,4 @@
 import StorageHelper from '../../../../core/helpers/StorageHelper';
-import NftEntity from '../../../nft/entities/NftEntity';
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
 
