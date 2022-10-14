@@ -39,7 +39,7 @@ const bitcoinRepo = new BitcoinStorageRepo(storageHelper);
 const cudosRepo = new CudosStorageRepo(storageHelper);
 const miningFarmRepo = new MiningFarmStorageRepo();
 const collectionRepo = new CollectionStorageRepo();
-const nftRepo = new NftStorageRepo(collectionRepo);
+const nftRepo = new NftStorageRepo();
 const userRepo = new UserStorageRepo();
 
 const bitcoinStore = new BitcoinStore(bitcoinRepo);
@@ -47,7 +47,7 @@ const cudosStore = new CudosStore(cudosRepo);
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFarmRepo);
 const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo);
 const nftPreviewsGridStore = new NftPreviewsGridStore(nftRepo, collectionRepo);
-const nftDetailsStore = new NftDetailsStore(bitcoinStore, nftRepo, cudosRepo);
+const nftDetailsStore = new NftDetailsStore(bitcoinStore, cudosStore, nftRepo);
 const collectionViewPageStore = new CollectionViewPageStore(collectionRepo);
 const farmViewPageStore = new FarmViewPageStore(miningFarmRepo, collectionRepo);
 const userProfilePageStore = new UserProfilePageStore(bitcoinStore, nftRepo, collectionRepo, userRepo);

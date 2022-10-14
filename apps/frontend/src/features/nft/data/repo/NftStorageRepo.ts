@@ -1,27 +1,24 @@
 import S from '../../../../core/utilities/Main';
 import StorageHelper from '../../../../core/helpers/StorageHelper';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
-import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import NftEntity from '../../entities/NftEntity';
 import NftRepo from '../../presentation/repos/NftRepo';
 
 export default class NftStorageRepo implements NftRepo {
-    storageHelper: StorageHelper;
-    collectionRepo: CollectionRepo;
 
-    constructor(collectionRepo: CollectionRepo) {
+    storageHelper: StorageHelper;
+
+    constructor() {
         this.storageHelper = new StorageHelper();
-        this.collectionRepo = collectionRepo;
     }
 
-    getNftsByOwnerAddressSortedPaginated(
+    async getNftsByOwnerAddressSortedPaginated(
         ownerAddress: string,
         sortKey: string,
         start: number,
         size: number,
-        callback: (nftEntities: NftEntity[], total: number) => void,
-    ) {
+    ): Promise < { nftEntities: NftEntity[], total: number } > {
         const nftJsons = this.storageHelper.nftsJson
             .filter(
                 (json) => {
@@ -29,9 +26,9 @@ export default class NftStorageRepo implements NftRepo {
                 },
             )
 
-        const nftEntities = nftJsons.map((json) => NftEntity.fromJson(json));
+        const nftEntitiesJson = nftJsons.map((json) => NftEntity.fromJson(json));
 
-        const sortedNftEntities = nftEntities.sort((a: NftEntity, b: NftEntity) => {
+        const sortedNftEntities = nftEntitiesJson.sort((a: NftEntity, b: NftEntity) => {
             switch (sortKey.toLowerCase()) {
                 case 'price':
                     return a.price.comparedTo(b.price)
@@ -41,17 +38,18 @@ export default class NftStorageRepo implements NftRepo {
             }
         });
 
-        callback(sortedNftEntities.slice(start, start + size), sortedNftEntities.length);
+        const nftEntities = sortedNftEntities.slice(start, start + size);
+        const total = sortedNftEntities.length;
+        return { nftEntities, total };
     }
 
-    getNftsByCollectionIdCategoryAndSearchSortedPaginated(
+    async getNftsByCollectionIdCategoryAndSearchSortedPaginated(
         collectionId: string,
         search: string,
         category: string,
         sortKey: string,
         start: number,
         size: number,
-        callback: (nftEntities: NftEntity[], total: number) => void,
     ) {
         const filteredNftEntities = this.storageHelper.nftsJson
             .filter(
@@ -70,14 +68,21 @@ export default class NftStorageRepo implements NftRepo {
             }
         });
 
-        callback(sortedNftEntities.slice(start, start + size), sortedNftEntities.length);
+        const nftEntities = sortedNftEntities.slice(start, start + size);
+        const total = sortedNftEntities.length;
+        return { nftEntities, total };
     }
 
-    getNftEntity(nftId: string, callback: (nftEntity: NftEntity, collectionEntity: CollectionEntity, farmView: MiningFarmEntity) => void) {
+    async getNftEntity(
+        nftId: string,
+    ): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } > {
         const nftJson = this.storageHelper.nftsJson.find((json) => json.id === nftId);
         const collectionJson = this.storageHelper.collectionsJson.find((json) => json.id === nftJson.collectionId);
         const farmJson = this.storageHelper.miningFarmsJson.find((json) => json.id === collectionJson.farmId);
 
-        callback(NftEntity.fromJson(nftJson), CollectionEntity.fromJson(collectionJson), MiningFarmEntity.fromJson(farmJson));
+        const nftEntity = NftEntity.fromJson(nftJson)
+        const collectionEntity = CollectionEntity.fromJson(collectionJson)
+        const miningFarmEntity = MiningFarmEntity.fromJson(farmJson);
+        return { nftEntity, collectionEntity, miningFarmEntity };
     }
 }

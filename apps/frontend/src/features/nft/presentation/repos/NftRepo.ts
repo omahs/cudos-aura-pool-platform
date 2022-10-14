@@ -9,8 +9,7 @@ export default interface NftRepo {
         sortKey: string,
         start: number,
         size: number,
-        callback: (nftEntities: NftEntity[], total: number) => void,
-    );
+    ): Promise < { nftEntities: NftEntity[], total: number } >;
 
     getNftsByCollectionIdCategoryAndSearchSortedPaginated(
         collectionId: string,
@@ -19,10 +18,9 @@ export default interface NftRepo {
         sortKey: string,
         start: number,
         size: number,
-        callback: (nftEntities: NftEntity[], total: number) => void,
-    );
+    ): Promise < { nftEntities: NftEntity[], total: number } >;
 
     getNftEntity(
         nftId: string,
-        callback: (nftEntity: NftEntity, collectionEntity: CollectionEntity, farmView: MiningFarmEntity) => void);
+    ): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } >;
 }

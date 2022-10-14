@@ -51,31 +51,25 @@ export default class NftPreviewsGridStore {
 
     async init() {
         await this.getCategories();
-
-        this.fetchViewingModels();
+        await this.fetchViewingModels();
     }
 
-    fetchViewingModels = () => {
+    fetchViewingModels = async () => {
         this.gridViewStore.setIsLoading(true);
-        this.nftRepo.getNftsByCollectionIdCategoryAndSearchSortedPaginated(
+        const { nftEntities, total } = await this.nftRepo.getNftsByCollectionIdCategoryAndSearchSortedPaginated(
             this.collectionId,
             this.searchString,
             this.getCategoryName(),
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
-            (nftEntities: NftEntity[], total) => {
-                const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
+        );
+        const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
 
-                this.collectionRepo.getCollectionsByIds(collectionIds)
-                    .then((collectionEntities: CollectionEntity[]) => {
-                        this.collectionEntities = collectionEntities;
-                        this.setNftEntities(nftEntities);
-                        this.gridViewStore.setTotalItems(total);
-                        this.gridViewStore.setIsLoading(false);
-                    });
-            },
-        )
+        this.collectionEntities = await this.collectionRepo.getCollectionsByIds(collectionIds);
+        this.setNftEntities(nftEntities);
+        this.gridViewStore.setTotalItems(total);
+        this.gridViewStore.setIsLoading(false);
     }
 
     getSelectedKey() {

@@ -56,34 +56,30 @@ export default class UserProfilePageStore {
         this.selectedSortIndex = 0;
         this.profilePage = PROFILE_PAGES.NFTS;
 
-        this.userRepo.fetchProfileByAddress(userAddress, (userEntity) => {
+        this.userRepo.fetchProfileByAddress(userAddress, async (userEntity) => {
             this.userEntity = userEntity;
 
-            this.fetchViewingModels();
+            await this.fetchViewingModels();
             callback();
         });
 
         this.bitcoinPrice = this.bitcoinStore.getBitcoinPrice();
     }
 
-    fetchViewingModels = () => {
+    fetchViewingModels = async () => {
         this.gridViewStore.setIsLoading(true);
-        this.nftRepo.getNftsByOwnerAddressSortedPaginated(
+        const { nftEntities, total } = await this.nftRepo.getNftsByOwnerAddressSortedPaginated(
             this.userEntity.address,
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
-            (nftEntities: NftEntity[], total) => {
-                const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
-                this.collectionRepo.getCollectionsByIds(collectionIds)
-                    .then((collectionEntities: CollectionEntity[]) => {
-                        this.collectionEntities = collectionEntities;
-                        this.setNftEntities(nftEntities);
-                        this.gridViewStore.setTotalItems(total);
-                        this.gridViewStore.setIsLoading(false);
-                    })
-            },
-        )
+        );
+
+        const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
+        this.collectionEntities = await this.collectionRepo.getCollectionsByIds(collectionIds);
+        this.setNftEntities(nftEntities);
+        this.gridViewStore.setTotalItems(total);
+        this.gridViewStore.setIsLoading(false);
     }
 
     getSelectedKey() {

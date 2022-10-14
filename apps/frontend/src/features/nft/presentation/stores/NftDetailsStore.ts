@@ -44,11 +44,10 @@ export default class NftDetailsStore {
         await this.cudosStore.init();
 
         // TODO: gt by real id
-        this.nftRepo.getNftEntity(nftId, (nftEntity, collectionEntity, miningFarm) => {
-            this.nftEntity = nftEntity;
-            this.collectionEntity = collectionEntity;
-            this.miningFarm = miningFarm;
-        });
+        const { nftEntity, collectionEntity, miningFarmEntity } = await this.nftRepo.getNftEntity(nftId);
+        this.nftEntity = nftEntity;
+        this.collectionEntity = collectionEntity;
+        this.miningFarm = miningFarmEntity;
 
         this.cudosPrice = this.cudosStore.getCudosPrice();
         this.bitcoinPrice = this.bitcoinStore.getBitcoinPrice();
