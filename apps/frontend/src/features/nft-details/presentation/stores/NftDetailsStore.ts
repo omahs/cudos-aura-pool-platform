@@ -1,7 +1,7 @@
 import S from '../../../../core/utilities/Main';
 import { makeAutoObservable } from 'mobx';
 import CudosRepo from '../../../cudos-data/presentation/repos/CudosRepo';
-import NftRepo from '../../../nft/presentation/repos/NftRepo';
+import NftRepo from '../../../';
 import NftEntity, { NftListinStatus } from '../../entities/NftEntity';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';

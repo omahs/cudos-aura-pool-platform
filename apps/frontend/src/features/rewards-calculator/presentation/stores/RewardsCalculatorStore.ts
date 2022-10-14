@@ -1,11 +1,10 @@
 import { makeAutoObservable } from 'mobx';
 
-import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
+import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 
 import S from '../../../../core/utilities/Main';
 import BigNumber from 'bignumber.js';
-import BitcoinDataEntity from '../../../bitcoin-data/entities/BitcoinDataEntity';
-import MiningFarmRepo from '../../../mining-farm-view/presentation/repos/MiningFarmRepo';
+import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRepo';
 import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
 
 export default class RewardsCalculatorStore {

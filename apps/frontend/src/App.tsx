@@ -10,7 +10,7 @@ import AppRouter from './features/app-routes/presentation/components/AppRouter';
 import AlertStore from './core/presentation/stores/AlertStore';
 import RewardsCalculatorStore from './features/rewards-calculator/presentation/stores/RewardsCalculatorStore';
 import BitcoinStorageRepo from './features/bitcoin-data/data/repo/BitcoinStorageRepo';
-import MiningFarmStorageRepo from './features/mining-farm-view/data/repo/MiningFarmStorageRepo';
+import MiningFarmStorageRepo from './features/mining-farm/data/repo/MiningFarmStorageRepo';
 import CollectionStorageRepo from './features/collection/data/repo/CollectionStorageRepo';
 import ExploreCollectionsStore from './features/collection/presentation/stores/ExploreCollectionsStore';
 import NftPreviewsGridStore from './features/nft/presentation/stores/NftPreviewsGridStore';
@@ -19,7 +19,7 @@ import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModa
 import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
 import NftDetailsStore from './features/nft/presentation/stores/NftDetailsStore';
 import CollectionViewPageStore from './features/collection/presentation/stores/CollectionViewPageStore';
-import FarmViewPageStore from './features/mining-farm-view/presentation/stores/FarmViewPageStore';
+import FarmViewPageStore from './features/mining-farm/presentation/stores/FarmViewPageStore';
 import UserProfilePageStore from './features/user-profile/presentation/stores/UserProfilePageStore';
 import UserStorageRepo from './features/user-profile/data/repo/UserStorageRepo';
 import WalletStore from './features/ledger/presentation/stores/WalletStore';
