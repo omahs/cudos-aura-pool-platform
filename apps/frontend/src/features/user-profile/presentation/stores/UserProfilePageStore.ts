@@ -1,8 +1,8 @@
 import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable, observable } from 'mobx';
 import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
-import UserProfileRepo from '../repos/UserProfileRepo';
-import UserProfileEntity from '../../entities/UserProfileEntity';
+import UserRepo from '../repos/UserRepo';
+import UserEntity from '../../entities/UserEntity';
 import S from '../../../../core/utilities/Main';
 import BitcoinRepo from '../../../bitcoin-data/presentation/repos/BitcoinRepo';
 import NftEntity from '../../../nft-details/entities/NftEntity';
@@ -20,25 +20,25 @@ export default class UserProfilePageStore {
     static TABLE_KEYS = ['Name', 'Price'];
 
     nftRepo: NftRepo;
-    userRepo: UserProfileRepo;
+    userRepo: UserRepo;
     bitcoinRepo: BitcoinRepo;
     collectionRepo: CollectionRepo;
 
     @observable gridViewStore: GridViewStore;
-    userProfileModel: UserProfileEntity;
+    userEntity: UserEntity;
     selectedSortIndex: number;
     nftEntities: NftEntity[];
     collectionEntities: CollectionEntity[];
     bitcoinPrice: number;
     profilePage: number;
 
-    constructor(nftRepo: NftRepo, collectionRepo: CollectionRepo, userRepo: UserProfileRepo, bitcoinRepo: BitcoinRepo) {
+    constructor(nftRepo: NftRepo, collectionRepo: CollectionRepo, userRepo: UserRepo, bitcoinRepo: BitcoinRepo) {
         this.nftRepo = nftRepo;
         this.userRepo = userRepo;
         this.bitcoinRepo = bitcoinRepo;
         this.collectionRepo = collectionRepo;
 
-        this.userProfileModel = null;
+        this.userEntity = null;
         this.gridViewStore = new GridViewStore(this.fetchViewingModels, 3, 4, 6)
         this.nftEntities = [];
         this.bitcoinPrice = S.NOT_EXISTS;
@@ -51,8 +51,8 @@ export default class UserProfilePageStore {
         this.selectedSortIndex = 0;
         this.profilePage = PROFILE_PAGES.NFTS;
 
-        this.userRepo.fetchProfileByAddress(userAddress, (userProfileModel) => {
-            this.userProfileModel = userProfileModel;
+        this.userRepo.fetchProfileByAddress(userAddress, (userEntity) => {
+            this.userEntity = userEntity;
 
             this.fetchViewingModels();
             callback();
@@ -66,7 +66,7 @@ export default class UserProfilePageStore {
     fetchViewingModels = () => {
         this.gridViewStore.setIsLoading(true);
         this.nftRepo.getNftsByOwnerAddressSortedPaginated(
-            this.userProfileModel.address,
+            this.userEntity.address,
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
