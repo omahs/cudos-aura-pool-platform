@@ -40,7 +40,7 @@ const cudosRepo = new CudosStorageRepo(storageHelper);
 const miningFarmRepo = new MiningFarmStorageRepo(storageHelper);
 const collectionRepo = new CollectionStorageRepo(storageHelper);
 const nftRepo = new NftStorageRepo(storageHelper);
-const userRepo = new UserStorageRepo();
+const userRepo = new UserStorageRepo(storageHelper);
 
 const bitcoinStore = new BitcoinStore(bitcoinRepo);
 const cudosStore = new CudosStore(cudosRepo);
