@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import TableStore from './TableStore';
 import S from '../../utilities/Main';
 
@@ -7,7 +7,7 @@ export enum GRID_SETTING {
     LOOSE
 }
 
-export default class GridViewStore {
+export default class GridViewState {
 
     static DEFAULT_LOOSE_SETTING_SIZE = 12;
     static DEFAULT_DENSE_SETTING_SIZE = 20;

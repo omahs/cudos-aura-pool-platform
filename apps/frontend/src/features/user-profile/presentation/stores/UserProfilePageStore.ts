@@ -1,4 +1,4 @@
-import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
+import GridViewState from '../../../../core/presentation/stores/GridViewState';
 import { makeAutoObservable, observable } from 'mobx';
 import NftRepo from '../../../nft/presentation/repos/NftRepo';
 import UserRepo from '../repos/UserRepo';
@@ -26,7 +26,7 @@ export default class UserProfilePageStore {
     collectionRepo: CollectionRepo;
 
     userEntity: UserEntity;
-    @observable gridViewStore: GridViewStore;
+    @observable gridViewState: GridViewState;
     selectedSortIndex: number;
     nftEntities: NftEntity[];
     collectionEntities: CollectionEntity[];
@@ -40,7 +40,7 @@ export default class UserProfilePageStore {
         this.collectionRepo = collectionRepo;
 
         this.userEntity = null;
-        this.gridViewStore = new GridViewStore(this.fetchViewingModels, 3, 4, 6)
+        this.gridViewState = new GridViewState(this.fetchViewingModels, 3, 4, 6)
         this.selectedSortIndex = 0;
         this.nftEntities = [];
         this.collectionEntities = [];
@@ -63,19 +63,19 @@ export default class UserProfilePageStore {
     }
 
     fetchViewingModels = async () => {
-        this.gridViewStore.setIsLoading(true);
+        this.gridViewState.setIsLoading(true);
         const { nftEntities, total } = await this.nftRepo.fetchNftsByOwnerAddressSortedPaginated(
             this.userEntity.address,
             this.getSelectedKey(),
-            this.gridViewStore.getFrom(),
-            this.gridViewStore.getItemsPerPage(),
+            this.gridViewState.getFrom(),
+            this.gridViewState.getItemsPerPage(),
         );
 
         const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
         this.collectionEntities = await this.collectionRepo.fetchCollectionsByIds(collectionIds);
         this.setNftEntities(nftEntities);
-        this.gridViewStore.setTotalItems(total);
-        this.gridViewStore.setIsLoading(false);
+        this.gridViewState.setTotalItems(total);
+        this.gridViewState.setIsLoading(false);
     }
 
     getSelectedKey() {

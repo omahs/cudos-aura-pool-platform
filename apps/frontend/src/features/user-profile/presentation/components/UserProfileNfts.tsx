@@ -40,7 +40,7 @@ export default function UserProfileNfts({ userProfilePageStore }: Props) {
                 </Actions>
             </div>
             <GridView
-                gridViewStore={userProfilePageStore.gridViewStore}
+                gridViewState={userProfilePageStore.gridViewState}
                 defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}
             >
                 {userProfilePageStore.nftEntities.map(

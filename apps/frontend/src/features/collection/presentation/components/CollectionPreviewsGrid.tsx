@@ -3,28 +3,28 @@ import { inject, observer } from 'mobx-react';
 import React from 'react'
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
-import NftPreview from '../../../nft/presentation/components/NftPreview';
 import Select from '../../../../core/presentation/components/Select';
-import NftPreviewsGridState from '../../../nft/presentation/stores/NftPreviewsGridState';
-import '../styles/nft-preview-grid.css';
+import CollectionPreviewsGridState from '../../../collection/presentation/stores/CollectionPreviewsGridState';
+import '../styles/collection-previews-grid.css';
 
 import GridView from '../../../../core/presentation/components/GridView';
-import NftEntity from '../../../nft/entities/NftEntity';
+import CollectionPreview from './CollectionPreview';
+import CollectionEntity from '../../entities/CollectionEntity';
 
 interface Props {
-    nftPreviewsGridState: NftPreviewsGridState;
+    collectionPreviewsGridState: CollectionPreviewsGridState;
 }
 
-function NftPreviewsGrid({ nftPreviewsGridState }: Props) {
+function CollectionPreviewsGrid({ collectionPreviewsGridState }: Props) {
     return (
         <div className={'NftModelsViewerTable'}>
             <div className={'Grid FilterHeader'}>
                 <Select
                     className={'SortBySelect'}
-                    onChange={nftPreviewsGridState.setSortByIndex}
-                    value={nftPreviewsGridState.selectedSortIndex}
+                    onChange={collectionPreviewsGridState.setSortByIndex}
+                    value={collectionPreviewsGridState.selectedSortIndex}
                 >
-                    {NftPreviewsGridState.TABLE_KEYS.map(
+                    {CollectionPreviewsGridState.TABLE_KEYS.map(
                         (key: string, index: number) => <MenuItem key={index} value={index}>{key}</MenuItem>,
                     )}
                 </Select>
@@ -42,14 +42,13 @@ function NftPreviewsGrid({ nftPreviewsGridState }: Props) {
                 </Actions>
             </div>
             <GridView
-                gridViewState={nftPreviewsGridState.gridViewState}
+                gridViewState={collectionPreviewsGridState.gridViewState}
                 defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}
             >
-                {nftPreviewsGridState.nftEntities.map(
-                    (nftEntity: NftEntity, index: number) => <NftPreview
+                {collectionPreviewsGridState.collectionEntities.map(
+                    (collectionEntity: CollectionEntity, index: number) => <CollectionPreview
                         key={index}
-                        nftEntity={nftEntity}
-                        collectionEntity={nftPreviewsGridState.getCollectionById(nftEntity.collectionId)}
+                        collectionEntity={collectionEntity}
                     />,
                 )}
             </GridView>
@@ -57,4 +56,4 @@ function NftPreviewsGrid({ nftPreviewsGridState }: Props) {
     )
 }
 
-export default inject((stores) => stores)(observer(NftPreviewsGrid));
+export default inject((stores) => stores)(observer(CollectionPreviewsGrid));
