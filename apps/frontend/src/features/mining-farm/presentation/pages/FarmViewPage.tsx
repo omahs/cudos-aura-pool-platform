@@ -6,12 +6,13 @@ import ProfileHeader from '../../../collection/presentation/components/ProfileHe
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import FarmViewPageStore from '../stores/FarmViewPageStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import { inject, observer } from 'mobx-react';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 interface Props {
     appStore?: AppStore
@@ -32,8 +33,8 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
     const farm = farmViewPageStore.farmProfile;
 
     const crumbs = [
-        { name: 'Marketplace', onClick: () => {} },
-        { name: 'Collection Details', onClick: () => {} },
+        { name: 'Marketplace', onClick: () => { navigate(AppRoutes.MARKETPLACE) } },
+        { name: 'Explore Farms', onClick: () => { navigate(AppRoutes.EXPLORE_FARMS) } },
         { name: `Farm Owner: ${farm ? farm.name : ''}`, onClick: () => {} },
     ]
 
