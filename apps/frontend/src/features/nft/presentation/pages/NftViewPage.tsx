@@ -176,7 +176,7 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
                                     </div>
                                 </div>
                                 {/* TODO: open buy nft popup */}
-                                { walletStore.isKeplrConnected()
+                                { walletStore.isConnected()
                                     ? <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
                                         {nftDetailsStore.isNftListed() === true
                                             ? <Button radius={BUTTON_RADIUS.DEFAULT} onClick={() => buyNftModalStore.showSignal(nftEntity, nftDetailsStore.cudosPrice, nftDetailsStore.collectionEntity.name)}>Buy now for {nftEntity.price.toFixed(0)} CUDOS </Button> : ''}

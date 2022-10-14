@@ -2,7 +2,8 @@ import BigNumber from 'bignumber.js';
 import S from '../../../core/utilities/Main';
 
 export default class UserEntity {
-    id: string;
+
+    accountId: string;
     name: string;
     address: string;
     totalBtcEarned: BigNumber;
@@ -12,7 +13,7 @@ export default class UserEntity {
     coverImgUrl: string;
 
     constructor() {
-        this.id = S.Strings.EMPTY;
+        this.accountId = S.Strings.NOT_EXISTS;
         this.name = S.Strings.EMPTY;
         this.address = S.Strings.EMPTY;
         this.totalBtcEarned = new BigNumber(S.NOT_EXISTS);
@@ -24,7 +25,7 @@ export default class UserEntity {
 
     toJson(): any {
         return {
-            'id': this.id,
+            'accountId': this.accountId,
             'name': this.name,
             'address': this.name,
             'totalBtcEarned': this.totalBtcEarned.toString(),
@@ -42,7 +43,7 @@ export default class UserEntity {
 
         const entity = new UserEntity();
 
-        entity.id = json.id ?? entity.id;
+        entity.accountId = json.accountId ?? entity.accountId;
         entity.name = json.name ?? entity.name;
         entity.address = json.address ?? entity.address;
         entity.totalBtcEarned = new BigNumber(json.totalBtcEarned) ?? entity.totalBtcEarned;

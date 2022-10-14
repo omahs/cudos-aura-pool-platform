@@ -26,7 +26,7 @@ function PageHeader({ walletStore }: Props) {
     }
 
     function onClickAddress() {
-        navigate(`${AppRoutes.USER_PROFILE}/${walletStore.getKeplrAddress()}`)
+        navigate(`${AppRoutes.USER_PROFILE}/${walletStore.getAddress()}`)
     }
 
     function onClickAddressMenu(event) {
@@ -44,23 +44,23 @@ function PageHeader({ walletStore }: Props) {
                 <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(isLocationMarketplace())}`} onClick={() => navigate(AppRoutes.MARKETPLACE)}>Marketplace</div>
                 <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(location.pathname === AppRoutes.REWARDS_CALCULATOR)}`} onClick={() => navigate(AppRoutes.REWARDS_CALCULATOR)}>Rewards Calculator</div>
 
-                {walletStore.isKeplrConnected()
+                {walletStore.isConnected()
                     ? <>
                         <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(location.pathname === AppRoutes.USER_PROFILE)}`} onClick={onClickAddress}>Profile</div>
                         <div className={'VerticalSeparator'} />
                         <div className={'FlexRow BalanceRow B2'}>
                             <Svg svg={AccountBalanceWalletIcon} />
                             <div className={'SemiBold Gray'}>Balance:</div>
-                            <div className={'Bold'}>{'12000'} CUDOS</div>
+                            <div className={'Bold'}>{walletStore.getBalance()} CUDOS</div>
                         </div>
                         <div className={'FlexRow AddressRow'}>
-                            <div className={'Bold'}>{walletStore.getKeplrAddress()}</div>
+                            <div className={'Bold'}>{walletStore.getAddress()}</div>
                             <Svg className={'Clickable'} onClick={onClickAddressMenu} svg={MoreVertIcon} />
                         </div>
                     </>
                     : <>
                         <Actions height={ACTIONS_HEIGHT.HEIGHT_48}>
-                            <Button onClick={() => walletStore.connectKeplr('PRIVATE')}>Connect Wallet</Button>
+                            <Button onClick={() => walletStore.connectKeplr()}>Connect Wallet</Button>
                         </Actions>
                     </>
                 }

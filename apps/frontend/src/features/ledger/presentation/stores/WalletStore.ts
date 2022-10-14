@@ -6,26 +6,39 @@ import BigNumber from 'bignumber.js';
 
 declare let Config;
 
+const SESSION_STORAGE_WALLET_KEY = 'auraPoolConnectedWallet';
+
+enum SessionStorageWalletOptions {
+    KEPLR = 'keplr',
+    COSMOSTATION = 'cosmostation',
+}
+
 export default class WalletStore {
+
+    selectedNetwork: string;
 
     keplrWallet: KeplrWallet;
     balance: BigNumber;
+    address: string;
 
     constructor() {
+        this.selectedNetwork = CHAIN_DETAILS.DEFAULT_NETWORK;
+
         this.keplrWallet = null;
         this.balance = null;
+        this.address = '';
 
         makeAutoObservable(this);
     }
 
     @action
-    async connectKeplr(chosenNetwork: string): Promise<void> {
+    public async connectKeplr(): Promise<void> {
         this.keplrWallet = new KeplrWallet({
-            CHAIN_ID: CHAIN_DETAILS.CHAIN_ID[chosenNetwork],
-            CHAIN_NAME: CHAIN_DETAILS.CHAIN_NAME[chosenNetwork],
-            RPC: CHAIN_DETAILS.RPC_ADDRESS[chosenNetwork],
-            API: CHAIN_DETAILS.API_ADDRESS[chosenNetwork],
-            STAKING: CHAIN_DETAILS.STAKING_URL[chosenNetwork],
+            CHAIN_ID: CHAIN_DETAILS.CHAIN_ID[this.selectedNetwork],
+            CHAIN_NAME: CHAIN_DETAILS.CHAIN_NAME[this.selectedNetwork],
+            RPC: CHAIN_DETAILS.RPC_ADDRESS[this.selectedNetwork],
+            API: CHAIN_DETAILS.API_ADDRESS[this.selectedNetwork],
+            STAKING: CHAIN_DETAILS.STAKING_URL[this.selectedNetwork],
             GAS_PRICE: CHAIN_DETAILS.GAS_PRICE.toString(),
         });
 
@@ -37,54 +50,103 @@ export default class WalletStore {
 
         this.keplrWallet.addAddressChangeCallback(this.onChangeAccount);
 
-        await this.keplrWallet.connect();
-        sessionStorage.setItem('keplrWallet', S.Strings.TRUE);
-        // await this.keplrWallet.getBalance();
-
-    }
-
-    async disconnectKeplr(): Promise<void> {
-        await this.keplrWallet.disconnect();
-        sessionStorage.removeItem('keplrWallet');
-    }
-
-    async tryConnectKeplr(): Promise<void> {
-        const connectedInSession = sessionStorage.getItem('keplrWallet');
-        if (connectedInSession !== null) {
+        try {
             await this.keplrWallet.connect();
+            sessionStorage.setItem(SESSION_STORAGE_WALLET_KEY, SessionStorageWalletOptions.KEPLR);
+
+            this.address = this.keplrWallet.accountAddress;
+            this.loadBalance(); // to not wait for it
+        } catch (ex) {
+            console.error(ex);
+            await this.disconnect();
         }
     }
 
-    isKeplrConnected(): boolean {
-        return this.keplrWallet !== null && this.keplrWallet.isConnected();
+    @action
+    public async connectCosmostation(): Promise < void > {
+        // TO DO: Cosmostation
     }
 
-    onClickToggleKeplr = async () => {
-        if (this.isKeplrConnected() === true) {
-            await this.disconnectKeplr();
-        } else {
-            await this.connectKeplr('PRIVATE');
+    public async disconnect(): Promise < void > {
+        if (this.keplrWallet !== null) {
+            try {
+                await this.keplrWallet.disconnect();
+            } catch (ex) {
+                console.error(ex);
+            }
+            this.keplrWallet = null;
+        }
+
+        // TO DO: Cosmostation
+
+        sessionStorage.removeItem(SESSION_STORAGE_WALLET_KEY);
+    }
+
+    public async tryConnect(): Promise < void > {
+        const sessionStorageWalletOptions = sessionStorage.getItem(SESSION_STORAGE_WALLET_KEY);
+        switch (sessionStorageWalletOptions) {
+            case SessionStorageWalletOptions.KEPLR:
+                await this.connectKeplr();
+                break;
+            // TO DO: Cosmostation
+            default:
+                break;
         }
     }
+
+    public isConnected(): boolean {
+        const sessionStorageWalletOptions = sessionStorage.getItem(SESSION_STORAGE_WALLET_KEY);
+        switch (sessionStorageWalletOptions) {
+            case SessionStorageWalletOptions.KEPLR:
+                return this.keplrWallet?.isConnected() ?? false;
+            // TO DO: Cosmostation
+            default:
+                return false;
+        }
+    }
+
+    private async loadBalance(): Promise < void > {
+        try {
+            const sessionStorageWalletOptions = sessionStorage.getItem(SESSION_STORAGE_WALLET_KEY);
+            switch (sessionStorageWalletOptions) {
+                case SessionStorageWalletOptions.KEPLR:
+                    this.balance = await this.keplrWallet.getBalance();
+                    // TO DO: Cosmostation
+                    break;
+                default:
+                    this.balance = new BigNumber(0);
+                    break;
+            }
+        } catch (ex) {
+            this.balance = new BigNumber(0);
+        }
+    }
+
+    // onClickToggleKeplr = async () => {
+    //     if (this.isKeplrConnected() === true) {
+    //         await this.disconnectKeplr();
+    //     } else {
+    //         await this.connectKeplr();
+    //     }
+    // }
 
     onChangeAccount = () => {
         window.location.reload();
     }
 
-    async getSignerData() {
-        const signer = this.keplrWallet.offlineSigner;
-        const sender = this.keplrWallet.accountAddress;
-        const client = await SigningStargateClient.connectWithSigner(Config.CUDOS_NETWORK.RPC, signer);
+    // async getSignerData() {
+    //     const signer = this.keplrWallet.offlineSigner;
+    //     const sender = this.keplrWallet.accountAddress;
+    //     const client = await SigningStargateClient.connectWithSigner(Config.CUDOS_NETWORK.RPC, signer);
 
-        return { signer, sender, client };
-    }
+    //     return { signer, sender, client };
+    // }
 
-    getKeplrAddress(): string {
-        return this.keplrWallet.accountAddress;
+    getAddress(): string {
+        return this.address;
     }
 
     getBalance(): string {
-        // return this.balance.toFixed();
-        return '12000'
+        return this.balance?.toFixed() ?? '0';
     }
 }

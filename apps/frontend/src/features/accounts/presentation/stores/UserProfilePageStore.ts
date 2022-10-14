@@ -8,6 +8,8 @@ import NftEntity from '../../../nft/entities/NftEntity';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
+import AccountSessionStore from './AccountSessionStore';
+import WalletStore from '../../../ledger/presentation/stores/WalletStore';
 
 export enum PROFILE_PAGES {
     NFTS,
@@ -19,13 +21,13 @@ export default class UserProfilePageStore {
 
     static TABLE_KEYS = ['Name', 'Price'];
 
-    bitcoinStore: BitcoinStore
+    bitcoinStore: BitcoinStore;
+    walletStore: WalletStore;
 
     nftRepo: NftRepo;
     userRepo: UserRepo;
     collectionRepo: CollectionRepo;
 
-    userEntity: UserEntity;
     @observable gridViewStore: GridViewStore;
     selectedSortIndex: number;
     nftEntities: NftEntity[];
@@ -33,13 +35,12 @@ export default class UserProfilePageStore {
     bitcoinPrice: number;
     profilePage: number;
 
-    constructor(bitcoinStore: BitcoinStore, nftRepo: NftRepo, collectionRepo: CollectionRepo, userRepo: UserRepo) {
+    constructor(bitcoinStore: BitcoinStore, walletStore: WalletStore, nftRepo: NftRepo, collectionRepo: CollectionRepo) {
         this.bitcoinStore = bitcoinStore;
+        this.walletStore = walletStore;
         this.nftRepo = nftRepo;
-        this.userRepo = userRepo;
         this.collectionRepo = collectionRepo;
 
-        this.userEntity = null;
         this.gridViewStore = new GridViewStore(this.fetchViewingModels, 3, 4, 6)
         this.selectedSortIndex = 0;
         this.nftEntities = [];
@@ -50,13 +51,14 @@ export default class UserProfilePageStore {
         makeAutoObservable(this);
     }
 
-    async init(userAddress: string) {
+    async init() {
         await this.bitcoinStore.init();
+
+        // TO DO: Page redirect if not wallet
 
         this.selectedSortIndex = 0;
         this.profilePage = PROFILE_PAGES.NFTS;
 
-        this.userEntity = await this.userRepo.fetchProfileByAddress(userAddress);
         await this.fetchViewingModels();
 
         this.bitcoinPrice = this.bitcoinStore.getBitcoinPrice();
@@ -65,7 +67,7 @@ export default class UserProfilePageStore {
     fetchViewingModels = async () => {
         this.gridViewStore.setIsLoading(true);
         const { nftEntities, total } = await this.nftRepo.fetchNftsByOwnerAddressSortedPaginated(
-            this.userEntity.address,
+            this.walletStore.getAddress(),
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),

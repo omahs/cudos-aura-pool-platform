@@ -12,23 +12,23 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import { useParams } from 'react-router-dom';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
+import AccountSessionStore from '../stores/AccountSessionStore';
 
 interface Props {
     appStore?: AppStore
 
+    accountSessionStore?: AccountSessionStore;
     userProfilePageStore?: UserProfilePageStore,
 }
 
-function UserProfilePage({ appStore, userProfilePageStore }: Props) {
-    const { userAddress } = useParams();
-
+function UserProfilePage({ appStore, userProfilePageStore, accountSessionStore }: Props) {
     useEffect(() => {
         appStore.useLoading(() => {
-            userProfilePageStore.init(userAddress);
+            userProfilePageStore.init();
         })
     }, [])
 
-    const userEntity = userProfilePageStore.userEntity;
+    const userEntity = accountSessionStore.userEntity;
 
     return (
         <PageLayoutComponent

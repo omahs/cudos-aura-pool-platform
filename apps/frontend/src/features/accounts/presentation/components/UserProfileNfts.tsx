@@ -8,7 +8,7 @@ import NftPreview from '../../../nft/presentation/components/NftPreview';
 import UserProfilePageStore from '../stores/UserProfilePageStore';
 import NftEntity from '../../../nft/entities/NftEntity';
 
-interface Props {
+type Props = {
     userProfilePageStore: UserProfilePageStore;
 }
 

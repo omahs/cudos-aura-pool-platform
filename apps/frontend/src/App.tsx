@@ -20,14 +20,15 @@ import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
 import NftDetailsStore from './features/nft/presentation/stores/NftDetailsStore';
 import CollectionViewPageStore from './features/collection/presentation/stores/CollectionViewPageStore';
 import FarmViewPageStore from './features/mining-farm/presentation/stores/FarmViewPageStore';
-import UserProfilePageStore from './features/user-profile/presentation/stores/UserProfilePageStore';
-import UserStorageRepo from './features/user-profile/data/repo/UserStorageRepo';
 import WalletStore from './features/ledger/presentation/stores/WalletStore';
 import BuyNftModalStore from './features/nft/presentation/stores/BuyNftModalStore';
 import ResellNftModalStore from './features/nft/presentation/stores/ResellNftModalStore';
 import StorageHelper from './core/helpers/StorageHelper';
 import BitcoinStore from './features/bitcoin-data/presentation/stores/BitcoinStore';
 import CudosStore from './features/cudos-data/presentation/stores/CudosStore';
+import UserProfilePageStore from './features/accounts/presentation/stores/UserProfilePageStore';
+import AccountStorageRepo from './features/accounts/data/repo/AccountStorageRepo';
+import AccountSessionStore from './features/accounts/presentation/stores/AccountSessionStore';
 
 const storageHelper = new StorageHelper();
 
@@ -40,8 +41,10 @@ const cudosRepo = new CudosStorageRepo(storageHelper);
 const miningFarmRepo = new MiningFarmStorageRepo(storageHelper);
 const collectionRepo = new CollectionStorageRepo(storageHelper);
 const nftRepo = new NftStorageRepo(storageHelper);
-const userRepo = new UserStorageRepo(storageHelper);
+const accountRepo = new AccountStorageRepo(storageHelper);
 
+const walletStore = new WalletStore();
+const accountSessionStore = new AccountSessionStore(accountRepo);
 const bitcoinStore = new BitcoinStore(bitcoinRepo);
 const cudosStore = new CudosStore(cudosRepo);
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFarmRepo);
@@ -50,8 +53,7 @@ const nftPreviewsGridStore = new NftPreviewsGridStore(nftRepo, collectionRepo);
 const nftDetailsStore = new NftDetailsStore(bitcoinStore, cudosStore, nftRepo);
 const collectionViewPageStore = new CollectionViewPageStore(collectionRepo, miningFarmRepo);
 const farmViewPageStore = new FarmViewPageStore(miningFarmRepo, collectionRepo);
-const userProfilePageStore = new UserProfilePageStore(bitcoinStore, nftRepo, collectionRepo, userRepo);
-const walletStore = new WalletStore();
+const userProfilePageStore = new UserProfilePageStore(bitcoinStore, walletStore, nftRepo, collectionRepo);
 const buyNftModalStore = new BuyNftModalStore();
 const resellNftModalStore = new ResellNftModalStore();
 
@@ -61,6 +63,12 @@ const App = () => {
         initHover();
         initOnBeforeUnload();
         removeInitalPageLoading();
+
+        async function run() {
+            await walletStore.tryConnect();
+            await accountSessionStore.loadSessionAccounts();
+        }
+        run();
     }, []);
 
     return (
@@ -71,6 +79,7 @@ const App = () => {
                 walletStore = { walletStore }
                 bitcoinStore = { bitcoinStore }
                 cudosStore = { cudosStore }
+                accountSessionStore = { accountSessionStore }
                 exampleModalStore = { exampleModalStore }
                 rewardsCalculatorStore = { rewardsCalculatorStore }
                 marketplaceStore = { marketplaceStore }
