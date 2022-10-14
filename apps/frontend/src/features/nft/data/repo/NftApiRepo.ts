@@ -12,16 +12,16 @@ export default class NftApiRepo implements NftRepo {
         this.nftApi = new NftApi();
     }
 
-    async getNftsByOwnerAddressSortedPaginated(
+    async fetchNftsByOwnerAddressSortedPaginated(
         ownerAddress: string,
         sortKey: string,
         start: number,
         size: number,
     ): Promise < { nftEntities: NftEntity[], total: number } > {
-        return this.nftApi.getNftsByOwnerAddressSortedPaginated(ownerAddress, sortKey, start, size);
+        return this.nftApi.fetchNftsByOwnerAddressSortedPaginated(ownerAddress, sortKey, start, size);
     }
 
-    async getNftsByCollectionIdCategoryAndSearchSortedPaginated(
+    async fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(
         collectionId: string,
         search: string,
         category: string,
@@ -29,12 +29,12 @@ export default class NftApiRepo implements NftRepo {
         start: number,
         size: number,
     ) {
-        return this.nftApi.getNftsByCollectionIdCategoryAndSearchSortedPaginated(collectionId, search, category, sortKey, start, size);
+        return this.nftApi.fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(collectionId, search, category, sortKey, start, size);
     }
 
-    async getNftEntity(
+    async fetchNftEntity(
         nftId: string,
     ): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } > {
-        return this.nftApi.getNftEntity(nftId);
+        return this.nftApi.fetchNftEntity(nftId);
     }
 }

@@ -56,7 +56,7 @@ export default class NftPreviewsGridStore {
 
     fetchViewingModels = async () => {
         this.gridViewStore.setIsLoading(true);
-        const { nftEntities, total } = await this.nftRepo.getNftsByCollectionIdCategoryAndSearchSortedPaginated(
+        const { nftEntities, total } = await this.nftRepo.fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(
             this.collectionId,
             this.searchString,
             this.getCategoryName(),

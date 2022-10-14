@@ -4,14 +4,14 @@ import NftEntity from '../../entities/NftEntity';
 
 export default interface NftRepo {
 
-    getNftsByOwnerAddressSortedPaginated(
+    fetchNftsByOwnerAddressSortedPaginated(
         ownerAddress: string,
         sortKey: string,
         start: number,
         size: number,
     ): Promise < { nftEntities: NftEntity[], total: number } >;
 
-    getNftsByCollectionIdCategoryAndSearchSortedPaginated(
+    fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(
         collectionId: string,
         search: string,
         category: string,
@@ -20,7 +20,7 @@ export default interface NftRepo {
         size: number,
     ): Promise < { nftEntities: NftEntity[], total: number } >;
 
-    getNftEntity(
+    fetchNftEntity(
         nftId: string,
     ): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } >;
 }

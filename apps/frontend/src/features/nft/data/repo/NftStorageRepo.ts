@@ -13,7 +13,7 @@ export default class NftStorageRepo implements NftRepo {
         this.storageHelper = new StorageHelper();
     }
 
-    async getNftsByOwnerAddressSortedPaginated(
+    async fetchNftsByOwnerAddressSortedPaginated(
         ownerAddress: string,
         sortKey: string,
         start: number,
@@ -43,7 +43,7 @@ export default class NftStorageRepo implements NftRepo {
         return { nftEntities, total };
     }
 
-    async getNftsByCollectionIdCategoryAndSearchSortedPaginated(
+    async fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(
         collectionId: string,
         search: string,
         category: string,
@@ -73,7 +73,7 @@ export default class NftStorageRepo implements NftRepo {
         return { nftEntities, total };
     }
 
-    async getNftEntity(
+    async fetchNftEntity(
         nftId: string,
     ): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } > {
         const nftJson = this.storageHelper.nftsJson.find((json) => json.id === nftId);

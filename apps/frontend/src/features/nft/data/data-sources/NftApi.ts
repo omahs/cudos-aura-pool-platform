@@ -1,8 +1,10 @@
+import CollectionEntity from '../../../collection/entities/CollectionEntity';
+import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import NftEntity from '../../entities/NftEntity';
 
 export default class NftApi {
 
-    async getNftsByOwnerAddressSortedPaginated(
+    async fetchNftsByOwnerAddressSortedPaginated(
         ownerAddress: string,
         sortKey: string,
         start: number,
@@ -11,7 +13,7 @@ export default class NftApi {
         return null;
     }
 
-    async getNftsByCollectionIdCategoryAndSearchSortedPaginated(
+    async fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(
         collectionId: string,
         search: string,
         category: string,
@@ -22,7 +24,7 @@ export default class NftApi {
         return null;
     }
 
-    async getNftEntity(
+    async fetchNftEntity(
         nftId: string,
     ): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } > {
         return null;

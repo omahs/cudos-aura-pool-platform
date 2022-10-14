@@ -68,7 +68,7 @@ export default class UserProfilePageStore {
 
     fetchViewingModels = async () => {
         this.gridViewStore.setIsLoading(true);
-        const { nftEntities, total } = await this.nftRepo.getNftsByOwnerAddressSortedPaginated(
+        const { nftEntities, total } = await this.nftRepo.fetchNftsByOwnerAddressSortedPaginated(
             this.userEntity.address,
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
