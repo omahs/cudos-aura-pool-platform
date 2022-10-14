@@ -8,23 +8,27 @@
 }
 
 .PageExploreCollections .ExploreColelctions .PageHeading {
+    font-size: 64px;
     margin-bottom: 40px;   
 }
 
 .PageExploreCollections .ExploreColelctions .SearchBar {
+    width: 420px;
     margin-bottom: 40px;
 }
 
 .PageExploreCollections .ExploreColelctions .CategoriesRow {
-    gap: 20px;
+    gap: 25px;
     margin-bottom: 100px;
 }
 
 .PageExploreCollections .ExploreColelctions .CategoriesRow .CategoryName {
-    padding: 2px 5px;
-    border-radius: 3px;
+    padding: 4px 10px;
+    border-radius: 6px;
     background-color: var(--color-gray-095);
-    font-family: 'Poppins'; font-weight: 600; font-size: 14px; line-height: 21px;
+    font-weight: 600; font-size: 14px;
+    
+    transition-property: background-color, color;
 }
 
 .PageExploreCollections .ExploreColelctions .CategoriesRow .CategoryName.Active {

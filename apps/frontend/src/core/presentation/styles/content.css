@@ -121,7 +121,7 @@ html.OverflowHidden {
 }
 
 .H1 {
-    font-size: 32px; line-height: 130%; letter-spacing: -3%;
+    font-size: 32px;
 }
 
 .H2 {
@@ -150,34 +150,6 @@ html.OverflowHidden {
 
 .B4 {
     font-size: 10px;
-}
-
-@media (max-width: 749px) {
-
-    .Heading1 {
-        font-size: 30px;
-    }
-
-    .Heading2 {
-        font-size: 24px;
-    }
-
-    .Heading3 {
-        font-size: 18px;
-    }
-
-    .Heading4 {
-        font-size: 14px;
-    }
-
-    .Heading5 {
-        font-size: 12px;
-    }
-
-    .Heading6 {
-        font-size: 5px;
-    }
-
 }
 
 /* PageContent */

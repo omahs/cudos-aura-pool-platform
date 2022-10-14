@@ -22,7 +22,7 @@ type Props = {
     nftPreviewsGridStore?: NftPreviewsGridStore
 }
 
-function CollectionViewPageComponent({ collectionViewPageStore, nftPreviewsGridStore }: Props) {
+function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: Props) {
 
     const collectionProfile = collectionViewPageStore.collectionProfile;
     const { collectionId } = useParams();
@@ -104,4 +104,4 @@ function CollectionViewPageComponent({ collectionViewPageStore, nftPreviewsGridS
     )
 }
 
-export default inject((stores) => stores)(observer(CollectionViewPageComponent));
+export default inject((stores) => stores)(observer(CollectionViewPage));

@@ -19,7 +19,7 @@ interface Props {
     userProfilePageStore?: UserProfilePageStore,
 }
 
-function UserProfilePageComponent({ appStore, userProfilePageStore }: Props) {
+function UserProfilePage({ appStore, userProfilePageStore }: Props) {
     const { userAddress } = useParams();
 
     useEffect(() => {
@@ -85,4 +85,4 @@ function UserProfilePageComponent({ appStore, userProfilePageStore }: Props) {
 
 }
 
-export default inject((stores) => stores)(observer(UserProfilePageComponent));
+export default inject((stores) => stores)(observer(UserProfilePage));

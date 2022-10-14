@@ -30,7 +30,7 @@ interface Props {
     resellNftModalStore?: ResellNftModalStore;
 }
 
-function NftViewPageComponent({ walletStore, nftDetailsStore, buyNftModalStore, resellNftModalStore }: Props) {
+function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNftModalStore }: Props) {
 
     const { nftId } = useParams();
     const navigate = useNavigate();
@@ -196,4 +196,4 @@ function NftViewPageComponent({ walletStore, nftDetailsStore, buyNftModalStore, 
 
 }
 
-export default inject((stores) => stores)(observer(NftViewPageComponent));
+export default inject((stores) => stores)(observer(NftViewPage));

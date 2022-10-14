@@ -17,7 +17,7 @@ interface Props {
     farmViewPageStore?: FarmViewPageStore,
 }
 
-function FarmViewPageComponent({ appStore, farmViewPageStore }: Props) {
+function FarmViewPage({ appStore, farmViewPageStore }: Props) {
 
     const { farmId } = useParams();
 
@@ -82,4 +82,4 @@ function FarmViewPageComponent({ appStore, farmViewPageStore }: Props) {
 
 }
 
-export default inject((stores) => stores)(observer(FarmViewPageComponent));
+export default inject((stores) => stores)(observer(FarmViewPage));
