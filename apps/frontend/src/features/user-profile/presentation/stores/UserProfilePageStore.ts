@@ -9,6 +9,7 @@ import NftProfileEntity from '../../../nft-details/entities/NftEntity';
 import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
 import { Collection } from 'cudosjs/build/stargate/modules/nft/proto-types/nft';
+import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
 
 export enum PROFILE_PAGES {
     NFTS,
@@ -19,6 +20,8 @@ export enum PROFILE_PAGES {
 export default class UserProfilePageStore {
 
     static TABLE_KEYS = ['Name', 'Price'];
+
+    bitcoinStore: BitcoinStore
 
     nftRepo: NftRepo;
     userRepo: UserProfileRepo;
@@ -33,7 +36,9 @@ export default class UserProfilePageStore {
     bitcoinPrice: number;
     profilePage: number;
 
-    constructor(nftRepo: NftRepo, collectionRepo: CollectionRepo, userRepo: UserProfileRepo, bitcoinRepo: BitcoinRepo) {
+    constructor(bitcoinStore: BitcoinStore, nftRepo: NftRepo, collectionRepo: CollectionRepo, userRepo: UserProfileRepo, bitcoinRepo: BitcoinRepo) {
+        this.bitcoinStore = bitcoinStore;
+
         this.nftRepo = nftRepo;
         this.userRepo = userRepo;
         this.bitcoinRepo = bitcoinRepo;
@@ -48,7 +53,9 @@ export default class UserProfilePageStore {
         makeAutoObservable(this);
     }
 
-    init(userAddress: string, callback: () => void) {
+    async init(userAddress: string, callback: () => void) {
+        await this.bitcoinStore.init();
+
         this.selectedSortIndex = 0;
         this.profilePage = PROFILE_PAGES.NFTS;
 
@@ -59,9 +66,7 @@ export default class UserProfilePageStore {
             callback();
         });
 
-        this.bitcoinRepo.getBitcoinData((bitcoinData) => {
-            this.bitcoinPrice = bitcoinData.price;
-        })
+        this.bitcoinPrice = this.bitcoinStore.bitcointDataEntity.price;
     }
 
     fetchViewingModels = () => {

@@ -36,7 +36,10 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        rewardsCalculatorStore.innitialLoad();
+        async function run() {
+            rewardsCalculatorStore.init();
+        }
+        run();
     }, []);
 
     function onClickExploreNftAndBuy() {

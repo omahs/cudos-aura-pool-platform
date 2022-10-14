@@ -1,18 +1,9 @@
-// import AbsApi from './AbsApi';
-// import StorageHelper from '../../../../core/helpers/StorageHelper';
-// import BitcoinDataEntity from '../../entities/BitcoinDataEntity';
+import BitcoinDataEntity from '../../entities/BitcoinDataEntity';
 
-// export default class BitcoiApi extends AbsApi {
-//     dataSource: BitcoinDataSource;
+export default class BitcoiApi {
 
-//     constructor(dataSource: BitcoinDataSource) {
-//         super();
+    async fetchBitcoinData(): Promise < BitcoinDataEntity > {
+        return null;
+    }
 
-//         this.storageHelper = new BitcoinDataSource();
-//     }
-
-//     getBitcoinData(callback: (bitcoinData: BitcoinDataEntity) => void) {
-//         const bitcoinData = BitcoinDataEntity.fromJson(this.storageHelper.bitcoinDataJson);
-//         callback(bitcoinData);
-//     }
-// }
+}

@@ -32,7 +32,10 @@ function ExploreCollectionsPage({ exploreCollectionsStore }: Props) {
     }
 
     useEffect(() => {
-        exploreCollectionsStore.innitialLoad();
+        async function run() {
+            await exploreCollectionsStore.init();
+        }
+        run();
     }, []);
 
     return (

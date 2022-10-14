@@ -41,7 +41,7 @@ export default class ExploreCollectionsStore {
         this.selectedTopCollectionPeriod = 0;
     }
 
-    innitialLoad() {
+    async init() {
         this.resetDefaults();
         this.getCategories();
         this.getCudosPrice();

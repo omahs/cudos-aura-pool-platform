@@ -39,10 +39,10 @@ export default class RewardsCalculatorStore {
         this.hashRateTh = 0;
     }
 
-    innitialLoad() {
+    async init() {
         this.resetDefaults();
         this.getFarmPools();
-        this.getBitcoinData();
+        this.bitcoinDataModel = await this.bitcoinRepo.fetchBitcoinData();
     }
 
     hasNetworkDifficulty() {
@@ -52,12 +52,6 @@ export default class RewardsCalculatorStore {
     getFarmPools() {
         this.miningFarmRepo.getAllFarmgs((miningFarms: MiningFarmEntity[]) => {
             this.miningFarms = miningFarms;
-        });
-    }
-
-    getBitcoinData() {
-        this.bitcoinRepo.getBitcoinData((bitcoinDataModel: BitcoinDataEntity) => {
-            this.bitcoinDataModel = bitcoinDataModel;
         });
     }
 

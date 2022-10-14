@@ -36,7 +36,11 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
     const navigate = useNavigate();
 
     useEffect(() => {
-        nftDetailsStore.init(nftId);
+        async function run() {
+            await nftDetailsStore.init(nftId);
+        }
+
+        run();
     }, []);
 
     function onClickCalculateRewards() {

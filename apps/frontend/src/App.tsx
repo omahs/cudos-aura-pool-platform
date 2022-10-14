@@ -25,18 +25,23 @@ import UserProfileStorageRepo from './features/user-profile/data/repo/UserProfil
 import WalletStore from './features/ledger/presentation/stores/WalletStore';
 import BuyNftModalStore from './features/nft-details/presentation/stores/BuyNftModalStore';
 import ResellNftModalStore from './features/nft-details/presentation/stores/ResellNftModalStore';
+import StorageHelper from './core/helpers/StorageHelper';
+import BitcoinStore from './features/bitcoin-data/presentation/stores/BitcoinStore';
+
+const storageHelper = new StorageHelper();
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
 const exampleModalStore = new ExampleModalStore();
 
-const bitcoinRepo = new BitcoinStorageRepo();
+const bitcoinRepo = new BitcoinStorageRepo(storageHelper);
 const cudosRepo = new CudosStorageRepo();
 const miningFarmRepo = new MiningFarmStorageRepo();
 const collectionRepo = new CollectionStorageRepo();
 const nftRepo = new NftStorageRepo(collectionRepo);
 const userProfileRepo = new UserProfileStorageRepo();
 
+const bitcoinStore = new BitcoinStore(bitcoinRepo);
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinRepo, miningFarmRepo);
 const exploreCollectionsStore = new ExploreCollectionsStore(collectionRepo);
 const nftPreviewsGridStore = new NftPreviewsGridStore(nftRepo, collectionRepo);
@@ -62,6 +67,7 @@ const App = () => {
                 appStore = { appStore }
                 alertStore = { alertStore }
                 walletStore = { walletStore }
+                bitcoinStore = { bitcoinStore }
                 exampleModalStore = { exampleModalStore }
                 rewardsCalculatorStore = { rewardsCalculatorStore }
                 exploreCollectionsStore = { exploreCollectionsStore }

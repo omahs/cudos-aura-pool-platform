@@ -49,7 +49,7 @@ export default class NftPreviewsGridStore {
         this.collectionEntities = [];
     }
 
-    async innitialLoad() {
+    async init() {
         await this.getCategories();
 
         this.fetchViewingModels();

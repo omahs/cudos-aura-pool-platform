@@ -17,7 +17,10 @@ interface Props {
 
 function NftPreviewsGrid({ nftPreviewsGridStore }: Props) {
     useEffect(() => {
-        nftPreviewsGridStore.innitialLoad();
+        async function run() {
+            await nftPreviewsGridStore.init();
+        }
+        run();
     }, [])
 
     const store = nftPreviewsGridStore;

@@ -36,7 +36,7 @@ export default class NftDetailsStore {
         this.miningFarm = null;
     }
 
-    init(nftId: string) {
+    async init(nftId: string) {
         // TODO: gt by real id
         this.nftRepo.getNftProfile(nftId, (nftProfile, collectionProfile, miningFarm) => {
             this.nftProfile = nftProfile;
@@ -48,9 +48,7 @@ export default class NftDetailsStore {
             this.cudosPrice = cudosPrice;
         })
 
-        this.bitcoinRepo.getBitcoinData((data) => {
-            this.bitcoinPrice = data.price;
-        })
+        this.bitcoinPrice = (await this.bitcoinRepo.fetchBitcoinData()).price
     }
 
     getNftPriceText() {
