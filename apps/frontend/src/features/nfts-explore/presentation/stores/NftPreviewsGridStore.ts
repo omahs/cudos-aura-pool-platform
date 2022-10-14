@@ -3,7 +3,7 @@ import { makeAutoObservable, observable } from 'mobx';
 import S from '../../../../core/utilities/Main';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
 import NftRepo from '../repos/NftRepo';
-import NftProfileEntity from '../../../nft-details/entities/NftEntity';
+import NftEntity from '../../../nft-details/entities/NftEntity';
 import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
 
 export default class NftPreviewsGridStore {
@@ -21,7 +21,7 @@ export default class NftPreviewsGridStore {
     selectedCategoryIndex: number;
 
     collectionEntities: CollectionProfileEntity[];
-    nftPreviews: NftProfileEntity[];
+    nftEntities: NftEntity[];
     categories: string[];
 
     constructor(nftRepo: NftRepo, collectionRepo: CollectionRepo) {
@@ -29,7 +29,7 @@ export default class NftPreviewsGridStore {
         this.collectionRepo = collectionRepo;
 
         this.gridViewStore = new GridViewStore(this.fetchViewingModels, 3, 4, 6)
-        this.nftPreviews = [];
+        this.nftEntities = [];
         this.collectionEntities = [];
         this.categories = [];
 
@@ -45,7 +45,7 @@ export default class NftPreviewsGridStore {
         this.searchString = S.Strings.EMPTY;
         this.selectedCategoryIndex = 0;
         this.searchString = S.Strings.EMPTY;
-        this.nftPreviews = [];
+        this.nftEntities = [];
         this.collectionEntities = [];
     }
 
@@ -64,8 +64,8 @@ export default class NftPreviewsGridStore {
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
-            (nftProfileEntities: NftProfileEntity[], total) => {
-                const collectionIds = nftProfileEntities.map((nftProfileEntity: NftProfileEntity) => nftProfileEntity.collectionId);
+            (nftProfileEntities: NftEntity[], total) => {
+                const collectionIds = nftProfileEntities.map((nftProfileEntity: NftEntity) => nftProfileEntity.collectionId);
 
                 this.collectionRepo.getCollectionsByIds(collectionIds)
                     .then((collectionEntities: CollectionProfileEntity[]) => {
@@ -108,8 +108,8 @@ export default class NftPreviewsGridStore {
         this.fetchViewingModels();
     }
 
-    setNftPreviews(nftPreviews: NftProfileEntity[]) {
-        this.nftPreviews = nftPreviews;
+    setNftPreviews(nftEntities: NftEntity[]) {
+        this.nftEntities = nftEntities;
     }
 
     getCollectionById(collectionId: string): CollectionProfileEntity {

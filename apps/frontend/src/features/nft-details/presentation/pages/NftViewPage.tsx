@@ -47,7 +47,7 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
         resellNftModalStore.showSignal(nftEntity, nftDetailsStore.cudosPrice, collection.name);
     }
 
-    const nftEntity = nftDetailsStore.nftProfile;
+    const nftEntity = nftDetailsStore.nftEntity;
     const collection = nftDetailsStore.collectionProfile;
     const farm = nftDetailsStore.miningFarm;
 

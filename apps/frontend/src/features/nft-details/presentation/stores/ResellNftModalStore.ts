@@ -1,7 +1,7 @@
 import S from '../../../../core/utilities/Main';
 import { action, makeObservable, observable } from 'mobx';
 import ModalStore from '../../../../core/presentation/stores/ModalStore';
-import NftProfileEntity from '../../entities/NftEntity';
+import NftEntity from '../../entities/NftEntity';
 import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
 
 export enum ModalStage {
@@ -13,7 +13,7 @@ export enum ModalStage {
 
 export default class ResellNftModalStore extends ModalStore {
 
-    @observable nft: NftProfileEntity;
+    @observable nftEntity: NftEntity;
     @observable cudosPrice: number;
     price: number;
     @observable priceDisplay: string;
@@ -54,8 +54,8 @@ export default class ResellNftModalStore extends ModalStore {
     }
 
     @action
-    showSignal(nft: NftProfileEntity, cudosPrice: number, collectionName: string) {
-        this.nft = nft;
+    showSignal(nftEntity: NftEntity, cudosPrice: number, collectionName: string) {
+        this.nftEntity = nftEntity;
         this.cudosPrice = cudosPrice;
         this.collectionName = collectionName;
         this.modalStage = ModalStage.FAIL;
@@ -80,7 +80,7 @@ export default class ResellNftModalStore extends ModalStore {
     buyNft = () => {
         this.modalStage = ModalStage.PROCESSING;
 
-        // TODO: really buy nft
+        // TODO: really buy nftEntity
 
         setTimeout(() => {
             this.modalStage = ModalStage.SUCCESS;
@@ -98,7 +98,7 @@ export default class ResellNftModalStore extends ModalStore {
     onClickSubmitForSell = () => {
         this.modalStage = ModalStage.PROCESSING;
 
-        // TODO: really buy nft
+        // TODO: really buy nftEntity
         this.txHash = 'aergaerhuaeruaeruaeruaeruearueru'
         setTimeout(() => {
             this.modalStage = ModalStage.SUCCESS;
