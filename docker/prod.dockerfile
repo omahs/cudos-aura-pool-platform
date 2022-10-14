@@ -32,4 +32,4 @@ USER node
 
 RUN npm i --omit=dev
 
-CMD ["/bin/bash", "-c", "npx sequelize db:migrate --config=./database/config/config.json && node ./apps/backend/main.js"] 
+CMD ["/bin/bash", "-c", "npx sequelize db:migrate --config=./database/config/config.js && node ./apps/backend/main.js"] 
