@@ -26,6 +26,8 @@ type Props = {
 function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: Props) {
 
     const collectionEntity = collectionViewPageStore.collectionEntity;
+    const miningFarmEntity = collectionViewPageStore.miningFarmEntity;
+
     const { collectionId } = useParams();
     const navigate = useNavigate();
 
@@ -38,6 +40,10 @@ function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: P
         { name: 'Marketplace', onClick: () => { navigate(AppRoutes.MARKETPLACE) } },
         { name: 'Collection Details', onClick: () => {} },
     ]
+
+    function onClickFarmLink() {
+        navigate(`${AppRoutes.FARM_VIEW}/${miningFarmEntity.id}`)
+    }
 
     return (
         <PageLayoutComponent
@@ -54,8 +60,8 @@ function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: P
                     <ProfileHeader coverPictureUrl={collectionEntity.coverImgUrl} profilePictureUrl={collectionEntity.profileImgurl} />
                     <div className={'Heading2 CollectionHeadingName'}>{collectionEntity.name}</div>
                     <div className={'ProfileInfo Grid'}>
-                        <div className={'FlexColumn'}>
-                            <div>Farm Owner <b>{collectionEntity.farmName}</b></div>
+                        <div className={'FlexColumn B1'}>
+                            <div className={'Clickable'} onClick={onClickFarmLink}>Farm Owner:  <b>{miningFarmEntity.name}</b></div>
                             <div className={'CollectionDescription'}>{collectionEntity.description}</div>
                         </div>
                         {/* // TODO: fill correct values */}

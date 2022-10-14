@@ -3,7 +3,7 @@ import S from '../../../core/utilities/Main';
 
 export default class CollectionEntity {
     id: string;
-    farmName: string;
+    farmId: string;
     name: string;
     description: string;
     ownerAddress: string;
@@ -17,7 +17,7 @@ export default class CollectionEntity {
 
     constructor() {
         this.id = S.Strings.EMPTY;
-        this.farmName = S.Strings.EMPTY;
+        this.farmId = S.Strings.EMPTY;
         this.name = S.Strings.EMPTY;
         this.description = S.Strings.EMPTY;
         this.ownerAddress = S.Strings.EMPTY;
@@ -33,7 +33,7 @@ export default class CollectionEntity {
     toJson(): any {
         return {
             'id': this.id,
-            'farmName': this.farmName,
+            'farmId': this.farmId,
             'name': this.name,
             'description': this.description,
             'ownerAddress': this.description,
@@ -55,7 +55,7 @@ export default class CollectionEntity {
         const model = new CollectionEntity();
 
         model.id = json.id ?? model.id;
-        model.farmName = json.farmName ?? model.farmName;
+        model.farmId = json.farmId ?? model.farmId;
         model.name = json.name ?? model.name;
         model.description = json.description ?? model.description;
         model.ownerAddress = json.ownerAddress ?? model.ownerAddress;
