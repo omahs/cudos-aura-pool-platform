@@ -1,9 +1,9 @@
-import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable } from 'mobx';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../repos/MiningFarmRepo';
+import CollectionPreviewsGridState from '../../../collection/presentation/stores/CollectionPreviewsGridState';
 
 export default class FarmViewPageStore {
 
@@ -12,7 +12,7 @@ export default class FarmViewPageStore {
     farmRepo: MiningFarmRepo;
     collectionRepo: CollectionRepo;
 
-    gridViewStore: GridViewStore;
+    collectionPreviewsGridState: CollectionPreviewsGridState;
     farmProfile: MiningFarmEntity;
     selectedSortIndex: number;
     collectionEntities: CollectionEntity[];
@@ -22,7 +22,7 @@ export default class FarmViewPageStore {
         this.collectionRepo = collectionRepo;
 
         this.farmProfile = null;
-        this.gridViewStore = new GridViewStore(this.fetchViewingModels, 3, 4, 6)
+        this.collectionPreviewsGridState = new CollectionPreviewsGridState(this.fetchViewingModels);
         this.collectionEntities = [];
 
         makeAutoObservable(this);
@@ -31,24 +31,16 @@ export default class FarmViewPageStore {
     async init(farmId: string) {
         this.selectedSortIndex = 0;
         this.farmProfile = await this.farmRepo.fetchMiningFarmById(farmId);
-        await this.fetchViewingModels()
+        this.collectionPreviewsGridState.init([]);
     }
 
-    fetchViewingModels = async () => {
-        this.gridViewStore.setIsLoading(true);
-        const { collectionEntities, total } = await this.collectionRepo.fetchCollectionsByFarmIdSortedPaginated(
+    fetchViewingModels = async (): Promise < {collectionEntities: CollectionEntity[], total: number} > => {
+        return this.collectionRepo.fetchCollectionsByFarmIdSortedPaginated(
             this.farmProfile.id,
-            this.getSelectedKey(),
-            this.gridViewStore.getFrom(),
-            this.gridViewStore.getItemsPerPage(),
+            this.collectionPreviewsGridState.getSelectedKey(),
+            this.collectionPreviewsGridState.gridViewState.getFrom(),
+            this.collectionPreviewsGridState.gridViewState.getItemsPerPage(),
         );
-        this.setCollectionEntities(collectionEntities);
-        this.gridViewStore.setTotalItems(total);
-        this.gridViewStore.setIsLoading(false);
-    }
-
-    getSelectedKey() {
-        return FarmViewPageStore.TABLE_KEYS[this.selectedSortIndex];
     }
 
     setSortByIndex = (index: number) => {

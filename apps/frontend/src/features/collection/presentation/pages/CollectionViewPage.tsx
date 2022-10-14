@@ -12,7 +12,6 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import CollectionViewPageStore from '../stores/CollectionViewPageStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import Svg from '../../../../core/presentation/components/Svg';
-import NftPreviewsGridStore from '../../../nft/presentation/stores/NftPreviewsGridStore';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
@@ -20,11 +19,9 @@ import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 type Props = {
     collectionViewPageStore?: CollectionViewPageStore
-    nftPreviewsGridStore?: NftPreviewsGridStore
 }
 
-function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: Props) {
-
+function CollectionViewPage({ collectionViewPageStore }: Props) {
     const collectionEntity = collectionViewPageStore.collectionEntity;
     const miningFarmEntity = collectionViewPageStore.miningFarmEntity;
 
@@ -33,7 +30,7 @@ function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: P
 
     useEffect(() => {
         async function run() {
-            await collectionViewPageStore.init(collectionId, nftPreviewsGridStore);
+            await collectionViewPageStore.init(collectionId);
         }
         run();
     }, []);
@@ -106,7 +103,7 @@ function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: P
                             </div>
                         </div>
                     </div>
-                    <NftPreviewsGrid />
+                    <NftPreviewsGrid nftPreviewsGridState={collectionViewPageStore.nftPreviewsGridState}/>
                 </div>
             ) }
             <PageFooter />

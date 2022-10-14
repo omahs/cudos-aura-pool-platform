@@ -3,9 +3,8 @@
 }
 
 .Slider.LeftShadow {
-    box-shadow: -100px 0px 100px 1px #aaaaaa;
+
 }
 
 .Slider.RightShadow {
-    box-shadow: 0 0px -100px 1px #aaaaaa;
 }

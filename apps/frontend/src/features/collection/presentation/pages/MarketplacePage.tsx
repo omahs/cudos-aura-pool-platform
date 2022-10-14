@@ -20,7 +20,7 @@ import Svg from '../../../../core/presentation/components/Svg';
 import '../styles/marketplace-page.css';
 import Slider from '../../../../core/presentation/components/Slider';
 import NftEntity from '../../../nft/entities/NftEntity';
-import NftPreviewInPicture from '../components/NftPreviewInPicture';
+import NftPreviewInPicture from '../../../nft/presentation/components/NftPreviewInPicture';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
 
 type Props = {
@@ -78,6 +78,7 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                     {marketplaceStore.newNftDropsEntities.slice(0, 4).map((nftEntity: NftEntity, index: number) => <NftPreviewInPicture
                         key={index}
                         nftEntity={nftEntity}
+                        onClick={() => navigate(`${AppRoutes.NFT_VIEW}/${nftEntity.id}`)}
                         collectionEntity={marketplaceStore.getCollectionById(nftEntity.collectionId)}
                     />)}
                 </Slider>
@@ -86,6 +87,7 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                     {marketplaceStore.trendingNftEntities.slice(0, 4).map((nftEntity: NftEntity, index: number) => <NftPreview
                         key={index}
                         nftEntity={nftEntity}
+                        onClick={() => navigate(`${AppRoutes.NFT_VIEW}/${nftEntity.id}`)}
                         collectionEntity={marketplaceStore.getCollectionById(nftEntity.collectionId)}
                     />)}
                 </Slider>

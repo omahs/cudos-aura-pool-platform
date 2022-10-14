@@ -20,7 +20,7 @@ export default function NftPreview({ nftEntity, collectionEntity }: Props) {
     }
 
     return (
-        <div className="NftPreview FlexColumn" onClick={onClickNft}>
+        <div className="NftPreview FlexColumn Clickable" onClick={onClickNft}>
             <div
                 className="NftPreviewImage"
                 style={{

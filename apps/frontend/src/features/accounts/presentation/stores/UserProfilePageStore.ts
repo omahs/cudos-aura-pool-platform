@@ -1,14 +1,10 @@
-import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable, observable } from 'mobx';
 import NftRepo from '../../../nft/presentation/repos/NftRepo';
-import UserRepo from '../repos/UserRepo';
-import UserEntity from '../../entities/UserEntity';
 import S from '../../../../core/utilities/Main';
 import NftEntity from '../../../nft/entities/NftEntity';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
-import AccountSessionStore from './AccountSessionStore';
 import WalletStore from '../../../ledger/presentation/stores/WalletStore';
 
 export enum PROFILE_PAGES {
@@ -25,10 +21,9 @@ export default class UserProfilePageStore {
     walletStore: WalletStore;
 
     nftRepo: NftRepo;
-    userRepo: UserRepo;
     collectionRepo: CollectionRepo;
 
-    @observable gridViewStore: GridViewStore;
+    @observable gridViewState: GridViewState;
     selectedSortIndex: number;
     nftEntities: NftEntity[];
     collectionEntities: CollectionEntity[];
@@ -41,7 +36,7 @@ export default class UserProfilePageStore {
         this.nftRepo = nftRepo;
         this.collectionRepo = collectionRepo;
 
-        this.gridViewStore = new GridViewStore(this.fetchViewingModels, 3, 4, 6)
+        this.gridViewState = new GridViewState(this.fetchViewingModels, 3, 4, 6)
         this.selectedSortIndex = 0;
         this.nftEntities = [];
         this.collectionEntities = [];
@@ -65,19 +60,19 @@ export default class UserProfilePageStore {
     }
 
     fetchViewingModels = async () => {
-        this.gridViewStore.setIsLoading(true);
+        this.gridViewState.setIsLoading(true);
         const { nftEntities, total } = await this.nftRepo.fetchNftsByOwnerAddressSortedPaginated(
             this.walletStore.getAddress(),
             this.getSelectedKey(),
-            this.gridViewStore.getFrom(),
-            this.gridViewStore.getItemsPerPage(),
+            this.gridViewState.getFrom(),
+            this.gridViewState.getItemsPerPage(),
         );
 
         const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
         this.collectionEntities = await this.collectionRepo.fetchCollectionsByIds(collectionIds);
         this.setNftEntities(nftEntities);
-        this.gridViewStore.setTotalItems(total);
-        this.gridViewStore.setIsLoading(false);
+        this.gridViewState.setTotalItems(total);
+        this.gridViewState.setIsLoading(false);
     }
 
     getSelectedKey() {

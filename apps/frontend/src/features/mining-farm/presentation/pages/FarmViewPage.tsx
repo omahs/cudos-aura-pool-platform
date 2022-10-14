@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import '../styles/page-farm-view-component.css';
-import NftPreviewsGrid from '../../../nft/presentation/components/NftPreviewsGrid';
 import ProfileHeader from '../../../collection/presentation/components/ProfileHeader';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import FarmViewPageStore from '../stores/FarmViewPageStore';
@@ -13,6 +12,7 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import CollectionPreviewsGrid from '../../../collection/presentation/components/CollectionPreviewsGrid';
 
 interface Props {
     appStore?: AppStore
@@ -82,7 +82,7 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
                         </div>
                     </div>
                     <div className={'H2'}>Collections Owned</div>
-                    <NftPreviewsGrid/>
+                    <CollectionPreviewsGrid collectionPreviewsGridState={farmViewPageStore.collectionPreviewsGridState}/>
                 </div>
             ) }
 
