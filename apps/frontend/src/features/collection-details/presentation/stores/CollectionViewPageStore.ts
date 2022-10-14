@@ -18,7 +18,7 @@ export default class CollectionViewPageStore {
         makeAutoObservable(this);
     }
 
-    innitiate(collectionId: string, nftPreviewsGridStore: NftPreviewsGridStore) {
+    init(collectionId: string, nftPreviewsGridStore: NftPreviewsGridStore) {
         this.nftPreviewsGridStore = nftPreviewsGridStore;
         this.nftPreviewsGridStore.collectionId = collectionId;
 

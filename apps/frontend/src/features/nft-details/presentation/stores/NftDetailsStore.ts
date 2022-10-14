@@ -36,7 +36,7 @@ export default class NftDetailsStore {
         this.miningFarm = null;
     }
 
-    innitiate(nftId: string) {
+    init(nftId: string) {
         // TODO: gt by real id
         this.nftRepo.getNftProfile(nftId, (nftProfile, collectionProfile, miningFarm) => {
             this.nftProfile = nftProfile;

@@ -28,7 +28,7 @@ function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: P
     const { collectionId } = useParams();
 
     useEffect(() => {
-        collectionViewPageStore.innitiate(collectionId, nftPreviewsGridStore);
+        collectionViewPageStore.init(collectionId, nftPreviewsGridStore);
     }, []);
 
     // TODO: get crumbs from router

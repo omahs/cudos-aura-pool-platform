@@ -42,7 +42,7 @@ export default class UserProfilePageStore {
         makeAutoObservable(this);
     }
 
-    innitiate(userAddress: string, callback: () => void) {
+    init(userAddress: string, callback: () => void) {
         this.selectedSortIndex = 0;
         this.profilePage = PROFILE_PAGES.NFTS;
 

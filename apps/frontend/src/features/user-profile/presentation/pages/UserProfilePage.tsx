@@ -24,7 +24,7 @@ function UserProfilePage({ appStore, userProfilePageStore }: Props) {
 
     useEffect(() => {
         appStore.useLoading(() => {
-            userProfilePageStore.innitiate(userAddress, () => {});
+            userProfilePageStore.init(userAddress, () => {});
         })
     }, [])
 

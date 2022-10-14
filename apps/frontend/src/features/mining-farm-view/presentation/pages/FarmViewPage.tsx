@@ -11,7 +11,7 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import { inject, observer } from 'mobx-react';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
-import LoadingIndicator from 'apps/frontend/src/core/presentation/components/LoadingIndicator';
+import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 
 interface Props {
     appStore?: AppStore
@@ -24,7 +24,7 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
 
     useEffect(() => {
         appStore.useLoading(() => {
-            farmViewPageStore.innitiate(farmId, () => {});
+            farmViewPageStore.init(farmId, () => {});
         });
     }, []);
 
