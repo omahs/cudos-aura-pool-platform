@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SvgCudosLogo from '../../../../public/assets/vectors/cudos-logo.svg';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
-import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
+import CollectionEntity from '../../entities/CollectionEntity';
 import '../styles/collection-preview.css';
 
 interface Props {

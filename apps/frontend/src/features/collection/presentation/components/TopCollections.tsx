@@ -15,7 +15,7 @@ interface Props {
     changeTopCollectionPeriod: (index: number) => void;
 }
 
-export default function TopCollections({selectedTopCollectionPeriod, cudosPriceChangeDisplay, cudosPriceUsd, topCollectionEntities, changeTopCollectionPeriod}: Props) {
+export default function TopCollections({ selectedTopCollectionPeriod, cudosPriceChangeDisplay, cudosPriceUsd, topCollectionEntities, changeTopCollectionPeriod }: Props) {
 
     const navigate = useNavigate();
 

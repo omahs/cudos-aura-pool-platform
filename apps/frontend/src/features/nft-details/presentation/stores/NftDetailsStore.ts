@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx';
 import CudosRepo from '../../../cudos-data/presentation/repos/CudosRepo';
 import NftRepo from '../../../nfts-explore/presentation/repos/NftRepo';
 import NftEntity, { NftListinStatus } from '../../entities/NftEntity';
-import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
+import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
 import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
 

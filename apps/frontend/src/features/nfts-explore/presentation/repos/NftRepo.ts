@@ -1,4 +1,4 @@
-import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
+import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
 import NftEntity from '../../../nft-details/entities/NftEntity';
 

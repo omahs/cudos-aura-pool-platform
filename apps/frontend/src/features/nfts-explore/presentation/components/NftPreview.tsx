@@ -5,7 +5,7 @@ import SvgCudosLogo from '../../../../public/assets/vectors/cudos-logo.svg';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import '../styles/nft-preview.css';
 import NftEntity from '../../../nft-details/entities/NftEntity';
-import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
+import CollectionEntity from '../../../collection/entities/CollectionEntity';
 
 interface Props {
     nftEntity: NftEntity,

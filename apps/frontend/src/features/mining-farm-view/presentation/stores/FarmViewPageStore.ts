@@ -1,7 +1,7 @@
 import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable } from 'mobx';
-import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
-import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
+import CollectionEntity from '../../../collection/entities/CollectionEntity';
+import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../repos/MiningFarmRepo';
 

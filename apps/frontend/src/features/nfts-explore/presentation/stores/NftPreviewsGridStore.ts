@@ -1,10 +1,10 @@
 import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable, observable } from 'mobx';
 import S from '../../../../core/utilities/Main';
-import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
+import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import NftRepo from '../repos/NftRepo';
 import NftEntity from '../../../nft-details/entities/NftEntity';
-import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
+import CollectionEntity from '../../../collection/entities/CollectionEntity';
 
 export default class NftPreviewsGridStore {
 
