@@ -24,7 +24,7 @@ type Props = {
 
 function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: Props) {
 
-    const collectionProfile = collectionViewPageStore.collectionProfile;
+    const collectionEntity = collectionViewPageStore.collectionEntity;
     const { collectionId } = useParams();
 
     useEffect(() => {
@@ -42,41 +42,41 @@ function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: P
             className = { 'PageCollectionView' }>
             <PageHeader />
 
-            { collectionProfile === null && (
+            { collectionEntity === null && (
                 <LoadingIndicator />
             ) }
 
-            { collectionProfile !== null && (
+            { collectionEntity !== null && (
                 <div className={'PageContent AppContent'} >
                     <Breadcrumbs crumbs={crumbs} />
-                    <ProfileHeader coverPictureUrl={collectionProfile.coverImgUrl} profilePictureUrl={collectionProfile.profileImgurl} />
-                    <div className={'Heading2 CollectionHeadingName'}>{collectionProfile.name}</div>
+                    <ProfileHeader coverPictureUrl={collectionEntity.coverImgUrl} profilePictureUrl={collectionEntity.profileImgurl} />
+                    <div className={'Heading2 CollectionHeadingName'}>{collectionEntity.name}</div>
                     <div className={'ProfileInfo Grid'}>
                         <div className={'FlexColumn'}>
-                            <div>Farm Owner <b>{collectionProfile.farmName}</b></div>
-                            <div className={'CollectionDescription'}>{collectionProfile.description}</div>
+                            <div>Farm Owner <b>{collectionEntity.farmName}</b></div>
+                            <div className={'CollectionDescription'}>{collectionEntity.description}</div>
                         </div>
                         {/* // TODO: fill correct values */}
                         <div className={'FlexColumn InfoBox'}>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Floor</div>
-                                <div className={'CollectionInfoValue'}>{collectionProfile.priceDisplay()} CUDOS</div>
+                                <div className={'CollectionInfoValue'}>{collectionEntity.priceDisplay()} CUDOS</div>
                             </div>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Volume</div>
-                                <div className={'CollectionInfoValue'}>{collectionProfile.volume.toFixed(1)} CUDOS</div>
+                                <div className={'CollectionInfoValue'}>{collectionEntity.volume.toFixed(1)} CUDOS</div>
                             </div>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Items</div>
-                                <div className={'CollectionInfoValue'}>{collectionProfile.items}</div>
+                                <div className={'CollectionInfoValue'}>{collectionEntity.items}</div>
                             </div>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Owners</div>
-                                <div className={'CollectionInfoValue'}>{collectionProfile.owners}</div>
+                                <div className={'CollectionInfoValue'}>{collectionEntity.owners}</div>
                             </div>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Total Hashing Power</div>
-                                <div className={'CollectionInfoValue'}>{collectionProfile.hashRateDisplay()}</div>
+                                <div className={'CollectionInfoValue'}>{collectionEntity.hashRateDisplay()}</div>
                             </div>
                             <div className={'HorizontalSeparator'}></div>
                             <div className={'FlexRow CollectionInfoRow'}>
@@ -86,10 +86,10 @@ function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: P
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Address</div>
                                 <div className={'CollectionInfoValue'}>
-                                    {collectionProfile.ownerAddress}
+                                    {collectionEntity.ownerAddress}
                                     <Svg svg={LaunchIcon}
                                         className={'SVG Icon Clickable '}
-                                        onClick={() => ProjectUtils.copyText(collectionProfile.ownerAddress)}
+                                        onClick={() => ProjectUtils.copyText(collectionEntity.ownerAddress)}
                                     />
                                 </div>
                             </div>

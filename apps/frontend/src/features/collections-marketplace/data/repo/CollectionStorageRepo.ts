@@ -1,6 +1,5 @@
 import StorageHelper from '../../../../core/helpers/StorageHelper';
-import CollectionPreviewEntity from '../../entities/CollectionPreviewEntity';
-import CollectionProfileEntity from '../../entities/CollectionProfileEntity';
+import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
 
 export default class CollectionStorageRepo implements CollectionRepo {
@@ -16,43 +15,43 @@ export default class CollectionStorageRepo implements CollectionRepo {
         callback(categories);
     }
 
-    getTopCollections(period: number, callback: (collections: CollectionPreviewEntity[]) => void) {
-        // TODO: get collections
-        const collections = this.storageHelper.collectionsJson.slice(0, 18).map((json) => CollectionPreviewEntity.fromJson(json));
-        callback(collections);
+    getTopCollections(period: number, callback: (collectionEntities: CollectionEntity[]) => void) {
+        // TODO: get collectionEntities
+        const collectionEntities = this.storageHelper.collectionsJson.slice(0, 18).map((json) => CollectionEntity.fromJson(json));
+        callback(collectionEntities);
     }
 
-    getAllCollections(callback: (collections: CollectionPreviewEntity[]) => void) {
-        // TODO: get collections
-        const collections = this.storageHelper.collectionsJson.map((json) => CollectionPreviewEntity.fromJson(json));
-        callback(collections);
+    getAllCollections(callback: (collectionEntitiess: CollectionEntity[]) => void) {
+        // TODO: get collectionEntitiess
+        const collectionEntitiess = this.storageHelper.collectionsJson.map((json) => CollectionEntity.fromJson(json));
+        callback(collectionEntitiess);
     }
 
-    async getCollectionsByIds(idArray: string[]): Promise<CollectionProfileEntity[]> {
-        const collections = this.storageHelper.collectionsJson
+    async getCollectionsByIds(idArray: string[]): Promise<CollectionEntity[]> {
+        const collectionEntitiess = this.storageHelper.collectionsJson
             .filter((json) => idArray.includes(json.id))
-            .map((json) => CollectionProfileEntity.fromJson(json));
+            .map((json) => CollectionEntity.fromJson(json));
 
-        return collections;
+        return collectionEntitiess;
     }
 
-    getCollectionProfile(collectionId: string, callback: (collection: CollectionProfileEntity) => void) {
-        const farms = this.storageHelper.miningFarmsJson;
+    getCollectionEntity(collectionId: string, callback: (collectionEntity: CollectionEntity) => void) {
+        const farmsJson = this.storageHelper.miningFarmsJson;
         const collectionJson = this.storageHelper.collectionsJson.find((json) => json.id === collectionId);
 
-        collectionJson.farmName = farms.find((farmJson) => {
+        collectionJson.farmName = farmsJson.find((farmJson) => {
             return farmJson.id === collectionJson.farmId
         }).name;
-        const collection = CollectionProfileEntity.fromJson(collectionJson);
+        const collectionEntity = CollectionEntity.fromJson(collectionJson);
 
-        callback(collection);
+        callback(collectionEntity);
     }
 
-    getCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number, callback: (collectionPreviews: CollectionPreviewEntity[], total: number) => void) {
+    getCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number, callback: (collectionEntities: CollectionEntity[], total: number) => void) {
         const collectionJsons = this.storageHelper.collectionsJson.filter((json) => json.farmId === farmId);
-        const collections = collectionJsons.map((json) => CollectionPreviewEntity.fromJson(json));
+        const collectionEntities = collectionJsons.map((json) => CollectionEntity.fromJson(json));
 
-        const sortedcollections = collections.sort((a: CollectionPreviewEntity, b: CollectionPreviewEntity) => {
+        const sortedCollectionsEntities = collectionEntities.sort((a: CollectionEntity, b: CollectionEntity) => {
             switch (sortKey.toLowerCase()) {
                 case 'price':
                     return a.price.comparedTo(b.price)
@@ -62,6 +61,6 @@ export default class CollectionStorageRepo implements CollectionRepo {
             }
         });
 
-        callback(sortedcollections.slice(from, from + count), sortedcollections.length);
+        callback(sortedCollectionsEntities.slice(from, from + count), sortedCollectionsEntities.length);
     }
 }

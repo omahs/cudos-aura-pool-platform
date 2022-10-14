@@ -35,6 +35,10 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
     const { nftId } = useParams();
     const navigate = useNavigate();
 
+    const nftEntity = nftDetailsStore.nftEntity;
+    const collectionEntity = nftDetailsStore.collectionEntity;
+    const farm = nftDetailsStore.miningFarm;
+
     useEffect(() => {
         async function run() {
             await nftDetailsStore.init(nftId);
@@ -48,12 +52,8 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
     }
 
     function onClickResellNft() {
-        resellNftModalStore.showSignal(nftEntity, nftDetailsStore.cudosPrice, collection.name);
+        resellNftModalStore.showSignal(nftEntity, nftDetailsStore.cudosPrice, collectionEntity.name);
     }
-
-    const nftEntity = nftDetailsStore.nftEntity;
-    const collection = nftDetailsStore.collectionProfile;
-    const farm = nftDetailsStore.miningFarm;
 
     // TODO: get crumbs from router
     const crumbs = [
@@ -97,7 +97,7 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
                                     </div>
                                     <div className={'DataRow FlexRow'}>
                                         <div className={'DataLabel'}>Collection</div>
-                                        <div className={'DataValue'}>{collection.name}</div>
+                                        <div className={'DataValue'}>{collectionEntity.name}</div>
                                     </div>
                                     <div className={'DataRow FlexRow'}>
                                         <div className={'DataLabel'}>Expiry</div>
@@ -106,11 +106,11 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
                                 </div>
                             </div>
                             <div className={'H2 Bold'}>Description</div>
-                            <div className={'Description B1'}>{collection.description}</div>
+                            <div className={'Description B1'}>{collectionEntity.description}</div>
                             <NftViewHistory />
                         </div>
                         <div className={'RightLayout FlexColumn'}>
-                            <div className={'CollectionName B2 SemiBolBuy now for {nftEntity.price.toFixed(0)} CUDOSd'}>{collection.name}</div>
+                            <div className={'CollectionName B2 SemiBolBuy now for {nftEntity.price.toFixed(0)} CUDOSd'}>{collectionEntity.name}</div>
                             <div className={'H2 Bold NftName'}>{nftEntity.name}</div>
                             <div className={'FlexRow OwnerRow'}>
                                 <div className={'FlexRow OwnerBox'}>
@@ -179,7 +179,7 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
                                 { walletStore.isKeplrConnected()
                                     ? <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
                                         {nftDetailsStore.isNftListed() === true
-                                            ? <Button radius={BUTTON_RADIUS.DEFAULT} onClick={() => buyNftModalStore.showSignal(nftEntity, nftDetailsStore.cudosPrice, nftDetailsStore.collectionProfile.name)}>Buy now for {nftEntity.price.toFixed(0)} CUDOS </Button> : ''}
+                                            ? <Button radius={BUTTON_RADIUS.DEFAULT} onClick={() => buyNftModalStore.showSignal(nftEntity, nftDetailsStore.cudosPrice, nftDetailsStore.collectionEntity.name)}>Buy now for {nftEntity.price.toFixed(0)} CUDOS </Button> : ''}
                                         {nftDetailsStore.isNftListed() === false && nftDetailsStore.isOwner(walletStore.getKeplrAddress())
                                             ? <Button radius={BUTTON_RADIUS.DEFAULT} onClick={onClickResellNft}>Resell NFT</Button> : ''}
                                     </Actions> : ''}

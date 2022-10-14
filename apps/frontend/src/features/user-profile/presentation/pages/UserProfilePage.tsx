@@ -28,43 +28,43 @@ function UserProfilePage({ appStore, userProfilePageStore }: Props) {
         })
     }, [])
 
-    const userProfile = userProfilePageStore.userProfileModel;
+    const userEntity = userProfilePageStore.userEntity;
 
     return (
         <PageLayoutComponent
             className = { 'PageUserProfile' }>
             <PageHeader />
 
-            { userProfile === null && (
+            { userEntity === null && (
                 <LoadingIndicator />
             ) }
 
-            { userProfile !== null && (
+            { userEntity !== null && (
                 <div className={'PageContent'} >
-                    <ProfileHeader coverPictureUrl={userProfile.coverImgUrl} profilePictureUrl={userProfile.profileImgurl} />
+                    <ProfileHeader coverPictureUrl={userEntity.coverImgUrl} profilePictureUrl={userEntity.profileImgurl} />
                     <div className={'ProfileHeaderDataRow FlexRow FlexGrow'}>
                         <div className={'FlexColumn LeftSide'}>
-                            <div className={'H2 Bold'}>{userProfile.name}</div>
+                            <div className={'H2 Bold'}>{userEntity.name}</div>
                             <div className={'FlexRow InfoBelowUserName'}>
-                                <div className={'Addrees'}>{userProfile.address}</div>
+                                <div className={'Addrees'}>{userEntity.address}</div>
                                 {/* TODO: display date correctly */}
-                                <div className={'JoinDate B3'}>{userProfile.timestampJoined}</div>
+                                <div className={'JoinDate B3'}>{userEntity.timestampJoined}</div>
                             </div>
                         </div>
                         <div className={'FlexRow RightSide'}>
                             <div className={'BorderContainer FlexColumn'}>
                                 <div className={'FlexRow BtcEarned'}>
                                     <div className={'FlexRow BtcValueRow'}>
-                                        <div className={'H2 Bold'}>{userProfile.totalBtcEarned.toFixed(3)}</div>
+                                        <div className={'H2 Bold'}>{userEntity.totalBtcEarned.toFixed(3)}</div>
                                         <div className={'B1 SemiBold'}>BTC</div>
                                     </div>
-                                    <div className={'B3 SemiBold Gray'}>${userProfile.totalBtcEarned.multipliedBy(userProfilePageStore.bitcoinPrice).toFixed(3)}</div>
+                                    <div className={'B3 SemiBold Gray'}>${userEntity.totalBtcEarned.multipliedBy(userProfilePageStore.bitcoinPrice).toFixed(3)}</div>
                                 </div>
                                 <div className={'B3 Bold Gray'}>BTC Earned</div>
                             </div>
                             <div className={'BorderContainer FlexColumn'}>
                                 <div className={'FlexRow TotalHash'}>
-                                    <div className={'H2 Bold'}>{userProfile.totalHashPower}</div>
+                                    <div className={'H2 Bold'}>{userEntity.totalHashPower}</div>
                                     <div className={'B1 SemiBold'}> TH/s</div>
                                 </div>
                                 <div className={'B3 Bold Gray'}>TOTAL CONTRACT HASH POWER</div>

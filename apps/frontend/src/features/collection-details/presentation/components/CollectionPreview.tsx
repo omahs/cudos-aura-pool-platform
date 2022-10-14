@@ -3,18 +3,18 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SvgCudosLogo from '../../../../public/assets/vectors/cudos-logo.svg';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
-import CollectionPreviewEntity from '../../../collections-marketplace/entities/CollectionPreviewEntity';
+import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
 import '../styles/collection-preview.css';
 
 interface Props {
-    collectionPreviewModel: CollectionPreviewEntity,
+    collectionEntity: CollectionEntity,
 }
 
-export default function CollectionPreview({ collectionPreviewModel }: Props) {
+export default function CollectionPreview({ collectionEntity }: Props) {
     const navigate = useNavigate();
 
     const onClickNft = () => {
-        navigate(`${AppRoutes.COLLECTION_VIEW}/${collectionPreviewModel.id}`);
+        navigate(`${AppRoutes.COLLECTION_VIEW}/${collectionEntity.id}`);
     }
 
     return (
@@ -22,16 +22,16 @@ export default function CollectionPreview({ collectionPreviewModel }: Props) {
             <div
                 className="CollectionPreviewImage"
                 style={{
-                    backgroundImage: `url("${collectionPreviewModel.profileImgurl}")`,
+                    backgroundImage: `url("${collectionEntity.profileImgurl}")`,
                 }}
             ></div>
-            <div className={'CollectionName B2'}>{collectionPreviewModel.name}</div>
-            <div className={'CollectionName H2 Bold'}>{collectionPreviewModel.name}</div>
-            <div className={'HashPower H4 Medium'}>{collectionPreviewModel.hashPower}</div>
+            <div className={'CollectionName B2'}>{collectionEntity.name}</div>
+            <div className={'CollectionName H2 Bold'}>{collectionEntity.name}</div>
+            <div className={'HashPower H4 Medium'}>{collectionEntity.hashPower}</div>
             <div className={'Priceheading B2 SemiBold'}>Price</div>
             <div className={'PriceRow FlexRow'}>
                 <Svg svg={SvgCudosLogo}/>
-                <div className={'Price H4 Bold'}>{collectionPreviewModel.price.toFixed(0)} CUDOS</div>
+                <div className={'Price H4 Bold'}>{collectionEntity.price.toFixed(0)} CUDOS</div>
             </div>
         </div>
     );

@@ -5,11 +5,11 @@ import SvgCudosLogo from '../../../../public/assets/vectors/cudos-logo.svg';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import '../styles/nft-preview.css';
 import NftEntity from '../../../nft-details/entities/NftEntity';
-import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
+import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
 
 interface Props {
     nftEntity: NftEntity,
-    collectionEntity: CollectionProfileEntity
+    collectionEntity: CollectionEntity
 }
 
 export default function NftPreview({ nftEntity, collectionEntity }: Props) {

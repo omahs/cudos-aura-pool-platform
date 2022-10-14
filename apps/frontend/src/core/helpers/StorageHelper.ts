@@ -14,9 +14,9 @@ const miningFarmsJson = [
     jsonMiningFarm('5', 'Cudos Farm Inc', collectionDescription, collectionOwnerAddress, 100, 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
-const userProfilesJson = [
-    jsonUserProfile('1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonUserProfile('1', 'NFT BOG', 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0', '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
+const usersJson = [
+    jsonUser('1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonUser('1', 'NFT BOG', 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0', '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
 const bitcoinDataJson = jsonBitcoinData(23336, 53.3, 6.25, '29794407589312');
@@ -106,7 +106,7 @@ export default class StorageHelper {
     nftsJson: any[];
     collectionsJson: any[];
     categoriesJson: string[];
-    userProfilesJson: any[];
+    usersJson: any[];
 
     constructor() {
         this.version = VERSION;
@@ -115,7 +115,7 @@ export default class StorageHelper {
         this.nftsJson = nftsJson;
         this.collectionsJson = collectionsJson;
         this.categoriesJson = categoriesJson;
-        this.userProfilesJson = userProfilesJson;
+        this.usersJson = usersJson;
     }
 
     static getSingletonInstance() {
@@ -164,7 +164,7 @@ function jsonMiningFarm(id, name, description, ownerAddress, powerCost, poolFee,
     };
 }
 
-function jsonUserProfile(id, name, address, totalBtcEarned, totalHashPower, timestampJoined, profileImgurl, coverImgUrl) {
+function jsonUser(id, name, address, totalBtcEarned, totalHashPower, timestampJoined, profileImgurl, coverImgUrl) {
     return {
         id,
         name,

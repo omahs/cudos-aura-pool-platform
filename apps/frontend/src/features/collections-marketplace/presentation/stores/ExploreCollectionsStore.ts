@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import CollectionPreviewEntity from '../../entities/CollectionPreviewEntity';
+import CollectionEntity from '../../entities/CollectionEntity';
 import S from '../../../../core/utilities/Main';
 import CollectionRepo from '../repos/CollectionRepo';
 
@@ -17,7 +17,7 @@ export default class ExploreCollectionsStore {
     searchString: string;
     selectedTopCollectionPeriod: number;
 
-    topCollectionPreviews: CollectionPreviewEntity[];
+    topCollectionEntities: CollectionEntity[];
     cudosPrice: number;
     cudosPriceChange: number;
     categories: string[];
@@ -25,7 +25,7 @@ export default class ExploreCollectionsStore {
     constructor(collectionRepo: CollectionRepo) {
         this.collectionRepo = collectionRepo;
 
-        this.topCollectionPreviews = [];
+        this.topCollectionEntities = [];
         this.categories = [];
         this.cudosPrice = S.NOT_EXISTS;
         this.cudosPriceChange = S.NOT_EXISTS;
@@ -55,8 +55,8 @@ export default class ExploreCollectionsStore {
     }
 
     getTopCollections() {
-        this.collectionRepo.getTopCollections(this.selectedTopCollectionPeriod, (collections: CollectionPreviewEntity[]) => {
-            this.topCollectionPreviews = collections;
+        this.collectionRepo.getTopCollections(this.selectedTopCollectionPeriod, (collectionEntities: CollectionEntity[]) => {
+            this.topCollectionEntities = collectionEntities;
         })
     }
 

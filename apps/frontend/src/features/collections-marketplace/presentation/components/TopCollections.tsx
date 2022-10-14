@@ -1,5 +1,5 @@
 import React from 'react'
-import CollectionPreviewEntity from '../../entities/CollectionPreviewEntity';
+import CollectionEntity from '../../entities/CollectionEntity';
 import ExploreCollectionsStore from '../stores/ExploreCollectionsStore';
 import S from '../../../../core/utilities/Main';
 
@@ -11,11 +11,11 @@ interface Props {
     selectedTopCollectionPeriod: number;
     cudosPriceChangeDisplay: string;
     cudosPriceUsd: number;
-    topCollectionPreviews: CollectionPreviewEntity[];
+    topCollectionEntities: CollectionEntity[];
     changeTopCollectionPeriod: (index: number) => void;
 }
 
-export default function TopCollections(props: Props) {
+export default function TopCollections({selectedTopCollectionPeriod, cudosPriceChangeDisplay, cudosPriceUsd, topCollectionEntities, changeTopCollectionPeriod}: Props) {
 
     const navigate = useNavigate();
 
@@ -27,8 +27,8 @@ export default function TopCollections(props: Props) {
                     <div className={'PeriodButtonsRow FlexRow'}>
                         {ExploreCollectionsStore.TOP_COLLECTION_PERIODS.map((period, index) => <div
                             key={index}
-                            className={`PeriodButton Clickable B3 Semibold ${S.CSS.getActiveClassName(props.selectedTopCollectionPeriod === index)}`}
-                            onClick={() => props.changeTopCollectionPeriod(index)}
+                            className={`PeriodButton Clickable B3 Semibold ${S.CSS.getActiveClassName(selectedTopCollectionPeriod === index)}`}
+                            onClick={() => changeTopCollectionPeriod(index)}
                         >
                             {period}
                         </div>)}
@@ -37,28 +37,28 @@ export default function TopCollections(props: Props) {
                 <div className={'PlaceHolder'}></div>
             </div>
             <div className={'CollectionsGrid Grid GridColumns3'}>
-                {props.topCollectionPreviews.map((collection, index) => {
+                {topCollectionEntities.map((collectionEntity, index) => {
                     return <div
                         key={index}
                         className={'CollectionPreview Clickable'}
-                        onClick={() => navigate(`${AppRoutes.COLLECTION_VIEW}/${collection.id}`)}
+                        onClick={() => navigate(`${AppRoutes.COLLECTION_VIEW}/${collectionEntity.id}`)}
                     >
                         <div className={'PreviewIndex B2 Bold'}>{index + 1}</div>
                         <div
                             className={'PreviewImage'}
                             style={{
-                                backgroundImage: `url("${collection.profileImgurl}")`,
+                                backgroundImage: `url("${collectionEntity.profileImgurl}")`,
                             }}
                         />
                         <div className={'FlexColumn CollectionPreviewDataColumn'}>
-                            <div className={'CollectionName H3 Bold'}>{collection.name}</div>
-                            <div className={'HashRate B3'}>Hashrate: {collection.hashRateDisplay()}</div>
+                            <div className={'CollectionName H3 Bold'}>{collectionEntity.name}</div>
+                            <div className={'HashRate B3'}>Hashrate: {collectionEntity.hashRateDisplay()}</div>
                         </div>
                         <div className={'FlexColumn CollectionPreviewDataColumn'}>
-                            <div className={'CollectionPriceCudos B2 Bold'}>{collection.priceDisplay()}</div>
+                            <div className={'CollectionPriceCudos B2 Bold'}>{collectionEntity.priceDisplay()}</div>
                             <div className={'FlexRow CollectionPriceUsd'}>
-                                <div className={'CurrentPrice B3 SemiBold'}>{collection.priceUsdDisplay(props.cudosPriceUsd)}</div>
-                                <div className={'CurrentPriceChange B3 SemiBold'}>{props.cudosPriceChangeDisplay}</div>
+                                <div className={'CurrentPrice B3 SemiBold'}>{collectionEntity.priceUsdDisplay(cudosPriceUsd)}</div>
+                                <div className={'CurrentPriceChange B3 SemiBold'}>{cudosPriceChangeDisplay}</div>
                             </div>
                         </div>
                     </div>

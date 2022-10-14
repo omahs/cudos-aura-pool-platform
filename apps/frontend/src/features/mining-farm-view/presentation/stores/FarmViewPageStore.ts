@@ -1,6 +1,6 @@
 import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable } from 'mobx';
-import CollectionPreviewEntity from '../../../collections-marketplace/entities/CollectionPreviewEntity';
+import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../repos/MiningFarmRepo';
@@ -15,7 +15,7 @@ export default class FarmViewPageStore {
     gridViewStore: GridViewStore;
     farmProfile: MiningFarmEntity;
     selectedSortIndex: number;
-    collectionPreviews: CollectionPreviewEntity[];
+    collectionEntities: CollectionEntity[];
 
     constructor(farmRepo: MiningFarmRepo, collectionRepo: CollectionRepo) {
         this.farmRepo = farmRepo;
@@ -23,7 +23,7 @@ export default class FarmViewPageStore {
 
         this.farmProfile = null;
         this.gridViewStore = new GridViewStore(this.fetchViewingModels, 3, 4, 6)
-        this.collectionPreviews = [];
+        this.collectionEntities = [];
 
         makeAutoObservable(this);
     }
@@ -46,8 +46,8 @@ export default class FarmViewPageStore {
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
-            (collectionPreviews: CollectionPreviewEntity[], total) => {
-                this.setCollectionPreviews(collectionPreviews);
+            (collectionEntities: CollectionEntity[], total) => {
+                this.setCollectionEntities(collectionEntities);
                 this.gridViewStore.setTotalItems(total);
                 this.gridViewStore.setIsLoading(false);
             },
@@ -64,8 +64,8 @@ export default class FarmViewPageStore {
         this.fetchViewingModels();
     }
 
-    setCollectionPreviews(collectionPreviews: CollectionPreviewEntity[]) {
-        this.collectionPreviews = collectionPreviews;
+    setCollectionEntities(collectionEntities: CollectionEntity[]) {
+        this.collectionEntities = collectionEntities;
     }
 
 }

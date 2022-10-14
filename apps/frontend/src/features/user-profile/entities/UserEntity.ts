@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import S from '../../../core/utilities/Main';
 
-export default class UserProfileEntity {
+export default class UserEntity {
     id: string;
     name: string;
     address: string;
@@ -35,12 +35,12 @@ export default class UserProfileEntity {
         }
     }
 
-    static fromJson(json): UserProfileEntity {
+    static fromJson(json): UserEntity {
         if (json === null) {
             return null;
         }
 
-        const entity = new UserProfileEntity();
+        const entity = new UserEntity();
 
         entity.id = json.id ?? entity.id;
         entity.name = json.name ?? entity.name;

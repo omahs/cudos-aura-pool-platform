@@ -1,18 +1,18 @@
 import { makeAutoObservable } from 'mobx';
-import CollectionProfileEntity from '../../../collections-marketplace/entities/CollectionProfileEntity';
+import CollectionEntity from '../../../collections-marketplace/entities/CollectionEntity';
 import CollectionRepo from '../../../collections-marketplace/presentation/repos/CollectionRepo';
 import NftPreviewsGridStore from '../../../nfts-explore/presentation/stores/NftPreviewsGridStore';
 
 export default class CollectionViewPageStore {
     collectionRepo: CollectionRepo;
 
-    collectionProfile: CollectionProfileEntity;
+    collectionEntity: CollectionEntity;
     nftPreviewsGridStore: NftPreviewsGridStore;
 
     constructor(collectionRepo: CollectionRepo) {
         this.collectionRepo = collectionRepo;
 
-        this.collectionProfile = null;
+        this.collectionEntity = null;
         this.nftPreviewsGridStore = null;
 
         makeAutoObservable(this);
@@ -22,8 +22,8 @@ export default class CollectionViewPageStore {
         this.nftPreviewsGridStore = nftPreviewsGridStore;
         this.nftPreviewsGridStore.collectionId = collectionId;
 
-        this.collectionRepo.getCollectionProfile(collectionId, (collectionProfile) => {
-            this.collectionProfile = collectionProfile;
+        this.collectionRepo.getCollectionEntity(collectionId, (collectionEntity) => {
+            this.collectionEntity = collectionEntity;
             this.nftPreviewsGridStore.fetchViewingModels();
         });
     }
