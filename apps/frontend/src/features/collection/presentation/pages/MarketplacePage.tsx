@@ -18,6 +18,9 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 
 import Svg from '../../../../core/presentation/components/Svg';
 import '../styles/page-explore-collections-component.css';
+import Slider from 'apps/frontend/src/core/presentation/components/Slider';
+import NftEntity from '../../../nft/entities/NftEntity';
+import NftPreviewInPicture from '../components/NftPreviewInPicture';
 
 type Props = {
     marketplaceStore?: MarketplaceStore
@@ -69,6 +72,13 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                         }) }
                     </div>
                 </div>
+                <Slider>
+                    {marketplaceStore.newNftDropsEntities.map((nftEntity: NftEntity, index: number) => <NftPreviewInPicture
+                        key={index}
+                        nftEntity={nftEntity}
+                        collectionEntity={marketplaceStore.getCollectionById(nftEntity.collectionId)}
+                    />)}
+                </Slider>
                 <Actions
                     layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
                     height={ACTIONS_HEIGHT.HEIGHT_48} >

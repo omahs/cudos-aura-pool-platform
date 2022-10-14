@@ -4,7 +4,7 @@ export default interface CollectionRepo {
 
     getCategories(callback: (categories: string[]) => void);
 
-    getTopCollections(period: number, callback: (collectionEntities: CollectionEntity[]) => void);
+    fetchTopCollections(period: number): Promise < CollectionEntity[] >;
 
     getAllCollections(callback: (collectionEntities: CollectionEntity[]) => void);
 
