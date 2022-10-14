@@ -19,6 +19,8 @@ WORKDIR ${WORKING_DIR}
 
 COPY --from=builder "/usr/src/cudos-aura-platform/dist" ./
 
+COPY --from=builder "/usr/src/cudos-aura-platform/apps/backend/database/" ./database
+
 COPY --from=builder "/usr/src/cudos-aura-platform/package.json" ./
 
 COPY --from=builder "/usr/src/cudos-aura-platform/config/.env" ./config/.env
@@ -30,4 +32,4 @@ USER node
 
 RUN npm i --omit=dev
 
-CMD ["/bin/bash", "-c", "npx ./apps/backend/sequelize db:migrate && node ./apps/backend/main.js"] 
+CMD ["/bin/bash", "-c", "npx sequelize db:migrate --config=./database/config/config.json && node ./apps/backend/main.js"] 
