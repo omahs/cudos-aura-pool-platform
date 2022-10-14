@@ -36,11 +36,13 @@
     color: #fff;
 }
 
-.PageMarketplace .ExploreCollections .NewNftDrops {
+.PageMarketplace .NewNftDrops {
+    margin-top: 20px;
     margin-bottom: 180px;
 }
 
 
-.PageMarketplace .ExploreCollections .TrendingNfts {
+.PageMarketplace .TrendingNfts {
+    margin-top: 20px;
     margin-bottom: 80px;
 }
