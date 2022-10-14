@@ -57,7 +57,7 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
 
     // TODO: get crumbs from router
     const crumbs = [
-        { name: 'Marketplace', onClick: () => {} },
+        { name: 'Marketplace', onClick: () => { navigate(AppRoutes.MARKETPLACE) } },
         { name: 'NFT Name Details', onClick: () => {} },
     ]
 
