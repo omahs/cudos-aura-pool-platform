@@ -9,12 +9,6 @@ WORKDIR ${WORKING_DIR}
 
 RUN npm i
 
-WORKDIR ${WORKING_DIR}/apps/backend
-
-RUN npx sequelize db:migrate
-
-WORKDIR ${WORKING_DIR}
-
 RUN npm run build:prod
 
 FROM node:16-buster
@@ -36,4 +30,4 @@ USER node
 
 RUN npm i --omit=dev
 
-CMD ["/bin/bash", "-c", "node ./apps/backend/main.js"] 
+CMD ["/bin/bash", "-c", "npx ./apps/backend/sequelize db:migrate && node ./apps/backend/main.js"] 
