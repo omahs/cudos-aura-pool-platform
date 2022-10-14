@@ -1,18 +1,18 @@
 import S from '../../../../core/utilities/Main';
 import { makeAutoObservable } from 'mobx';
-import CudosRepo from '../../../cudos-data/presentation/repos/CudosRepo';
 import NftRepo from '../../../nft/presentation/repos/NftRepo';
 import NftEntity, { NftListinStatus } from '../../entities/NftEntity';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
+import CudosStore from '../../../cudos-data/presentation/stores/CudosStore';
 
 export default class NftDetailsStore {
 
     bitcoinStore: BitcoinStore;
+    cudosStore: CudosStore;
 
     nftRepo: NftRepo;
-    cudosRepo: CudosRepo;
 
     cudosPrice: number;
     bitcoinPrice: number;
@@ -20,11 +20,11 @@ export default class NftDetailsStore {
     collectionEntity: CollectionEntity;
     miningFarm: MiningFarmEntity;
 
-    constructor(bitcoinStore: BitcoinStore, nftRepo: NftRepo, cudosRepo: CudosRepo) {
+    constructor(bitcoinStore: BitcoinStore, cudosStore: CudosStore, nftRepo: NftRepo) {
         this.bitcoinStore = bitcoinStore;
+        this.cudosStore = cudosStore;
 
         this.nftRepo = nftRepo;
-        this.cudosRepo = cudosRepo;
 
         this.resetDefaults();
 
@@ -41,6 +41,7 @@ export default class NftDetailsStore {
 
     async init(nftId: string) {
         await this.bitcoinStore.init();
+        await this.cudosStore.init();
 
         // TODO: gt by real id
         this.nftRepo.getNftEntity(nftId, (nftEntity, collectionEntity, miningFarm) => {
@@ -49,10 +50,7 @@ export default class NftDetailsStore {
             this.miningFarm = miningFarm;
         });
 
-        this.cudosRepo.getCudosPrice((cudosPrice) => {
-            this.cudosPrice = cudosPrice;
-        })
-
+        this.cudosPrice = this.cudosStore.getCudosPrice();
         this.bitcoinPrice = this.bitcoinStore.getBitcoinPrice();
     }
 

@@ -1,14 +1,17 @@
 import StorageHelper from '../../../../core/helpers/StorageHelper';
+import CudosDataEntity from '../../entities/CudosDataEntity';
 import CudosRepo from '../../presentation/repos/CudosRepo';
 
 export default class CudosStorageRepo implements CudosRepo {
+
     storageHelper: StorageHelper;
 
-    constructor() {
-        this.storageHelper = new StorageHelper();
+    constructor(storageHelper: StorageHelper) {
+        this.storageHelper = storageHelper;
     }
 
-    getCudosPrice(callback: (price: number) => void) {
-        callback(0.07);
+    async fetchCudosData(): Promise < CudosDataEntity > {
+        return CudosDataEntity.fromJson(this.storageHelper.cudosDataJson);
     }
+
 }

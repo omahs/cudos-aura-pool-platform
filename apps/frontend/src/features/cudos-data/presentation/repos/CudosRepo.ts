@@ -1,3 +1,8 @@
+import CudosDataEntity from '../../entities/CudosDataEntity';
+
 export default interface CudosRepo {
-    getCudosPrice(callback: (price: number) => void);
+
+    fetchCudosData(): Promise < CudosDataEntity >;
+    // getCudosPrice(callback: (price: number) => void);
+
 }
