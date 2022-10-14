@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import S from '../../../core/utilities/Main';
 
-export default class NftPreviewModel {
+export default class NftPreviewEntity {
     id: string;
     name: string;
     category: string;
@@ -31,12 +31,12 @@ export default class NftPreviewModel {
         }
     }
 
-    static fromJson(json): NftPreviewModel {
+    static fromJson(json): NftPreviewEntity {
         if (json === null) {
             return null;
         }
 
-        const model = new NftPreviewModel();
+        const model = new NftPreviewEntity();
 
         model.id = json.id ?? model.id;
         model.name = json.name ?? model.name;

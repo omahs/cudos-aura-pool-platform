@@ -1,6 +1,6 @@
 import S from '../../../core/utilities/Main';
 
-export default class MiningFarmModel {
+export default class MiningFarmEntity {
     id: string;
     name: string;
     description: string;
@@ -34,12 +34,12 @@ export default class MiningFarmModel {
         }
     }
 
-    static fromJson(json): MiningFarmModel {
+    static fromJson(json): MiningFarmEntity {
         if (json === null) {
             return null;
         }
 
-        const model = new MiningFarmModel();
+        const model = new MiningFarmEntity();
 
         model.id = json.id ?? model.id;
         model.name = json.name ?? model.name;

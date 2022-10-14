@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import S from '../../../core/utilities/Main';
 
-export default class CollectionPreview {
+export default class CollectionPreviewEntity {
     id: string;
     name: string;
     hashPower: number;
@@ -26,12 +26,12 @@ export default class CollectionPreview {
         }
     }
 
-    static fromJson(json): CollectionPreview {
+    static fromJson(json): CollectionPreviewEntity {
         if (json === null) {
             return null;
         }
 
-        const model = new CollectionPreview();
+        const model = new CollectionPreviewEntity();
 
         model.id = json.id ?? model.id;
         model.name = json.name ?? model.name;

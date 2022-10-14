@@ -3,11 +3,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SvgCudosLogo from '../../../../public/assets/vectors/cudos-logo.svg';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
-import NftPreviewModel from '../../entities/NftPreviewModel';
+import NftPreviewEntity from '../../entities/NftPreviewEntity';
 import '../styles/nft-preview.css';
 
 interface Props {
-    nftPreviewModel: NftPreviewModel,
+    nftPreviewModel: NftPreviewEntity,
 }
 
 export default function NftPreview({ nftPreviewModel }: Props) {

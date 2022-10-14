@@ -5,7 +5,7 @@ import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presen
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import NftPreview from './NftPreview';
 import Select from '../../../../core/presentation/components/Select';
-import NftPreviewModel from '../../entities/NftPreviewModel'
+import NftPreviewEntity from '../../entities/NftPreviewEntity'
 import NftPreviewsGridStore from '../stores/NftPreviewsGridStore';
 import '../styles/nft-preview-grid.css';
 
@@ -15,7 +15,7 @@ interface Props {
     nftPreviewsGridStore?: NftPreviewsGridStore;
 }
 
-function NftPreviewsGrid({nftPreviewsGridStore}: Props) {
+function NftPreviewsGrid({ nftPreviewsGridStore }: Props) {
     useEffect(() => {
         nftPreviewsGridStore.innitialLoad();
     }, [])
@@ -47,16 +47,16 @@ function NftPreviewsGrid({nftPreviewsGridStore}: Props) {
                     </Button>
                 </Actions>
             </div>
-            <GridView 
+            <GridView
                 gridViewStore={nftPreviewsGridStore.gridViewStore}
                 defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}
             >
-                    {store.nftPreviews.map(
-                        (nftPreviewModel: NftPreviewModel, index: number) => <NftPreview
-                            key={index}
-                            nftPreviewModel={nftPreviewModel}
-                        />,
-                    )}
+                {store.nftPreviews.map(
+                    (nftPreviewModel: NftPreviewEntity, index: number) => <NftPreview
+                        key={index}
+                        nftPreviewModel={nftPreviewModel}
+                    />,
+                )}
             </GridView>
         </div>
     )

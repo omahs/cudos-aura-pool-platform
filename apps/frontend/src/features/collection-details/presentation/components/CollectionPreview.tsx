@@ -3,11 +3,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SvgCudosLogo from '../../../../public/assets/vectors/cudos-logo.svg';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
-import CollectionPreviewModel from '../../../collections-marketplace/entities/CollectionPreview';
+import CollectionPreviewEntity from '../../../collections-marketplace/entities/CollectionPreviewEntity';
 import '../styles/collection-preview.css';
 
 interface Props {
-    collectionPreviewModel: CollectionPreviewModel,
+    collectionPreviewModel: CollectionPreviewEntity,
 }
 
 export default function CollectionPreview({ collectionPreviewModel }: Props) {

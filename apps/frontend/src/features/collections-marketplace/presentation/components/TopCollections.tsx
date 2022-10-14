@@ -1,5 +1,5 @@
 import React from 'react'
-import CollectionPreview from '../../entities/CollectionPreview';
+import CollectionPreviewEntity from '../../entities/CollectionPreviewEntity';
 import ExploreCollectionsStore from '../stores/ExploreCollectionsStore';
 import S from '../../../../core/utilities/Main';
 
@@ -11,7 +11,7 @@ interface Props {
     selectedTopCollectionPeriod: number;
     cudosPriceChangeDisplay: string;
     cudosPriceUsd: number;
-    topCollectionPreviews: CollectionPreview[];
+    topCollectionPreviews: CollectionPreviewEntity[];
     changeTopCollectionPeriod: (index: number) => void;
 }
 

@@ -1,19 +1,19 @@
 import { makeAutoObservable } from 'mobx';
 
-import MiningFarmModel from '../../../mining-farm-view/entities/MiningFarmModel';
+import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
 
 import S from '../../../../core/utilities/Main';
 import BigNumber from 'bignumber.js';
 import BitcoinRepo from '../../../bitcoin-data/presentation/repos/BitcoinRepo';
-import BitcoinDataModel from '../../../bitcoin-data/entities/BitcoinData';
+import BitcoinDataEntity from '../../../bitcoin-data/entities/BitcoinDataEntity';
 import MiningFarmRepo from '../../../mining-farm-view/presentation/repos/MiningFarmRepo';
 
 export default class RewardsCalculatorStore {
 
-    miningFarms: MiningFarmModel[];
+    miningFarms: MiningFarmEntity[];
     selectedFarmIndex: number;
 
-    bitcoinDataModel: BitcoinDataModel;
+    bitcoinDataModel: BitcoinDataEntity;
 
     networkDifficultyEdit: string;
     hashRateTh: number;
@@ -50,13 +50,13 @@ export default class RewardsCalculatorStore {
     }
 
     getFarmPools() {
-        this.miningFarmRepo.getAllFarmgs((miningFarms: MiningFarmModel[]) => {
+        this.miningFarmRepo.getAllFarmgs((miningFarms: MiningFarmEntity[]) => {
             this.miningFarms = miningFarms;
         });
     }
 
     getBitcoinData() {
-        this.bitcoinRepo.getBitcoinData((bitcoinDataModel: BitcoinDataModel) => {
+        this.bitcoinRepo.getBitcoinData((bitcoinDataModel: BitcoinDataEntity) => {
             this.bitcoinDataModel = bitcoinDataModel;
         });
     }

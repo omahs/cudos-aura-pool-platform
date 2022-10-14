@@ -6,7 +6,7 @@ export enum NftListinStatus {
     LISTED
 }
 
-export default class NftProfile {
+export default class NftProfileEntity {
     id: string;
     name: string;
     category: string;
@@ -48,12 +48,12 @@ export default class NftProfile {
         }
     }
 
-    static fromJson(json): NftProfile {
+    static fromJson(json): NftProfileEntity {
         if (json === null) {
             return null;
         }
 
-        const model = new NftProfile();
+        const model = new NftProfileEntity();
 
         model.id = json.id ?? model.id;
         model.name = json.name ?? model.name;

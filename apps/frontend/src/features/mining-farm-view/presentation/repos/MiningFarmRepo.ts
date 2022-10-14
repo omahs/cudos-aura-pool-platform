@@ -1,7 +1,7 @@
-import MiningFarmModel from '../../entities/MiningFarmModel';
+import MiningFarmEntity from '../../entities/MiningFarmEntity';
 
 export default interface MiningFarmRepo {
-    getAllFarmgs(callback: (farms: MiningFarmModel[]) => void);
+    getAllFarmgs(callback: (farms: MiningFarmEntity[]) => void);
 
-    getFarmById(farmId: string, callback: (farm: MiningFarmModel) => void);
+    getFarmById(farmId: string, callback: (farm: MiningFarmEntity) => void);
 }
