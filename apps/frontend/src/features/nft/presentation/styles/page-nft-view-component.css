@@ -1,6 +1,10 @@
 
 .PageNftView .PageContent {
-    padding: 70px var(--page-spacing-h);
+    padding: 24px var(--page-spacing-h);
+}
+
+.PageNftView .PageContent .NftInfoCnt {
+    margin-top: 40px;
 }
 
 .PageNftView .PageContent .LeftLayout {
@@ -30,7 +34,7 @@
 
 .PageNftView .PageContent .LeftLayout .PaddingColumn .DataUnderPicture .DataRow .DataValue {
     text-align: right;
-    font-weight: 600; font-size: 16px; line-height: 22px;
+    font-weight: 600; font-size: 16px;
 }
 
 .PageNftView .PageContent .RightLayout {
@@ -65,11 +69,11 @@
 }
 
 .PageNftView .PageContent .RightLayout .OwnerRow .OwnerBox .OwnerPicture .OwnerInfo .AddressName {
-    font-weight: 600; font-size: 16px; line-height: 22px;
+    font-weight: 600; font-size: 16px;
 }
 
 .PageNftView .PageContent .RightLayout .OwnerRow .OwnerBox .OwnerPicture .OwnerInfo .Address {
-    font-weight: 700; font-size: 16px; line-height: 24px;
+    font-weight: 700; font-size: 16px;
 }
 
 
@@ -83,5 +87,5 @@
 
 .PageNftView .PageContent .RightLayout .BorderContainer .DataRow .DataValue{
     gap: 15px;
-    font-weight: 600; font-size: 16px; line-height: 22px;
+    font-weight: 600; font-size: 16px;
 }

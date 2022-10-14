@@ -58,7 +58,7 @@
 .RewardsCalculator .LayoutContainer .DataContainer .BtcPriceContainer .PriceChange {
     padding: 4px 10px;
     gap: 10px;
-    font-weight: 600; font-size: 14px; line-height: 21px;
+    font-weight: 600; font-size: 14px;
     border: 1px solid #000000;
     border-radius: 6px;
 }

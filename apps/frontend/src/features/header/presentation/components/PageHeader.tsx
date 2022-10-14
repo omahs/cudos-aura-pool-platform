@@ -22,8 +22,7 @@ function PageHeader({ walletStore }: Props) {
     const location = useLocation();
 
     function isLocationMarketplace(): boolean {
-        return location.pathname !== AppRoutes.REWARDS_CALCULATOR
-        && location.pathname !== AppRoutes.USER_PROFILE
+        return location.pathname !== AppRoutes.REWARDS_CALCULATOR && location.pathname !== AppRoutes.USER_PROFILE
     }
 
     function onClickAddress() {
@@ -32,12 +31,15 @@ function PageHeader({ walletStore }: Props) {
 
     function onClickAddressMenu(event) {
         event.stopPropagation();
-        // TODO
+    }
+
+    function onClickLogo() {
+        navigate(AppRoutes.MARKETPLACE);
     }
 
     return (
         <footer className={'PageHeader FlexRow FlexSplit'}>
-            <Svg className={'SVG IconLogoWithText'} svg={ SvgAuraPoolLogo } />
+            <Svg className={'SVG IconLogoWithText Clickable'} svg={ SvgAuraPoolLogo } onClick = { onClickLogo } />
             <div className={'StartRightBlock FlexRow'}>
                 <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(isLocationMarketplace())}`} onClick={() => navigate(AppRoutes.MARKETPLACE)}>Marketplace</div>
                 <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(location.pathname === AppRoutes.REWARDS_CALCULATOR)}`} onClick={() => navigate(AppRoutes.REWARDS_CALCULATOR)}>Rewards Calculator</div>

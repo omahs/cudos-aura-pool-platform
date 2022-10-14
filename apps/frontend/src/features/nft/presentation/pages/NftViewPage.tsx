@@ -79,7 +79,7 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
             { nftEntity !== null && (
                 <div className={'PageContent AppContent'} >
                     <Breadcrumbs crumbs={crumbs}/>
-                    <div className={'Grid GridColumns2'}>
+                    <div className={'NftInfoCnt Grid GridColumns2'}>
                         <div className={'LeftLayout FlexColumn'}>
                             <div className={'PaddingColumn FlexColumn'}>
                                 <div className={'Picture'}

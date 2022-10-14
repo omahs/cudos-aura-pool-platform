@@ -1,6 +1,6 @@
 
 .PageCollectionView .PageContent {
-    padding: 70px var(--page-spacing-h);
+    padding: 24px var(--page-spacing-h);
 }
 
 .PageCollectionView .PageContent .ProfileInfo {

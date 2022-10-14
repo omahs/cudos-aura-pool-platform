@@ -1,6 +1,6 @@
 
 .PageExploreNfts .PageContent {
-    padding: 70px  var(--page-spacing-h);
+    padding: 48px  var(--page-spacing-h);
 }
 
 .PageExploreNfts .PageContent .ExploreNfts {
@@ -24,7 +24,7 @@
     padding: 2px 5px;
     border-radius: 3px;
     background-color: var(--color-gray-095);
-    font-family: 'Poppins'; font-weight: 600; font-size: 14px; line-height: 21px;
+    font-weight: 600; font-size: 14px;
 }
 
 .PageExploreNfts .PageContent .ExploreNfts .CategoriesRow .CategoryName.Active {

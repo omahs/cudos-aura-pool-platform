@@ -17,7 +17,7 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 
 import Svg from '../../../../core/presentation/components/Svg';
-import '../styles/page-marketplace-component.css';
+import '../styles/marketplace-page.css';
 import Slider from '../../../../core/presentation/components/Slider';
 import NftEntity from '../../../nft/entities/NftEntity';
 import NftPreviewInPicture from '../components/NftPreviewInPicture';
