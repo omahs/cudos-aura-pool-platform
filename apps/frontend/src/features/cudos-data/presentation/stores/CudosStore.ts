@@ -28,4 +28,8 @@ export default class CudosStore {
         return this.cudostDataEntity?.price ?? 0;
     }
 
+    getBitcoinPriceChange(): number {
+        return this.cudostDataEntity?.priceChange ?? 0;
+    }
+
 }
