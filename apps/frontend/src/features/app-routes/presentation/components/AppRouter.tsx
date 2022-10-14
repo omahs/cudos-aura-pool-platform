@@ -12,7 +12,7 @@ import ExploreCollectionsPage from '../../../collection/presentation/pages/Explo
 import ExploreNftsPage from '../../../nft/presentation/pages/ExploreNftsPage';
 import NftViewPage from '../../../nft/presentation/pages/NftViewPage';
 import CollectionViewPage from '../../../collection/presentation/pages/CollectionViewPage';
-import FarmViewPage from '../../../mining-farm-view/presentation/pages/FarmViewPage';
+import FarmViewPage from '../../../mining-farm/presentation/pages/FarmViewPage';
 import UserProfilePage from '../../../user-profile/presentation/pages/UserProfilePage';
 
 export default function AppRouter() {

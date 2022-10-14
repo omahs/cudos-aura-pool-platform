@@ -21,7 +21,7 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 
 import S from '../../../../core/utilities/Main';
 import '../styles/page-rewards-calculator-component.css';
-import MiningFarmEntity from '../../../mining-farm-view/entities/MiningFarmEntity';
+import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import Autocomplete from '../../../../core/presentation/components/Autcomplete';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import AutocompleteOption from '../../../../core/entities/AutocompleteOption';
