@@ -1,4 +1,5 @@
 import StorageHelper from '../../../../core/helpers/StorageHelper';
+import NftEntity from '../../../nft/entities/NftEntity';
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
 
@@ -17,7 +18,9 @@ export default class CollectionStorageRepo implements CollectionRepo {
 
     async fetchTopCollections(period: number): Promise < CollectionEntity[] > {
         // TODO: get collectionEntities
-        return this.storageHelper.collectionsJson.slice(0, 18).map((json) => CollectionEntity.fromJson(json));
+        const collectionEntities = this.storageHelper.collectionsJson.slice(0, 18).map((json) => CollectionEntity.fromJson(json));
+
+        return collectionEntities;
     }
 
     async fetchAllCollections(): Promise < CollectionEntity[] > {

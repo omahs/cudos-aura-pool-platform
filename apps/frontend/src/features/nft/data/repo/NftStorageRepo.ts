@@ -88,4 +88,18 @@ export default class NftStorageRepo implements NftRepo {
             miningFarmEntity: MiningFarmEntity.fromJson(farmJson),
         };
     }
+
+    async fetchNewNftDrops(): Promise < NftEntity[] > {
+        // TODO: sort them by listing date or something?
+        const nftEntities = this.storageHelper.nftsJson.slice(0, 10).map((json) => NftEntity.fromJson(json));
+
+        return nftEntities;
+    }
+
+    async fetchTrendingNfts(): Promise < NftEntity[] > {
+        // TODO: sort them by something?
+        const nftEntities = this.storageHelper.nftsJson.slice(0, 10).map((json) => NftEntity.fromJson(json));
+
+        return nftEntities;
+    }
 }

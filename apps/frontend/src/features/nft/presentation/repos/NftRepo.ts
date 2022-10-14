@@ -23,4 +23,8 @@ export default interface NftRepo {
     fetchNftEntity(
         nftId: string,
     ): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } >;
+
+    fetchNewNftDrops(): Promise < NftEntity[] >;
+
+    fetchTrendingNfts(): Promise < NftEntity[] >;
 }

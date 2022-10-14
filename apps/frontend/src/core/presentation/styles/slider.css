@@ -1,0 +1,11 @@
+.Slider {
+    gap: 20px;
+}
+
+.Slider.LeftShadow {
+    box-shadow: -100px 0px 100px 1px #aaaaaa;
+}
+
+.Slider.RightShadow {
+    box-shadow: 100px 0px 100px 1px #aaaaaa;
+}
