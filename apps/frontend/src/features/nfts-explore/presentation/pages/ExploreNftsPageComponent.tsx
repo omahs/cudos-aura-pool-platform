@@ -23,11 +23,9 @@ function ExploreNftsPageComponent({ nftPreviewsGridStore }: Props) {
 
     return (
         <PageLayoutComponent
-            className = { 'PageExploreNfts' }
-            modals = { [
-            ] } >
+            className = { 'PageExploreNfts' } >
             <PageHeader />
-            <div className={'PageContent'} >
+            <div className={'PageContent AppContent'} >
                 <div className={'ExploreNfts FlexColumn'}>
                     <div className={'PageHeading H1 Bold'}>Explore NFTs</div>
                     <Input
@@ -53,8 +51,7 @@ function ExploreNftsPageComponent({ nftPreviewsGridStore }: Props) {
                         }
                     </div>
                 </div>
-                <NftPreviewsGrid
-                />
+                <NftPreviewsGrid />
             </div>
             <PageFooter />
         </PageLayoutComponent>

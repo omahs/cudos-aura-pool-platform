@@ -92,7 +92,9 @@ img.CoverNode {
 
 /* Site */
 .AppContent {
-    width:100%; min-width:calc(1200px + 2 * var(--item-spacing)); max-width:calc(1600px + 2 *  var(--item-spacing));
+    width:100%;
+    /* min-width:calc(1200px + 2 * var(--item-spacing)); */
+    max-width:calc(1400px + 2 *  var(--item-spacing));
     box-sizing:border-box;
     padding-left:var(--item-spacing); padding-right:var(--item-spacing);
     margin-left:auto; margin-right:auto;

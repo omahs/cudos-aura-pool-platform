@@ -15,8 +15,9 @@ import Svg from '../../../../core/presentation/components/Svg';
 import NftPreviewsGridStore from '../../../nfts-explore/presentation/stores/NftPreviewsGridStore';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
+import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 
-interface Props {
+type Props = {
     collectionViewPageStore?: CollectionViewPageStore
     nftPreviewsGridStore?: NftPreviewsGridStore
 }
@@ -25,12 +26,10 @@ function CollectionViewPageComponent({ collectionViewPageStore, nftPreviewsGridS
 
     const collectionProfile = collectionViewPageStore.collectionProfile;
     const { collectionId } = useParams();
-    useEffect(
-        () => {
-            collectionViewPageStore.innitiate(collectionId, nftPreviewsGridStore);
-        },
-        [],
-    );
+
+    useEffect(() => {
+        collectionViewPageStore.innitiate(collectionId, nftPreviewsGridStore);
+    }, []);
 
     // TODO: get crumbs from router
     const crumbs = [
@@ -39,13 +38,16 @@ function CollectionViewPageComponent({ collectionViewPageStore, nftPreviewsGridS
     ]
 
     return (
-        collectionProfile === null ? ''
-            : <PageLayoutComponent
-                className = { 'PageCollectionView' }
-                modals = { [
-                ] } >
-                <PageHeader />
-                <div className={'PageContent'} >
+        <PageLayoutComponent
+            className = { 'PageCollectionView' }>
+            <PageHeader />
+
+            { collectionProfile === null && (
+                <LoadingIndicator />
+            ) }
+
+            { collectionProfile !== null && (
+                <div className={'PageContent AppContent'} >
                     <Breadcrumbs crumbs={crumbs} />
                     <ProfileHeader coverPictureUrl={collectionProfile.coverImgUrl} profilePictureUrl={collectionProfile.profileImgurl} />
                     <div className={'Heading2 CollectionHeadingName'}>{collectionProfile.name}</div>
@@ -93,11 +95,11 @@ function CollectionViewPageComponent({ collectionViewPageStore, nftPreviewsGridS
                             </div>
                         </div>
                     </div>
-                    <NftPreviewsGrid
-                    />
+                    <NftPreviewsGrid />
                 </div>
-                <PageFooter />
-            </PageLayoutComponent>
+            ) }
+            <PageFooter />
+        </PageLayoutComponent>
 
     )
 }
