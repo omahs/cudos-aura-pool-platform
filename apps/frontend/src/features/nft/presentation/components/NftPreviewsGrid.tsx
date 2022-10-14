@@ -1,28 +1,37 @@
-import MenuItem from '@mui/material/MenuItem';
+import { MenuItem } from '@mui/material';
+import { inject, observer } from 'mobx-react';
+import React, { useEffect } from 'react'
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
-import GridView from '../../../../core/presentation/components/GridView';
+import NftPreview from './NftPreview';
 import Select from '../../../../core/presentation/components/Select';
-import React from 'react';
-import NftPreview from '../../../nft/presentation/components/NftPreview';
-import UserProfilePageStore from '../stores/UserProfilePageStore';
-import NftEntity from '../../../nft/entities/NftEntity';
+import NftPreviewsGridStore from '../stores/NftPreviewsGridStore';
+import '../styles/nft-preview-grid.css';
+
+import GridView from '../../../../core/presentation/components/GridView';
+import NftEntity from '../../entities/NftEntity';
 
 interface Props {
-    userProfilePageStore: UserProfilePageStore;
+    nftPreviewsGridStore?: NftPreviewsGridStore;
 }
 
-export default function UserProfileNfts({ userProfilePageStore }: Props) {
+function NftPreviewsGrid({ nftPreviewsGridStore }: Props) {
+    useEffect(() => {
+        async function run() {
+            await nftPreviewsGridStore.init();
+        }
+        run();
+    }, [])
 
     return (
         <div className={'NftModelsViewerTable'}>
             <div className={'Grid FilterHeader'}>
                 <Select
                     className={'SortBySelect'}
-                    onChange={userProfilePageStore.setSortByIndex}
-                    value={userProfilePageStore.selectedSortIndex}
+                    onChange={nftPreviewsGridStore.setSortByIndex}
+                    value={nftPreviewsGridStore.selectedSortIndex}
                 >
-                    {UserProfilePageStore.TABLE_KEYS.map(
+                    {NftPreviewsGridStore.TABLE_KEYS.map(
                         (key: string, index: number) => <MenuItem key={index} value={index}>{key}</MenuItem>,
                     )}
                 </Select>
@@ -35,22 +44,24 @@ export default function UserProfileNfts({ userProfilePageStore }: Props) {
                         padding={BUTTON_PADDING.PADDING_24}
                         type={BUTTON_TYPE.ROUNDED}
                     >
-                All Filters
+                        All Filters
                     </Button>
                 </Actions>
             </div>
             <GridView
-                gridViewStore={userProfilePageStore.gridViewStore}
+                gridViewStore={nftPreviewsGridStore.gridViewStore}
                 defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}
             >
-                {userProfilePageStore.nftEntities.map(
+                {nftPreviewsGridStore.nftEntities.map(
                     (nftEntity: NftEntity, index: number) => <NftPreview
                         key={index}
                         nftEntity={nftEntity}
-                        collectionEntity={userProfilePageStore.getCollectionById(nftEntity.collectionId)}
+                        collectionEntity={nftPreviewsGridStore.getCollectionById(nftEntity.collectionId)}
                     />,
                 )}
             </GridView>
         </div>
     )
 }
+
+export default inject((stores) => stores)(observer(NftPreviewsGrid));

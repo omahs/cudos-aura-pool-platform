@@ -1,93 +1,105 @@
 import GridViewStore from '../../../../core/presentation/stores/GridViewStore';
 import { makeAutoObservable, observable } from 'mobx';
-import NftRepo from '../../../nft/presentation/repos/NftRepo';
-import UserRepo from '../repos/UserRepo';
-import UserEntity from '../../entities/UserEntity';
 import S from '../../../../core/utilities/Main';
-import NftEntity from '../../../nft/entities/NftEntity';
-import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
-import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
+import NftRepo from '../repos/NftRepo';
+import NftEntity from '../../entities/NftEntity';
+import CollectionEntity from '../../../collection/entities/CollectionEntity';
 
-export enum PROFILE_PAGES {
-    NFTS,
-    EARNINGS,
-    HISTORY
-}
-
-export default class UserProfilePageStore {
+export default class NftPreviewsGridStore {
 
     static TABLE_KEYS = ['Name', 'Price'];
 
-    bitcoinStore: BitcoinStore
-
     nftRepo: NftRepo;
-    userRepo: UserRepo;
     collectionRepo: CollectionRepo;
 
-    userEntity: UserEntity;
     @observable gridViewStore: GridViewStore;
-    selectedSortIndex: number;
-    nftEntities: NftEntity[];
-    collectionEntities: CollectionEntity[];
-    bitcoinPrice: number;
-    profilePage: number;
 
-    constructor(bitcoinStore: BitcoinStore, nftRepo: NftRepo, collectionRepo: CollectionRepo, userRepo: UserRepo) {
-        this.bitcoinStore = bitcoinStore;
+    collectionId: string;
+    searchString: string;
+    selectedSortIndex: number;
+    selectedCategoryIndex: number;
+
+    collectionEntities: CollectionEntity[];
+    nftEntities: NftEntity[];
+    categories: string[];
+
+    constructor(nftRepo: NftRepo, collectionRepo: CollectionRepo) {
         this.nftRepo = nftRepo;
-        this.userRepo = userRepo;
         this.collectionRepo = collectionRepo;
 
-        this.userEntity = null;
         this.gridViewStore = new GridViewStore(this.fetchViewingModels, 3, 4, 6)
-        this.selectedSortIndex = 0;
         this.nftEntities = [];
         this.collectionEntities = [];
-        this.bitcoinPrice = S.NOT_EXISTS;
-        this.profilePage = S.NOT_EXISTS;
+        this.categories = [];
+
+        this.resetDefaults();
 
         makeAutoObservable(this);
     }
 
-    async init(userAddress: string, callback: () => void) {
-        await this.bitcoinStore.init();
-
+    resetDefaults = () => {
+        this.gridViewStore.resetDefaults()
         this.selectedSortIndex = 0;
-        this.profilePage = PROFILE_PAGES.NFTS;
+        this.collectionId = S.Strings.EMPTY;
+        this.searchString = S.Strings.EMPTY;
+        this.selectedCategoryIndex = 0;
+        this.searchString = S.Strings.EMPTY;
+        this.nftEntities = [];
+        this.collectionEntities = [];
+    }
 
-        this.userRepo.fetchProfileByAddress(userAddress, (userEntity) => {
-            this.userEntity = userEntity;
+    async init() {
+        await this.getCategories();
 
-            this.fetchViewingModels();
-            callback();
-        });
-
-        this.bitcoinPrice = this.bitcoinStore.getBitcoinPrice();
+        this.fetchViewingModels();
     }
 
     fetchViewingModels = () => {
         this.gridViewStore.setIsLoading(true);
-        this.nftRepo.getNftsByOwnerAddressSortedPaginated(
-            this.userEntity.address,
+        this.nftRepo.getNftsByCollectionIdCategoryAndSearchSortedPaginated(
+            this.collectionId,
+            this.searchString,
+            this.getCategoryName(),
             this.getSelectedKey(),
             this.gridViewStore.getFrom(),
             this.gridViewStore.getItemsPerPage(),
             (nftEntities: NftEntity[], total) => {
                 const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
+
                 this.collectionRepo.getCollectionsByIds(collectionIds)
                     .then((collectionEntities: CollectionEntity[]) => {
                         this.collectionEntities = collectionEntities;
                         this.setNftEntities(nftEntities);
                         this.gridViewStore.setTotalItems(total);
                         this.gridViewStore.setIsLoading(false);
-                    })
+                    });
             },
         )
     }
 
     getSelectedKey() {
-        return UserProfilePageStore.TABLE_KEYS[this.selectedSortIndex];
+        return NftPreviewsGridStore.TABLE_KEYS[this.selectedSortIndex];
+    }
+
+    async getCategories() {
+        this.collectionRepo.getCategories((categories: string[]) => {
+            this.categories = categories;
+        })
+    }
+
+    selectCategory(index: number) {
+        this.selectedCategoryIndex = index;
+        this.fetchViewingModels();
+    }
+
+    getCategoryName(): string {
+        return this.categories[this.selectedCategoryIndex];
+    }
+
+    changeSearchString = (searchString: string) => {
+        this.searchString = searchString;
+        this.fetchViewingModels();
     }
 
     setSortByIndex = (index: number) => {
@@ -100,12 +112,9 @@ export default class UserProfilePageStore {
         this.nftEntities = nftEntities;
     }
 
-    setProfilePage(page: number) {
-        this.profilePage = page;
-    }
-
     getCollectionById(collectionId: string): CollectionEntity {
-        const collectionEntity = this.collectionEntities.find((entity: CollectionEntity) => entity.id === collectionId)
+        const collectionEntity = this.collectionEntities.find((colllectionProfileEntity: CollectionEntity) => colllectionProfileEntity.id === collectionId);
+
         return collectionEntity;
     }
 }

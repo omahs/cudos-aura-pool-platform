@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import '../styles/page-user-profile-component.css';
-import ProfileHeader from '../../../collection-details/presentation/components/ProfileHeader';
+import ProfileHeader from '../../../collection/presentation/components/ProfileHeader';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import { inject, observer } from 'mobx-react';
