@@ -4,32 +4,31 @@ import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
 
 export default class CollectionStorageRepo implements CollectionRepo {
+
     storageHelper: StorageHelper;
 
-    constructor() {
-        this.storageHelper = new StorageHelper();
+    constructor(storageHelper: StorageHelper) {
+        this.storageHelper = storageHelper;
     }
 
-    getCategories(callback: (categories: string[]) => void) {
+    async fetchCategories(): Promise < string [] > {
         // TODO: get categories from
-        const categories = this.storageHelper.categoriesJson;
-        callback(categories);
+        return this.storageHelper.categoriesJson;
     }
 
-    async fetchTopCollections(period: number): Promise< CollectionEntity[] > {
+    async fetchTopCollections(period: number): Promise < CollectionEntity[] > {
         // TODO: get collectionEntities
         const collectionEntities = this.storageHelper.collectionsJson.slice(0, 18).map((json) => CollectionEntity.fromJson(json));
 
         return collectionEntities;
     }
 
-    getAllCollections(callback: (collectionEntitiess: CollectionEntity[]) => void) {
+    async fetchAllCollections(): Promise < CollectionEntity[] > {
         // TODO: get collectionEntitiess
-        const collectionEntitiess = this.storageHelper.collectionsJson.map((json) => CollectionEntity.fromJson(json));
-        callback(collectionEntitiess);
+        return this.storageHelper.collectionsJson.map((json) => CollectionEntity.fromJson(json));
     }
 
-    async getCollectionsByIds(idArray: string[]): Promise<CollectionEntity[]> {
+    async fetchCollectionsByIds(idArray: string[]): Promise < CollectionEntity[] > {
         const collectionEntitiess = this.storageHelper.collectionsJson
             .filter((json) => idArray.includes(json.id))
             .map((json) => CollectionEntity.fromJson(json));
@@ -37,15 +36,12 @@ export default class CollectionStorageRepo implements CollectionRepo {
         return collectionEntitiess;
     }
 
-    getCollectionEntity(collectionId: string, callback: (collectionEntity: CollectionEntity) => void) {
+    async fetchCollectionEntity(collectionId: string): Promise < CollectionEntity > {
         const collectionJson = this.storageHelper.collectionsJson.find((json) => json.id === collectionId);
-
-        const collectionEntity = CollectionEntity.fromJson(collectionJson);
-
-        callback(collectionEntity);
+        return CollectionEntity.fromJson(collectionJson);
     }
 
-    getCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number, callback: (collectionEntities: CollectionEntity[], total: number) => void) {
+    async fetchCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number): Promise < { collectionEntities: CollectionEntity[], total: number } > {
         const collectionJsons = this.storageHelper.collectionsJson.filter((json) => json.farmId === farmId);
         const collectionEntities = collectionJsons.map((json) => CollectionEntity.fromJson(json));
 
@@ -59,6 +55,10 @@ export default class CollectionStorageRepo implements CollectionRepo {
             }
         });
 
-        callback(sortedCollectionsEntities.slice(from, from + count), sortedCollectionsEntities.length);
+        return {
+            collectionEntities: sortedCollectionsEntities.slice(from, from + count),
+            total: sortedCollectionsEntities.length,
+        }
     }
+
 }

@@ -37,10 +37,10 @@ const exampleModalStore = new ExampleModalStore();
 
 const bitcoinRepo = new BitcoinStorageRepo(storageHelper);
 const cudosRepo = new CudosStorageRepo(storageHelper);
-const miningFarmRepo = new MiningFarmStorageRepo();
-const collectionRepo = new CollectionStorageRepo();
-const nftRepo = new NftStorageRepo();
-const userRepo = new UserStorageRepo();
+const miningFarmRepo = new MiningFarmStorageRepo(storageHelper);
+const collectionRepo = new CollectionStorageRepo(storageHelper);
+const nftRepo = new NftStorageRepo(storageHelper);
+const userRepo = new UserStorageRepo(storageHelper);
 
 const bitcoinStore = new BitcoinStore(bitcoinRepo);
 const cudosStore = new CudosStore(cudosRepo);

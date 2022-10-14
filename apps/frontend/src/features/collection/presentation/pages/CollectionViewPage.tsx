@@ -32,7 +32,10 @@ function CollectionViewPage({ collectionViewPageStore, nftPreviewsGridStore }: P
     const navigate = useNavigate();
 
     useEffect(() => {
-        collectionViewPageStore.init(collectionId, nftPreviewsGridStore);
+        async function run() {
+            await collectionViewPageStore.init(collectionId, nftPreviewsGridStore);
+        }
+        run();
     }, []);
 
     // TODO: get crumbs from router

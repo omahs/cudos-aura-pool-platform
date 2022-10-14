@@ -9,8 +9,8 @@ export default class NftStorageRepo implements NftRepo {
 
     storageHelper: StorageHelper;
 
-    constructor() {
-        this.storageHelper = new StorageHelper();
+    constructor(storageHelper: StorageHelper) {
+        this.storageHelper = storageHelper;
     }
 
     async fetchNftsByOwnerAddressSortedPaginated(
@@ -38,9 +38,10 @@ export default class NftStorageRepo implements NftRepo {
             }
         });
 
-        const nftEntities = sortedNftEntities.slice(start, start + size);
-        const total = sortedNftEntities.length;
-        return { nftEntities, total };
+        return {
+            nftEntities: sortedNftEntities.slice(start, start + size),
+            total: sortedNftEntities.length,
+        };
     }
 
     async fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(
@@ -68,9 +69,10 @@ export default class NftStorageRepo implements NftRepo {
             }
         });
 
-        const nftEntities = sortedNftEntities.slice(start, start + size);
-        const total = sortedNftEntities.length;
-        return { nftEntities, total };
+        return {
+            nftEntities: sortedNftEntities.slice(start, start + size),
+            total: sortedNftEntities.length,
+        };
     }
 
     async fetchNftEntity(
@@ -80,10 +82,11 @@ export default class NftStorageRepo implements NftRepo {
         const collectionJson = this.storageHelper.collectionsJson.find((json) => json.id === nftJson.collectionId);
         const farmJson = this.storageHelper.miningFarmsJson.find((json) => json.id === collectionJson.farmId);
 
-        const nftEntity = NftEntity.fromJson(nftJson)
-        const collectionEntity = CollectionEntity.fromJson(collectionJson)
-        const miningFarmEntity = MiningFarmEntity.fromJson(farmJson);
-        return { nftEntity, collectionEntity, miningFarmEntity };
+        return {
+            nftEntity: NftEntity.fromJson(nftJson),
+            collectionEntity: CollectionEntity.fromJson(collectionJson),
+            miningFarmEntity: MiningFarmEntity.fromJson(farmJson),
+        };
     }
 
     async fetchNewNftDrops(): Promise < NftEntity[] > {

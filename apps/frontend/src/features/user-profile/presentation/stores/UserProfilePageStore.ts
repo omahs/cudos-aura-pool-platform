@@ -50,18 +50,14 @@ export default class UserProfilePageStore {
         makeAutoObservable(this);
     }
 
-    async init(userAddress: string, callback: () => void) {
+    async init(userAddress: string) {
         await this.bitcoinStore.init();
 
         this.selectedSortIndex = 0;
         this.profilePage = PROFILE_PAGES.NFTS;
 
-        this.userRepo.fetchProfileByAddress(userAddress, async (userEntity) => {
-            this.userEntity = userEntity;
-
-            await this.fetchViewingModels();
-            callback();
-        });
+        this.userEntity = await this.userRepo.fetchProfileByAddress(userAddress);
+        await this.fetchViewingModels();
 
         this.bitcoinPrice = this.bitcoinStore.getBitcoinPrice();
     }
@@ -76,7 +72,7 @@ export default class UserProfilePageStore {
         );
 
         const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
-        this.collectionEntities = await this.collectionRepo.getCollectionsByIds(collectionIds);
+        this.collectionEntities = await this.collectionRepo.fetchCollectionsByIds(collectionIds);
         this.setNftEntities(nftEntities);
         this.gridViewStore.setTotalItems(total);
         this.gridViewStore.setIsLoading(false);
