@@ -13,7 +13,7 @@ RUN npm run build:prod
 
 FROM node:16-buster
 
-ARG WORKING_DIR="/usr/local/cudos-aura-platform"    
+ARG WORKING_DIR="/usr/local/cudos-aura-platform"  
 
 WORKDIR ${WORKING_DIR}
 
