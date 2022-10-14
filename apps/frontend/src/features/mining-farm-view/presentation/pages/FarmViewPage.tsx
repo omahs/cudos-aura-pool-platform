@@ -11,6 +11,7 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import { inject, observer } from 'mobx-react';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
+import LoadingIndicator from 'apps/frontend/src/core/presentation/components/LoadingIndicator';
 
 interface Props {
     appStore?: AppStore
@@ -36,10 +37,15 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
     ]
 
     return (
-        farm === null ? ''
-            : <PageLayoutComponent
-                className = { 'PageFarmView' } >
-                <PageHeader />
+        <PageLayoutComponent
+            className = { 'PageFarmView' } >
+            <PageHeader />
+
+            { farm === null && (
+                <LoadingIndicator />
+            ) }
+
+            { farm !== null && (
                 <div className={'PageContent AppContent'} >
                     <Breadcrumbs crumbs={crumbs}/>
                     <ProfileHeader coverPictureUrl={farm.coverImgUrl} profilePictureUrl={farm.profileImgurl} />
@@ -76,8 +82,10 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
                     <div className={'H2'}>Collections Owned</div>
                     <NftPreviewsGrid/>
                 </div>
-                <PageFooter />
-            </PageLayoutComponent>
+            ) }
+
+            <PageFooter />
+        </PageLayoutComponent>
     )
 
 }
