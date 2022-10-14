@@ -39,17 +39,11 @@ export default class RewardsCalculatorStore {
         await this.bitcoinStore.init();
 
         this.resetDefaults();
-        this.getFarmPools();
+        this.miningFarms = await this.miningFarmRepo.fetchAllMiningFarms();
     }
 
     hasNetworkDifficulty() {
         return this.networkDifficultyEdit !== S.Strings.EMPTY;
-    }
-
-    getFarmPools() {
-        this.miningFarmRepo.getAllFarmgs((miningFarms: MiningFarmEntity[]) => {
-            this.miningFarms = miningFarms;
-        });
     }
 
     onEditNetworkDifficulty = (input: string) => {

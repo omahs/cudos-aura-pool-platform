@@ -28,14 +28,10 @@ export default class FarmViewPageStore {
         makeAutoObservable(this);
     }
 
-    init(farmId: string, callback: () => void) {
+    async init(farmId: string) {
         this.selectedSortIndex = 0;
-        this.farmRepo.getFarmById(farmId, async (farmProfile) => {
-            this.farmProfile = farmProfile;
-
-            await this.fetchViewingModels()
-            callback();
-        });
+        this.farmProfile = await this.farmRepo.fetchMiningFarmById(farmId);
+        await this.fetchViewingModels()
     }
 
     fetchViewingModels = async () => {

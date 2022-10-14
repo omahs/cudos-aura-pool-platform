@@ -9,8 +9,8 @@ export default class NftStorageRepo implements NftRepo {
 
     storageHelper: StorageHelper;
 
-    constructor() {
-        this.storageHelper = new StorageHelper();
+    constructor(storageHelper: StorageHelper) {
+        this.storageHelper = storageHelper;
     }
 
     async fetchNftsByOwnerAddressSortedPaginated(

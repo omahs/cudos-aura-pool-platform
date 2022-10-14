@@ -3,10 +3,11 @@ import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
 
 export default class CollectionStorageRepo implements CollectionRepo {
+
     storageHelper: StorageHelper;
 
-    constructor() {
-        this.storageHelper = new StorageHelper();
+    constructor(storageHelper: StorageHelper) {
+        this.storageHelper = storageHelper;
     }
 
     async fetchCategories(): Promise < string [] > {
@@ -56,4 +57,5 @@ export default class CollectionStorageRepo implements CollectionRepo {
             total: sortedCollectionsEntities.length,
         }
     }
+
 }

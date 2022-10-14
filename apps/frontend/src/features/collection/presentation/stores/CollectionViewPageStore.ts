@@ -28,11 +28,8 @@ export default class CollectionViewPageStore {
         this.nftPreviewsGridStore = nftPreviewsGridStore;
         this.nftPreviewsGridStore.collectionId = collectionId;
 
-        const collectionEntity = await this.collectionRepo.fetchCollectionEntity(collectionId);
-        this.miningFarmRepo.getFarmById(collectionEntity.farmId, (miningFarmEntity: MiningFarmEntity) => {
-            this.miningFarmEntity = miningFarmEntity;
-            this.collectionEntity = collectionEntity;
-            this.nftPreviewsGridStore.fetchViewingModels();
-        })
+        this.collectionEntity = await this.collectionRepo.fetchCollectionEntity(collectionId);
+        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(this.collectionEntity.farmId);
+        await this.nftPreviewsGridStore.fetchViewingModels();
     }
 }

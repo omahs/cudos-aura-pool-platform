@@ -3,21 +3,20 @@ import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../../presentation/repos/MiningFarmRepo';
 
 export default class MiningFarmStorageRepo implements MiningFarmRepo {
+
     storageHelper: StorageHelper;
 
-    constructor() {
-        this.storageHelper = new StorageHelper();
+    constructor(storageHelper: StorageHelper) {
+        this.storageHelper = storageHelper;
     }
 
-    getAllFarmgs(callback: (farms: MiningFarmEntity[]) => void) {
-        const farms = this.storageHelper.miningFarmsJson.map((json: any) => MiningFarmEntity.fromJson(json));
-
-        callback(farms);
+    async fetchAllMiningFarms(): Promise < MiningFarmEntity[] > {
+        return this.storageHelper.miningFarmsJson.map((json: any) => MiningFarmEntity.fromJson(json));
     }
 
-    getFarmById(farmId: string, callback: (farm: MiningFarmEntity) => void) {
+    async fetchMiningFarmById(farmId: string): Promise < MiningFarmEntity > {
         const farmJson = this.storageHelper.miningFarmsJson.find((json: any) => json.id === farmId);
-
-        callback(MiningFarmEntity.fromJson(farmJson));
+        return MiningFarmEntity.fromJson(farmJson);
     }
+
 }
