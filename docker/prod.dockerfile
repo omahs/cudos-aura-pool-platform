@@ -9,6 +9,12 @@ WORKDIR ${WORKING_DIR}
 
 RUN npm i
 
+WORKDIR ${WORKING_DIR}/apps/backend
+
+RUN npx sequelize db:migrate
+
+WORKDIR ${WORKING_DIR}
+
 RUN npm run build:prod
 
 FROM node:16-buster
