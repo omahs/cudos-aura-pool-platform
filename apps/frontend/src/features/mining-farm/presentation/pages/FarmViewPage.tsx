@@ -12,7 +12,14 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
-import CollectionPreviewsGrid from '../../../collection/presentation/components/CollectionPreviewsGrid';
+import Select from '../../../../core/presentation/components/Select';
+import { MenuItem } from '@mui/material';
+import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import GridView from '../../../../core/presentation/components/GridView';
+import CollectionPreview from '../../../collection/presentation/components/CollectionPreview';
+import CollectionEntity from '../../../collection/entities/CollectionEntity';
+import CollectionFilterModel from '../../../collection/utilities/CollectionFilterModel';
 
 interface Props {
     appStore?: AppStore
@@ -30,12 +37,13 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
         });
     }, []);
 
-    const farm = farmViewPageStore.miningFarmEntity;
+    const miningFarmEntity = farmViewPageStore.miningFarmEntity;
+    const collectionFilterModel = farmViewPageStore.collectionFilterModel;
 
     const crumbs = [
         { name: 'Marketplace', onClick: () => { navigate(AppRoutes.MARKETPLACE) } },
         { name: 'Explore Farms', onClick: () => { navigate(AppRoutes.EXPLORE_FARMS) } },
-        { name: `Farm Owner: ${farm ? farm.name : ''}`, onClick: () => {} },
+        { name: `Farm Owner: ${miningFarmEntity?.name ?? ''}`, onClick: () => {} },
     ]
 
     return (
@@ -43,17 +51,17 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
             className = { 'PageFarmView' } >
             <PageHeader />
 
-            { farm === null && (
+            { miningFarmEntity === null && (
                 <LoadingIndicator />
             ) }
 
-            { farm !== null && (
+            { miningFarmEntity !== null && (
                 <div className={'PageContent AppContent'} >
                     <Breadcrumbs crumbs={crumbs}/>
-                    <ProfileHeader coverPictureUrl={farm.coverImgUrl} profilePictureUrl={farm.profileImgurl} />
-                    <div className={'H2'}>{farm.name}</div>
+                    <ProfileHeader coverPictureUrl={miningFarmEntity.coverImgUrl} profilePictureUrl={miningFarmEntity.profileImgurl} />
+                    <div className={'H2'}>{miningFarmEntity.name}</div>
                     <div className={'Grid GridColumns2'}>
-                        <div className={'FarmDescription'}>{farm.description}</div>
+                        <div className={'FarmDescription'}>{miningFarmEntity.description}</div>
                         <div className={'BorderContainer'}>
                             {/* TODO: use real data */}
                             <div className={'FlexRow FarmInfoRow'}>
@@ -83,9 +91,46 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
                         </div>
                     </div>
                     <div className={'H2'}>Collections Owned</div>
-                    <CollectionPreviewsGrid
-                        collectionPreviewsGridState={farmViewPageStore.collectionPreviewsGridState}
-                        collectionFilterModel={farmViewPageStore.collectionFilterModel} />
+                    <div className={'CollectionsGridWrapper'}>
+                        <div className={'Grid FilterHeader'}>
+                            <Select
+                                className={'SortBySelect'}
+                                onChange={farmViewPageStore.onChangeSortKey}
+                                value={collectionFilterModel.sortKey} >
+                                <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                            </Select>
+                            <Actions
+                                layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
+                                height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                {/* TODO: show all filters */}
+                                <Button
+                                    padding={BUTTON_PADDING.PADDING_24}
+                                    type={BUTTON_TYPE.ROUNDED} >
+                                    All Filters
+                                </Button>
+                            </Actions>
+                        </div>
+
+                        { farmViewPageStore.collectionEntities === null && (
+                            <LoadingIndicator />
+                        ) }
+
+                        { farmViewPageStore.collectionEntities !== null && (
+                            <GridView
+                                gridViewState={farmViewPageStore.gridViewState}
+                                defaultContent={<div className={'NoContentFound'}>No Nfts found</div>} >
+                                { farmViewPageStore.collectionEntities.map((collectionEntity: CollectionEntity, index: number) => {
+                                    return (
+                                        <CollectionPreview
+                                            key={index}
+                                            collectionEntity={collectionEntity}
+                                            miningFarmName={farmViewPageStore.getMiningFarmName(collectionEntity.farmId)} />
+                                    )
+                                }) }
+                            </GridView>
+                        ) }
+                    </div>
                 </div>
             ) }
 

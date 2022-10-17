@@ -10,8 +10,8 @@ export default class ExploreCollectionsPageStore {
 
     collectionRepo: CollectionRepo;
     miningFarmRepo: MiningFarmRepo;
-    gridViewState: GridViewState;
 
+    gridViewState: GridViewState;
     collectionFilterModel: CollectionFilterModel;
 
     collectionEntities: CollectionEntity[];
@@ -20,18 +20,14 @@ export default class ExploreCollectionsPageStore {
     constructor(collectionRepo: CollectionRepo, miningFarmRepo: MiningFarmRepo) {
         this.collectionRepo = collectionRepo;
         this.miningFarmRepo = miningFarmRepo;
+
         this.gridViewState = new GridViewState(this.fetch, 3, 4, 6);
-
-        this.resetDefaults();
-
-        makeAutoObservable(this);
-    }
-
-    resetDefaults() {
-        this.gridViewState.resetDefaults();
         this.collectionFilterModel = new CollectionFilterModel();
+
         this.collectionEntities = null;
         this.miningFarmEntitiesMap = new Map();
+
+        makeAutoObservable(this);
     }
 
     async init() {

@@ -3,10 +3,16 @@
     padding: 24px var(--page-spacing-h);
 }
 
-.PageFarmView .PageContent .Grid {
+.PageFarmView .Grid {
     gap: 50px;
 }
 
-.PageFarmView .PageContent .BorderContainer .FarmInfoRow {
+.PageFarmView .BorderContainer .FarmInfoRow {
     justify-content: space-between;
 } 
+
+.PageFarmView .CollectionsGridWrapper .FilterHeader {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    margin-bottom: 20px;
+    align-items: end;
+}
