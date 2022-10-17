@@ -95,28 +95,24 @@ export default class WalletStore {
     }
 
     public isConnected(): boolean {
-        const sessionStorageWalletOptions = sessionStorage.getItem(SESSION_STORAGE_WALLET_KEY);
-        switch (sessionStorageWalletOptions) {
-            case SessionStorageWalletOptions.KEPLR:
-                return this.keplrWallet?.isConnected() ?? false;
-            // TO DO: Cosmostation
-            default:
-                return false;
+        if (this.keplrWallet !== null) {
+            return this.keplrWallet.isConnected();
         }
+
+        // TO DO: Cosmostation
+
+        return false;
     }
 
     private async loadBalance(): Promise < void > {
         try {
-            const sessionStorageWalletOptions = sessionStorage.getItem(SESSION_STORAGE_WALLET_KEY);
-            switch (sessionStorageWalletOptions) {
-                case SessionStorageWalletOptions.KEPLR:
-                    this.balance = await this.keplrWallet.getBalance();
-                    // TO DO: Cosmostation
-                    break;
-                default:
-                    this.balance = new BigNumber(0);
-                    break;
+            if (this.keplrWallet !== null) {
+                this.balance = await this.keplrWallet.getBalance();
             }
+
+            // TO DO: Cosmostation
+
+            this.balance = new BigNumber(0);
         } catch (ex) {
             this.balance = new BigNumber(0);
         }
