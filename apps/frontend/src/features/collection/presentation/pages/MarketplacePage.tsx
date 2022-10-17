@@ -51,17 +51,21 @@ function MarkedplacePage({ marketplaceStore }: Props) {
             <div className={'PageContent AppContent'} >
                 <div className={'ExploreCollections FlexColumn'}>
                     <div className={'PageHeading H1 Bold'}>Explore NFT Collections</div>
-                    <Input
-                        inputType={InputType.TEXT}
-                        className={'SearchBar'}
-                        value = { marketplaceStore.searchString }
-                        onChange = { marketplaceStore.changeSearchString }
-                        placeholder = {'Search Collections, Farms and accounts'}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start" >
-                                <Svg svg={SearchIcon}/>
-                            </InputAdornment>,
-                        }} />
+                    <div className={'Grid GridColumns3'}>
+                        <div></div>
+                        <Input
+                            inputType={InputType.TEXT}
+                            className={'SearchBar'}
+                            value = { marketplaceStore.searchString }
+                            onChange = { marketplaceStore.changeSearchString }
+                            placeholder = {'Search Collections, Farms and accounts'}
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start" >
+                                    <Svg svg={SearchIcon}/>
+                                </InputAdornment>,
+                            }} />
+                        <div></div>
+                    </div>
                     <div className={'CategoriesRow FlexRow'}>
                         { marketplaceStore.categories.map((category, index) => {
                             return (

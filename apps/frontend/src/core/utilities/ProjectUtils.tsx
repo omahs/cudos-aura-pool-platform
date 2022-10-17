@@ -137,15 +137,15 @@ export default class ProjectUtils {
         });
     }
 
-    static shortenString(str: string, maxLength: number) {
+    static shortenAddressString(str: string, maxLength: number) {
         const strLen = str.length;
 
-        if (strLen <= maxLength) {
+        if (strLen <= maxLength - 3) {
             return str;
         }
 
-        const leftStr = str.slice(0, maxLength - 4);
-        const rightStr = str.slice(strLen - 1);
+        const leftStr = str.slice(0, maxLength - 6);
+        const rightStr = str.slice(strLen - 3);
 
         return `${leftStr}...${rightStr}`;
     }

@@ -94,7 +94,7 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Address</div>
                                 <div className={'CollectionInfoValue'}>
-                                    {collectionEntity.ownerAddress}
+                                    {ProjectUtils.shortenAddressString(collectionEntity.ownerAddress, 25)}
                                     <Svg svg={LaunchIcon}
                                         className={'SVG Icon Clickable '}
                                         onClick={() => ProjectUtils.copyText(collectionEntity.ownerAddress)}
