@@ -28,10 +28,6 @@ export default class CollectionStorageRepo implements CollectionRepo {
         return this.collectionApi.fetchCollectionEntity(collectionId);
     }
 
-    async fetchCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number): Promise < { collectionEntities: CollectionEntity[], total: number } > {
-        return this.collectionApi.fetchCollectionsByFarmIdSortedPaginated(farmId, sortKey, from, count);
-    }
-
     async fetchCollectionsByFilter(collectionFilterModel: CollectionFilterModel): Promise < { collectionEntities: CollectionEntity[], total: number } > {
         return this.collectionApi.fetchCollectionsByFilter(collectionFilterModel);
     }

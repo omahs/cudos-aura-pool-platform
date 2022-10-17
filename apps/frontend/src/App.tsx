@@ -102,9 +102,7 @@ const App = () => {
                 farmViewPageStore = { farmViewPageStore }
                 userProfilePageStore = { userProfilePageStore }
                 buyNftModalStore = { buyNftModalStore }
-                resellNftModalStore = { resellNftModalStore }
-                nftRepo = { nftRepo }
-                collectionRepo = { collectionRepo } >
+                resellNftModalStore = { resellNftModalStore } >
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

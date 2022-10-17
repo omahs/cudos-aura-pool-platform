@@ -21,10 +21,6 @@ export default class CollectionApi implements CollectionRepo {
         return null;
     }
 
-    async fetchCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number): Promise < { collectionEntities: CollectionEntity[], total: number } > {
-        return null;
-    }
-
     async fetchCollectionsByFilter(collectionFilterModel: CollectionFilterModel): Promise < { collectionEntities: CollectionEntity[], total: number } > {
         return null;
     }
