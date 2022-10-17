@@ -29,7 +29,7 @@ export default class FarmViewPageStore {
     }
 
     async init(farmId: string) {
-        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(farmId);
+        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmsByIds([farmId])[0];
         this.collectionFilterModel.farmId = this.miningFarmEntity.id;
         await this.collectionPreviewsGridState.fetchViewingModels();
     }

@@ -69,11 +69,11 @@ function ExploreNftsPage({ nftRepo, collectionRepo }: Props) {
                     />
                     <div className={'CategoriesRow FlexRow'}>
                         {nftPreviewsGridState.current.categories.map((category, index) => <div
-                            key={index}
+                            key={category.categoryId}
                             onClick={() => nftPreviewsGridState.current.selectCategory(index)}
                             className={`CategoryName Clickable B2 SemiBold ${S.CSS.getActiveClassName(nftPreviewsGridState.current.selectedCategoryIndex === index)}`}
                         >
-                            {category}
+                            {category.categoryName}
                         </div>)
                         }
                     </div>

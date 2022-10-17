@@ -3,6 +3,7 @@ import StorageHelper from '../../../../core/helpers/StorageHelper';
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
 import CollectionFilterModel from '../../utilities/CollectionFilterModel';
+import CategoryEntity from '../../entities/CategoryEntity';
 
 export default class CollectionStorageRepo implements CollectionRepo {
 
@@ -12,9 +13,9 @@ export default class CollectionStorageRepo implements CollectionRepo {
         this.storageHelper = storageHelper;
     }
 
-    async fetchCategories(): Promise < string [] > {
+    async fetchCategories(): Promise < CategoryEntity[] > {
         // TODO: get categories from
-        return this.storageHelper.categoriesJson;
+        return this.storageHelper.categoriesJson.map((json) => CategoryEntity.fromJson(json));
     }
 
     async fetchTopCollections(period: number): Promise < CollectionEntity[] > {

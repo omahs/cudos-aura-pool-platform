@@ -52,7 +52,8 @@ function CollectionPreviewsGrid({ collectionPreviewsGridState, collectionFilterM
                     return (
                         <CollectionPreview
                             key={index}
-                            collectionEntity={collectionEntity} />
+                            collectionEntity={collectionEntity}
+                            miningFarmEntity={collectionPreviewsGridState.miningFarmEntitiesMap.get(collectionEntity.farmId)} />
                     )
                 }) }
             </GridView>

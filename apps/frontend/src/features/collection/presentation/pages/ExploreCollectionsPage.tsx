@@ -22,18 +22,21 @@ import CollectionFilterModel from '../../utilities/CollectionFilterModel';
 import ExploreCollectionsPageState from '../stores/ExploreCollectionsPageState';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import RepoStore from '../../../../core/presentation/stores/RepoStore';
+import CategoriesStore from '../stores/CategoriesStore';
 
 type Props = {
     repoStore?: RepoStore;
     appStore?: AppStore;
+    categoriesStore?: CategoriesStore;
 }
 
-function ExploreCollectionsPage({ appStore, repoStore }: Props) {
+function ExploreCollectionsPage({ appStore, repoStore, categoriesStore }: Props) {
 
     const [state] = useState(new ExploreCollectionsPageState(repoStore.collectionRepo, repoStore.miningFarmRepo));
 
     useEffect(() => {
         appStore.useLoading(async () => {
+            await categoriesStore.init();
             await state.init();
         });
     }, [])

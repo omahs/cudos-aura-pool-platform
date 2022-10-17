@@ -31,7 +31,7 @@ export default class CollectionViewPageStore {
     async init(collectionId: string) {
         this.nftPreviewsGridState.collectionId = collectionId;
         this.collectionEntity = await this.collectionRepo.fetchCollectionEntity(collectionId);
-        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(this.collectionEntity.farmId);
+        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmsByIds([this.collectionEntity.farmId])[0];
 
         const categories = await this.collectionRepo.fetchCategories()
         await this.nftPreviewsGridState.init(categories);
