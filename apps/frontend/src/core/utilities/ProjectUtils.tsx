@@ -137,6 +137,19 @@ export default class ProjectUtils {
         });
     }
 
+    static shortenString(str: string, maxLength: number) {
+        const strLen = str.length;
+
+        if (strLen <= maxLength) {
+            return str;
+        }
+
+        const leftStr = str.slice(0, maxLength - 4);
+        const rightStr = str.slice(strLen - 1);
+
+        return `${leftStr}...${rightStr}`;
+    }
+
 }
 
 function getQueryArray() {
