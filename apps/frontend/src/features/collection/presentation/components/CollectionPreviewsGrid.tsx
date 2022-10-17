@@ -53,7 +53,7 @@ function CollectionPreviewsGrid({ collectionPreviewsGridState, collectionFilterM
                         <CollectionPreview
                             key={index}
                             collectionEntity={collectionEntity}
-                            miningFarmEntity={collectionPreviewsGridState.miningFarmEntitiesMap.get(collectionEntity.farmId)} />
+                            miningFarmName={collectionPreviewsGridState.miningFarmEntitiesMap.get(collectionEntity.farmId)} />
                     )
                 }) }
             </GridView>

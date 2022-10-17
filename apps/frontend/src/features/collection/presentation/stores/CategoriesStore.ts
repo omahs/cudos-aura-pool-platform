@@ -10,6 +10,9 @@ export default class CategoriesStore {
 
     constructor(collectionRepo: CollectionRepo) {
         this.collectionRepo = collectionRepo;
+
+        this.inited = false;
+        this.categoryEntities = null;
     }
 
     async init() {

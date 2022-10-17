@@ -3,31 +3,20 @@
     padding: 48px  var(--page-spacing-h);
 }
 
-.PageExploreCollections .PageContent .ExploreCollections {
+.PageExploreCollections .ExploreCollections {
     align-items: center;
 }
 
-.PageExploreCollections .PageContent .ExploreCollections .PageHeading {
+.PageExploreCollections .ExploreCollections .PageHeading {
     margin-bottom: 40px;
 }
 
-.PageExploreCollections .PageContent .ExploreCollections .SearchBar {
+.PageExploreCollections .ExploreCollections .SearchBar {
     margin-bottom: 40px;
 }
 
-.PageExploreCollections .PageContent .ExploreCollections .CategoriesRow {
-    gap: 20px;
-    margin-bottom: 100px;
-}
-
-.PageExploreCollections .PageContent .ExploreCollections .CategoriesRow .CategoryName {
-    padding: 2px 5px;
-    border-radius: 3px;
-    background-color: var(--color-gray-095);
-    font-weight: 600; font-size: 14px;
-}
-
-.PageExploreCollections .PageContent .ExploreCollections .CategoriesRow .CategoryName.Active {
-    background-color: #000;
-    color: #fff;
+.PageExploreCollections .CollectionsGridWrapper .FilterHeader {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    margin-bottom: 20px;
+    align-items: end;
 }

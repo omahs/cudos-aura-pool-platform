@@ -30,6 +30,7 @@ import AccountStorageRepo from './features/accounts/data/repo/AccountStorageRepo
 import AccountSessionStore from './features/accounts/presentation/stores/AccountSessionStore';
 import RepoStore from './core/presentation/stores/RepoStore';
 import CategoriesStore from './features/collection/presentation/stores/CategoriesStore';
+import ExploreCollectionsPageStore from './features/collection/presentation/stores/ExploreCollectionsPageStore';
 
 const storageHelper = new StorageHelper();
 storageHelper.open();
@@ -52,6 +53,7 @@ const accountSessionStore = new AccountSessionStore(walletStore, accountRepo);
 const bitcoinStore = new BitcoinStore(bitcoinRepo);
 const cudosStore = new CudosStore(cudosRepo);
 const categoriesStore = new CategoriesStore(collectionRepo);
+const exploreCollectionsPageStore = new ExploreCollectionsPageStore(collectionRepo, miningFarmRepo);
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFarmRepo);
 const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo, nftRepo, miningFarmRepo);
 const nftDetailsStore = new NftDetailsStore(bitcoinStore, cudosStore, nftRepo);
@@ -87,6 +89,7 @@ const App = () => {
                 accountSessionStore = { accountSessionStore }
                 exampleModalStore = { exampleModalStore }
                 rewardsCalculatorStore = { rewardsCalculatorStore }
+                exploreCollectionsPageStore = { exploreCollectionsPageStore }
                 marketplaceStore = { marketplaceStore }
                 nftDetailsStore = { nftDetailsStore }
                 collectionViewPageStore = { collectionViewPageStore }
