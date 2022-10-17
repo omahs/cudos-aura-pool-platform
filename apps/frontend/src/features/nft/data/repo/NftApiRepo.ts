@@ -2,6 +2,7 @@ import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import NftEntity from '../../entities/NftEntity';
 import NftRepo from '../../presentation/repos/NftRepo';
+import NftFilterModel from '../../utilities/NftFilterModel';
 import NftApi from '../data-sources/NftApi';
 
 export default class NftApiRepo implements NftRepo {
@@ -36,5 +37,9 @@ export default class NftApiRepo implements NftRepo {
         nftId: string,
     ): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } > {
         return this.nftApi.fetchNftEntity(nftId);
+    }
+
+    async fetchNftsByFilter(nftFilterModel: NftFilterModel): Promise < { nftEntities: NftEntity[], total: number } > {
+        return this.nftApi.fetchNftsByFilter(nftFilterModel);
     }
 }

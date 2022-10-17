@@ -1,25 +1,23 @@
 import { makeAutoObservable } from 'mobx';
 import S from '../../../core/utilities/Main';
 
-export default class CollectionFilterModel {
+export default class NftFilterModel {
 
     static SORT_KEY_NAME = 1;
     static SORT_KEY_PRICE = 2;
 
     sessionAccount: number;
-    farmId: string;
+    categoryIds: string[];
     sortKey: number;
     searchString: string;
-    categoryIds: string[];
     from: number;
     count: number;
 
     constructor() {
         this.sessionAccount = S.INT_FALSE;
-        this.farmId = '';
-        this.sortKey = CollectionFilterModel.SORT_KEY_NAME;
+        this.sortKey = NftFilterModel.SORT_KEY_NAME;
         this.searchString = '';
-        this.categoryIds = [];
+        this.categoryIds = ['0'];
         this.from = -1;
         this.count = -1;
 
@@ -33,7 +31,6 @@ export default class CollectionFilterModel {
 
         return {
             sessionAccount: model.sessionAccount,
-            farmId: model.farmId,
             sortKey: model.sortKey,
             searchString: model.searchString,
             categoryIds: model.categoryIds,
@@ -42,15 +39,14 @@ export default class CollectionFilterModel {
         }
     }
 
-    static fromJson(json): CollectionFilterModel {
+    static fromJson(json): NftFilterModel {
         if (json === null) {
             return null;
         }
 
-        const model = new CollectionFilterModel();
+        const model = new NftFilterModel();
 
         model.sessionAccount = parseInt(json.sessionAccount ?? model.sessionAccount);
-        model.farmId = (json.farmId ?? model.farmId).toString();
         model.sortKey = parseInt(json.sortKey ?? model.sortKey);
         model.searchString = json.searchString ?? model.searchString;
         model.categoryIds = (json.categoryIds ?? model.categoryIds).map((j) => j.toString());

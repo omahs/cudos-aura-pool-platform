@@ -86,7 +86,7 @@ export default class CollectionStorageRepo implements CollectionRepo {
         //     });
         // }
 
-        collectionSlice = collectionSlice.sort((a: CollectionEntity, b: CollectionEntity) => {
+        collectionSlice.sort((a: CollectionEntity, b: CollectionEntity) => {
             switch (collectionFilterModel.sortKey) {
                 case CollectionFilterModel.SORT_KEY_PRICE:
                     return a.price.comparedTo(b.price)

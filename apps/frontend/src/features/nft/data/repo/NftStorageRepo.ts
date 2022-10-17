@@ -4,6 +4,7 @@ import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import NftEntity from '../../entities/NftEntity';
 import NftRepo from '../../presentation/repos/NftRepo';
+import NftFilterModel from '../../utilities/NftFilterModel';
 
 export default class NftStorageRepo implements NftRepo {
 
@@ -101,5 +102,30 @@ export default class NftStorageRepo implements NftRepo {
         const nftEntities = this.storageHelper.nftsJson.slice(0, 10).map((json) => NftEntity.fromJson(json));
 
         return nftEntities;
+    }
+
+    async fetchNftsByFilter(nftFilterModel: NftFilterModel): Promise < { nftEntities: NftEntity[], total: number } > {
+        let nftsSlice = this.storageHelper.nftsJson.map((json) => NftEntity.fromJson(json));
+
+        if (nftFilterModel.searchString !== '') {
+            nftsSlice = nftsSlice.filter((json) => {
+                return json.name.toLowerCase().indexOf(nftFilterModel.searchString) !== -1;
+            });
+        }
+
+        nftsSlice.sort((a: NftEntity, b: NftEntity) => {
+            switch (nftFilterModel.sortKey) {
+                case NftFilterModel.SORT_KEY_PRICE:
+                    return a.price.comparedTo(b.price)
+                case NftFilterModel.SORT_KEY_NAME:
+                default:
+                    return a.name.localeCompare(b.name)
+            }
+        });
+
+        return {
+            nftEntities: nftsSlice.slice(nftFilterModel.from, nftFilterModel.from + nftFilterModel.count),
+            total: nftsSlice.length,
+        };
     }
 }

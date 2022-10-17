@@ -32,6 +32,7 @@ import RepoStore from './core/presentation/stores/RepoStore';
 import CategoriesStore from './features/collection/presentation/stores/CategoriesStore';
 import ExploreCollectionsPageStore from './features/collection/presentation/stores/ExploreCollectionsPageStore';
 import ExploreMiningFarmsPageStore from './features/mining-farm/presentation/stores/ExploreMiningFarmsPageStore';
+import ExploreNftsPageStore from './features/nft/presentation/stores/ExploreNftsPageStore';
 
 const storageHelper = new StorageHelper();
 storageHelper.open();
@@ -56,6 +57,7 @@ const cudosStore = new CudosStore(cudosRepo);
 const categoriesStore = new CategoriesStore(collectionRepo);
 const exploreCollectionsPageStore = new ExploreCollectionsPageStore(collectionRepo, miningFarmRepo);
 const exploreMiningFarmsPageStore = new ExploreMiningFarmsPageStore(miningFarmRepo);
+const exploreNftsPageStore = new ExploreNftsPageStore(nftRepo, collectionRepo);
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFarmRepo);
 const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo, nftRepo, miningFarmRepo);
 const nftDetailsStore = new NftDetailsStore(bitcoinStore, cudosStore, nftRepo);
@@ -93,6 +95,7 @@ const App = () => {
                 rewardsCalculatorStore = { rewardsCalculatorStore }
                 exploreCollectionsPageStore = { exploreCollectionsPageStore }
                 exploreMiningFarmsPageStore = { exploreMiningFarmsPageStore }
+                exploreNftsPageStore = { exploreNftsPageStore }
                 marketplaceStore = { marketplaceStore }
                 nftDetailsStore = { nftDetailsStore }
                 collectionViewPageStore = { collectionViewPageStore }
