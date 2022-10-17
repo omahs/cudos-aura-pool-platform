@@ -10,9 +10,9 @@ import S from '../../../../../src/core/utilities/Main';
 import UserProfileNfts from '../components/UserProfileNfts';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
-import { useParams } from 'react-router-dom';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import AccountSessionStore from '../stores/AccountSessionStore';
+import UserEntity from '../../entities/UserEntity';
 
 interface Props {
     appStore?: AppStore
@@ -23,8 +23,8 @@ interface Props {
 
 function UserProfilePage({ appStore, userProfilePageStore, accountSessionStore }: Props) {
     useEffect(() => {
-        appStore.useLoading(() => {
-            userProfilePageStore.init();
+        appStore.useLoading(async () => {
+            appStore.useLoading(() => userProfilePageStore.init());
         })
     }, [])
 
@@ -35,11 +35,11 @@ function UserProfilePage({ appStore, userProfilePageStore, accountSessionStore }
             className = { 'PageUserProfile' }>
             <PageHeader />
 
-            { userEntity === null && (
-                <LoadingIndicator />
+            { UserEntity.isEmptyEntity(userEntity) && (
+                <div className={'ProfileNotFoundPage H1 Bold FlexColumn'}>Profile page not found for this user</div>
             ) }
 
-            { userEntity !== null && (
+            { !UserEntity.isEmptyEntity(userEntity) && (
                 <div className={'PageContent AppContent'} >
                     <ProfileHeader coverPictureUrl={userEntity.coverImgUrl} profilePictureUrl={userEntity.profileImgurl} />
                     <div className={'ProfileHeaderDataRow FlexRow FlexGrow'}>
