@@ -4,6 +4,7 @@ import CollectionRepo from '../../../collection/presentation/repos/CollectionRep
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../repos/MiningFarmRepo';
 import CollectionPreviewsGridState from '../../../collection/presentation/stores/CollectionPreviewsGridState';
+import CollectionFilterModel from '../../../collection/utilities/CollectionFilterModel';
 
 export default class FarmViewPageStore {
 
@@ -11,6 +12,8 @@ export default class FarmViewPageStore {
 
     farmRepo: MiningFarmRepo;
     collectionRepo: CollectionRepo;
+
+    collectionFilterModel: CollectionFilterModel;
 
     collectionPreviewsGridState: CollectionPreviewsGridState;
     farmProfile: MiningFarmEntity;
@@ -20,6 +23,8 @@ export default class FarmViewPageStore {
     constructor(farmRepo: MiningFarmRepo, collectionRepo: CollectionRepo) {
         this.farmRepo = farmRepo;
         this.collectionRepo = collectionRepo;
+
+        this.collectionFilterModel = new CollectionFilterModel();
 
         this.farmProfile = null;
         this.collectionPreviewsGridState = new CollectionPreviewsGridState(this.fetchViewingModels);
@@ -32,6 +37,8 @@ export default class FarmViewPageStore {
         this.selectedSortIndex = 0;
         this.farmProfile = await this.farmRepo.fetchMiningFarmById(farmId);
         this.collectionPreviewsGridState.init([]);
+
+        this.collectionFilterModel.farmId = this.farmProfile.id;
     }
 
     fetchViewingModels = async (): Promise < {collectionEntities: CollectionEntity[], total: number} > => {
