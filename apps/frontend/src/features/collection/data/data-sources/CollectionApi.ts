@@ -1,5 +1,6 @@
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
+import CollectionFilterModel from '../../utilities/CollectionFilterModel';
 
 export default class CollectionApi implements CollectionRepo {
 
@@ -8,10 +9,6 @@ export default class CollectionApi implements CollectionRepo {
     }
 
     async fetchTopCollections(period: number): Promise < CollectionEntity[] > {
-        return null;
-    }
-
-    async fetchAllCollections(): Promise < CollectionEntity[] > {
         return null;
     }
 
@@ -24,6 +21,10 @@ export default class CollectionApi implements CollectionRepo {
     }
 
     async fetchCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number): Promise < { collectionEntities: CollectionEntity[], total: number } > {
+        return null;
+    }
+
+    async fetchCollectionsByFilter(collectionFilterModel: CollectionFilterModel): Promise < { collectionEntities: CollectionEntity[], total: number } > {
         return null;
     }
 }
