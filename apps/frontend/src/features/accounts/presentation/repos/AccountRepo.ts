@@ -5,6 +5,8 @@ import UserEntity from '../../entities/UserEntity';
 
 export default interface AccountRepo {
 
-    fetchSessionAccounts(address: string): Promise < { accountEntity: AccountEntity, userEntity: UserEntity, adminEntity: AdminEntity, superAdminEntity: SuperAdminEntity } >;
+    login(username: string, password: string, walletAddress: string, signedTx: any): Promise < void >;
+    logout(): Promise < void >;
+    fetchSessionAccounts(): Promise < { accountEntity: AccountEntity, userEntity: UserEntity, adminEntity: AdminEntity, superAdminEntity: SuperAdminEntity } >;
 
 }

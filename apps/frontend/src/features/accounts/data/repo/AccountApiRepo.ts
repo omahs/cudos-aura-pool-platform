@@ -13,8 +13,16 @@ export default class AccountStorageRepo implements AccountRepo {
         this.accountApi = new AccountApi();
     }
 
-    async fetchSessionAccounts(address: string): Promise < { accountEntity: AccountEntity; userEntity: UserEntity; adminEntity: AdminEntity; superAdminEntity: SuperAdminEntity; } > {
-        return this.accountApi.fetchSessionAccounts(address);
+    async login(username: string, password: string, walletAddress: string, signedTx: any): Promise < void > {
+        return this.accountApi.login(username, password, walletAddress, signedTx);
+    }
+
+    async logout(): Promise < void > {
+        return this.accountApi.logout();
+    }
+
+    async fetchSessionAccounts(): Promise < { accountEntity: AccountEntity; userEntity: UserEntity; adminEntity: AdminEntity; superAdminEntity: SuperAdminEntity; } > {
+        return this.accountApi.fetchSessionAccounts();
     }
 
 }

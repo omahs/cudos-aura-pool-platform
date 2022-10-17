@@ -23,16 +23,20 @@ export default class UserEntity {
         this.coverImgUrl = S.Strings.EMPTY;
     }
 
-    toJson(): any {
+    static toJson(entity: UserEntity): any {
+        if (entity === null) {
+            return null;
+        }
+
         return {
-            'accountId': this.accountId,
-            'name': this.name,
-            'address': this.name,
-            'totalBtcEarned': this.totalBtcEarned.toString(),
-            'totalHashPower': this.totalHashPower,
-            'timestampJoined': this.timestampJoined,
-            'profileImgurl': this.profileImgurl,
-            'coverImgUrl': this.coverImgUrl,
+            'accountId': entity.accountId,
+            'name': entity.name,
+            'address': entity.address,
+            'totalBtcEarned': entity.totalBtcEarned.toString(),
+            'totalHashPower': entity.totalHashPower,
+            'timestampJoined': entity.timestampJoined,
+            'profileImgurl': entity.profileImgurl,
+            'coverImgUrl': entity.coverImgUrl,
         }
     }
 

@@ -1,6 +1,6 @@
 import S from '../../../core/utilities/Main';
 
-enum AccountType {
+export enum AccountType {
     User = 1,
     Admin = 2,
     SuperAdmin = 3,
@@ -8,18 +8,26 @@ enum AccountType {
 
 export default class AccountEntity {
 
-    id: string;
+    accountId: string;
     type: AccountType;
 
     constructor() {
-        this.id = S.Strings.EMPTY;
+        this.accountId = S.Strings.EMPTY;
         this.type = AccountType.User;
     }
 
-    toJson(): any {
+    isUser(): boolean {
+        return this.type === AccountType.User;
+    }
+
+    static toJson(entity: AccountEntity): any {
+        if (entity === null) {
+            return null;
+        }
+
         return {
-            'id': this.id,
-            'type': this.type,
+            'accountId': entity.accountId,
+            'type': entity.type,
         }
     }
 
@@ -30,7 +38,7 @@ export default class AccountEntity {
 
         const entity = new AccountEntity();
 
-        entity.id = (json.id ?? entity.id).toString();
+        entity.accountId = (json.accountId ?? entity.accountId).toString();
         entity.type = parseInt(json.type ?? entity.type);
 
         return entity;
