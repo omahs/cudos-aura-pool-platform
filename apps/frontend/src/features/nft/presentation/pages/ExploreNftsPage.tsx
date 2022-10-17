@@ -20,8 +20,8 @@ import NftRepo from '../repos/NftRepo';
 import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 
 type Props = {
-    nftRepo: NftRepo
-    collectionRepo: CollectionRepo;
+    nftRepo?: NftRepo
+    collectionRepo?: CollectionRepo;
 }
 
 function ExploreNftsPage({ nftRepo, collectionRepo }: Props) {

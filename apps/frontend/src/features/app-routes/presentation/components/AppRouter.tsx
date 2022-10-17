@@ -17,6 +17,7 @@ import UserProfilePage from '../../../accounts/presentation/pages/UserProfilePag
 import { inject, observer } from 'mobx-react';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
+import ExploreCollectionsPage from '../../../collection/presentation/pages/ExploreCollectionsPage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -58,6 +59,7 @@ function AppRouter({ accountSessionStore }: Props) {
                     <Route index = { true } element = { <MarketplacePage /> } />
                     <Route path = { AppRoutes.MARKETPLACE } element = { <MarketplacePage /> } />
                     <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPage /> } />
+                    <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPage /> } />
                     <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePage /> } />
                     <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />
                     <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPage /> } />

@@ -1,13 +1,8 @@
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
-import MiningFarmRepo from '../../presentation/repos/MiningFarmRepo';
 
-export default class MiningFarmApi implements MiningFarmRepo {
+export default class MiningFarmApi {
 
     async fetchAllMiningFarms(): Promise < MiningFarmEntity[] > {
-        return null;
-    }
-
-    async fetchMiningFarmById(farmId: string): Promise < MiningFarmEntity > {
         return null;
     }
 

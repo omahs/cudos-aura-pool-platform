@@ -14,11 +14,6 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
         return this.storageHelper.miningFarmsJson.map((json: any) => MiningFarmEntity.fromJson(json));
     }
 
-    async fetchMiningFarmById(farmId: string): Promise < MiningFarmEntity > {
-        const farmJson = this.storageHelper.miningFarmsJson.find((json: any) => json.id === farmId);
-        return MiningFarmEntity.fromJson(farmJson);
-    }
-
     async fetchMiningFarmsByIds(farmIds: string[]): Promise < MiningFarmEntity[] > {
         const farmsJson = this.storageHelper.miningFarmsJson.filter((json: any) => farmIds.includes(json.id));
         return farmsJson.map((farmJson) => MiningFarmEntity.fromJson(farmJson));
