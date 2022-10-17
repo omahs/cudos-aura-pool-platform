@@ -50,8 +50,6 @@ export default class UserProfilePageStore {
     async init() {
         await this.bitcoinStore.init();
 
-        // TO DO: Page redirect if not wallet
-
         this.selectedSortIndex = 0;
         this.profilePage = PROFILE_PAGES.NFTS;
 
