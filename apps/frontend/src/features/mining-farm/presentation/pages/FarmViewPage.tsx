@@ -30,7 +30,7 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
         });
     }, []);
 
-    const farm = farmViewPageStore.farmProfile;
+    const farm = farmViewPageStore.miningFarmEntity;
 
     const crumbs = [
         { name: 'Marketplace', onClick: () => { navigate(AppRoutes.MARKETPLACE) } },
@@ -83,7 +83,9 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
                         </div>
                     </div>
                     <div className={'H2'}>Collections Owned</div>
-                    <CollectionPreviewsGrid collectionPreviewsGridState={farmViewPageStore.collectionPreviewsGridState}/>
+                    <CollectionPreviewsGrid
+                        collectionPreviewsGridState={farmViewPageStore.collectionPreviewsGridState}
+                        collectionFilterModel={farmViewPageStore.collectionFilterModel} />
                 </div>
             ) }
 

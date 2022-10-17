@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import S from '../../../../core/utilities/Main';
@@ -19,27 +19,23 @@ import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRe
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import CollectionPreviewsGrid from '../components/CollectionPreviewsGrid';
 import CollectionFilterModel from '../../utilities/CollectionFilterModel';
+import ExploreCollectionsPageState from '../stores/ExploreCollectionsPageState';
+import AppStore from '../../../../core/presentation/stores/AppStore';
+import RepoStore from '../../../../core/presentation/stores/RepoStore';
 
 type Props = {
-    collectionsRepo: CollectionRepo
-    miningFarmRepo: MiningFarmRepo;
+    repoStore?: RepoStore;
+    appStore?: AppStore;
 }
 
-function ExploreCollectionsPage({ collectionsRepo, miningFarmRepo }: Props) {
+function ExploreCollectionsPage({ appStore, repoStore }: Props) {
 
-    const fetchFunction = async (collectionFilterModel: CollectionFilterModel): Promise < {collectionEntities: CollectionEntity[], total: number, miningFarmEntities: MiningFarmEntity[]}> => {
-        const { collectionEntities, total } = await collectionsRepo.fetchCollectionsByFilter(collectionFilterModel);
-
-        const farmIds = collectionEntities.map((collectionEntity: CollectionEntity) => collectionEntity.farmId);
-
-        const miningFarmEntities = await miningFarmRepo.fetchMiningFarmsByIds(farmIds);
-        return { collectionEntities, total, miningFarmEntities }
-    }
-
-    const collectionPreviewsGridState = useRef(new CollectionsPreviewsGridState(fetchFunction))
+    const [state] = useState(new ExploreCollectionsPageState(repoStore.collectionRepo, repoStore.miningFarmRepo));
 
     useEffect(() => {
-        collectionPreviewsGridState.current.init([]);
+        appStore.useLoading(async () => {
+            await state.init();
+        });
     }, [])
 
     return (
@@ -47,7 +43,7 @@ function ExploreCollectionsPage({ collectionsRepo, miningFarmRepo }: Props) {
             className = { 'PageExploreCollections' } >
             <PageHeader />
             <div className={'PageContent AppContent'} >
-                <div className={'ExploreCollections FlexColumn'}>
+                {/* <div className={'ExploreCollections FlexColumn'}>
                     <div className={'PageHeading H1 Bold'}>Explore Collections</div>
                     <Input
                         inputType={InputType.TEXT}
@@ -71,8 +67,10 @@ function ExploreCollectionsPage({ collectionsRepo, miningFarmRepo }: Props) {
                         </div>)
                         }
                     </div>
-                </div>
-                <CollectionPreviewsGrid collectionPreviewsGridState = {collectionPreviewsGridState.current}/>
+                </div> */}
+                <CollectionPreviewsGrid
+                    collectionFilterModel={state.collectionFilterModel}
+                    collectionPreviewsGridState = {state.collectionPreviewsGridState} />
             </div>
             <PageFooter />
         </PageLayoutComponent>

@@ -28,6 +28,7 @@ import CudosStore from './features/cudos-data/presentation/stores/CudosStore';
 import UserProfilePageStore from './features/accounts/presentation/stores/UserProfilePageStore';
 import AccountStorageRepo from './features/accounts/data/repo/AccountStorageRepo';
 import AccountSessionStore from './features/accounts/presentation/stores/AccountSessionStore';
+import RepoStore from './core/presentation/stores/RepoStore';
 
 const storageHelper = new StorageHelper();
 
@@ -41,6 +42,8 @@ const miningFarmRepo = new MiningFarmStorageRepo(storageHelper);
 const collectionRepo = new CollectionStorageRepo(storageHelper);
 const nftRepo = new NftStorageRepo(storageHelper);
 const accountRepo = new AccountStorageRepo(storageHelper);
+
+const repoStore = new RepoStore(bitcoinRepo, cudosRepo, miningFarmRepo, collectionRepo, nftRepo, accountRepo);
 
 const walletStore = new WalletStore();
 const accountSessionStore = new AccountSessionStore(accountRepo);
@@ -72,6 +75,7 @@ const App = () => {
     return (
         <StrictMode>
             <Provider
+                repoStore = { repoStore }
                 appStore = { appStore }
                 alertStore = { alertStore }
                 walletStore = { walletStore }
@@ -88,7 +92,7 @@ const App = () => {
                 buyNftModalStore = { buyNftModalStore }
                 resellNftModalStore = { resellNftModalStore }
                 nftRepo = { nftRepo }
-                collectionRepo = { collectionRepo }>
+                collectionRepo = { collectionRepo } >
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

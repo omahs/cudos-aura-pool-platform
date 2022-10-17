@@ -11,4 +11,5 @@ export default class AppRoutes {
     static FARM_VIEW = '/farm-view';
     static USER_PROFILE = '/profile';
     static EXPLORE_FARMS = '/explore-farms';
+    static EXPLORE_COLLECTIONS = '/explore-collections';
 }

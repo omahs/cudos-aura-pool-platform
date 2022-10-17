@@ -1,83 +1,52 @@
 import GridViewState from '../../../../core/presentation/stores/GridViewState';
-import { makeAutoObservable, observable } from 'mobx';
-import S from '../../../../core/utilities/Main';
+import { makeAutoObservable, runInAction } from 'mobx';
 import CollectionEntity from '../../entities/CollectionEntity';
+import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 
 export default class CollectionPreviewsGridState {
 
-    static TABLE_KEYS = ['Name', 'Price'];
-
-    fetchFunction: () => Promise < {collectionEntities: CollectionEntity[], total: number }>;
-    @observable gridViewState: GridViewState;
-
-    searchString: string;
-    selectedSortIndex: number;
-    selectedCategoryIndex: number;
+    fetchCollections: () => Promise < {collectionEntities: CollectionEntity[], total: number }>;
+    fetchMiningFarms: (farmIds: string[]) => Promise < MiningFarmEntity[] >;
+    gridViewState: GridViewState;
 
     collectionEntities: CollectionEntity[];
-    categories: string[];
+    miningFarmEntitiesMap: Map < string, MiningFarmEntity >;
 
-    constructor(fetchFunction: () => Promise < {collectionEntities: CollectionEntity[], total: number }>) {
-        this.fetchFunction = fetchFunction;
-
-        this.gridViewState = new GridViewState(this.fetchViewingModels, 3, 4, 6)
-        this.collectionEntities = [];
-        this.categories = [];
+    constructor(
+        fetchCollections: () => Promise < {collectionEntities: CollectionEntity[], total: number }>,
+        fetchMiningFarms: (farmIds: string[]) => Promise < MiningFarmEntity[] >,
+    ) {
+        this.fetchCollections = fetchCollections;
+        this.fetchMiningFarms = fetchMiningFarms;
+        this.gridViewState = new GridViewState(this.fetchViewingModels, 3, 4, 6);
 
         this.resetDefaults();
 
         makeAutoObservable(this);
     }
 
-    resetDefaults = () => {
+    resetDefaults() {
         this.gridViewState.resetDefaults()
-        this.selectedSortIndex = 0;
-        this.searchString = S.Strings.EMPTY;
-        this.selectedCategoryIndex = 0;
         this.collectionEntities = [];
-    }
-
-    async init(categories) {
-        this.categories = categories;
-        await this.fetchViewingModels();
     }
 
     fetchViewingModels = async () => {
         this.gridViewState.setIsLoading(true);
-        const { collectionEntities, total } = await this.fetchFunction();
+        const { collectionEntities, total } = await this.fetchCollections();
+        const miningFarmEntities = await this.fetchMiningFarms(collectionEntities.map((collectionEntity) => {
+            return collectionEntity.farmId;
+        }));
 
-        this.collectionEntities = collectionEntities;
-        this.gridViewState.setTotalItems(total);
-        this.gridViewState.setIsLoading(false);
-    }
+        const miningFarmEntitiesMap = new Map();
+        miningFarmEntities.forEach((miningFarmEntity) => {
+            miningFarmEntitiesMap.set(miningFarmEntity.id, miningFarmEntity);
+        });
 
-    getSelectedKey() {
-        return CollectionPreviewsGridState.TABLE_KEYS[this.selectedSortIndex];
-    }
-
-    selectCategory(index: number) {
-        this.selectedCategoryIndex = index;
-        this.fetchViewingModels();
-    }
-
-    getCategoryName(): string {
-        return this.categories[this.selectedCategoryIndex];
-    }
-
-    changeSearchString = (searchString: string) => {
-        this.searchString = searchString;
-        this.fetchViewingModels();
-    }
-
-    setSortByIndex = (index: number) => {
-        this.selectedSortIndex = index;
-
-        this.fetchViewingModels();
-    }
-
-    getCollectionById(collectionId: string): CollectionEntity {
-        const collectionEntity = this.collectionEntities.find((colllectionProfileEntity: CollectionEntity) => colllectionProfileEntity.id === collectionId);
-
-        return collectionEntity;
+        runInAction(() => {
+            this.miningFarmEntitiesMap = miningFarmEntitiesMap;
+            this.collectionEntities = collectionEntities;
+            this.gridViewState.setTotalItems(total);
+            this.gridViewState.setIsLoading(false);
+        });
     }
 }
