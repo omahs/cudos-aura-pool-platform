@@ -118,14 +118,14 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
                                     <div className={'OwnerPicture'}></div>
                                     <div className={'OwnerInfo FlexColumn'}>
                                         <div className={'AddressName B1 SemiBold'}>Creator</div>
-                                        <div className={'Address'}>{ProjectUtils.shortenString(nftEntity.creatorAddress, 25)}</div>
+                                        <div className={'Address'}>{ProjectUtils.shortenAddressString(nftEntity.creatorAddress, 25)}</div>
                                     </div>
                                 </div>
                                 <div className={'FlexRow OwnerBox'}>
                                     <div className={'OwnerPicture'}></div>
                                     <div className={'OwnerInfo FlexColumn'}>
                                         <div className={'AddressName B1 SemiBold'}>Current Owner</div>
-                                        <div className={'Address'}>{ProjectUtils.shortenString(nftEntity.currentOwnerAddress, 25)}</div>
+                                        <div className={'Address'}>{ProjectUtils.shortenAddressString(nftEntity.currentOwnerAddress, 25)}</div>
                                     </div>
                                 </div>
                             </div>

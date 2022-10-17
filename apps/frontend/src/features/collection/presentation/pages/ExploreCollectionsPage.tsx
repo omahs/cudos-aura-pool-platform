@@ -37,7 +37,7 @@ function ExploreCollectionsPage({ appStore, repoStore, categoriesStore }: Props)
     useEffect(() => {
         appStore.useLoading(async () => {
             await categoriesStore.init();
-            await state.init();
+            await state.init(categoriesStore.categoryEntities);
         });
     }, [])
 
@@ -46,31 +46,35 @@ function ExploreCollectionsPage({ appStore, repoStore, categoriesStore }: Props)
             className = { 'PageExploreCollections' } >
             <PageHeader />
             <div className={'PageContent AppContent'} >
-                {/* <div className={'ExploreCollections FlexColumn'}>
+                <div className={'ExploreCollections FlexColumn'}>
                     <div className={'PageHeading H1 Bold'}>Explore Collections</div>
-                    <Input
-                        inputType={InputType.TEXT}
-                        className={'SearchBar'}
-                        value = {collectionPreviewsGridState.current.searchString}
-                        onChange = { collectionPreviewsGridState.current.changeSearchString }
-                        placeholder = {'Search Collections name'}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start" >
-                                <Svg svg={SearchIcon} />
-                            </InputAdornment>,
-                        }}
-                    />
+                    <div className={'Grid GridColumns3'}>
+                        <div></div>
+                        <Input
+                            inputType={InputType.TEXT}
+                            className={'SearchBar'}
+                            value = {state.searchString()}
+                            onChange = { state.setSearchString }
+                            placeholder = {'Search Collections name'}
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start" >
+                                    <Svg svg={SearchIcon} />
+                                </InputAdornment>,
+                            }}
+                        />
+                        <div></div>
+                    </div>
                     <div className={'CategoriesRow FlexRow'}>
-                        {collectionPreviewsGridState.current.categories.map((category, index) => <div
+                        {state.categories.map((category, index) => <div
                             key={index}
-                            onClick={() => collectionPreviewsGridState.current.selectCategory(index)}
-                            className={`CategoryName Clickable B2 SemiBold ${S.CSS.getActiveClassName(collectionPreviewsGridState.current.selectedCategoryIndex === index)}`}
+                            onClick={() => state.toggleCategory(index)}
+                            className={`CategoryName Clickable B2 SemiBold ${S.CSS.getActiveClassName(state.isCategorySelected(index))}`}
                         >
-                            {category}
+                            {category.categoryName}
                         </div>)
                         }
                     </div>
-                </div> */}
+                </div>
                 <CollectionPreviewsGrid
                     collectionFilterModel={state.collectionFilterModel}
                     collectionPreviewsGridState = {state.collectionPreviewsGridState} />

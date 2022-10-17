@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import S from '../../../core/utilities/Main';
 
 export default class CollectionFilterModel {
@@ -20,7 +21,9 @@ export default class CollectionFilterModel {
         this.searchString = '';
         this.from = -1;
         this.count = -1;
-        this.categoryIds = [];
+        this.categoryIds = ['0'];
+
+        makeAutoObservable(this);
     }
 
     static toJson(model) {

@@ -83,7 +83,7 @@ function PageHeader({ accountSessionStore, walletStore }: Props) {
                             <div className={'Bold'}>{walletStore.getBalance()} CUDOS</div>
                         </div>
                         <div className={'FlexRow AddressRow'}>
-                            <div className={'Bold'}>{ProjectUtils.shortenString(walletStore.address, 20)}</div>
+                            <div className={'Bold'}>{ProjectUtils.shortenAddressString(walletStore.address, 20)}</div>
                             <Svg className={'Clickable'} onClick={onClickAddressMenu} svg={MoreVertIcon} />
                         </div>
 
@@ -101,7 +101,7 @@ function PageHeader({ accountSessionStore, walletStore }: Props) {
                             }}
                         >
                             <div className={'PageHeaderAddressPopover FlexColumn'}>
-                                <div className={'Address B2'}>{ProjectUtils.shortenString(walletStore.address, 20)}</div>
+                                <div className={'Address B2'}>{ProjectUtils.shortenAddressString(walletStore.address, 20)}</div>
                                 <div className={'ButtonRow FlexRow'}>
                                     <Svg className={'Clickable'} svg={FileCopyIcon} onClick={onClickCopyAddress}/>
                                     <a href={`${CHAIN_DETAILS.EXPLORER_URL[walletStore.selectedNetwork]}/accounts/${walletStore.address}`} target={'_blank'} rel="noreferrer"><Svg svg={LaunchIcon} /></a>
