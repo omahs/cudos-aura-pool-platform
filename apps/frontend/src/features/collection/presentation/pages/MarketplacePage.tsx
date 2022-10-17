@@ -22,7 +22,6 @@ import Slider from '../../../../core/presentation/components/Slider';
 import NftEntity from '../../../nft/entities/NftEntity';
 import NftPreviewInPicture from '../../../nft/presentation/components/NftPreviewInPicture';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
-import MiningFarmPeview from '../../../mining-farm/presentation/components/MiningFarmPreview';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import MiningFarmPreview from '../../../mining-farm/presentation/components/MiningFarmPreview';
 
@@ -67,10 +66,10 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                         { marketplaceStore.categories.map((category, index) => {
                             return (
                                 <div
-                                    key={index}
+                                    key={category.categoryId}
                                     onClick={() => marketplaceStore.selectCategory(index)}
                                     className={`CategoryName Transition Clickable ${S.CSS.getActiveClassName(marketplaceStore.selectedCategoryIndex === index)}`} >
-                                    {category}
+                                    {category.categoryName}
                                 </div>
                             )
                         }) }

@@ -7,6 +7,7 @@ import NftEntity from '../../../nft/entities/NftEntity';
 import NftRepo from '../../../nft/presentation/repos/NftRepo';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRepo';
+import CategoryEntity from '../../entities/CategoryEntity';
 
 export default class MarketplaceStore {
 
@@ -34,7 +35,7 @@ export default class MarketplaceStore {
 
     cudosPrice: number;
     cudosPriceChange: number;
-    categories: string[];
+    categories: CategoryEntity[];
 
     constructor(cudosStore: CudosStore, collectionRepo: CollectionRepo, nftRepo: NftRepo, miningFarmRepo: MiningFarmRepo) {
         this.cudosStore = cudosStore;

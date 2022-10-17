@@ -3,6 +3,7 @@ import { makeAutoObservable, observable } from 'mobx';
 import S from '../../../../core/utilities/Main';
 import NftEntity from '../../entities/NftEntity';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
+import CategoryEntity from '../../../collection/entities/CategoryEntity';
 
 export default class NftPreviewsGridState {
 
@@ -18,7 +19,7 @@ export default class NftPreviewsGridState {
 
     collectionEntities: CollectionEntity[];
     nftEntities: NftEntity[];
-    categories: string[];
+    categories: CategoryEntity[];
 
     constructor(fetchFunction: () => Promise < {nftEntities: NftEntity[], total: number, collectionEntities: CollectionEntity[] }>) {
         this.fetchFunction = fetchFunction;
@@ -68,7 +69,7 @@ export default class NftPreviewsGridState {
     }
 
     getCategoryName(): string {
-        return this.categories[this.selectedCategoryIndex];
+        return this.categories[this.selectedCategoryIndex].categoryName;
     }
 
     changeSearchString = (searchString: string) => {
