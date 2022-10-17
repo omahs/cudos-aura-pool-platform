@@ -14,6 +14,10 @@ export default class MiningFarmApiRepo implements MiningFarmRepo {
         return this.miningFarmApi.fetchAllMiningFarms();
     }
 
+    async fetchPopularMiningFarms(): Promise < MiningFarmEntity[] > {
+        return this.miningFarmApi.fetchPopularMiningFarms();
+    }
+
     async fetchMiningFarmById(miningFarmId: string): Promise < MiningFarmEntity > {
         return this.miningFarmApi.fetchMiningFarmById(miningFarmId);
     }

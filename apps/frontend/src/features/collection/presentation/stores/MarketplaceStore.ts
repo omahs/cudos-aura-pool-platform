@@ -5,6 +5,8 @@ import CollectionRepo from '../repos/CollectionRepo';
 import CudosStore from '../../../cudos-data/presentation/stores/CudosStore';
 import NftEntity from '../../../nft/entities/NftEntity';
 import NftRepo from '../../../nft/presentation/repos/NftRepo';
+import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
+import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRepo';
 
 export default class MarketplaceStore {
 
@@ -18,6 +20,7 @@ export default class MarketplaceStore {
 
     collectionRepo: CollectionRepo;
     nftRepo: NftRepo;
+    miningFarmRepo: MiningFarmRepo;
 
     selectedCategoryIndex: number;
     searchString: string;
@@ -27,20 +30,19 @@ export default class MarketplaceStore {
     topCollectionEntities: CollectionEntity[];
     newNftDropsEntities: NftEntity[];
     trendingNftEntities: NftEntity[];
+    popularFarmsEntities: MiningFarmEntity[];
 
     cudosPrice: number;
     cudosPriceChange: number;
     categories: string[];
 
-    constructor(cudosStore: CudosStore, collectionRepo: CollectionRepo, nftRepo: NftRepo) {
+    constructor(cudosStore: CudosStore, collectionRepo: CollectionRepo, nftRepo: NftRepo, miningFarmRepo: MiningFarmRepo) {
         this.cudosStore = cudosStore;
         this.collectionRepo = collectionRepo;
         this.nftRepo = nftRepo;
+        this.miningFarmRepo = miningFarmRepo;
 
         this.collectionMap = new Map < string, CollectionEntity >();
-        this.topCollectionEntities = [];
-        this.newNftDropsEntities = [];
-        this.trendingNftEntities = [];
 
         this.categories = [];
         this.cudosPrice = S.NOT_EXISTS;
@@ -59,6 +61,7 @@ export default class MarketplaceStore {
         this.topCollectionEntities = [];
         this.newNftDropsEntities = [];
         this.trendingNftEntities = [];
+        this.popularFarmsEntities = [];
     }
 
     async init() {
@@ -71,6 +74,7 @@ export default class MarketplaceStore {
         await this.fetchTopCollections();
         await this.fetchNewNftDrops();
         this.fetchTrendingNfts();
+        this.fetchPopularFarms();
 
         this.cudosPrice = this.cudosStore.getCudosPrice();
         this.cudosPriceChange = this.cudosStore.getBitcoinPriceChange();
@@ -92,6 +96,10 @@ export default class MarketplaceStore {
         this.trendingNftEntities = await this.nftRepo.fetchTrendingNfts();
 
         await this.fetchCollectionsForEntities(this.trendingNftEntities);
+    }
+
+    async fetchPopularFarms() {
+        this.popularFarmsEntities = await this.miningFarmRepo.fetchPopularMiningFarms();
     }
 
     async fetchCollectionsForEntities(nftEntities: NftEntity[]) {
