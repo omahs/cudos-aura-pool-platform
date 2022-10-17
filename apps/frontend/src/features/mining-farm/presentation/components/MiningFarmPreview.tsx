@@ -18,7 +18,7 @@ export default function MiningFarmPeview({ miningFarmEntity }: Props) {
     }
 
     return (
-        <div className={'MiningFarmPreview FlexColumn BorderContainer'} onClick={onClickMiningFarm}>
+        <div className={'MiningFarmPreview FlexColumn BorderContainer Clickable'} onClick={onClickMiningFarm}>
             <div
                 className={'MiningFarmPreviewCoverImage'}
                 style={{

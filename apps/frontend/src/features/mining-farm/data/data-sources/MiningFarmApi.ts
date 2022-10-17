@@ -1,4 +1,5 @@
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
+import MiningFarmFilterModel from '../../utilities/MiningFarmFilterModel';
 
 export default class MiningFarmApi {
 
@@ -11,6 +12,10 @@ export default class MiningFarmApi {
     }
 
     async fetchMiningFarmsByIds(miningFarmIds: string[]): Promise < MiningFarmEntity[] > {
+        return null;
+    }
+
+    async fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} > {
         return null;
     }
 }

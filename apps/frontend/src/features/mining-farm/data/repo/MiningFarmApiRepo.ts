@@ -1,5 +1,6 @@
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../../presentation/repos/MiningFarmRepo';
+import MiningFarmFilterModel from '../../utilities/MiningFarmFilterModel';
 import MiningFarmApi from '../data-sources/MiningFarmApi';
 
 export default class MiningFarmApiRepo implements MiningFarmRepo {
@@ -20,5 +21,9 @@ export default class MiningFarmApiRepo implements MiningFarmRepo {
 
     async fetchMiningFarmsByIds(miningFarmIds: string[]): Promise < MiningFarmEntity[] > {
         return this.miningFarmApi.fetchMiningFarmsByIds(miningFarmIds);
+    }
+
+    async fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} > {
+        return this.miningFarmApi.fetchMiningFarmsByFilter(miningFarmFilterModel);
     }
 }

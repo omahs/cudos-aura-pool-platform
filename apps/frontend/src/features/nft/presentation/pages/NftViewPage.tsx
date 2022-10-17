@@ -22,6 +22,7 @@ import ResellNftModalStore from '../stores/ResellNftModalStore';
 import ResellNftModal from '../components/ResellNftModal';
 import WalletStore from '../../../ledger/presentation/stores/WalletStore';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
+import ProjectUtils from '../../../../core/utilities/ProjectUtils';
 
 interface Props {
     walletStore?: WalletStore;
@@ -117,14 +118,14 @@ function NftViewPage({ walletStore, nftDetailsStore, buyNftModalStore, resellNft
                                     <div className={'OwnerPicture'}></div>
                                     <div className={'OwnerInfo FlexColumn'}>
                                         <div className={'AddressName B1 SemiBold'}>Creator</div>
-                                        <div className={'Address'}>{nftEntity.creatorAddress}</div>
+                                        <div className={'Address'}>{ProjectUtils.shortenString(nftEntity.creatorAddress, 25)}</div>
                                     </div>
                                 </div>
                                 <div className={'FlexRow OwnerBox'}>
                                     <div className={'OwnerPicture'}></div>
                                     <div className={'OwnerInfo FlexColumn'}>
                                         <div className={'AddressName B1 SemiBold'}>Current Owner</div>
-                                        <div className={'Address'}>{nftEntity.currentOwnerAddress}</div>
+                                        <div className={'Address'}>{ProjectUtils.shortenString(nftEntity.currentOwnerAddress, 25)}</div>
                                     </div>
                                 </div>
                             </div>
