@@ -2,27 +2,30 @@ import React, { useEffect, useState } from 'react';
 
 import '../styles/page-explore-farms-component.css';
 import AppStore from '../../../../core/presentation/stores/AppStore';
-import { useNavigate } from 'react-router-dom';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import { inject, observer } from 'mobx-react';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
-import Input, { InputType } from 'apps/frontend/src/core/presentation/components/Input';
+import Input, { InputType } from '../../../../core/presentation/components/Input';
 import InputAdornment from '@mui/material/InputAdornment';
-import Svg from 'apps/frontend/src/core/presentation/components/Svg';
+import Svg from '../../../../core/presentation/components/Svg';
 import SearchIcon from '@mui/icons-material/Search';
+import ExploreMiningFarmsPageState from '../stores/ExploreMiningFarmsPageState';
+import RepoStore from '../../../../core/presentation/stores/RepoStore';
+import MiningFarmPreviewsGrid from '../components/MiningFarmPreviewsGrid';
 
 interface Props {
     appStore?: AppStore
+    repoStore?: RepoStore
 }
 
-function ExploreFarmsPage({ appStore }: Props) {
+function ExploreFarmsPage({ appStore, repoStore }: Props) {
 
-    const [searchString, setSearchString] = useState('');
+    const [state] = useState(new ExploreMiningFarmsPageState(repoStore.miningFarmRepo));
 
     useEffect(() => {
         appStore.useLoading(async () => {
-            await exploreFarmsPageStore.init();
+            await state.init();
         });
     }, []);
 
@@ -32,19 +35,23 @@ function ExploreFarmsPage({ appStore }: Props) {
             <PageHeader />
             <div className={'PageContent AppContent FlexColumn'} >
                 <div className={'H2 Bold'}>Explore Farms</div>
-                <Input
-                    inputType={InputType.TEXT}
-                    className={'SearchBar'}
-                    value = {searchString}
-                    onChange = { setSearchString }
-                    placeholder = {'Search Collections name'}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start" >
-                            <Svg svg={SearchIcon} />
-                        </InputAdornment>,
-                    }}
-                />
-                <FarmPreviewsGrid farmPreviewGridState={farmViewPageStore.collectionPreviewsGridState}/>
+                <div className={'Grid GridColumns3'}>
+                    <div></div>
+                    <Input
+                        inputType={InputType.TEXT}
+                        className={'SearchBar'}
+                        value = {state.getSearchString()}
+                        onChange = { state.setSearchString }
+                        placeholder = {'Search Collections name'}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start" >
+                                <Svg svg={SearchIcon} />
+                            </InputAdornment>,
+                        }}
+                    />
+                    <div></div>
+                </div>
+                <MiningFarmPreviewsGrid miningFarmPreviewsGridState={state.miningFarmPreviewsGridState} miningFarmFilterModel={state.miningFarmFilterModel} />
             </div>
             <PageFooter />
         </PageLayoutComponent>

@@ -18,6 +18,7 @@ import { inject, observer } from 'mobx-react';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import ExploreCollectionsPage from '../../../collection/presentation/pages/ExploreCollectionsPage';
+import ExploreFarmsPage from '../../../mining-farm/presentation/pages/ExploreFarmsPage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -60,6 +61,7 @@ function AppRouter({ accountSessionStore }: Props) {
                     <Route path = { AppRoutes.MARKETPLACE } element = { <MarketplacePage /> } />
                     <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPage /> } />
                     <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPage /> } />
+                    <Route path = { AppRoutes.EXPLORE_FARMS } element = { <ExploreFarmsPage /> } />
                     <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePage /> } />
                     <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />
                     <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPage /> } />
