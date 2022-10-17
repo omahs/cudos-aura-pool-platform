@@ -1,10 +1,11 @@
+import CategoryEntity from '../../entities/CategoryEntity';
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
 import CollectionFilterModel from '../../utilities/CollectionFilterModel';
 
 export default class CollectionApi implements CollectionRepo {
 
-    async fetchCategories(): Promise < string [] > {
+    async fetchCategories(): Promise < CategoryEntity [] > {
         return null;
     }
 

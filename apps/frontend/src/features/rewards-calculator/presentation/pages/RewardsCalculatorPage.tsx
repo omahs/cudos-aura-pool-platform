@@ -1,5 +1,3 @@
-/* global TR */
-
 import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
@@ -26,20 +24,17 @@ import Autocomplete from '../../../../core/presentation/components/Autcomplete';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import AutocompleteOption from '../../../../core/entities/AutocompleteOption';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
-import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
 
 interface Props {
-    bitcoinStore?: BitcoinStore;
     rewardsCalculatorStore?: RewardsCalculatorStore
 }
 
-function RewardsCalculatorPage({ rewardsCalculatorStore, bitcoinStore }: Props) {
+function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
     const [networkDifficultyEditEnabled, setNetworkDifficultyEditEnabled] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         async function run() {
-            bitcoinStore.init();
             rewardsCalculatorStore.init();
         }
         run();
@@ -56,8 +51,8 @@ function RewardsCalculatorPage({ rewardsCalculatorStore, bitcoinStore }: Props) 
     const selectedFarmIndex = rewardsCalculatorStore.selectedFarmIndex;
     const selectedFarmName = rewardsCalculatorStore.getSelectedFarmName();
 
-    const bitcoinPrice = bitcoinStore.getBitcoinPrice();
-    const bitcoinPriceChange = bitcoinStore.getBitcoinPriceChange();
+    const bitcoinPrice = rewardsCalculatorStore.bitcoinStore.getBitcoinPrice();
+    const bitcoinPriceChange = rewardsCalculatorStore.bitcoinStore.getBitcoinPriceChange();
 
     const networkDifficulty = rewardsCalculatorStore.getNetworkDifficulty();
 

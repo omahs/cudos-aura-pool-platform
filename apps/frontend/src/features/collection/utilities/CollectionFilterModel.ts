@@ -11,6 +11,7 @@ export default class CollectionFilterModel {
     searchString: string;
     from: number;
     count: number;
+    categoryIds: string[];
 
     constructor() {
         this.sessionAccount = S.INT_FALSE;
@@ -19,6 +20,7 @@ export default class CollectionFilterModel {
         this.searchString = '';
         this.from = -1;
         this.count = -1;
+        this.categoryIds = [];
     }
 
     static toJson(model) {
@@ -33,6 +35,7 @@ export default class CollectionFilterModel {
             searchString: model.searchString,
             from: model.from,
             count: model.count,
+            categoryIds: model.categoryIds,
         }
     }
 
@@ -49,6 +52,7 @@ export default class CollectionFilterModel {
         model.searchString = json.searchString ?? model.searchString;
         model.from = parseInt(json.from ?? model.from);
         model.count = parseInt(json.count ?? model.count);
+        model.categoryIds = (json.categoryIds ?? model.categoryIds).map((j) => j.toString());
 
         return model;
     }
