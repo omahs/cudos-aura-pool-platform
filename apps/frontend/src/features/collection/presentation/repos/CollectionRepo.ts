@@ -13,4 +13,5 @@ export default interface CollectionRepo {
     fetchCollectionEntity(collectionId: string): Promise < CollectionEntity >;
 
     fetchCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number): Promise < { collectionEntities: CollectionEntity[], total: number } >;
+
 }
