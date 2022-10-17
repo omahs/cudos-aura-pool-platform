@@ -18,23 +18,17 @@ import CollectionRepo from '../repos/CollectionRepo';
 import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRepo';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import CollectionPreviewsGrid from '../components/CollectionPreviewsGrid';
+import CollectionFilterModel from '../../utilities/CollectionFilterModel';
 
 type Props = {
     collectionsRepo: CollectionRepo
     miningFarmRepo: MiningFarmRepo;
 }
 
-function ExploreNftsPage({ collectionsRepo, miningFarmRepo }: Props) {
+function ExploreCollectionsPage({ collectionsRepo, miningFarmRepo }: Props) {
 
-    const fetchFunction = async (): Promise < {collectionEntities: CollectionEntity[], total: number, miningFarmEntities: MiningFarmEntity[]}> => {
-        // const { collectionEntities, total } = await collectionsRepo.fetchCollectionsByCategoryAndSearchSortedPaginated(
-        //     '',
-        //     collectionPreviewsGridState.current.searchString,
-        //     'All',
-        //     collectionPreviewsGridState.current.getSelectedKey(),
-        //     collectionPreviewsGridState.current.gridViewState.getFrom(),
-        //     collectionPreviewsGridState.current.gridViewState.getItemsPerPage(),
-        // );
+    const fetchFunction = async (collectionFilterModel: CollectionFilterModel): Promise < {collectionEntities: CollectionEntity[], total: number, miningFarmEntities: MiningFarmEntity[]}> => {
+        const { collectionEntities, total } = await collectionsRepo.fetchCollectionsByFilter(collectionFilterModel);
 
         const farmIds = collectionEntities.map((collectionEntity: CollectionEntity) => collectionEntity.farmId);
 
@@ -86,4 +80,4 @@ function ExploreNftsPage({ collectionsRepo, miningFarmRepo }: Props) {
 
 }
 
-export default inject((stores) => stores)(observer(ExploreNftsPage));
+export default inject((stores) => stores)(observer(ExploreCollectionsPage));

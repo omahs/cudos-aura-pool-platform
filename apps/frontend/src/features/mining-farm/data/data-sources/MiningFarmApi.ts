@@ -11,4 +11,7 @@ export default class MiningFarmApi implements MiningFarmRepo {
         return null;
     }
 
+    async fetchMiningFarmsByIds(miningFarmIds: string[]): Promise < MiningFarmEntity[] > {
+        return null;
+    }
 }

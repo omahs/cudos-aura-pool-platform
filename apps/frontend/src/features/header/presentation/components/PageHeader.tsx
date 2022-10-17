@@ -25,7 +25,7 @@ interface Props {
 function PageHeader({ walletStore }: Props) {
     const navigate = useNavigate();
     const location = useLocation();
-    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
     function isLocationMarketplace(): boolean {
         return location.pathname !== AppRoutes.REWARDS_CALCULATOR && location.pathname !== AppRoutes.USER_PROFILE
