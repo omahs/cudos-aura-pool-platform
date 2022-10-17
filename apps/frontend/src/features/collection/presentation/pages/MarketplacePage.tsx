@@ -113,8 +113,8 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                 <Actions
                     layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
                     height={ACTIONS_HEIGHT.HEIGHT_48}>
-                    {/* TODO: redirect */}
                     <Button
+                        onClick={() => navigate(AppRoutes.EXPLORE_COLLECTIONS)}
                         padding={BUTTON_PADDING.PADDING_24}
                         type={BUTTON_TYPE.ROUNDED}>
                         See All Collections
