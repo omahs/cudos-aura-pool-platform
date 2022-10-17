@@ -17,12 +17,14 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import LaunchIcon from '@mui/icons-material/Launch';
 import ProjectUtils from '../../../../core/utilities/ProjectUtils';
 import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
+import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 
 interface Props {
+    accountSessionStore?: AccountSessionStore,
     walletStore?: WalletStore
 }
 
-function PageHeader({ walletStore }: Props) {
+function PageHeader({ accountSessionStore, walletStore }: Props) {
     const navigate = useNavigate();
     const location = useLocation();
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -50,9 +52,16 @@ function PageHeader({ walletStore }: Props) {
         ProjectUtils.copyText(walletStore.address)
     }
 
-    function onClickDisconnect() {
-        walletStore.disconnect();
+    async function onClickDisconnect() {
+        await accountSessionStore.logout();
         setAnchorEl(null);
+    }
+
+    async function onClickLogin() {
+        await walletStore.connectKeplr();
+
+        // prepare a signed tx for register
+        await accountSessionStore.login('', '', walletStore.getAddress(), '');
     }
 
     const open = Boolean(anchorEl);
@@ -105,7 +114,7 @@ function PageHeader({ walletStore }: Props) {
                     </>
                     : <>
                         <Actions height={ACTIONS_HEIGHT.HEIGHT_48}>
-                            <Button onClick={() => walletStore.connectKeplr()}>Connect Wallet</Button>
+                            <Button onClick={onClickLogin}>Connect Wallet</Button>
                         </Actions>
                     </>
                 }

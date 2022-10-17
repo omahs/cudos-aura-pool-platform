@@ -32,6 +32,7 @@ import RepoStore from './core/presentation/stores/RepoStore';
 import CategoriesStore from './features/collection/presentation/stores/CategoriesStore';
 
 const storageHelper = new StorageHelper();
+storageHelper.open();
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
@@ -47,7 +48,7 @@ const accountRepo = new AccountStorageRepo(storageHelper);
 const repoStore = new RepoStore(bitcoinRepo, cudosRepo, miningFarmRepo, collectionRepo, nftRepo, accountRepo);
 
 const walletStore = new WalletStore();
-const accountSessionStore = new AccountSessionStore(accountRepo);
+const accountSessionStore = new AccountSessionStore(walletStore, accountRepo);
 const bitcoinStore = new BitcoinStore(bitcoinRepo);
 const cudosStore = new CudosStore(cudosRepo);
 const categoriesStore = new CategoriesStore(collectionRepo);
@@ -68,8 +69,7 @@ const App = () => {
         removeInitalPageLoading();
 
         async function run() {
-            await walletStore.tryConnect();
-            await accountSessionStore.loadSessionAccounts();
+            await accountSessionStore.loadSessionAccountsAndSyncWalletStore();
         }
         run();
     }, []);
