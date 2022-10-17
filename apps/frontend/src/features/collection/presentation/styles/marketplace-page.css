@@ -46,3 +46,12 @@
     margin-top: 20px;
     margin-bottom: 80px;
 }
+
+.PageMarketplace .PopularFarms {
+    margin-top: 20px;
+    margin-bottom: 80px;
+}
+
+.PageMarketplace .PopularFarms .FarmPreviews {
+    gap: 30px;
+}

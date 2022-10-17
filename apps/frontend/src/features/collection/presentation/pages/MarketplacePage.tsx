@@ -22,6 +22,9 @@ import Slider from '../../../../core/presentation/components/Slider';
 import NftEntity from '../../../nft/entities/NftEntity';
 import NftPreviewInPicture from '../../../nft/presentation/components/NftPreviewInPicture';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
+import MiningFarmPeview from '../../../mining-farm/presentation/components/MiningFarmPreview';
+import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
+import MiningFarmPreview from '../../../mining-farm/presentation/components/MiningFarmPreview';
 
 type Props = {
     marketplaceStore?: MarketplaceStore
@@ -118,6 +121,26 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                         See All Collections
                     </Button>
                 </Actions>
+
+                <div className={'PopularFarms FlexColumn'}>
+                    <div className={'H2 Bold'}>Popular Farms</div>
+                    <div className={'FlexRow FarmPreviews'}>
+                        {marketplaceStore.popularFarmsEntities.map((miningFarmEntity: MiningFarmEntity, index: number) => <MiningFarmPreview
+                            key={index}
+                            miningFarmEntity={miningFarmEntity}
+                        />)}
+                    </div>
+                    <Actions
+                        layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
+                        height={ACTIONS_HEIGHT.HEIGHT_48}>
+                        <Button
+                            onClick={() => navigate(AppRoutes.EXPLORE_FARMS)}
+                            padding={BUTTON_PADDING.PADDING_24}
+                            type={BUTTON_TYPE.ROUNDED}>
+                        See All Farms
+                        </Button>
+                    </Actions>
+                </div>
             </div>
             <PageFooter />
         </PageLayoutComponent>

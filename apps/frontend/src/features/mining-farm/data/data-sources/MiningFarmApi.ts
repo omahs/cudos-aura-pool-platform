@@ -6,6 +6,10 @@ export default class MiningFarmApi {
         return null;
     }
 
+    async fetchPopularMiningFarms(): Promise < MiningFarmEntity[] > {
+        return null;
+    }
+
     async fetchMiningFarmsByIds(miningFarmIds: string[]): Promise < MiningFarmEntity[] > {
         return null;
     }
