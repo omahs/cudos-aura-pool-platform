@@ -51,10 +51,11 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
                 <div className={'PageContent AppContent'} >
                     <Breadcrumbs crumbs={crumbs}/>
                     <ProfileHeader coverPictureUrl={farm.coverImgUrl} profilePictureUrl={farm.profileImgurl} />
-                    <div className={'Heading2'}>{farm.name}</div>
+                    <div className={'H2'}>{farm.name}</div>
                     <div className={'Grid GridColumns2'}>
                         <div className={'FarmDescription'}>{farm.description}</div>
                         <div className={'BorderContainer'}>
+                            {/* TODO: use real data */}
                             <div className={'FlexRow FarmInfoRow'}>
                                 <div className={'FarmInfoLabel'}>Total Hashrate</div>
                                 <div className={'FarmInfoValue'}>102.000 EH/s</div>
