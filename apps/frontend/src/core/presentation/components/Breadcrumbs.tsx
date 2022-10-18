@@ -11,7 +11,7 @@ interface Crumb {
     onClick: () => void;
 }
 
-interface Props {
+type Props = {
     crumbs: Crumb[];
 }
 

@@ -19,7 +19,7 @@ import ProjectUtils from '../../../../core/utilities/ProjectUtils';
 import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 
-interface Props {
+type Props = {
     accountSessionStore?: AccountSessionStore,
     walletStore?: WalletStore
 }

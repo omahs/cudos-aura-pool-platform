@@ -6,7 +6,7 @@ import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import '../styles/nft-preview.css';
 import NftEntity from '../../entities/NftEntity';
 
-interface Props {
+type Props = {
     nftEntity: NftEntity,
     collectionName: string
 }

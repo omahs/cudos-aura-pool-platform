@@ -25,7 +25,7 @@ import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import AutocompleteOption from '../../../../core/entities/AutocompleteOption';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
 
-interface Props {
+type Props = {
     rewardsCalculatorStore?: RewardsCalculatorStore
 }
 

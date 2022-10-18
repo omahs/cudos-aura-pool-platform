@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../styles/profile-header.css';
 
-interface Props {
+type Props = {
     coverPictureUrl: string;
     profilePictureUrl: string;
 }

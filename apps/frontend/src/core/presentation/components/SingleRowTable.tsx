@@ -6,7 +6,7 @@ import TableRow from '../../entities/TableRow';
 import '../styles/single-row-table.css';
 import Table from './Table';
 
-interface Props {
+type Props = {
     content: any
     className: string
 }

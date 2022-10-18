@@ -5,7 +5,7 @@ import '../styles/nft-preview-inv-pricture.css';
 import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
-interface Props {
+type Props = {
     nftEntity: NftEntity
     collectionEntity: CollectionEntity
 }

@@ -23,7 +23,7 @@ import Select from '../../../../core/presentation/components/Select';
 
 import '../styles/page-explore-farms-component.css';
 
-interface Props {
+type Props = {
     appStore?: AppStore
     exploreMiningFarmsPageStore?: ExploreMiningFarmsPageStore;
 }

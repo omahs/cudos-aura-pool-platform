@@ -12,7 +12,7 @@ import GridViewState, { GRID_SETTING } from '../stores/GridViewState';
 import { ALIGN_CENTER } from './TableDesktop';
 import { observer } from 'mobx-react';
 
-interface Props {
+type Props = {
     gridViewState: GridViewState;
     defaultContent: React.ReactNode;
 }

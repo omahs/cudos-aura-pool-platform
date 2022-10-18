@@ -23,7 +23,7 @@ import NftPreview from '../../../nft/presentation/components/NftPreview';
 
 import '../styles/page-user-profile-component.css';
 
-interface Props {
+type Props = {
     appStore?: AppStore
     bitcoinStore?: BitcoinStore;
     accountSessionStore?: AccountSessionStore;

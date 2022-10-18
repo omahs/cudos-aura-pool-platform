@@ -23,7 +23,7 @@ import CollectionPreview from '../../../collection/presentation/components/Colle
 
 import '../styles/page-farm-view-component.css';
 
-interface Props {
+type Props = {
     appStore?: AppStore
     farmViewPageStore?: FarmViewPageStore,
 }
