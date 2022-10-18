@@ -60,15 +60,6 @@ export default class UserEntity {
     }
 
     static isEmptyEntity(userEntity: UserEntity): boolean {
-        console.log(userEntity.accountId === S.Strings.NOT_EXISTS
-            && userEntity.name === S.Strings.EMPTY
-            && userEntity.address === S.Strings.EMPTY
-            && userEntity.totalBtcEarned.eq(S.NOT_EXISTS)
-            && userEntity.totalHashPower === S.NOT_EXISTS
-            && userEntity.timestampJoined === S.NOT_EXISTS
-            && userEntity.profileImgurl === S.Strings.EMPTY
-            && userEntity.coverImgUrl === S.Strings.EMPTY);
-
         return userEntity !== null
         && userEntity.accountId === S.Strings.NOT_EXISTS
         && userEntity.name === S.Strings.EMPTY

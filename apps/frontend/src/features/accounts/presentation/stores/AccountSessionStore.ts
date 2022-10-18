@@ -63,7 +63,7 @@ export default class AccountSessionStore {
         this.inited = true;
     }
 
-    async login(username: string, password: string, walletAddress: string, signedTx: any): Promise < void > {
+    login = async (username: string, password: string, walletAddress: string, signedTx: any): Promise < void > => {
         try {
             await this.accountRepo.login(username, password, walletAddress, signedTx);
         } finally {

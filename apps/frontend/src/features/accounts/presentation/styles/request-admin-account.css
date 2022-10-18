@@ -1,0 +1,50 @@
+
+.RequestAdminAccountForm {
+    gap: 40px;
+    align-items: center;
+}
+
+.RequestAdminAccountForm .Heading{
+    width: 100%;
+}
+
+
+.RequestAdminAccountForm .NavBar {
+    justify-content: space-around;
+    width: 100%;
+    position: relative;
+}
+
+.RequestAdminAccountForm .NavBar .NavItem {
+    gap: 20px;
+    color: var(--color-gray-030);
+    align-items: center;
+}
+
+.RequestAdminAccountForm .NavBar .NavItem .NavNumber {
+    background-color: var(--color-gray-060);
+    height: 40px; width: 40px;
+    border-radius: 40px;
+    justify-content: center;
+    align-items: center;
+    border: 10px solid #fff;
+    z-index: 2;
+}
+
+.RequestAdminAccountForm .NavBar .NavItem.Active {
+    color: #000;
+}
+
+.RequestAdminAccountForm .NavBar .NavItem.Active .NavNumber {
+    color: #fff;
+    background-color: #000;
+}
+
+
+.RequestAdminAccountForm .NavBar .HorizontalSeparator {
+    position: absolute;
+    top: 28px;
+    border: 1px solid var(--color-gray-060);
+    width: 100%;
+    z-index: 1;
+}

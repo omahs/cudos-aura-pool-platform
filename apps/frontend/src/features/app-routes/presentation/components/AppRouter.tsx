@@ -19,6 +19,7 @@ import AccountSessionStore from '../../../accounts/presentation/stores/AccountSe
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import ExploreCollectionsPage from '../../../collection/presentation/pages/ExploreCollectionsPage';
 import ExploreFarmsPage from '../../../mining-farm/presentation/pages/ExploreFarmsPage';
+import AdminPortalPage from '../../../accounts/presentation/pages/AdminPortalPage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -66,6 +67,9 @@ function AppRouter({ accountSessionStore }: Props) {
                     <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />
                     <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPage /> } />
                     <Route path = { `${AppRoutes.FARM_VIEW}/:farmId` } element = { <FarmViewPage /> } />
+
+                    <Route path = { AppRoutes.ADMIN_PORTAL } element = { <AdminPortalPage /> } />
+
                 </Routes>
             ) }
         </div>

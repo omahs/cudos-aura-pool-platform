@@ -1,0 +1,11 @@
+.AdminLoginForm {
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.AdminLoginForm .ForgottenPassword, .AdminLoginForm .RequestAccount {
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+
+ 

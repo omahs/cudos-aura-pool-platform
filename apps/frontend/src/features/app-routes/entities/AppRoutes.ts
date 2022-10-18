@@ -12,4 +12,6 @@ export default class AppRoutes {
     static USER_PROFILE = '/profile';
     static EXPLORE_FARMS = '/explore-farms';
     static EXPLORE_COLLECTIONS = '/explore-collections';
+
+    static ADMIN_PORTAL = '/admin-portal';
 }
