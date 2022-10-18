@@ -19,7 +19,7 @@ import ProjectUtils from '../../../../core/utilities/ProjectUtils';
 import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 
-interface Props {
+type Props = {
     accountSessionStore?: AccountSessionStore,
     walletStore?: WalletStore
 }
@@ -34,7 +34,7 @@ function PageHeader({ accountSessionStore, walletStore }: Props) {
     }
 
     function onClickAddress() {
-        navigate(`${AppRoutes.USER_PROFILE}/${walletStore.getAddress()}`)
+        navigate(AppRoutes.USER_PROFILE);
     }
 
     function onClickAddressMenu(event) {

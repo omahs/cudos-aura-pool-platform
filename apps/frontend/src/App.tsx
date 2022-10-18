@@ -18,7 +18,7 @@ import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModa
 import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
 import NftDetailsStore from './features/nft/presentation/stores/NftDetailsStore';
 import CollectionViewPageStore from './features/collection/presentation/stores/CollectionViewPageStore';
-import FarmViewPageStore from './features/mining-farm/presentation/stores/FarmViewPageStore';
+import MiningFarmViewPageStore from './features/mining-farm/presentation/stores/MiningFarmViewPageStore';
 import WalletStore from './features/ledger/presentation/stores/WalletStore';
 import BuyNftModalStore from './features/nft/presentation/stores/BuyNftModalStore';
 import ResellNftModalStore from './features/nft/presentation/stores/ResellNftModalStore';
@@ -30,6 +30,9 @@ import AccountStorageRepo from './features/accounts/data/repo/AccountStorageRepo
 import AccountSessionStore from './features/accounts/presentation/stores/AccountSessionStore';
 import RepoStore from './core/presentation/stores/RepoStore';
 import CategoriesStore from './features/collection/presentation/stores/CategoriesStore';
+import ExploreCollectionsPageStore from './features/collection/presentation/stores/ExploreCollectionsPageStore';
+import ExploreMiningFarmsPageStore from './features/mining-farm/presentation/stores/ExploreMiningFarmsPageStore';
+import ExploreNftsPageStore from './features/nft/presentation/stores/ExploreNftsPageStore';
 
 const storageHelper = new StorageHelper();
 storageHelper.open();
@@ -52,12 +55,15 @@ const accountSessionStore = new AccountSessionStore(walletStore, accountRepo);
 const bitcoinStore = new BitcoinStore(bitcoinRepo);
 const cudosStore = new CudosStore(cudosRepo);
 const categoriesStore = new CategoriesStore(collectionRepo);
+const exploreCollectionsPageStore = new ExploreCollectionsPageStore(collectionRepo, miningFarmRepo);
+const exploreMiningFarmsPageStore = new ExploreMiningFarmsPageStore(miningFarmRepo);
+const exploreNftsPageStore = new ExploreNftsPageStore(nftRepo, collectionRepo);
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFarmRepo);
 const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo, nftRepo, miningFarmRepo);
 const nftDetailsStore = new NftDetailsStore(bitcoinStore, cudosStore, nftRepo);
 const collectionViewPageStore = new CollectionViewPageStore(nftRepo, collectionRepo, miningFarmRepo);
-const farmViewPageStore = new FarmViewPageStore(miningFarmRepo, collectionRepo);
-const userProfilePageStore = new UserProfilePageStore(bitcoinStore, walletStore, nftRepo, collectionRepo);
+const miningFarmViewPageStore = new MiningFarmViewPageStore(miningFarmRepo, collectionRepo);
+const userProfilePageStore = new UserProfilePageStore(walletStore, nftRepo, collectionRepo);
 const buyNftModalStore = new BuyNftModalStore();
 const resellNftModalStore = new ResellNftModalStore();
 
@@ -87,15 +93,16 @@ const App = () => {
                 accountSessionStore = { accountSessionStore }
                 exampleModalStore = { exampleModalStore }
                 rewardsCalculatorStore = { rewardsCalculatorStore }
+                exploreCollectionsPageStore = { exploreCollectionsPageStore }
+                exploreMiningFarmsPageStore = { exploreMiningFarmsPageStore }
+                exploreNftsPageStore = { exploreNftsPageStore }
                 marketplaceStore = { marketplaceStore }
                 nftDetailsStore = { nftDetailsStore }
                 collectionViewPageStore = { collectionViewPageStore }
-                farmViewPageStore = { farmViewPageStore }
+                miningFarmViewPageStore = { miningFarmViewPageStore }
                 userProfilePageStore = { userProfilePageStore }
                 buyNftModalStore = { buyNftModalStore }
-                resellNftModalStore = { resellNftModalStore }
-                nftRepo = { nftRepo }
-                collectionRepo = { collectionRepo } >
+                resellNftModalStore = { resellNftModalStore } >
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

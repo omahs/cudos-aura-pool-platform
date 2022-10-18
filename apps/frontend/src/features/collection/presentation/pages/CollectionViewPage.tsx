@@ -2,20 +2,30 @@
 
 import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
-import LaunchIcon from '@mui/icons-material/Launch';
-import '../styles/page-collection-view-component.css';
-import NftPreviewsGrid from '../../../nft/presentation/components/NftPreviewsGrid';
-import ProfileHeader from '../components/ProfileHeader';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import ProjectUtils from '../../../../core/utilities/ProjectUtils';
+import CollectionViewPageStore from '../stores/CollectionViewPageStore';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import NftEntity from '../../../nft/entities/NftEntity';
+import NftFilterModel from '../../../nft/utilities/NftFilterModel';
+
+import { MenuItem } from '@mui/material';
+import LaunchIcon from '@mui/icons-material/Launch';
+import ProfileHeader from '../components/ProfileHeader';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
-import CollectionViewPageStore from '../stores/CollectionViewPageStore';
-import { useNavigate, useParams } from 'react-router-dom';
 import Svg from '../../../../core/presentation/components/Svg';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import Select from '../../../../core/presentation/components/Select';
+import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import GridView from '../../../../core/presentation/components/GridView';
+import NftPreview from '../../../nft/presentation/components/NftPreview';
+
+import '../styles/page-collection-view-component.css';
 
 type Props = {
     collectionViewPageStore?: CollectionViewPageStore
@@ -42,8 +52,10 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
     ]
 
     function onClickFarmLink() {
-        navigate(`${AppRoutes.FARM_VIEW}/${miningFarmEntity.id}`)
+        navigate(`${AppRoutes.MINING_FARM_VIEW}/${miningFarmEntity.id}`)
     }
+
+    const nftFilterModel = collectionViewPageStore.nftFilterModel;
 
     return (
         <PageLayoutComponent
@@ -97,13 +109,51 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
                                     {ProjectUtils.shortenAddressString(collectionEntity.ownerAddress, 25)}
                                     <Svg svg={LaunchIcon}
                                         className={'SVG Icon Clickable '}
-                                        onClick={() => ProjectUtils.copyText(collectionEntity.ownerAddress)}
-                                    />
+                                        onClick={() => ProjectUtils.copyText(collectionEntity.ownerAddress)} />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <NftPreviewsGrid nftPreviewsGridState={collectionViewPageStore.nftPreviewsGridState}/>
+                    <div className={'DataGridWrapper'}>
+                        <div className={'Grid FilterHeader'}>
+                            <Select
+                                className={'SortBySelect'}
+                                onChange={collectionViewPageStore.onChangeSortKey}
+                                value={nftFilterModel.sortKey} >
+                                <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                            </Select>
+                            <Actions
+                                layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
+                                height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                {/* TODO: show all filters */}
+                                <Button
+                                    padding={BUTTON_PADDING.PADDING_24}
+                                    type={BUTTON_TYPE.ROUNDED}>
+                                    All Filters
+                                </Button>
+                            </Actions>
+                        </div>
+
+                        { collectionViewPageStore.nftEntities === null && (
+                            <LoadingIndicator />
+                        ) }
+
+                        { collectionViewPageStore.nftEntities !== null && (
+                            <GridView
+                                gridViewState={collectionViewPageStore.gridViewState}
+                                defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}>
+                                { collectionViewPageStore.nftEntities.map((nftEntity: NftEntity) => {
+                                    return (
+                                        <NftPreview
+                                            key={nftEntity.id}
+                                            nftEntity={nftEntity}
+                                            collectionName={collectionEntity.name} />
+                                    )
+                                }) }
+                            </GridView>
+                        ) }
+                    </div>
                 </div>
             ) }
             <PageFooter />

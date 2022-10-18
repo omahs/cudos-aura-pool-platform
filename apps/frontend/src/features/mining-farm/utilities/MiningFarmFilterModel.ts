@@ -1,5 +1,3 @@
-import S from '../../../core/utilities/Main';
-
 export default class MiningFarmFilterModel {
 
     static SORT_KEY_NAME = 1;

@@ -33,8 +33,16 @@ function MarkedplacePage({ marketplaceStore }: Props) {
 
     const navigate = useNavigate();
 
-    const onClickSeeAllNfts = () => {
+    function onClickSeeAllNfts() {
         navigate(AppRoutes.EXPLORE_NFTS);
+    }
+
+    function onClickSeeAllCollections() {
+        navigate(AppRoutes.EXPLORE_COLLECTIONS);
+    }
+
+    function onClickSeeAllFarms() {
+        navigate(AppRoutes.EXPLORE_MINING_FARMS);
     }
 
     useEffect(() => {
@@ -45,8 +53,7 @@ function MarkedplacePage({ marketplaceStore }: Props) {
     }, []);
 
     return (
-        <PageLayoutComponent
-            className = { 'PageMarketplace' } >
+        <PageLayoutComponent className = { 'PageMarketplace' } >
             <PageHeader />
             <div className={'PageContent AppContent'} >
                 <div className={'ExploreCollections FlexColumn'}>
@@ -118,7 +125,7 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                     layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
                     height={ACTIONS_HEIGHT.HEIGHT_48}>
                     <Button
-                        onClick={() => navigate(AppRoutes.EXPLORE_COLLECTIONS)}
+                        onClick={onClickSeeAllCollections}
                         padding={BUTTON_PADDING.PADDING_24}
                         type={BUTTON_TYPE.ROUNDED}>
                         See All Collections
@@ -137,7 +144,7 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                         layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
                         height={ACTIONS_HEIGHT.HEIGHT_48}>
                         <Button
-                            onClick={() => navigate(AppRoutes.EXPLORE_FARMS)}
+                            onClick={onClickSeeAllFarms}
                             padding={BUTTON_PADDING.PADDING_24}
                             type={BUTTON_TYPE.ROUNDED}>
                         See All Farms

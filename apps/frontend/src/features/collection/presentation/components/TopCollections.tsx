@@ -7,7 +7,7 @@ import '../styles/top-collections.css';
 import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
-interface Props {
+type Props = {
     selectedTopCollectionPeriod: number;
     cudosPriceChangeDisplay: string;
     cudosPriceUsd: number;

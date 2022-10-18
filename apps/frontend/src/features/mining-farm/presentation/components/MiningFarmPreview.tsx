@@ -1,12 +1,10 @@
-import Svg from '../../../../core/presentation/components/Svg';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import SvgCudosLogo from '../../../../public/assets/vectors/cudos-logo.svg';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import '../styles/mining-farm-preview.css';
 
-interface Props {
+type Props = {
     miningFarmEntity: MiningFarmEntity,
 }
 
@@ -14,7 +12,7 @@ export default function MiningFarmPeview({ miningFarmEntity }: Props) {
     const navigate = useNavigate();
 
     const onClickMiningFarm = () => {
-        navigate(`${AppRoutes.FARM_VIEW}/${miningFarmEntity.id}`);
+        navigate(`${AppRoutes.MINING_FARM_VIEW}/${miningFarmEntity.id}`);
     }
 
     return (

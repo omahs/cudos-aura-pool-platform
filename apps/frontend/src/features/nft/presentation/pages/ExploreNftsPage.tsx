@@ -1,52 +1,42 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import S from '../../../../core/utilities/Main';
+import NftEntity from '../../entities/NftEntity';
+import NftFilterModel from '../../utilities/NftFilterModel';
+import ExploreNftsPageStore from '../stores/ExploreNftsPageStore';
+import AppStore from '../../../../core/presentation/stores/AppStore';
 
+import { InputAdornment, MenuItem } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-
-import '../styles/page-explore-nfts-component.css';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
-import { InputAdornment } from '@mui/material';
-import NftPreviewsGrid from '../../../nft/presentation/components/NftPreviewsGrid';
-import NftPreviewsGridState from '../stores/NftPreviewsGridState';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import Svg from '../../../../core/presentation/components/Svg';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
-import NftEntity from '../../entities/NftEntity';
-import CollectionEntity from '../../../collection/entities/CollectionEntity';
-import NftRepo from '../repos/NftRepo';
-import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
+import Select from '../../../../core/presentation/components/Select';
+import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import GridView from '../../../../core/presentation/components/GridView';
+import NftPreview from '../components/NftPreview';
+import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
+import CategoriesSelector from '../../../collection/presentation/components/CategoriesSelector';
+
+import '../styles/page-explore-nfts-component.css';
 
 type Props = {
-    nftRepo?: NftRepo
-    collectionRepo?: CollectionRepo;
+    appStore?: AppStore;
+    exploreNftsPageStore?: ExploreNftsPageStore;
 }
 
-function ExploreNftsPage({ nftRepo, collectionRepo }: Props) {
-
-    const fetchFunction = async (): Promise < {nftEntities: NftEntity[], total: number, collectionEntities: CollectionEntity[]}> => {
-        const { nftEntities, total } = await nftRepo.fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(
-            '',
-            nftPreviewsGridState.current.searchString,
-            'All',
-            nftPreviewsGridState.current.getSelectedKey(),
-            nftPreviewsGridState.current.gridViewState.getFrom(),
-            nftPreviewsGridState.current.gridViewState.getItemsPerPage(),
-        );
-
-        const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
-
-        const collectionEntities = await collectionRepo.fetchCollectionsByIds(collectionIds);
-        return { nftEntities, total, collectionEntities }
-    }
-
-    const nftPreviewsGridState = useRef(new NftPreviewsGridState(fetchFunction))
+function ExploreNftsPage({ appStore, exploreNftsPageStore }: Props) {
 
     useEffect(() => {
-        nftPreviewsGridState.current.init([]);
+        appStore.useLoading(async () => {
+            exploreNftsPageStore.init();
+        });
     }, [])
+
+    const nftFilterModel = exploreNftsPageStore.nftFilterModel;
 
     return (
         <PageLayoutComponent
@@ -58,8 +48,8 @@ function ExploreNftsPage({ nftRepo, collectionRepo }: Props) {
                     <Input
                         inputType={InputType.TEXT}
                         className={'SearchBar'}
-                        value = {nftPreviewsGridState.current.searchString}
-                        onChange = { nftPreviewsGridState.current.changeSearchString }
+                        value = {nftFilterModel.searchString}
+                        onChange = { exploreNftsPageStore.onChangeSearchWord }
                         placeholder = {'Search Collections, Farms and accounts'}
                         InputProps={{
                             startAdornment: <InputAdornment position="start" >
@@ -67,18 +57,52 @@ function ExploreNftsPage({ nftRepo, collectionRepo }: Props) {
                             </InputAdornment>,
                         }}
                     />
-                    <div className={'CategoriesRow FlexRow'}>
-                        {nftPreviewsGridState.current.categories.map((category, index) => <div
-                            key={category.categoryId}
-                            onClick={() => nftPreviewsGridState.current.selectCategory(index)}
-                            className={`CategoryName Clickable B2 SemiBold ${S.CSS.getActiveClassName(nftPreviewsGridState.current.selectedCategoryIndex === index)}`}
-                        >
-                            {category.categoryName}
-                        </div>)
-                        }
-                    </div>
+                    <CategoriesSelector
+                        selectedCategoryIds = { nftFilterModel.categoryIds }
+                        onChangeCategories = { exploreNftsPageStore.onChangeCategoryIds } />
                 </div>
-                <NftPreviewsGrid nftPreviewsGridState = {nftPreviewsGridState.current}/>
+                <div className={'DataGridWrapper'}>
+                    <div className={'Grid FilterHeader'}>
+                        <Select
+                            className={'SortBySelect'}
+                            onChange={exploreNftsPageStore.onChangeSortKey}
+                            value={nftFilterModel.sortKey} >
+                            <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                            <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                        </Select>
+                        <Actions
+                            layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
+                            height={ACTIONS_HEIGHT.HEIGHT_48} >
+                            {/* TODO: show all filters */}
+                            <Button
+                                padding={BUTTON_PADDING.PADDING_24}
+                                type={BUTTON_TYPE.ROUNDED} >
+                            All Filters
+                            </Button>
+                        </Actions>
+                    </div>
+
+                    { exploreNftsPageStore.nftEntities === null && (
+                        <LoadingIndicator />
+                    ) }
+
+                    { exploreNftsPageStore.nftEntities !== null && (
+                        <GridView
+                            gridViewState={exploreNftsPageStore.gridViewState}
+                            defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}>
+                            {exploreNftsPageStore.nftEntities.map(
+                                (nftEntity: NftEntity, index: number) => {
+                                    return (
+                                        <NftPreview
+                                            key={index}
+                                            nftEntity={nftEntity}
+                                            collectionName={exploreNftsPageStore.getCollectioName(nftEntity.collectionId)} />
+                                    )
+                                },
+                            )}
+                        </GridView>
+                    ) }
+                </div>
             </div>
             <PageFooter />
         </PageLayoutComponent>

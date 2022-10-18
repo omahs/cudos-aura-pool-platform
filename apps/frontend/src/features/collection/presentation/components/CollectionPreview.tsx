@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import CollectionEntity from '../../entities/CollectionEntity';
 import '../styles/collection-preview.css';
-import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 
-interface Props {
+type Props = {
     collectionEntity: CollectionEntity,
-    miningFarmEntity: MiningFarmEntity
+    miningFarmName: string
 }
 
-export default function CollectionPreview({ collectionEntity, miningFarmEntity }: Props) {
+export default function CollectionPreview({ collectionEntity, miningFarmName }: Props) {
+
     const navigate = useNavigate();
 
     const onClickNft = () => {
@@ -23,9 +23,8 @@ export default function CollectionPreview({ collectionEntity, miningFarmEntity }
                 className="CollectionPreviewImage"
                 style={{
                     backgroundImage: `url("${collectionEntity.profileImgurl}")`,
-                }}
-            ></div>
-            <div className={'MiningFarmName B2'}>{miningFarmEntity.name}</div>
+                }} />
+            <div className={'MiningFarmName B2'}>{miningFarmName}</div>
             <div className={'CollectionName H2 Bold'}>{collectionEntity.name}</div>
             <div className={'HashPower H4 Medium'}>{collectionEntity.hashPower}</div>
         </div>

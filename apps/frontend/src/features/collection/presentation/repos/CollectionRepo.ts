@@ -10,9 +10,7 @@ export default interface CollectionRepo {
 
     fetchCollectionsByIds(idArray: string[]): Promise < CollectionEntity[] >;
 
-    fetchCollectionEntity(collectionId: string): Promise < CollectionEntity >;
-
-    fetchCollectionsByFarmIdSortedPaginated(farmId: string, sortKey: string, from: number, count: number): Promise < { collectionEntities: CollectionEntity[], total: number } >;
+    fetchCollectionById(collectionId: string): Promise < CollectionEntity >;
 
     fetchCollectionsByFilter(collectionFilterModel: CollectionFilterModel): Promise < { collectionEntities: CollectionEntity[], total: number } >;
 }

@@ -44,7 +44,7 @@ export default class NftDetailsStore {
         await this.cudosStore.init();
 
         // TODO: gt by real id
-        const { nftEntity, collectionEntity, miningFarmEntity } = await this.nftRepo.fetchNftEntity(nftId);
+        const { nftEntity, collectionEntity, miningFarmEntity } = await this.nftRepo.fetchNftById(nftId);
         this.nftEntity = nftEntity;
         this.collectionEntity = collectionEntity;
         this.miningFarm = miningFarmEntity;

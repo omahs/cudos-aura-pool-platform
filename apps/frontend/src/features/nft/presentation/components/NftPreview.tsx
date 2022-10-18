@@ -5,14 +5,13 @@ import SvgCudosLogo from '../../../../public/assets/vectors/cudos-logo.svg';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import '../styles/nft-preview.css';
 import NftEntity from '../../entities/NftEntity';
-import CollectionEntity from '../../../collection/entities/CollectionEntity';
 
-interface Props {
+type Props = {
     nftEntity: NftEntity,
-    collectionEntity: CollectionEntity
+    collectionName: string
 }
 
-export default function NftPreview({ nftEntity, collectionEntity }: Props) {
+export default function NftPreview({ nftEntity, collectionName }: Props) {
     const navigate = useNavigate();
 
     const onClickNft = () => {
@@ -27,7 +26,7 @@ export default function NftPreview({ nftEntity, collectionEntity }: Props) {
                     backgroundImage: `url("${nftEntity.imageUrl}")`,
                 }}
             ></div>
-            <div className={'CollectionName B2'}>{collectionEntity.name}</div>
+            <div className={'CollectionName B2'}>{collectionName}</div>
             <div className={'NftName H2 Bold'}>{nftEntity.name}</div>
             <div className={'HashPower H4 Medium'}>{nftEntity.hashPower}</div>
             <div className={'Priceheading B2 SemiBold'}>Price</div>

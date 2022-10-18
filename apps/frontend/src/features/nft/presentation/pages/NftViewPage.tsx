@@ -24,7 +24,7 @@ import WalletStore from '../../../ledger/presentation/stores/WalletStore';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import ProjectUtils from '../../../../core/utilities/ProjectUtils';
 
-interface Props {
+type Props = {
     walletStore?: WalletStore;
     nftDetailsStore?: NftDetailsStore;
     buyNftModalStore?: BuyNftModalStore;
