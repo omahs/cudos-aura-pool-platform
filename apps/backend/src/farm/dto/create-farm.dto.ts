@@ -10,7 +10,7 @@ export class CreateFarmDto {
   @IsString()
   @IsOptional()
   @ApiProperty({ required: false, example: 'My farmy farm for farming' })
-      description?: string;
+      description: string;
 
   @IsString()
   @IsNotEmpty()
@@ -42,6 +42,6 @@ export class CreateFarmDto {
 
   @IsNumber()
   @IsNotEmpty()
-  @ApiProperty({ required: true, example: 20 })
+  @ApiProperty({ required: true, example: 0.0001 })
       maintenance_fee_in_btc: number;
 }

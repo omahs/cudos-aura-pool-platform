@@ -1,9 +1,43 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNotEmpty, IsOptional, IsNumber, IsDate, IsDateString } from 'class-validator';
+
 export class CreateNFTDto {
-    name: string;
-    uri: string;
-    data: string;
-    hashing_power: number;
-    price: number;
-    expiration_date: number;
-    collection_id: number;
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({ required: true, example: 'The coolest NFT' })
+        name: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @IsOptional()
+    @ApiProperty({ example: 'The new coolest NFT' })
+        uri: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @IsOptional()
+    @ApiProperty({ example: 'The new coolest NFT' })
+        data: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    @ApiProperty({ required: true, example: 200 })
+        hashing_power: number;
+
+    @IsNumber()
+    @IsNotEmpty()
+    @ApiProperty({ required: true, example: 1000 })
+        price: number;
+
+    @IsDateString()
+    @IsNotEmpty()
+    @IsOptional()
+    @ApiProperty({ required: true, example: '2022-10-17T13:25:19.503Z' })
+        expiration_date: number;
+
+    @IsNumber()
+    @IsNotEmpty()
+    @IsOptional()
+    @ApiProperty({ required: true, example: 1 })
+        collection_id: number;
 }

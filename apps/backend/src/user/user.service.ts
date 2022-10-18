@@ -84,12 +84,24 @@ export class UserService {
     }
 
     async updateOne(
-        email: string,
+        id: number,
         updateUserDto: Partial<UpdateUserDto>,
     ): Promise<User> {
         const [count, [user]] = await this.userModel.update(
-            { updateUserDto },
-            { where: { email }, returning: true },
+            { ...updateUserDto },
+            { where: { id }, returning: true },
+        );
+
+        return user;
+    }
+
+    async changePassword(id: number, password: string) {
+        const salt = this.generateSalt();
+        const hashed_pass = this.generateHashedPass(password, salt);
+
+        const [count, [user]] = await this.userModel.update(
+            { salt, hashed_pass },
+            { where: { id }, returning: true },
         );
 
         return user;

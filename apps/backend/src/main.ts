@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
-
+import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 
 declare const module: any;
@@ -9,11 +9,11 @@ declare const module: any;
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
-    // app.useGlobalPipes(
-    //   new ValidationPipe({
-    //     whitelist: true,
-    //   }),
-    // );
+    app.useGlobalPipes(
+        new ValidationPipe({
+            whitelist: true,
+        }),
+    );
 
     const config = new DocumentBuilder()
         .setTitle('Cudos Dapp')

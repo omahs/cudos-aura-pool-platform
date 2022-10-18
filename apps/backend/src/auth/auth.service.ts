@@ -16,13 +16,13 @@ export class AuthService {
     async validateUser(email: string, password: string): Promise<any> {
         const user = await this.userService.findOne(email);
         if (!user) {
-            throw new NotFoundException();
+            throw new NotFoundException('Incorrect email');
         }
 
         const hashedPass = this.userService.generateHashedPass(password, user.salt);
 
         if (user.hashed_pass !== hashedPass) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException('Incorrect password');
         }
 
         const result = {

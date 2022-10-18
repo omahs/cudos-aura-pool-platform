@@ -67,7 +67,7 @@ export class CollectionService {
         updateCollectionDto: Partial<UpdateCollectionDto>,
     ): Promise<Collection> {
         const [count, [collection]] = await this.collectionModel.update(
-            updateCollectionDto,
+            { ...updateCollectionDto, status: CollectionStatus.QUEUED },
             {
                 where: { id },
                 returning: true,
