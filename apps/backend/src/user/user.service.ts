@@ -78,7 +78,6 @@ export class UserService {
             where: {
                 email,
             },
-            attributes: { exclude: ['salt', 'hashed_pass'] },
         });
 
         return user;

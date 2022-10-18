@@ -13,7 +13,6 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import RoleGuard from '../auth/guards/role.guard';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import { GetUserDto } from './dto/get-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IsUserGuard } from './guards/is-user.guard'
 import { Role } from './roles';
@@ -26,8 +25,11 @@ export class UserController {
     constructor(private userService: UserService) {}
 
   @Get(':email')
-    async findOne(@Param('email') email: string): Promise<User> {
-        return this.userService.findOne(email);
+    async findOne(@Param('email') email: string): Promise<Partial<User>> {
+        const user = await this.userService.findOne(email);
+        const { salt, hashed_pass, ...rest } = user.toJSON()
+
+        return rest
     }
 
   @ApiBearerAuth('access-token')
