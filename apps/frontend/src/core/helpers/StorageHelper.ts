@@ -1,5 +1,5 @@
 const LOCAL_STORAGE_KEY = 'cudos_aura_service_storage';
-const VERSION = 1;
+const VERSION = 4;
 
 const collectionDescription = 'DigiDaigaku is a collection of 2022 unique characters developed by Limit Break, a company founded by world famous game designers Gabriel Leydon and Halbert Nakagawa.  Currently, DigiDaigaku characters live in a mysterious world unknown to outsiders, but in time, exciting details about their world will be revealed. /n Learn more about the project at: https://digidaigaku.com and https://twitter.com/DigiDaigaku'
 const collectionProfileImgUrl = 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200';
@@ -14,14 +14,16 @@ const miningFarmsJson = [
     jsonMiningFarm('5', 'Cudos Farm Inc', collectionDescription, collectionOwnerAddress, 100, 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
-const userProfilesJson = [
-    jsonUserProfile('1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
+const usersJson = [
+    jsonUser('1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonUser('1', 'NFT BOG', 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0', '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
 const bitcoinDataJson = jsonBitcoinData(23336, 53.3, 6.25, '29794407589312');
+const cudosDataJson = jsonCudosData(0.07);
 
 const nftsJson = [
-    jsonNft('1', 'Very Cool Name', '3D', '1', 4000, 12000, 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200', 1, 2002312312222, collectionOwnerAddress, collectionOwnerAddress),
+    jsonNft('1', 'Very Cool Name', '3D', '1', 4000, 12000, 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200', 0, 2002312312222, collectionOwnerAddress, 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0'),
     jsonNft('2', 'Ethereum Meme', 'Anime', '1', 4030, 15000, 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200', 1, 2002312312222, collectionOwnerAddress, collectionOwnerAddress),
     jsonNft('3', 'Cudos NFT Name', 'Art', '1', 4200, 2000, 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200', 1, 2002312312222, collectionOwnerAddress, collectionOwnerAddress),
     jsonNft('4', 'Razorlabs Name', 'Anime', '1', 4600, 12000, 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200', 1, 2002312312222, collectionOwnerAddress, collectionOwnerAddress),
@@ -93,7 +95,17 @@ const collectionsJson = [
     jsonCollection('22', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 600, 13000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl),
 ]
 
-const categoriesJson = ['All', 'Anime', 'Games', 'Classic', 'Hollywood', 'Punk', 'Pop', 'Art', '3D']
+const categoriesJson = [
+    jsonCategory('1', 'All'),
+    jsonCategory('2', 'Anime'),
+    jsonCategory('3', 'Games'),
+    jsonCategory('4', 'Classic'),
+    jsonCategory('5', 'Hollywood'),
+    jsonCategory('6', 'Punk'),
+    jsonCategory('7', 'Pop'),
+    jsonCategory('8', 'Art'),
+    jsonCategory('9', '3D'),
+]
 
 export default class StorageHelper {
 
@@ -102,19 +114,31 @@ export default class StorageHelper {
     version: number;
     miningFarmsJson: any[];
     bitcoinDataJson: any;
+    cudosDataJson: any;
     nftsJson: any[];
     collectionsJson: any[];
-    categoriesJson: string[];
-    userProfilesJson: any[];
+    categoriesJson: any[];
+    usersJson: any[];
+
+    sessionAccount: any;
+    sessionUser: any;
+    sessionAdmin: any;
+    sessionSuperAdmin: any;
 
     constructor() {
         this.version = VERSION;
         this.miningFarmsJson = miningFarmsJson;
         this.bitcoinDataJson = bitcoinDataJson;
+        this.cudosDataJson = cudosDataJson;
         this.nftsJson = nftsJson;
         this.collectionsJson = collectionsJson;
         this.categoriesJson = categoriesJson;
-        this.userProfilesJson = userProfilesJson;
+        this.usersJson = usersJson;
+
+        this.sessionAccount = null;
+        this.sessionUser = null;
+        this.sessionAdmin = null;
+        this.sessionSuperAdmin = null;
     }
 
     static getSingletonInstance() {
@@ -163,7 +187,7 @@ function jsonMiningFarm(id, name, description, ownerAddress, powerCost, poolFee,
     };
 }
 
-function jsonUserProfile(id, name, address, totalBtcEarned, totalHashPower, timestampJoined, profileImgurl, coverImgUrl) {
+function jsonUser(id, name, address, totalBtcEarned, totalHashPower, timestampJoined, profileImgurl, coverImgUrl) {
     return {
         id,
         name,
@@ -182,6 +206,12 @@ function jsonBitcoinData(price, priceChange, blockReward, networkDifficulty) {
     }
 }
 
+function jsonCudosData(price) {
+    return {
+        price,
+    }
+}
+
 function jsonNft(id, name, category, collectionId, hashPower, price, imageUrl, listingStatus, expiryDate, creatorAddress, currentOwnerAddress) {
     return {
         id, collectionId, name, category, hashPower, price, imageUrl, listingStatus, expiryDate, creatorAddress, currentOwnerAddress,
@@ -192,4 +222,10 @@ function jsonCollection(id, farmId, name, description, ownerAddress, hashPower, 
     return {
         id, farmId, name, description, ownerAddress, hashPower, price, volume, items, owners, profileImgurl, coverImgUrl,
     }
+}
+
+function jsonCategory(categoryId, categoryName) {
+    return {
+        categoryId, categoryName,
+    };
 }

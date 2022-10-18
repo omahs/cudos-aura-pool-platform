@@ -1,0 +1,57 @@
+
+.PageMarketplace .PageContent{
+    padding: 70px var(--page-spacing-h);
+}
+
+.PageMarketplace .ExploreCollections {
+    align-items: center;
+}
+
+.PageMarketplace .ExploreCollections .PageHeading {
+    font-size: 64px;
+    margin-bottom: 40px;   
+}
+
+.PageMarketplace .ExploreCollections .SearchBar {
+    width: 420px;
+    margin-bottom: 40px;
+}
+
+.PageMarketplace .ExploreCollections .CategoriesRow {
+    gap: 25px;
+    margin-bottom: 100px;
+}
+
+.PageMarketplace .ExploreCollections .CategoriesRow .CategoryName {
+    padding: 4px 10px;
+    border-radius: 6px;
+    background-color: var(--color-gray-095);
+    font-weight: 600; font-size: 14px;
+    
+    transition-property: background-color, color;
+}
+
+.PageMarketplace .ExploreCollections .CategoriesRow .CategoryName.Active {
+    background-color: #000;
+    color: #fff;
+}
+
+.PageMarketplace .NewNftDrops {
+    margin-top: 20px;
+    margin-bottom: 180px;
+}
+
+
+.PageMarketplace .TrendingNfts {
+    margin-top: 20px;
+    margin-bottom: 80px;
+}
+
+.PageMarketplace .PopularFarms {
+    margin-top: 20px;
+    margin-bottom: 80px;
+}
+
+.PageMarketplace .PopularFarms .FarmPreviews {
+    gap: 30px;
+}

@@ -1,16 +1,17 @@
-// import BitcoinRepo from '../../presentation/repos/BitcoinRepo';
+import BitcoinDataEntity from '../../entities/BitcoinDataEntity';
+import BitcoinRepo from '../../presentation/repos/BitcoinRepo';
+import BitcoinApi from '../data-sources/BitcoinApi';
 
-// export default class BitcoinApiRepo implements BitcoinRepo {
-//     dataSource: BitcoinDataSource;
+export default class BitcoinApiRepo implements BitcoinRepo {
 
-//     constructor(dataSource: BitcoinDataSource) {
-//         super();
+    bitcoinApi: BitcoinApi;
 
-//         this.storageHelper = new BitcoinDataSource();
-//     }
+    constructor() {
+        this.bitcoinApi = new BitcoinApi();
+    }
 
-//     getBitcoinData(callback: (bitcoinData: BitcoinDataModel) => void) {
-//         const bitcoinData = BitcoinDataModel.fromJson(this.storageHelper.bitcoinDataJson);
-//         callback(bitcoinData);
-//     }
-// }
+    async fetchBitcoinData(): Promise < BitcoinDataEntity > {
+        return this.bitcoinApi.fetchBitcoinData();
+    }
+
+}

@@ -10,37 +10,62 @@ import AppRouter from './features/app-routes/presentation/components/AppRouter';
 import AlertStore from './core/presentation/stores/AlertStore';
 import RewardsCalculatorStore from './features/rewards-calculator/presentation/stores/RewardsCalculatorStore';
 import BitcoinStorageRepo from './features/bitcoin-data/data/repo/BitcoinStorageRepo';
-import MiningFarmStorageRepo from './features/mining-farm-view/data/repo/MiningFarmStorageRepo';
-import CollectionStorageRepo from './features/collections-marketplace/data/repo/CollectionStorageRepo';
-import ExploreCollectionsStore from './features/collections-marketplace/presentation/stores/ExploreCollectionsStore';
-import NftPreviewsGridStore from './features/nfts-explore/presentation/stores/NftPreviewsGridStore';
-import NftStorageRepo from './features/nfts-explore/data/repo/NftStorageRepo';
+import MiningFarmStorageRepo from './features/mining-farm/data/repo/MiningFarmStorageRepo';
+import CollectionStorageRepo from './features/collection/data/repo/CollectionStorageRepo';
+import MarketplaceStore from './features/collection/presentation/stores/MarketplaceStore';
+import NftStorageRepo from './features/nft/data/repo/NftStorageRepo';
 import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModalStore';
 import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
-import NftDetailsStore from './features/nft-details/presentation/stores/NftDetailsStore';
-import CollectionViewPageStore from './features/collection-details/presentation/stores/CollectionViewPageStore';
-import FarmViewPageStore from './features/mining-farm-view/presentation/stores/FarmViewPageStore';
-import UserProfilePageStore from './features/user-profile/presentation/stores/UserProfilePageStore';
-import UserProfileStorageRepo from './features/user-profile/data/repo/UserProfileStorageRepo';
+import NftDetailsStore from './features/nft/presentation/stores/NftDetailsStore';
+import CollectionViewPageStore from './features/collection/presentation/stores/CollectionViewPageStore';
+import MiningFarmViewPageStore from './features/mining-farm/presentation/stores/MiningFarmViewPageStore';
+import WalletStore from './features/ledger/presentation/stores/WalletStore';
+import BuyNftModalStore from './features/nft/presentation/stores/BuyNftModalStore';
+import ResellNftModalStore from './features/nft/presentation/stores/ResellNftModalStore';
+import StorageHelper from './core/helpers/StorageHelper';
+import BitcoinStore from './features/bitcoin-data/presentation/stores/BitcoinStore';
+import CudosStore from './features/cudos-data/presentation/stores/CudosStore';
+import UserProfilePageStore from './features/accounts/presentation/stores/UserProfilePageStore';
+import AccountStorageRepo from './features/accounts/data/repo/AccountStorageRepo';
+import AccountSessionStore from './features/accounts/presentation/stores/AccountSessionStore';
+import RepoStore from './core/presentation/stores/RepoStore';
+import CategoriesStore from './features/collection/presentation/stores/CategoriesStore';
+import ExploreCollectionsPageStore from './features/collection/presentation/stores/ExploreCollectionsPageStore';
+import ExploreMiningFarmsPageStore from './features/mining-farm/presentation/stores/ExploreMiningFarmsPageStore';
+import ExploreNftsPageStore from './features/nft/presentation/stores/ExploreNftsPageStore';
+
+const storageHelper = new StorageHelper();
+storageHelper.open();
 
 const appStore = new AppStore();
 const alertStore = new AlertStore();
 const exampleModalStore = new ExampleModalStore();
 
-const bitcoinRepo = new BitcoinStorageRepo();
-const cudosRepo = new CudosStorageRepo();
-const miningFarmRepo = new MiningFarmStorageRepo();
-const collectionRepo = new CollectionStorageRepo();
-const nftRepo = new NftStorageRepo(collectionRepo);
-const userProfileRepo = new UserProfileStorageRepo(collectionRepo);
+const bitcoinRepo = new BitcoinStorageRepo(storageHelper);
+const cudosRepo = new CudosStorageRepo(storageHelper);
+const miningFarmRepo = new MiningFarmStorageRepo(storageHelper);
+const collectionRepo = new CollectionStorageRepo(storageHelper);
+const nftRepo = new NftStorageRepo(storageHelper);
+const accountRepo = new AccountStorageRepo(storageHelper);
 
-const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinRepo, miningFarmRepo);
-const exploreCollectionsStore = new ExploreCollectionsStore(collectionRepo);
-const nftPreviewsGridStore = new NftPreviewsGridStore(nftRepo, collectionRepo);
-const nftDetailsStore = new NftDetailsStore(nftRepo, cudosRepo, bitcoinRepo);
-const collectionViewPageStore = new CollectionViewPageStore(collectionRepo);
-const farmViewPageStore = new FarmViewPageStore(miningFarmRepo, collectionRepo);
-const userProfilePageStore = new UserProfilePageStore(nftRepo, userProfileRepo, bitcoinRepo);
+const repoStore = new RepoStore(bitcoinRepo, cudosRepo, miningFarmRepo, collectionRepo, nftRepo, accountRepo);
+
+const walletStore = new WalletStore();
+const accountSessionStore = new AccountSessionStore(walletStore, accountRepo);
+const bitcoinStore = new BitcoinStore(bitcoinRepo);
+const cudosStore = new CudosStore(cudosRepo);
+const categoriesStore = new CategoriesStore(collectionRepo);
+const exploreCollectionsPageStore = new ExploreCollectionsPageStore(collectionRepo, miningFarmRepo);
+const exploreMiningFarmsPageStore = new ExploreMiningFarmsPageStore(miningFarmRepo);
+const exploreNftsPageStore = new ExploreNftsPageStore(nftRepo, collectionRepo);
+const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFarmRepo);
+const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo, nftRepo, miningFarmRepo);
+const nftDetailsStore = new NftDetailsStore(bitcoinStore, cudosStore, nftRepo);
+const collectionViewPageStore = new CollectionViewPageStore(nftRepo, collectionRepo, miningFarmRepo);
+const miningFarmViewPageStore = new MiningFarmViewPageStore(miningFarmRepo, collectionRepo);
+const userProfilePageStore = new UserProfilePageStore(walletStore, nftRepo, collectionRepo);
+const buyNftModalStore = new BuyNftModalStore();
+const resellNftModalStore = new ResellNftModalStore();
 
 const App = () => {
 
@@ -48,21 +73,36 @@ const App = () => {
         initHover();
         initOnBeforeUnload();
         removeInitalPageLoading();
+
+        async function run() {
+            await accountSessionStore.loadSessionAccountsAndSyncWalletStore();
+        }
+        run();
     }, []);
 
     return (
         <StrictMode>
             <Provider
+                repoStore = { repoStore }
                 appStore = { appStore }
                 alertStore = { alertStore }
+                walletStore = { walletStore }
+                bitcoinStore = { bitcoinStore }
+                cudosStore = { cudosStore }
+                categoriesStore = { categoriesStore }
+                accountSessionStore = { accountSessionStore }
                 exampleModalStore = { exampleModalStore }
                 rewardsCalculatorStore = { rewardsCalculatorStore }
-                exploreCollectionsStore = { exploreCollectionsStore }
-                nftPreviewsGridStore = { nftPreviewsGridStore }
+                exploreCollectionsPageStore = { exploreCollectionsPageStore }
+                exploreMiningFarmsPageStore = { exploreMiningFarmsPageStore }
+                exploreNftsPageStore = { exploreNftsPageStore }
+                marketplaceStore = { marketplaceStore }
                 nftDetailsStore = { nftDetailsStore }
                 collectionViewPageStore = { collectionViewPageStore }
-                farmViewPageStore = { farmViewPageStore } 
-                userProfilePageStore = { userProfilePageStore }>
+                miningFarmViewPageStore = { miningFarmViewPageStore }
+                userProfilePageStore = { userProfilePageStore }
+                buyNftModalStore = { buyNftModalStore }
+                resellNftModalStore = { resellNftModalStore } >
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

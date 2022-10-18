@@ -1,0 +1,45 @@
+.ResellNftPopup {
+    gap: 24px;
+}
+
+.ResellNftPopup .BorderContainer {
+    gap: 24px;
+    background: var(--color-gray-090);
+    align-items: flex-start;
+}
+.ResellNftPopup .BorderContainer .NftPicture {
+    width: 124px; height: 146px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 16px;
+}
+
+.ResellNftPopup .BorderContainer .Gray {
+    color: var(--color-gray-030);
+}
+
+.ResellNftPopup .CheckBoxRow {
+    gap: 50px;
+}
+
+.ResellNftPopup .Processing  {
+    align-items: center;
+    padding: 80px 120px;
+    gap: 24px;
+}
+
+.ResellNftPopup .BigSvg {
+    width: 70px; height: 70px;
+}
+
+
+.ResellNftPopup .TransactionView {
+    gap: 10px;
+}
+
+.ResellNftPopup .Success, .ResellNftPopup .Fail {
+    align-items: center;
+    padding: 40px 120px;
+    gap: 24px;
+}
+

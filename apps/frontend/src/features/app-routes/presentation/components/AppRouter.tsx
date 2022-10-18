@@ -1,21 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 
 import AppRoutes from '../../entities/AppRoutes';
+import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 
 import NotFoundPage from '../../../not-found/presensation/components/NotFoundPage';
 import UiKitPage from '../../../ui-kit/presensation/components/UiKitPage';
+import RewardsCalculatorPage from '../../../rewards-calculator/presentation/pages/RewardsCalculatorPage';
+import MarketplacePage from '../../../collection/presentation/pages/MarketplacePage';
+import ExploreNftsPage from '../../../nft/presentation/pages/ExploreNftsPage';
+import ExploreCollectionsPage from '../../../collection/presentation/pages/ExploreCollectionsPage';
+import ExploreMiningFarmsPage from '../../../mining-farm/presentation/pages/ExploreMiningFarmsPage';
+import UserProfilePage from '../../../accounts/presentation/pages/UserProfilePage';
+import NftViewPage from '../../../nft/presentation/pages/NftViewPage';
+import CollectionViewPage from '../../../collection/presentation/pages/CollectionViewPage';
+import MiningFarmViewPage from '../../../mining-farm/presentation/pages/MiningFarmViewPage';
+
+import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 
 import '../styles/app-router.css';
-import RewardsCalculatorPageComponent from '../../../rewards-calculator/presentation/pages/RewardsCalculatorPageComponent';
-import ExploreCollectionsPageComponent from '../../../collections-marketplace/presentation/pages/ExploreCollectionsPageComponent';
-import ExploreNftsPageComponent from '../../../nfts-explore/presentation/pages/ExploreNftsPageComponent';
-import NftViewPageComponent from '../../../nft-details/presentation/pages/NftViewPageComponent';
-import CollectionViewPageComponent from '../../../collection-details/presentation/pages/CollectionViewPageComponent';
-import FarmViewPageComponent from '../../../mining-farm-view/presentation/pages/FarmViewPageComponent';
-import UserProfilePageComponent from '../../../user-profile/presentation/pages/UserProfilePageComponent';
 
-export default function AppRouter() {
+type Props = {
+    accountSessionStore?: AccountSessionStore,
+}
+
+function AppRouter({ accountSessionStore }: Props) {
 
     const location = useLocation();
     const [displayLocation, setDisplayLocation] = useState(location);
@@ -38,17 +48,31 @@ export default function AppRouter() {
         <div
             className={`AppRouter ${transitionStage}`}
             onAnimationEnd = { onRouterTransitionEnd } >
-            <Routes location = { displayLocation } >
-                <Route path = { AppRoutes.HOME } element = { <UiKitPage /> } />
-                <Route path = { AppRoutes.NOT_FOUND } element = { <NotFoundPage /> } />
-                <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPageComponent /> } />
-                <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPageComponent /> } />
-                <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPageComponent /> } />
-                <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePageComponent /> } />
-                <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPageComponent /> } />
-                <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPageComponent /> } />
-                <Route path = { `${AppRoutes.FARM_VIEW}/:farmId` } element = { <FarmViewPageComponent /> } />
-            </Routes>
+
+            { accountSessionStore.isInited() === false && (
+                <LoadingIndicator />
+            ) }
+
+            { accountSessionStore.isInited() === true && (
+                <Routes location = { displayLocation } >
+                    <Route index = { true } element = { <MarketplacePage /> } />
+                    <Route path = { '*' } element = { <NotFoundPage /> } />
+                    <Route path = { AppRoutes.UiKIt } element = { <UiKitPage /> } />
+                    <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPage /> } />
+                    <Route path = { AppRoutes.MARKETPLACE } element = { <MarketplacePage /> } />
+                    <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPage /> } />
+                    <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPage /> } />
+                    <Route path = { AppRoutes.EXPLORE_MINING_FARMS } element = { <ExploreMiningFarmsPage /> } />
+                    { accountSessionStore.isUser() === true && (
+                        <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePage /> } />
+                    ) }
+                    <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />
+                    <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPage /> } />
+                    <Route path = { `${AppRoutes.MINING_FARM_VIEW}/:farmId` } element = { <MiningFarmViewPage /> } />
+                </Routes>
+            ) }
         </div>
     )
 }
+
+export default inject((stores) => stores)(observer(AppRouter));

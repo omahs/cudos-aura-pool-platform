@@ -1,19 +1,6 @@
-.PageRewardsCalculator {
-    --page-spacing-h: 72px;
-}
-
-header.PageHeader {
-    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
-    background: transparent;
-}
-
-footer.PageFooter {
-    padding-left: var(--page-spacing-h); padding-right: var(--page-spacing-h);
-    margin-top: auto;
-}
 
 .RewardsCalculator {
-    padding: 72px;
+    padding: 70px var(--page-spacing-h);
 }
 
 .RewardsCalculatorHeading {
@@ -32,9 +19,10 @@ footer.PageFooter {
 }
 
 .RewardsCalculator .LayoutContainer .MiningFarmForm {
-    box-sizing: border-box;
-    border-radius: 20px;
-    padding: 65px 158px;
+}
+
+.RewardsCalculator .LayoutContainer .MiningFarmForm .MiningFarmFormWidth {
+    width: 320px;
     gap: 24px;
 }
 
@@ -49,18 +37,13 @@ footer.PageFooter {
 
 .RewardsCalculator .LayoutContainer .MiningFarmForm .NetworkDifficulty .EnableEditButton {
     height: 40px; width: 40px;
-    background: var(--color-primary);
+    box-sizing: border-box;
+    background: var(--color-gray-010);
     border-radius: 13px;
-    fill: #fff;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    right: 5px;
-}
-
-.RewardsCalculator .LayoutContainer .MiningFarmForm .RewindButton .SVG {
-    margin-right: 10px;
-    fill: #fff;
+    color: #fff;
+    padding: 13px;
+    cursor: pointer;
+    margin-right: -10px;
 }
 
 .RewardsCalculator .LayoutContainer .DataContainer {
@@ -68,13 +51,14 @@ footer.PageFooter {
 }
 
 .RewardsCalculator .LayoutContainer .DataContainer .BtcPriceContainer .BtcPrice {
+    font-weight: 700;
     margin-right: 16px;
-    margin-bottom: 8px;
 }
 
 .RewardsCalculator .LayoutContainer .DataContainer .BtcPriceContainer .PriceChange {
-    padding: 10px;
-    font-weight: 600; font-size: 14px; line-height: 21px;
+    padding: 4px 10px;
+    gap: 10px;
+    font-weight: 600; font-size: 14px;
     border: 1px solid #000000;
     border-radius: 6px;
 }
@@ -82,10 +66,12 @@ footer.PageFooter {
 .RewardsCalculator .LayoutContainer .DataContainer .BtcPriceContainer .SubHeading {
     font-weight: 700; font-size: 18px; line-height: 145%;
     color: var(--color-gray-060);
+    margin-top: 8px;
 }
 
 .RewardsCalculator .LayoutContainer .DataContainer .FarmDataContainer {
     font-size: 18px; line-height: 145%;
+    background: var(--color-gray-060);
 }
 
 .RewardsCalculator .LayoutContainer .DataContainer .FarmDataContainer .DataRow {
@@ -121,4 +107,9 @@ footer.PageFooter {
 .RewardsCalculator .LayoutContainer .DataContainer .RewardsEstimateContainer .Discretion {
     font-weight: 700; font-size: 12px; line-height: 145%;
     color: var(--color-gray-060);
+}
+
+.RewardsCalculator .LayoutContainer .DataContainer .Disclaimer {
+    font-size: 12px;
+    color: var(--color-gray-030);
 }

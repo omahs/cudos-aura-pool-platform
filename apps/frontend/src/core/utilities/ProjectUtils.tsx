@@ -137,6 +137,19 @@ export default class ProjectUtils {
         });
     }
 
+    static shortenAddressString(str: string, maxLength: number) {
+        const strLen = str.length;
+
+        if (strLen <= maxLength - 3) {
+            return str;
+        }
+
+        const leftStr = str.slice(0, maxLength - 6);
+        const rightStr = str.slice(strLen - 3);
+
+        return `${leftStr}...${rightStr}`;
+    }
+
 }
 
 function getQueryArray() {

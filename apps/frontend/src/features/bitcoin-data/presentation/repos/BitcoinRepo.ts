@@ -1,5 +1,7 @@
-import BitcoinDataModel from '../../entities/BitcoinData';
+import BitcoinDataEntity from '../../entities/BitcoinDataEntity';
 
 export default interface BitcoinRepo {
-    getBitcoinData(callback: (bitcoinData: BitcoinDataModel) => void);
+
+    fetchBitcoinData(): Promise < BitcoinDataEntity >;
+
 }

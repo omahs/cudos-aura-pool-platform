@@ -139,15 +139,15 @@ label {
 
 @media (hover: hover) {
 
-.HoverHidden {
-    pointer-events: none;
-    opacity: 0;
-}
+    .HoverHidden {
+        pointer-events: none;
+        opacity: 0;
+    }
 
-html:not(.Touchable) .HoverHiddenTrigger:hover .HoverHidden {
-    pointer-events: auto;
-    opacity: 1;
-}
+    html:not(.Touchable) .HoverHiddenTrigger:hover .HoverHidden {
+        pointer-events: auto;
+        opacity: 1;
+    }
 
 }
 
@@ -155,10 +155,11 @@ html:not(.Touchable) .HoverHiddenTrigger:hover .HoverHidden {
     transition-property:opacity;
 }
 
-.BorderContainer{
+.BorderContainer {
     padding: 24px;
     border: 1px solid var(--color-gray-060);
     border-radius: 20px;
+    box-sizing: border-box;
 }
 
 /* Grid */

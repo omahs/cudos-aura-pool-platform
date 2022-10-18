@@ -8,43 +8,43 @@ import GridOnIcon from '@mui/icons-material/GridOn';
 
 import S from '../../../core/utilities/Main';
 import Svg from '../../../core/presentation/components/Svg';
-import GridViewStore, { GRID_SETTING } from '../stores/GridViewStore';
+import GridViewState, { GRID_SETTING } from '../stores/GridViewState';
 import { ALIGN_CENTER } from './TableDesktop';
 import { observer } from 'mobx-react';
 
-interface Props {
-    gridViewStore: GridViewStore;
+type Props = {
+    gridViewState: GridViewState;
     defaultContent: React.ReactNode;
 }
 
-function GridView({ gridViewStore, defaultContent, children }: React.PropsWithChildren < Props >) {
+function GridView({ gridViewState, defaultContent, children }: React.PropsWithChildren < Props >) {
     useEffect(() => {
-        gridViewStore.resetDefaults();
+        gridViewState.resetDefaults();
     }, [])
 
     return (
         <div className={'GridView'}>
             <div className={'GridHeader FlexRow FlexGrow'}>
-                <div className={'TotalItems B2 SemiBold'}>{gridViewStore.getItemCount()} Items</div>
+                <div className={'TotalItems B2 SemiBold'}>{gridViewState.getItemCount()} Items</div>
                 <div className={'GridLayoutButtons FlexRow'}>
                     <Svg svg={GridViewIcon}
-                        className={`Clickable ${S.CSS.getActiveClassName(gridViewStore.checkIsGridSettingSelected(GRID_SETTING.LOOSE))}`}
-                        onClick={() => gridViewStore.setGridSettingAndPreviewCount(GRID_SETTING.LOOSE)}
+                        className={`Clickable ${S.CSS.getActiveClassName(gridViewState.checkIsGridSettingSelected(GRID_SETTING.LOOSE))}`}
+                        onClick={() => gridViewState.setGridSettingAndPreviewCount(GRID_SETTING.LOOSE)}
                     />
                     <Svg svg={GridOnIcon}
-                        className={`Clickable ${S.CSS.getActiveClassName(gridViewStore.checkIsGridSettingSelected(GRID_SETTING.DENSE))}`}
-                        onClick={() => gridViewStore.setGridSettingAndPreviewCount(GRID_SETTING.DENSE)}
+                        className={`Clickable ${S.CSS.getActiveClassName(gridViewState.checkIsGridSettingSelected(GRID_SETTING.DENSE))}`}
+                        onClick={() => gridViewState.setGridSettingAndPreviewCount(GRID_SETTING.DENSE)}
                     />
                 </div>
             </div>
-            { gridViewStore.isFetching === true
+            { gridViewState.isFetching === true
                 ? <LoadingIndicator margin={'16px'}/>
                 : <SingleRowTable
                     legend={['']}
                     widths={['100%']}
                     aligns={[ALIGN_CENTER]}
-                    tableStore={gridViewStore.tableStore}
-                    content={<div className={`PreviewsGrid Grid ${gridViewStore.getGridSettingClass()}`}>{children}</div>}
+                    tableStore={gridViewState.tableStore}
+                    content={<div className={`PreviewsGrid Grid ${gridViewState.getGridSettingClass()}`}>{children}</div>}
                     noRowsContent={defaultContent}
                 /> }
         </div>

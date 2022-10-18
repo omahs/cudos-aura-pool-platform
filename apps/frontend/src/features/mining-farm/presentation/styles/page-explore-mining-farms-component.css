@@ -1,0 +1,10 @@
+.PageExploreMiningFarms .PageContent {
+    align-items: center;
+    gap: 40px;
+}
+
+.PageExploreMiningFarms .DataGridWrapper .FilterHeader {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    margin-bottom: 20px;
+    align-items: end;
+}

@@ -1,36 +1,31 @@
 import { makeAutoObservable } from 'mobx';
 
-import MiningFarmModel from '../../../mining-farm-view/entities/MiningFarmModel';
+import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 
 import S from '../../../../core/utilities/Main';
 import BigNumber from 'bignumber.js';
-import BitcoinRepo from '../../../bitcoin-data/presentation/repos/BitcoinRepo';
-import BitcoinDataModel from '../../../bitcoin-data/entities/BitcoinData';
-import MiningFarmRepo from '../../../mining-farm-view/presentation/repos/MiningFarmRepo';
+import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRepo';
+import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
 
 export default class RewardsCalculatorStore {
 
-    miningFarms: MiningFarmModel[];
-    selectedFarmIndex: number;
+    bitcoinStore: BitcoinStore;
+    miningFarmRepo: MiningFarmRepo;
 
-    bitcoinDataModel: BitcoinDataModel;
+    miningFarms: MiningFarmEntity[];
+    selectedFarmIndex: number;
 
     networkDifficultyEdit: string;
     hashRateTh: number;
 
-    miningFarmRepo: MiningFarmRepo;
-    bitcoinRepo: BitcoinRepo;
+    constructor(bitcoinStore: BitcoinStore, miningFarmRepo: MiningFarmRepo) {
+        this.bitcoinStore = bitcoinStore;
+        this.miningFarmRepo = miningFarmRepo;
 
-    constructor(bitcoinRepo: BitcoinRepo, miningFarmRepo: MiningFarmRepo) {
         this.miningFarms = [];
         this.selectedFarmIndex = S.NOT_EXISTS;
-        this.bitcoinDataModel = null;
 
-        this.networkDifficultyEdit = S.Strings.EMPTY;
-        this.hashRateTh = S.NOT_EXISTS;
-
-        this.miningFarmRepo = miningFarmRepo
-        this.bitcoinRepo = bitcoinRepo
+        this.resetDefaults();
 
         makeAutoObservable(this);
     }
@@ -40,39 +35,31 @@ export default class RewardsCalculatorStore {
         this.hashRateTh = 0;
     }
 
-    innitialLoad() {
+    async init() {
+        await this.bitcoinStore.init();
+
         this.resetDefaults();
-        this.getFarmPools();
-        this.getBitcoinData();
+        this.miningFarms = await this.miningFarmRepo.fetchAllMiningFarms();
     }
 
-    getFarmPools() {
-        this.miningFarmRepo.getAllFarmgs((miningFarms: MiningFarmModel[]) => {
-            this.miningFarms = miningFarms;
-        });
-    }
-
-    getBitcoinData() {
-        this.bitcoinRepo.getBitcoinData((bitcoinDataModel: BitcoinDataModel) => {
-            this.bitcoinDataModel = bitcoinDataModel;
-        });
-    }
-
-    selectFarmPool = (index: any) => {
-        this.selectedFarmIndex = index.value;
+    hasNetworkDifficulty() {
+        return this.networkDifficultyEdit !== S.Strings.EMPTY;
     }
 
     onEditNetworkDifficulty = (input: string) => {
         this.networkDifficultyEdit = input;
     }
 
-    changeHashRate = (input: string) => {
+    onChangeHashRate = (input: string) => {
         this.hashRateTh = Number(input);
     }
 
-    changeHashRateSlider = (event: MouseEvent, a: number) => {
+    onChangeHashRateSlider = (event: MouseEvent, value: number) => {
+        this.hashRateTh = value;
+    }
 
-        this.hashRateTh = a;
+    selectFarmPool = (index: any) => {
+        this.selectedFarmIndex = index.value;
     }
 
     calculatePowerConsumption(): number {
@@ -85,12 +72,23 @@ export default class RewardsCalculatorStore {
     }
 
     calculateBtcToUsd(btcAmount: BigNumber): BigNumber {
-        return btcAmount.multipliedBy(this.bitcoinDataModel.price);
+        return btcAmount.multipliedBy(this.bitcoinStore.getBitcoinPrice());
+    }
+
+    getSelectedFarmName(): string {
+        return this.miningFarms[this.selectedFarmIndex]?.name ?? S.Strings.EMPTY;
+    }
+
+    getNetworkDifficulty() {
+        if (this.hasNetworkDifficulty() === true) {
+            return this.networkDifficultyEdit;
+        }
+
+        return this.bitcoinStore.getNetworkDifficulty();
     }
 
     getPriceChangeFormated(): string {
-        let priceChange = this.bitcoinDataModel ? this.bitcoinDataModel.priceChange : 0;
-        priceChange = priceChange === S.NOT_EXISTS ? 0 : priceChange;
+        const priceChange = this.bitcoinStore.getBitcoinPriceChange();
 
         const sign = priceChange >= 0 ? '+' : '-';
 
@@ -127,19 +125,12 @@ export default class RewardsCalculatorStore {
 
         const hashRate = this.hashRateTh === S.NOT_EXISTS ? 0 : this.hashRateTh;
 
-        const result = `${powerConsumptionPerTh * hashRate} W`;
-
-        return result;
+        return `${powerConsumptionPerTh * hashRate} W`;
     }
 
     getBlockRewardDisplay(): string {
-        const blockRewardString = this.bitcoinDataModel
-            && this.bitcoinDataModel.blockReward !== S.Strings.EMPTY
-            ? this.bitcoinDataModel.blockReward
-            : S.Strings.EMPTY;
-
-        const result = blockRewardString === S.Strings.EMPTY ? '-' : `${(new BigNumber(blockRewardString)).toFixed(2)} BTC`;
-
-        return result;
+        const blockReward = this.bitcoinStore.getBlockReward();
+        return blockReward === S.Strings.EMPTY ? '-' : `${(new BigNumber(blockReward)).toFixed(2)} BTC`;
     }
+
 }

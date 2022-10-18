@@ -1,0 +1,65 @@
+
+.PageCollectionView .PageContent {
+    padding: 24px var(--page-spacing-h);
+}
+
+.PageCollectionView .ProfileInfo {
+    margin-top: 40px;
+}
+
+.PageCollectionView .ProfileInfo .FlexRow {
+    gap: 40px;
+}
+
+
+.PageCollectionView .CollectionHeadingName {
+    margin-bottom: 40px;
+}
+
+.PageCollectionView .ProfileInfo {
+    align-items: flex-start;
+    gap: 100px;
+    grid-template-columns:  minmax(0, 2fr)  minmax(0, 1fr);
+    flex-grow: 1;
+    margin-bottom: 50px;
+}
+
+.PageCollectionView .ProfileInfo .CollectionDescription {
+    margin-top: 20px;
+}
+
+.PageCollectionView .ProfileInfo .InfoBox {
+    border: 1px solid var(--color-gray-light);
+    border-radius: 20px;
+    padding: 24px;
+    gap: 20px;
+}
+
+.PageCollectionView .ProfileInfo .InfoBox .CollectionInfoRow {
+    justify-content: space-between;
+}
+
+.PageCollectionView .ProfileInfo .InfoBox .HorizontalSeparator {
+    flex-grow: 1;
+    border: 1px solid var(--color-gray-light);
+} 
+
+.PageCollectionView .ProfileInfo .InfoBox .CollectionInfoRow .CollectionInfoValue {
+    text-align: right;
+    font-weight: 700;
+}
+
+.PageCollectionView .GridHeader {
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.PageCollectionView .GridHeader .FlexRow {
+    justify-content: space-between;
+}
+
+.PageCollectionView .DataGridWrapper .FilterHeader {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    margin-bottom: 20px;
+    align-items: end;
+}

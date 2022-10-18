@@ -1,0 +1,34 @@
+.PageFooter {
+    padding: 30px var(--page-spacing-h);
+
+    margin-top: auto;
+    background-color: #000;
+    color: #fff;
+    fill: #fff;
+}
+
+.PageFooter .IconLogoWithText {
+    margin-right: 12px;
+    height: 28px;
+    width: 117px;
+}
+
+.PageFooter .FooterNav {
+    color: var(--color-secondary);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.PageFooter .FooterNav > a {
+    height: 12px; line-height: 12px;
+    padding: 0 12px;
+}
+
+.PageFooter .FooterNav > a:not(:last-child) {
+    border-right: 1px solid var(--color-secondary);
+}
+
+.PageFooter .IconSocial {
+    fill: var(--color-dark);
+    margin-left: 24px;
+}
