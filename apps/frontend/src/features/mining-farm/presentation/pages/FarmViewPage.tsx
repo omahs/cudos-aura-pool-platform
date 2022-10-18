@@ -1,25 +1,27 @@
 import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 
-import '../styles/page-farm-view-component.css';
-import ProfileHeader from '../../../collection/presentation/components/ProfileHeader';
-import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import FarmViewPageStore from '../stores/FarmViewPageStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
-import { useNavigate, useParams } from 'react-router-dom';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import CollectionEntity from '../../../collection/entities/CollectionEntity';
+import CollectionFilterModel from '../../../collection/utilities/CollectionFilterModel';
+
+import { MenuItem } from '@mui/material';
+import ProfileHeader from '../../../collection/presentation/components/ProfileHeader';
+import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
-import { inject, observer } from 'mobx-react';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import Select from '../../../../core/presentation/components/Select';
-import { MenuItem } from '@mui/material';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../../../collection/presentation/components/CollectionPreview';
-import CollectionEntity from '../../../collection/entities/CollectionEntity';
-import CollectionFilterModel from '../../../collection/utilities/CollectionFilterModel';
+
+import '../styles/page-farm-view-component.css';
 
 interface Props {
     appStore?: AppStore
@@ -91,7 +93,7 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
                         </div>
                     </div>
                     <div className={'H2'}>Collections Owned</div>
-                    <div className={'CollectionsGridWrapper'}>
+                    <div className={'DataGridWrapper'}>
                         <div className={'Grid FilterHeader'}>
                             <Select
                                 className={'SortBySelect'}

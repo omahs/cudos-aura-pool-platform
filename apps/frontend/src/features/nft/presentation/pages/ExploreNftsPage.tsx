@@ -61,7 +61,7 @@ function ExploreNftsPage({ appStore, exploreNftsPageStore }: Props) {
                         selectedCategoryIds = { nftFilterModel.categoryIds }
                         onChangeCategories = { exploreNftsPageStore.onChangeCategoryIds } />
                 </div>
-                <div className={'NftModelsViewerTable'}>
+                <div className={'DataGridWrapper'}>
                     <div className={'Grid FilterHeader'}>
                         <Select
                             className={'SortBySelect'}

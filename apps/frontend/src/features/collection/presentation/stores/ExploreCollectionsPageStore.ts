@@ -34,7 +34,7 @@ export default class ExploreCollectionsPageStore {
         await this.fetch();
     }
 
-    async fetch() {
+    fetch = async () => {
         this.gridViewState.setIsLoading(true);
 
         this.collectionFilterModel.from = this.gridViewState.getFrom();

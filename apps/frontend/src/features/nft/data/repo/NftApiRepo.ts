@@ -13,30 +13,16 @@ export default class NftApiRepo implements NftRepo {
         this.nftApi = new NftApi();
     }
 
-    async fetchNftsByOwnerAddressSortedPaginated(
-        ownerAddress: string,
-        sortKey: string,
-        start: number,
-        size: number,
-    ): Promise < { nftEntities: NftEntity[], total: number } > {
-        return this.nftApi.fetchNftsByOwnerAddressSortedPaginated(ownerAddress, sortKey, start, size);
+    async fetchNftById(nftId: string): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } > {
+        return this.nftApi.fetchNftById(nftId);
     }
 
-    async fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(
-        collectionId: string,
-        search: string,
-        category: string,
-        sortKey: string,
-        start: number,
-        size: number,
-    ) {
-        return this.nftApi.fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(collectionId, search, category, sortKey, start, size);
+    async fetchNewNftDrops(): Promise < NftEntity[] > {
+        return this.nftApi.fetchNewNftDrops();
     }
 
-    async fetchNftEntity(
-        nftId: string,
-    ): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } > {
-        return this.nftApi.fetchNftEntity(nftId);
+    async fetchTrendingNfts(): Promise < NftEntity[] > {
+        return this.nftApi.fetchTrendingNfts();
     }
 
     async fetchNftsByFilter(nftFilterModel: NftFilterModel): Promise < { nftEntities: NftEntity[], total: number } > {

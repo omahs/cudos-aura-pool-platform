@@ -63,7 +63,7 @@ const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo, nftRep
 const nftDetailsStore = new NftDetailsStore(bitcoinStore, cudosStore, nftRepo);
 const collectionViewPageStore = new CollectionViewPageStore(nftRepo, collectionRepo, miningFarmRepo);
 const farmViewPageStore = new FarmViewPageStore(miningFarmRepo, collectionRepo);
-const userProfilePageStore = new UserProfilePageStore(bitcoinStore, walletStore, nftRepo, collectionRepo);
+const userProfilePageStore = new UserProfilePageStore(walletStore, nftRepo, collectionRepo);
 const buyNftModalStore = new BuyNftModalStore();
 const resellNftModalStore = new ResellNftModalStore();
 

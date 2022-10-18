@@ -34,7 +34,7 @@ function PageHeader({ accountSessionStore, walletStore }: Props) {
     }
 
     function onClickAddress() {
-        navigate(`${AppRoutes.USER_PROFILE}/${walletStore.getAddress()}`)
+        navigate(AppRoutes.USER_PROFILE);
     }
 
     function onClickAddressMenu(event) {

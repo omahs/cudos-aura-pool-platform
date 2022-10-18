@@ -1,56 +1,64 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../repos/CollectionRepo';
-import NftPreviewsGridState from '../../../nft/presentation/stores/NftPreviewsGridState';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRepo';
 import NftEntity from '../../../nft/entities/NftEntity';
 import NftRepo from '../../../nft/presentation/repos/NftRepo';
+import NftFilterModel from '../../../nft/utilities/NftFilterModel';
+import GridViewState from '../../../../core/presentation/stores/GridViewState';
 
 export default class CollectionViewPageStore {
+
     nftRepo: NftRepo;
     collectionRepo: CollectionRepo;
     miningFarmRepo: MiningFarmRepo;
 
+    gridViewState: GridViewState;
+    nftFilterModel: NftFilterModel;
+
     collectionEntity: CollectionEntity;
     miningFarmEntity: MiningFarmEntity;
-    nftPreviewsGridState: NftPreviewsGridState;
+    nftEntities: NftEntity[];
 
     constructor(nftRepo: NftRepo, collectionRepo: CollectionRepo, miningFarmRepo: MiningFarmRepo) {
         this.nftRepo = nftRepo;
         this.collectionRepo = collectionRepo;
         this.miningFarmRepo = miningFarmRepo;
 
+        this.gridViewState = new GridViewState(this.fetch, 3, 4, 6);
+        this.nftFilterModel = new NftFilterModel();
+
         this.collectionEntity = null;
         this.miningFarmEntity = null;
-        this.nftPreviewsGridState = new NftPreviewsGridState(this.fetchFunction);
+        this.nftEntities = null;
 
         makeAutoObservable(this);
     }
 
     async init(collectionId: string) {
-        this.nftPreviewsGridState.collectionId = collectionId;
-        this.collectionEntity = await this.collectionRepo.fetchCollectionEntity(collectionId);
-        this.miningFarmEntity = (await this.miningFarmRepo.fetchMiningFarmsByIds([this.collectionEntity.farmId]))[0];
-
-        const categories = await this.collectionRepo.fetchCategories()
-        await this.nftPreviewsGridState.init(categories);
+        this.nftFilterModel.collectionId = collectionId;
+        this.collectionEntity = await this.collectionRepo.fetchCollectionById(collectionId);
+        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(this.collectionEntity.farmId);
+        await this.fetch();
     }
 
-    fetchFunction = async (): Promise < {nftEntities: NftEntity[], total: number, collectionEntities: CollectionEntity[]}> => {
-        const { nftEntities, total } = await this.nftRepo.fetchNftsByCollectionIdCategoryAndSearchSortedPaginated(
-            this.collectionEntity.id,
-            this.nftPreviewsGridState.searchString,
-            this.nftPreviewsGridState.getCategoryName(),
-            this.nftPreviewsGridState.getSelectedKey(),
-            this.nftPreviewsGridState.gridViewState.getFrom(),
-            this.nftPreviewsGridState.gridViewState.getItemsPerPage(),
-        );
+    fetch = async () => {
+        this.gridViewState.setIsLoading(true);
+        this.nftFilterModel.from = this.gridViewState.getFrom();
+        this.nftFilterModel.count = this.gridViewState.getItemsPerPage();
+        const { nftEntities, total } = await this.nftRepo.fetchNftsByFilter(this.nftFilterModel);
 
-        const collectionIds = nftEntities.map((nftEntity: NftEntity) => nftEntity.collectionId);
-
-        const collectionEntities = await this.collectionRepo.fetchCollectionsByIds(collectionIds);
-
-        return { nftEntities, total, collectionEntities }
+        runInAction(() => {
+            this.nftEntities = nftEntities;
+            this.gridViewState.setTotalItems(total);
+            this.gridViewState.setIsLoading(false);
+        });
     }
+
+    onChangeSortKey = (sortKey: number) => {
+        this.nftFilterModel.sortKey = sortKey;
+        this.fetch();
+    }
+
 }

@@ -3,10 +3,6 @@ import MiningFarmFilterModel from '../../utilities/MiningFarmFilterModel';
 
 export default class MiningFarmApi {
 
-    async fetchAllMiningFarms(): Promise < MiningFarmEntity[] > {
-        return null;
-    }
-
     async fetchPopularMiningFarms(): Promise < MiningFarmEntity[] > {
         return null;
     }

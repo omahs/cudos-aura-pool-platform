@@ -10,6 +10,7 @@ export default class NftFilterModel {
     categoryIds: string[];
     sortKey: number;
     searchString: string;
+    collectionId: string;
     from: number;
     count: number;
 
@@ -17,25 +18,27 @@ export default class NftFilterModel {
         this.sessionAccount = S.INT_FALSE;
         this.sortKey = NftFilterModel.SORT_KEY_NAME;
         this.searchString = '';
-        this.categoryIds = ['0'];
+        this.categoryIds = [];
+        this.collectionId = '';
         this.from = -1;
         this.count = -1;
 
         makeAutoObservable(this);
     }
 
-    static toJson(model) {
-        if (model === null) {
+    static toJson(entity: NftFilterModel) {
+        if (entity === null) {
             return null;
         }
 
         return {
-            sessionAccount: model.sessionAccount,
-            sortKey: model.sortKey,
-            searchString: model.searchString,
-            categoryIds: model.categoryIds,
-            from: model.from,
-            count: model.count,
+            sessionAccount: entity.sessionAccount,
+            sortKey: entity.sortKey,
+            searchString: entity.searchString,
+            categoryIds: entity.categoryIds,
+            collectionId: entity.collectionId,
+            from: entity.from,
+            count: entity.count,
         }
     }
 
@@ -50,6 +53,7 @@ export default class NftFilterModel {
         model.sortKey = parseInt(json.sortKey ?? model.sortKey);
         model.searchString = json.searchString ?? model.searchString;
         model.categoryIds = (json.categoryIds ?? model.categoryIds).map((j) => j.toString());
+        model.collectionId = (json.collectionId ?? model.collectionId).toString();
         model.from = parseInt(json.from ?? model.from);
         model.count = parseInt(json.count ?? model.count);
 

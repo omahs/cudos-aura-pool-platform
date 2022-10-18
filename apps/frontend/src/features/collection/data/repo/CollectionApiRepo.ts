@@ -24,8 +24,9 @@ export default class CollectionStorageRepo implements CollectionRepo {
         return this.collectionApi.fetchCollectionsByIds(idArray);
     }
 
-    async fetchCollectionEntity(collectionId: string): Promise < CollectionEntity > {
-        return this.collectionApi.fetchCollectionEntity(collectionId);
+    async fetchCollectionById(collectionId: string): Promise < CollectionEntity > {
+        const collectionEntities = await this.fetchCollectionsByIds([collectionId]);
+        return collectionEntities.length === 1 ? collectionEntities[0] : null;
     }
 
     async fetchCollectionsByFilter(collectionFilterModel: CollectionFilterModel): Promise < { collectionEntities: CollectionEntity[], total: number } > {

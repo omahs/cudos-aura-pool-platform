@@ -28,7 +28,7 @@ export default class ExploreMiningFarmsPageStore {
         await this.fetch();
     }
 
-    async fetch() {
+    fetch = async () => {
         this.gridViewState.setIsLoading(true);
 
         this.miningFarmFilterModel.from = this.gridViewState.getFrom();

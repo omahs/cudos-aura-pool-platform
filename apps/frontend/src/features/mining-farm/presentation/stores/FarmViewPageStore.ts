@@ -33,12 +33,12 @@ export default class FarmViewPageStore {
     }
 
     async init(farmId: string) {
-        this.miningFarmEntity = (await this.miningFarmRepo.fetchMiningFarmsByIds([farmId]))[0];
+        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(farmId);
         this.collectionFilterModel.farmId = this.miningFarmEntity.id;
         await this.fetch();
     }
 
-    async fetch() {
+    fetch = async () => {
         this.gridViewState.setIsLoading(true);
 
         this.collectionFilterModel.from = this.gridViewState.getFrom();

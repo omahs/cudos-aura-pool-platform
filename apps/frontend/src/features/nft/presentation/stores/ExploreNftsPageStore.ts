@@ -34,7 +34,7 @@ export default class ExploreNftsPageStore {
         await this.fetch();
     }
 
-    async fetch() {
+    fetch = async () => {
         this.gridViewState.setIsLoading(true);
 
         this.nftFilterModel.from = this.gridViewState.getFrom();

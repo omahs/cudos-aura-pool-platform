@@ -5,6 +5,7 @@ export default interface MiningFarmRepo {
 
     fetchAllMiningFarms(): Promise < MiningFarmEntity[] >;
     fetchPopularMiningFarms(): Promise < MiningFarmEntity[] >;
-    fetchMiningFarmsByIds(farmids: string[]): Promise < MiningFarmEntity[] >;
+    fetchMiningFarmsByIds(miningFarmIds: string[]): Promise < MiningFarmEntity[] >;
+    fetchMiningFarmById(miningFarmId: string): Promise < MiningFarmEntity >;
     fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} >;
 }

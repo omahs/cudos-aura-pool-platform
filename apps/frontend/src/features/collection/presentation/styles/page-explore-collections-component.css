@@ -15,7 +15,7 @@
     margin-bottom: 40px;
 }
 
-.PageExploreCollections .CollectionsGridWrapper .FilterHeader {
+.PageExploreCollections .DataGridWrapper .FilterHeader {
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     margin-bottom: 20px;
     align-items: end;

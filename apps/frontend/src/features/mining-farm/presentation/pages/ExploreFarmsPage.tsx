@@ -60,7 +60,7 @@ function ExploreFarmsPage({ appStore, exploreMiningFarmsPageStore }: Props) {
                     />
                     <div></div>
                 </div>
-                <div className={'CollectionsGridWrapper'}>
+                <div className={'DataGridWrapper'}>
                     <div className={'Grid FilterHeader'}>
                         <Select
                             className={'SortBySelect'}

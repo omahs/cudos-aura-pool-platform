@@ -65,7 +65,7 @@ function ExploreCollectionsPage({ appStore, exploreCollectionsPageStore }: Props
                         selectedCategoryIds = { collectionFilterModel.categoryIds }
                         onChangeCategories = { exploreCollectionsPageStore.onChangeCategoryIds } />
                 </div>
-                <div className={'CollectionsGridWrapper'}>
+                <div className={'DataGridWrapper'}>
                     <div className={'Grid FilterHeader'}>
                         <Select
                             className={'SortBySelect'}
