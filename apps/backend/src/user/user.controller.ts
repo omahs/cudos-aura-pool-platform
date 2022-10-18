@@ -26,8 +26,8 @@ export class UserController {
     constructor(private userService: UserService) {}
 
   @Get(':email')
-    async findOne(@Param() params: GetUserDto): Promise<User> {
-        return this.userService.findOne(params.email);
+    async findOne(@Param('email') email: string): Promise<User> {
+        return this.userService.findOne(email);
     }
 
   @ApiBearerAuth('access-token')
