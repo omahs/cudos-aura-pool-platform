@@ -1,10 +1,22 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+
 export class UpdateCollectionDto {
-    name: string;
-    description: string;
-    denom_id: string;
-    hashing_power: number;
-    royalties: number;
-    maintenance_fee: number;
-    payout_address: number;
-    farm_id: number;
+    @IsString()
+    @IsNotEmpty()
+    @IsOptional()
+    @ApiProperty({ example: 'Collection Name' })
+        name: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @IsOptional()
+    @ApiProperty({ example: 'Collection Name' })
+        description: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @IsOptional()
+    @ApiProperty({ example: 'Collection Name' })
+        denom_id: string;
 }

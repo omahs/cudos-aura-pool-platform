@@ -19,7 +19,7 @@ export class GraphqlService {
     async fetchNft(
         filters: Partial<MarketplaceNftFilters>,
     ): Promise<MarketplaceNftQuery> {
-        const res = await this.httpService.axiosRef.post(process.env.APP_GRAPHQL_URL, {
+        const res = await this.httpService.axiosRef.post(process.env.App_Hasura_Url, {
             query: print(MarketplaceNftDocument),
             variables: { ...filters },
         });
@@ -28,7 +28,7 @@ export class GraphqlService {
     }
 
     async getMintedNftUuid(tx_hash: string): Promise<{ uuid: string }> {
-        const res: AxiosResponse<{ data: GetNftByTxHashQuery }> = await this.httpService.axiosRef.post(process.env.APP_GRAPHQL_URL, {
+        const res: AxiosResponse<{ data: GetNftByTxHashQuery }> = await this.httpService.axiosRef.post(process.env.App_Hasura_Url, {
             query: print(GetNftByTxHashDocument),
             variables: { tx_hash },
         });
@@ -45,7 +45,7 @@ export class GraphqlService {
     }
 
     async fetchCollection(): Promise<MarketplaceCollectionQuery> {
-        const res = await this.httpService.axiosRef.post(process.env.APP_GRAPHQL_URL, {
+        const res = await this.httpService.axiosRef.post(process.env.App_Hasura_Url, {
             query: print(MarketplaceCollectionDocument),
         });
 

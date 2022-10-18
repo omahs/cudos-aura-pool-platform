@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateFarmDto } from './dto/create-farm.dto';
 import { UpdateFarmDto } from './dto/update-farm.dto';
@@ -13,12 +13,18 @@ export class FarmService {
 
     async findAll(): Promise<Farm[]> {
         const farms = await this.farmModel.findAll();
+
         return farms;
     }
 
     async findOne(id: number): Promise<Farm> {
         const farm = await this.farmModel.findByPk(id);
-        return farm;
+
+        if (!farm) {
+            throw new NotFoundException();
+        }
+
+        return farm
     }
 
     async findByCreatorId(id: number): Promise<Farm[]> {
