@@ -68,7 +68,7 @@ function StepFarmDetails({ adminEntity, miningFarmEntity, onClickContinue }: Pro
                 onChange={(string) => { miningFarmEntity.primaryAccountOwnerEmail = string }}
                 inputType={InputType.TEXT}
             />;
-            <Autocomplete
+            {/* <Autocomplete
                 value = { miningFarmEntity.manufacturerId }
                 multiple
                 onChange = { (d) => {
@@ -95,7 +95,7 @@ function StepFarmDetails({ adminEntity, miningFarmEntity, onClickContinue }: Pro
                 placeholder={'Select energy source...'}
                 options = { EnergySourceEntity.getAllEnergySources.map((energySource: EnergySourceEntity) => {
                     return new AutocompleteOption(energySource.id, energySource.name);
-                })} />
+                })} /> */}
             <div className={'B2'}>2. Add farm activity details</div>
             <Input
                 label={'Machines Location'}
