@@ -9,6 +9,7 @@ import Svg from '../../../../core/presentation/components/Svg';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 type Props = {
     onClickLogin: (email: string, password: string) => void
@@ -42,11 +43,11 @@ function AdminLogin({ onClickLogin, onClickForgottenPassword, onClickRequestAcco
                 inputType={InputType.TEXT}
             />
             <Input
-                label={'Email'}
-                placeholder={'Email'}
+                label={'Password'}
+                placeholder={'Password'}
                 InputProps={{
                     endAdornment: <InputAdornment position="end" >
-                        <Svg className={'Clickable'} svg={VisibilityOffIcon} onClick={onClickShowPassword}/>
+                        <Svg className={'Clickable'} svg={showPassword === false ? VisibilityOffIcon : VisibilityIcon} onClick={onClickShowPassword}/>
                     </InputAdornment>,
                 }}
                 value={password}

@@ -7,16 +7,16 @@ const collectionCoverPictureUrl = 'https://static.dw.com/image/62450424_303.jpeg
 const collectionOwnerAddress = 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lktde3g6';
 
 const miningFarmsJson = [
-    jsonMiningFarm('1', 'Cool Farm', 'Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 10, 'Uzundjovo, Bulgaria', 2, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('2', 'Not so Cool Farm', 'Not so Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 15, 'Las Brisas, United States', 1, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('3', 'Razorlabs Farm', 'Razorlabs Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 30, 'Las Brisas, United States', 3, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('4', 'Limechain Farm', 'Limechain Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 8, 'Las Brisas, United States', 10, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('5', 'Cudos Farm', 'Cudos Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 100, 'Las Brisas, United States', 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonMiningFarm('1', '1', 'Cool Farm', 'Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 10, 'Uzundjovo, Bulgaria', 2, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonMiningFarm('2', '2', 'Not so Cool Farm', 'Not so Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 15, 'Las Brisas, United States', 1, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonMiningFarm('3', '3', 'Razorlabs Farm', 'Razorlabs Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 30, 'Las Brisas, United States', 3, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonMiningFarm('4', '4', 'Limechain Farm', 'Limechain Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 8, 'Las Brisas, United States', 10, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonMiningFarm('5', '5', 'Cudos Farm', 'Cudos Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 100, 'Las Brisas, United States', 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
 const usersJson = [
     jsonUser('1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonUser('1', 'NFT BOG', 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0', '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonUser('2', 'NFT BOG', 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0', '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
 const bitcoinDataJson = jsonBitcoinData(23336, 53.3, 6.25, '29794407589312');
@@ -173,9 +173,10 @@ export default class StorageHelper {
     }
 }
 
-function jsonMiningFarm(id, name, legalName, primaryAccountOwnerName, description, manufacturerId, minerId, energySourceId, ownerAddress, powerCost, machinesLocation, poolFee, powerConsumptionPerTh, profileImgurl, coverImgUrl) {
+function jsonMiningFarm(id, adminId, name, legalName, primaryAccountOwnerName, description, manufacturerId, minerId, energySourceId, ownerAddress, powerCost, machinesLocation, poolFee, powerConsumptionPerTh, profileImgurl, coverImgUrl) {
     return {
         id,
+        adminId,
         name,
         legalName,
         primaryAccountOwnerName,

@@ -3,6 +3,7 @@ import S from '../../../core/utilities/Main';
 
 export default class MiningFarmEntity {
     id: string;
+    adminId: string;
     name: string;
     legalName: string;
     primaryAccountOwnerName: string;
@@ -22,6 +23,7 @@ export default class MiningFarmEntity {
 
     constructor() {
         this.id = S.Strings.EMPTY;
+        this.adminId = S.Strings.EMPTY;
         this.name = S.Strings.EMPTY;
         this.legalName = S.Strings.EMPTY;
         this.primaryAccountOwnerName = S.Strings.EMPTY;
@@ -45,6 +47,7 @@ export default class MiningFarmEntity {
     toJson(): any {
         return {
             'id': this.id,
+            'adminId': this.adminId,
             'name': this.name,
             'legalName': this.legalName,
             'primaryAccountOwnerName': this.primaryAccountOwnerName,
@@ -72,6 +75,7 @@ export default class MiningFarmEntity {
         const model = new MiningFarmEntity();
 
         model.id = json.id ?? model.id;
+        model.adminId = json.adminId ?? model.adminId;
         model.name = json.name ?? model.name;
         model.legalName = json.legalName ?? model.legalName;
         model.primaryAccountOwnerName = json.primaryAccountOwnerName ?? model.primaryAccountOwnerName;
