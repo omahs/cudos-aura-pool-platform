@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
-import FarmViewPageStore from '../stores/FarmViewPageStore';
+import MiningFarmViewPageStore from '../stores/MiningFarmViewPageStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
@@ -21,36 +21,36 @@ import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentati
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../../../collection/presentation/components/CollectionPreview';
 
-import '../styles/page-farm-view-component.css';
+import '../styles/page-mining-farm-view-component.css';
 
 type Props = {
     appStore?: AppStore
-    farmViewPageStore?: FarmViewPageStore,
+    miningFarmViewPageStore?: MiningFarmViewPageStore,
 }
 
-function FarmViewPage({ appStore, farmViewPageStore }: Props) {
+function MiningFarmViewPage({ appStore, miningFarmViewPageStore }: Props) {
 
     const { farmId } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
         appStore.useLoading(async () => {
-            await farmViewPageStore.init(farmId);
+            await miningFarmViewPageStore.init(farmId);
         });
     }, []);
 
-    const miningFarmEntity = farmViewPageStore.miningFarmEntity;
-    const collectionFilterModel = farmViewPageStore.collectionFilterModel;
+    const miningFarmEntity = miningFarmViewPageStore.miningFarmEntity;
+    const collectionFilterModel = miningFarmViewPageStore.collectionFilterModel;
 
     const crumbs = [
         { name: 'Marketplace', onClick: () => { navigate(AppRoutes.MARKETPLACE) } },
-        { name: 'Explore Farms', onClick: () => { navigate(AppRoutes.EXPLORE_FARMS) } },
+        { name: 'Explore Farms', onClick: () => { navigate(AppRoutes.EXPLORE_MINING_FARMS) } },
         { name: `Farm Owner: ${miningFarmEntity?.name ?? ''}`, onClick: () => {} },
     ]
 
     return (
         <PageLayoutComponent
-            className = { 'PageFarmView' } >
+            className = { 'PageMiningFarmView' } >
             <PageHeader />
 
             { miningFarmEntity === null && (
@@ -97,7 +97,7 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
                         <div className={'Grid FilterHeader'}>
                             <Select
                                 className={'SortBySelect'}
-                                onChange={farmViewPageStore.onChangeSortKey}
+                                onChange={miningFarmViewPageStore.onChangeSortKey}
                                 value={collectionFilterModel.sortKey} >
                                 <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
                                 <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
@@ -114,20 +114,20 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
                             </Actions>
                         </div>
 
-                        { farmViewPageStore.collectionEntities === null && (
+                        { miningFarmViewPageStore.collectionEntities === null && (
                             <LoadingIndicator />
                         ) }
 
-                        { farmViewPageStore.collectionEntities !== null && (
+                        { miningFarmViewPageStore.collectionEntities !== null && (
                             <GridView
-                                gridViewState={farmViewPageStore.gridViewState}
+                                gridViewState={miningFarmViewPageStore.gridViewState}
                                 defaultContent={<div className={'NoContentFound'}>No Nfts found</div>} >
-                                { farmViewPageStore.collectionEntities.map((collectionEntity: CollectionEntity, index: number) => {
+                                { miningFarmViewPageStore.collectionEntities.map((collectionEntity: CollectionEntity, index: number) => {
                                     return (
                                         <CollectionPreview
                                             key={index}
                                             collectionEntity={collectionEntity}
-                                            miningFarmName={farmViewPageStore.getMiningFarmName(collectionEntity.farmId)} />
+                                            miningFarmName={miningFarmViewPageStore.getMiningFarmName(collectionEntity.farmId)} />
                                     )
                                 }) }
                             </GridView>
@@ -142,4 +142,4 @@ function FarmViewPage({ appStore, farmViewPageStore }: Props) {
 
 }
 
-export default inject((stores) => stores)(observer(FarmViewPage));
+export default inject((stores) => stores)(observer(MiningFarmViewPage));

@@ -6,7 +6,7 @@ import MiningFarmRepo from '../repos/MiningFarmRepo';
 import CollectionFilterModel from '../../../collection/utilities/CollectionFilterModel';
 import GridViewState from '../../../../core/presentation/stores/GridViewState';
 
-export default class FarmViewPageStore {
+export default class MiningFarmViewPageStore {
 
     miningFarmRepo: MiningFarmRepo;
     collectionRepo: CollectionRepo;

@@ -11,11 +11,11 @@ import RewardsCalculatorPage from '../../../rewards-calculator/presentation/page
 import MarketplacePage from '../../../collection/presentation/pages/MarketplacePage';
 import ExploreNftsPage from '../../../nft/presentation/pages/ExploreNftsPage';
 import ExploreCollectionsPage from '../../../collection/presentation/pages/ExploreCollectionsPage';
-import ExploreFarmsPage from '../../../mining-farm/presentation/pages/ExploreFarmsPage';
+import ExploreMiningFarmsPage from '../../../mining-farm/presentation/pages/ExploreMiningFarmsPage';
 import UserProfilePage from '../../../accounts/presentation/pages/UserProfilePage';
 import NftViewPage from '../../../nft/presentation/pages/NftViewPage';
 import CollectionViewPage from '../../../collection/presentation/pages/CollectionViewPage';
-import FarmViewPage from '../../../mining-farm/presentation/pages/FarmViewPage';
+import MiningFarmViewPage from '../../../mining-farm/presentation/pages/MiningFarmViewPage';
 
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 
@@ -62,13 +62,13 @@ function AppRouter({ accountSessionStore }: Props) {
                     <Route path = { AppRoutes.MARKETPLACE } element = { <MarketplacePage /> } />
                     <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPage /> } />
                     <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPage /> } />
-                    <Route path = { AppRoutes.EXPLORE_FARMS } element = { <ExploreFarmsPage /> } />
+                    <Route path = { AppRoutes.EXPLORE_MINING_FARMS } element = { <ExploreMiningFarmsPage /> } />
                     { accountSessionStore.isUser() === true && (
                         <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePage /> } />
                     ) }
                     <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />
                     <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPage /> } />
-                    <Route path = { `${AppRoutes.FARM_VIEW}/:farmId` } element = { <FarmViewPage /> } />
+                    <Route path = { `${AppRoutes.MINING_FARM_VIEW}/:farmId` } element = { <MiningFarmViewPage /> } />
                 </Routes>
             ) }
         </div>

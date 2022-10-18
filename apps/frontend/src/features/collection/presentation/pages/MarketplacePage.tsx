@@ -42,7 +42,7 @@ function MarkedplacePage({ marketplaceStore }: Props) {
     }
 
     function onClickSeeAllFarms() {
-        navigate(AppRoutes.EXPLORE_FARMS);
+        navigate(AppRoutes.EXPLORE_MINING_FARMS);
     }
 
     useEffect(() => {

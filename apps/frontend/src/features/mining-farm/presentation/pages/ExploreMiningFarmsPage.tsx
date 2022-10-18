@@ -21,14 +21,14 @@ import LoadingIndicator from '../../../../core/presentation/components/LoadingIn
 import MiningFarmPeview from '../components/MiningFarmPreview';
 import Select from '../../../../core/presentation/components/Select';
 
-import '../styles/page-explore-farms-component.css';
+import '../styles/page-explore-mining-farms-component.css';
 
 type Props = {
     appStore?: AppStore
     exploreMiningFarmsPageStore?: ExploreMiningFarmsPageStore;
 }
 
-function ExploreFarmsPage({ appStore, exploreMiningFarmsPageStore }: Props) {
+function ExploreMiningFarmsPage({ appStore, exploreMiningFarmsPageStore }: Props) {
 
     useEffect(() => {
         appStore.useLoading(async () => {
@@ -40,7 +40,7 @@ function ExploreFarmsPage({ appStore, exploreMiningFarmsPageStore }: Props) {
 
     return (
         <PageLayoutComponent
-            className = { 'PageExploreFarms' } >
+            className = { 'PageExploreMiningFarms' } >
             <PageHeader />
             <div className={'PageContent AppContent FlexColumn'} >
                 <div className={'H2 Bold'}>Explore Farms</div>
@@ -107,4 +107,4 @@ function ExploreFarmsPage({ appStore, exploreMiningFarmsPageStore }: Props) {
 
 }
 
-export default inject((stores) => stores)(observer(ExploreFarmsPage));
+export default inject((stores) => stores)(observer(ExploreMiningFarmsPage));

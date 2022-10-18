@@ -18,7 +18,7 @@ import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModa
 import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
 import NftDetailsStore from './features/nft/presentation/stores/NftDetailsStore';
 import CollectionViewPageStore from './features/collection/presentation/stores/CollectionViewPageStore';
-import FarmViewPageStore from './features/mining-farm/presentation/stores/FarmViewPageStore';
+import MiningFarmViewPageStore from './features/mining-farm/presentation/stores/MiningFarmViewPageStore';
 import WalletStore from './features/ledger/presentation/stores/WalletStore';
 import BuyNftModalStore from './features/nft/presentation/stores/BuyNftModalStore';
 import ResellNftModalStore from './features/nft/presentation/stores/ResellNftModalStore';
@@ -62,7 +62,7 @@ const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFa
 const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo, nftRepo, miningFarmRepo);
 const nftDetailsStore = new NftDetailsStore(bitcoinStore, cudosStore, nftRepo);
 const collectionViewPageStore = new CollectionViewPageStore(nftRepo, collectionRepo, miningFarmRepo);
-const farmViewPageStore = new FarmViewPageStore(miningFarmRepo, collectionRepo);
+const miningFarmViewPageStore = new MiningFarmViewPageStore(miningFarmRepo, collectionRepo);
 const userProfilePageStore = new UserProfilePageStore(walletStore, nftRepo, collectionRepo);
 const buyNftModalStore = new BuyNftModalStore();
 const resellNftModalStore = new ResellNftModalStore();
@@ -99,7 +99,7 @@ const App = () => {
                 marketplaceStore = { marketplaceStore }
                 nftDetailsStore = { nftDetailsStore }
                 collectionViewPageStore = { collectionViewPageStore }
-                farmViewPageStore = { farmViewPageStore }
+                miningFarmViewPageStore = { miningFarmViewPageStore }
                 userProfilePageStore = { userProfilePageStore }
                 buyNftModalStore = { buyNftModalStore }
                 resellNftModalStore = { resellNftModalStore } >

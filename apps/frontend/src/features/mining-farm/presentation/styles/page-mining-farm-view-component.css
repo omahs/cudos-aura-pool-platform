@@ -1,17 +1,17 @@
 
-.PageFarmView .PageContent {
+.PageMiningFarmView .PageContent {
     padding: 24px var(--page-spacing-h);
 }
 
-.PageFarmView .Grid {
+.PageMiningFarmView .Grid {
     gap: 50px;
 }
 
-.PageFarmView .BorderContainer .FarmInfoRow {
+.PageMiningFarmView .BorderContainer .FarmInfoRow {
     justify-content: space-between;
 } 
 
-.PageFarmView .DataGridWrapper .FilterHeader {
+.PageMiningFarmView .DataGridWrapper .FilterHeader {
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     margin-bottom: 20px;
     align-items: end;

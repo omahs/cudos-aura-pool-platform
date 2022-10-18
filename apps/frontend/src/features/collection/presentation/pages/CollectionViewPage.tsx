@@ -52,7 +52,7 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
     ]
 
     function onClickFarmLink() {
-        navigate(`${AppRoutes.FARM_VIEW}/${miningFarmEntity.id}`)
+        navigate(`${AppRoutes.MINING_FARM_VIEW}/${miningFarmEntity.id}`)
     }
 
     const nftFilterModel = collectionViewPageStore.nftFilterModel;

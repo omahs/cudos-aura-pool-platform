@@ -12,7 +12,7 @@ export default function MiningFarmPeview({ miningFarmEntity }: Props) {
     const navigate = useNavigate();
 
     const onClickMiningFarm = () => {
-        navigate(`${AppRoutes.FARM_VIEW}/${miningFarmEntity.id}`);
+        navigate(`${AppRoutes.MINING_FARM_VIEW}/${miningFarmEntity.id}`);
     }
 
     return (
