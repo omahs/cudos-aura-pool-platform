@@ -9,6 +9,7 @@ import AdminLogin from '../components/AdminLogin';
 import AdminPortalPageState from '../stores/AdminPortalPageState';
 import AccountSessionStore from '../stores/AccountSessionStore';
 import RequestAdminAccount from '../components/request-account/RequestAdminAccount';
+import ChangePassword from '../components/ChangePassword';
 
 type Props = {
     accountSessionStore?: AccountSessionStore;
@@ -31,6 +32,10 @@ function UserProfilePage({ accountSessionStore }: Props) {
                     />)}
                     {adminPortalPageState.isPageRequestAdminAccount() === true
                     && (<RequestAdminAccount onClickNavigateLogin={adminPortalPageState.setPageLogin}/>)}
+                    {adminPortalPageState.isPageChangePassword() === true
+                    && (<ChangePassword
+                        miningFarmEntity={adminPortalPageState.miningFarmEntity}
+                        onClickLogin={adminPortalPageState.changePassword}/>)}
                 </div>
             </div>
             <PageFooter />
