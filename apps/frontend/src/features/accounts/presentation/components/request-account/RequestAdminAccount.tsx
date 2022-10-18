@@ -6,6 +6,8 @@ import RequestAdminAccountPageState from '../../stores/RequestAdminAccountPageSt
 import S from '../../../../../core/utilities/Main';
 import StepAccount from './StepAccount';
 import StepFarmDetails from './StepFarmDetails';
+import StepReview from './StepReview';
+import StepSuccess from './StepSuccess';
 
 type Props = {
     onClickNavigateLogin: () => void
@@ -26,7 +28,7 @@ function RequestAdminAccount({ onClickNavigateLogin }: Props) {
                     <div className={'NavNumber B3 FlexRow'}>2</div>
                     <div className={'B3 SemiBold'}>Farm Details</div>
                 </div>
-                <div className={`FlexColumn NavItem ${S.CSS.getActiveClassName(state.isStepFinish() === true)}`}>
+                <div className={`FlexColumn NavItem ${S.CSS.getActiveClassName(state.isStepReview() === true)}`}>
                     <div className={'NavNumber B3 FlexRow'}>3</div>
                     <div className={'B3 SemiBold'}>Finish</div>
                 </div>
@@ -40,8 +42,23 @@ function RequestAdminAccount({ onClickNavigateLogin }: Props) {
                 />)}
             {state.isStepFarmDetails() === true && (
                 <StepFarmDetails
+                    miningFarmEntity={state.miningFarmEntity}
+                    imageEntities={state.imageEntities}
+                    onClickContinue={state.setStepReview}
+                />
+            )}
+            {state.isStepReview() === true && (
+                <StepReview
                     adminEntity={state.adminEntity}
                     miningFarmEntity={state.miningFarmEntity}
+                    imageEntities={state.imageEntities}
+                    onClickContinue={state.finishCreation}
+                    onClickBack={state.setStepFarmDetails}
+                />
+            )}
+            {state.isStepSuccess() === true && (
+                <StepSuccess
+                    adminEntity={state.adminEntity}
                 />
             )}
         </div>

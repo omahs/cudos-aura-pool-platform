@@ -112,4 +112,20 @@ export default class MiningFarmEntity {
         }
     }
 
+    displayHashRate(): string {
+        if (this.hashRateTh < 1000) {
+            return `${this.hashRateTh} TH/s`;
+        }
+
+        if (this.hashRateTh / 1000 < 1000) {
+            return `${(this.hashRateTh / 1000).toFixed(2)} PH/s`;
+        }
+
+        if (this.hashRateTh / 1000000 < 1000) {
+            return `${(this.hashRateTh / 1000000).toFixed(2)} EH/s`;
+        }
+
+        return S.Strings.EMPTY;
+    }
+
 }

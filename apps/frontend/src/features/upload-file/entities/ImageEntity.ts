@@ -1,7 +1,16 @@
 import S from '../../../../src/core/utilities/Main';
 import { makeAutoObservable } from 'mobx';
 
+export enum PictureType {
+    FARM_PROFILE = '1',
+    FARM_COVER = '2',
+    FARM_PHOTO = '3',
+    COLLECTION_PROFILE = '4',
+    COLLECTION_COVER = '5',
+}
+
 export default class ImageEntity {
+
     id: string;
     type: string;
     sizeBytes: number;

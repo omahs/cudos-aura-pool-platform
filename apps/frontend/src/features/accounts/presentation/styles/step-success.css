@@ -1,0 +1,12 @@
+.HeadingRow {
+    gap: 10px;
+}
+
+.EmailBox {
+    margin-top: 50px;
+    width: 100%;
+    gap: 10px;
+    padding: 15px;
+    background-color: var(--color-gray-060);
+    color: var(--color-gray-030);
+}

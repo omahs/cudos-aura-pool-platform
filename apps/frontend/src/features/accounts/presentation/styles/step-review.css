@@ -1,0 +1,29 @@
+.ReviewDataContainer {
+    border: 1px solid var(--color-gray-060);
+    border-radius: 20px;
+    padding: 24px;
+    gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ReviewDataContainer .DataRow {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ReviewDataContainer .DataRow .DataLabel {
+    color: var(--color-gray-030);
+}
+
+.TermsAgreeRow {
+    width: 100%;
+}
+
+.ButtonRow {
+    width: 100%;
+}
+
+.Description {
+    overflow-wrap: anywhere;
+}

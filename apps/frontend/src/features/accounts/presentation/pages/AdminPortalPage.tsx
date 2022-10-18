@@ -11,7 +11,7 @@ import AccountSessionStore from '../stores/AccountSessionStore';
 import RequestAdminAccount from '../components/request-account/RequestAdminAccount';
 
 type Props = {
-    accountSessionStore: AccountSessionStore;
+    accountSessionStore?: AccountSessionStore;
 }
 
 function UserProfilePage({ accountSessionStore }: Props) {

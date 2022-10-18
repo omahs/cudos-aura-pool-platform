@@ -1,38 +1,57 @@
 import React, { useState } from 'react';
 
-import '../../styles/request-admin-account.css';
+import '../../styles/step-farm-details.css';
 import Input, { InputType } from '../../../../../core/presentation/components/Input';
 import { InputAdornment } from '@mui/material';
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import Svg from '../../../../../core/presentation/components/Svg';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
 import Button, { BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
 import AdminEntity from '../../../entities/AdminEntity';
-import MiningFarmEntity from 'apps/frontend/src/features/mining-farm/entities/MiningFarmEntity';
-import Autocomplete from 'apps/frontend/src/core/presentation/components/Autcomplete';
-import AutocompleteOption from 'apps/frontend/src/core/entities/AutocompleteOption';
-import ManufacturerEntity from 'apps/frontend/src/features/mining-farm/entities/ManufacturerEntity';
-import MinerEntity from 'apps/frontend/src/features/mining-farm/entities/MinerEntity';
-import EnergySourceEntity from 'apps/frontend/src/features/mining-farm/entities/EnergySourceEntity';
+import MiningFarmEntity from '../../../../mining-farm/entities/MiningFarmEntity';
+import Autocomplete from '../../../../../core/presentation/components/Autcomplete';
+import AutocompleteOption from '../../../../../core/entities/AutocompleteOption';
+import ManufacturerEntity from '../../../../mining-farm/entities/ManufacturerEntity';
+import MinerEntity from '../../../../mining-farm/entities/MinerEntity';
+import EnergySourceEntity from '../../../../mining-farm/entities/EnergySourceEntity';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
+import UploaderComponent from '../../../../../core/presentation/components/UploaderComponent';
+import AlertStore from '../../../../../core/presentation/stores/AlertStore';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import ImageEntity, { PictureType } from '../../../../../features/upload-file/entities/ImageEntity';
+import CloseIcon from '@mui/icons-material/Close';
 
 type Props = {
-    adminEntity: AdminEntity
+    alertStore?: AlertStore
     miningFarmEntity: MiningFarmEntity
+    imageEntities: ImageEntity[]
     onClickContinue: () => void
 }
 
-function StepFarmDetails({ adminEntity, miningFarmEntity, onClickContinue }: Props) {
-
+function StepFarmDetails({ alertStore, miningFarmEntity, imageEntities, onClickContinue }: Props) {
+    const [selectedManufacturersOptions, setSelectedManufacturersOptions] = useState([]);
+    const [selectedMindersOptions, setSelectedMinersOptions] = useState([]);
+    const [selectedEnergySourceOptions, setSelectedEnergySourceOptions] = useState([]);
     const [hashRateDisplay, setHashRateDisplay] = useState('');
+
+    function onClickRemoveImage(imageEntityToRemove: ImageEntity) {
+        const imageEntityIndex = imageEntities.findIndex((imageEntity: ImageEntity) => imageEntity.id === imageEntityToRemove.id);
+        imageEntities.splice(imageEntityIndex, 1);
+        console.log(imageEntities);
+    }
+
+    // based onfilled farm entity properties
+    // TODO
+    function shouldButtonBeDisabled() {
+        return false;
+    }
 
     return (
         <>
-            <div className={'H3 Bold Heading'}>Welcome to AuraPool</div>
-            <div className={'B1'}>Follow the steps to create your Farm Profile</div>
-            <div className={'B2'}>1. Fill in the general farm details</div>
+            <div className={'H3 Bold FullLine'}>Welcome to AuraPool</div>
+            <div className={'B1 FullLine'}>Follow the steps to create your Farm Profile</div>
+            <div className={'B2 Bold FullLine'}>1. Fill in the general farm details</div>
             <Input
                 label={'Farm Name'}
                 placeholder={'e.g Cool Farm'}
@@ -64,39 +83,48 @@ function StepFarmDetails({ adminEntity, miningFarmEntity, onClickContinue }: Pro
             <Input
                 label={'Primary Account Owner Email'}
                 placeholder={'examplemail@mail.com'}
-                value={miningFarmEntity.energySource}
+                value={miningFarmEntity.primaryAccountOwnerEmail}
                 onChange={(string) => { miningFarmEntity.primaryAccountOwnerEmail = string }}
                 inputType={InputType.TEXT}
-            />;
-            {/* <Autocomplete
-                value = { miningFarmEntity.manufacturerId }
+            />
+            <Autocomplete
+                label={'Manufacturers'}
+                value = { selectedManufacturersOptions }
                 multiple
                 onChange = { (d) => {
-                    miningFarmEntity.manufacturerId = d;
+                    setSelectedManufacturersOptions(d);
+                    miningFarmEntity.manufacturerIds = d.map((option) => option.value);
+                    console.log(miningFarmEntity);
                 }}
                 placeholder={'Select manufacturers...'}
                 options = { ManufacturerEntity.getAllManufacturers().map((manufacturer: ManufacturerEntity) => {
                     return new AutocompleteOption(manufacturer.id, manufacturer.name);
                 })} />
             <Autocomplete
-                value = { miningFarmEntity.minerId }
+                label={'Miners'}
+                value = { selectedMindersOptions }
+                multiple
                 onChange = { (d) => {
-                    miningFarmEntity.minerId = d;
+                    setSelectedMinersOptions(d);
+                    miningFarmEntity.minerIds = d.map((option) => option.value);
                 }}
                 placeholder={'Select miners...'}
-                options = { MinerEntity.getAllMiners.map((miner: MinerEntity) => {
+                options = { MinerEntity.getAllMiners().map((miner: MinerEntity) => {
                     return new AutocompleteOption(miner.id, miner.name);
                 })} />
             <Autocomplete
-                value = { miningFarmEntity.energySourceId }
+                label={'Energy Source'}
+                value = { selectedEnergySourceOptions }
+                multiple
                 onChange = { (d) => {
-                    miningFarmEntity.energySourceId = d;
+                    setSelectedEnergySourceOptions(d);
+                    miningFarmEntity.energySourceIds = d.map((option) => option.value);
                 }}
                 placeholder={'Select energy source...'}
-                options = { EnergySourceEntity.getAllEnergySources.map((energySource: EnergySourceEntity) => {
+                options = { EnergySourceEntity.getAllEnergySources().map((energySource: EnergySourceEntity) => {
                     return new AutocompleteOption(energySource.id, energySource.name);
-                })} /> */}
-            <div className={'B2'}>2. Add farm activity details</div>
+                })} />
+            <div className={'B2 Bold FullLine'}>2. Add farm activity details</div>
             <Input
                 label={'Machines Location'}
                 placeholder={'e.g Las Brisas, United States'}
@@ -118,26 +146,71 @@ function StepFarmDetails({ adminEntity, miningFarmEntity, onClickContinue }: Pro
                     miningFarmEntity.parseHashRateFromString(string);
                 }}
                 inputType={InputType.TEXT}
-                InputProps={{
-                    endAdornment: <InputAdornment position="end" >
-                        <Svg svg={NearMeIcon}/>
-                    </InputAdornment>,
-                }}
             />
-            <div className={'FlexRow HashRateInfo B2 SemiBold'}>
+            <div className={'FlexRow HashRateInfo B2 SemiBold FullLine'}>
                 <Svg svg={ErrorOutlineIcon}/>
                 Insert the Hashrate planned to be offered as NFTs
             </div>
-            <div className={'B2'}> 3. Upload photos from the farm</div>
+            <div className={'B2 Bold FullLine'}> 3. Upload photos from the farm</div>
+            <div className={'Uploader FlexColumn'}>
+                <div className={'B3 SemiBold'}>Upload files here</div>
+                <div className={'B3 SemiBold'}>File Format: <span className={'Gray'}>.svg, .png, .jpeg</span></div>
+                <Actions layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                    <Button
+                        radius={BUTTON_RADIUS.RADIUS_16}
+                    >
+                        <Svg svg={FileUploadIcon}/>
+                        Upload file
+                    </Button>
+                </Actions>
+                <UploaderComponent
+                    id = { this }
+                    params = { {
+                        'maxSize': 73400320, // 70MB
+                        'onExceedLimit': () => {
+                            this.props.alertStore.show('', 'Максималният размер на файловете е 70MB!');
+                        },
+                        'multi': true,
+                        onReadFileAsBase64: (base64File, responseData, files: any[], i: number) => {
+                            const imageEntity = new ImageEntity();
+                            // TODO upload or generate good id
 
-            <Actions layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                            imageEntity.id = Date.now().toString();
+                            imageEntity.base64 = base64File;
+                            imageEntity.sizeBytes = base64File.length;
+                            imageEntity.type = PictureType.FARM_PHOTO;
+
+                            imageEntities.push(imageEntity);
+
+                            alertStore.show('success');
+                        },
+                    } } />
+            </div>
+            <div className={'UploadedImagesRow FlexRow'}>
+                {imageEntities.length === 0 && (
+                    <div className={'NoUploads B3 SemiBold'}>No files uploaded yet.</div>
+                )}
+                {imageEntities.length > 0 && (
+                    imageEntities.map((imageEntity) => {
+                        return <div key={imageEntity.id}
+                            style={{
+                                backgroundImage: `url(${imageEntity.base64})`,
+                            }}
+                            className={'PictureBox'} >
+                            <Svg svg={CloseIcon} className={'RemovePictureButton Clickable'} onClick={() => onClickRemoveImage(imageEntity)}/>
+                        </div>
+                    })
+                )}
+            </div>
+            <Actions layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_RIGHT} height={ACTIONS_HEIGHT.HEIGHT_48}>
                 <Button
+                    disabled={shouldButtonBeDisabled()}
                     onClick={onClickContinue}
                     radius={BUTTON_RADIUS.RADIUS_16}
-                >Continue</Button>
+                >Next Step</Button>
             </Actions>
         </>
     )
 }
 
-export default (observer(StepFarmDetails));
+export default inject((props) => props)(observer(StepFarmDetails));

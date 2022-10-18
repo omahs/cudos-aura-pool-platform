@@ -19,7 +19,7 @@ type Props = {
 function StepAccount({ adminEntity, onClickContinue, onClickNavigateLogin }: Props) {
     return (
         <>
-            <div className={'H2 Bold Heading'}>Request Admin Account</div>
+            <div className={'H2 Bold FullLine'}>Request Admin Account</div>
             <div className={'B1'}>Fill in your email and the required farm details in order to request an account. The information will be reviewed.</div>
             <Input
                 label={'Email'}
