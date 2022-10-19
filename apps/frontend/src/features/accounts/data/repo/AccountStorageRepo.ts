@@ -16,30 +16,101 @@ export default class AccountStorageRepo implements AccountRepo {
     }
 
     async login(username: string, password: string, walletAddress: string, signedTx: any): Promise < void > {
+
+        const currentAccounts = this.storageHelper.accountsJson;
+        const currentUsers = this.storageHelper.usersJson;
+        const currentAdmins = this.storageHelper.adminsJson;
+
+        let adminJson = null;
+        let userJson = null;
+        let accountJson = null;
+
+        // admin login
+        if (walletAddress === S.Strings.EMPTY || walletAddress === null || walletAddress === undefined) {
+            adminJson = currentAdmins.find((json) => {
+                return json.email === username
+            });
+
+            if (adminJson === undefined) {
+                throw Error('Account not found');
+            }
+
+            userJson = currentUsers.find((json) => json.accountId === adminJson.accountId);
+            accountJson = currentAccounts.find((json) => json.accountId === adminJson.accountId);
+        } else {
+            userJson = currentUsers.find((json) => json.address === walletAddress);
+            if (userJson === undefined) {
+                const accountEntity = new AccountEntity();
+
+                accountEntity.accountId = `${currentAccounts.length + 1}`;
+                accountEntity.type = AccountType.Admin;
+                accountEntity.timestampLastLogin = S.NOT_EXISTS;
+                accountEntity.timestampRegister = Date.now() - 100000000;
+                accountEntity.active = S.INT_FALSE;
+
+                accountJson = AccountEntity.toJson(accountEntity);
+                currentAccounts.push(accountJson);
+
+                const userEntity = new UserEntity();
+
+                userEntity.userId = `${currentUsers.length + 1}`;
+                userEntity.accountId = accountEntity.accountId;
+                userEntity.name = S.Strings.EMPTY;
+                userEntity.address = walletAddress;
+                userEntity.totalBtcEarned = new BigNumber(0);
+                userEntity.totalHashPower = 0;
+                userEntity.timestampJoined = Date.now() - 100000000;
+
+                userJson = UserEntity.toJson(userEntity);
+                currentUsers.push(userJson);
+            } else {
+                accountJson = currentAccounts.find((json) => json.accountId === userJson.accountId);
+            }
+        }
+
+        this.storageHelper.sessionAccount = accountJson ?? null;
+        this.storageHelper.sessionUser = userJson ?? null;
+        this.storageHelper.sessionAdmin = adminJson ?? null;
+        this.storageHelper.save();
+    }
+
+    async register(email: string, password: string, repeatPassword: string): Promise < void > {
+        const currentAccounts = this.storageHelper.accountsJson;
+        const currentUsers = this.storageHelper.usersJson;
+        const currentAdmins = this.storageHelper.adminsJson;
+
         const accountEntity = new AccountEntity();
-        accountEntity.accountId = '1';
-        accountEntity.type = walletAddress !== S.Strings.EMPTY ? AccountType.User : AccountType.Admin;
+
+        accountEntity.accountId = `${currentAccounts.length + 1}`;
+        accountEntity.type = AccountType.Admin;
         accountEntity.timestampLastLogin = S.NOT_EXISTS;
         accountEntity.timestampRegister = Date.now() - 100000000;
+        accountEntity.active = S.INT_FALSE;
+
+        const accountJson = AccountEntity.toJson(accountEntity);
+        currentAccounts.push(accountJson);
 
         const userEntity = new UserEntity();
+
+        userEntity.userId = `${currentUsers.length + 1}`;
         userEntity.accountId = accountEntity.accountId;
-        userEntity.name = 'MockedUser';
-        userEntity.address = walletAddress;
+        userEntity.name = S.Strings.EMPTY;
+        userEntity.address = S.Strings.EMPTY;
         userEntity.totalBtcEarned = new BigNumber(0);
         userEntity.totalHashPower = 0;
         userEntity.timestampJoined = Date.now() - 100000000;
 
-        let adminEntity = null;
-        if (walletAddress === S.Strings.EMPTY) {
-            adminEntity = new AdminEntity();
-            adminEntity.accountId = accountEntity.accountId;
-            adminEntity.email = 'email@email.com'
-        }
+        const userJson = UserEntity.toJson(userEntity);
+        currentUsers.push(userJson);
 
-        this.storageHelper.sessionAccount = AccountEntity.toJson(accountEntity);
-        this.storageHelper.sessionUser = UserEntity.toJson(userEntity);
-        this.storageHelper.sessionAdmin = AdminEntity.toJson(adminEntity);
+        const adminEntity = new AdminEntity();
+
+        adminEntity.adminId = `${currentAdmins.length + 1}`;
+        adminEntity.accountId = accountEntity.accountId;
+        adminEntity.email = email
+
+        const adminJson = AdminEntity.toJson(adminEntity)
+        currentAdmins.push(adminJson);
         this.storageHelper.save();
     }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import '../styles/admin-login.css';
+import '../styles/admin-register.css';
 import { inject, observer } from 'mobx-react';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
 import { InputAdornment } from '@mui/material';
@@ -11,44 +11,39 @@ import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AccountSessionStore from '../stores/AccountSessionStore';
-import AppStore from '../../../../core/presentation/stores/AppStore';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import S from 'apps/frontend/src/core/utilities/Main';
-import AlertStore from 'apps/frontend/src/core/presentation/stores/AlertStore';
 
 type Props = {
-    alertStore: AlertStore;
     accountSessionStore?: AccountSessionStore;
-    onClickForgottenPassword: () => void
-    onClickRequestAccount: () => void
-    loginRedirect: () => void
+    registerRedirect: () => void
 }
 
-function AdminLogin({ alertStore, accountSessionStore, onClickForgottenPassword, onClickRequestAccount, loginRedirect }: Props) {
+function AdminRegister({ accountSessionStore, registerRedirect }: Props) {
     const [email, setEmail] = useState('');
-    const [logging, setLogging] = useState(false);
+    const [registering, setRegistering] = useState(false);
     const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
     function onClickShowPassword() {
         setShowPassword(!showPassword);
     }
 
-    async function onClickLogin() {
-        setLogging(true);
-        try {
-            await accountSessionStore.login(email, password);
-            loginRedirect();
-        } catch (e) {
-            alertStore.show('Account not found');
-        }
-        setLogging(false);
+    function onClickShowRepeatPassword() {
+        setShowRepeatPassword(!showRepeatPassword);
+    }
+    async function onClickRegister() {
+        setRegistering(true);
+        await accountSessionStore.register(email, password, repeatPassword);
+        registerRedirect();
+        setRegistering(false);
     }
 
     return (
         <div className={'AdminLoginForm FlexColumn'}>
-            <div className={'H2 Bold'}>Log in</div>
-            <div className={'B1'}>Fill your credentials in order to access your account</div>
+            <div className={'H2 Bold'}>Register</div>
+            <div className={'B1'}>Fill your credentials in order to register an account</div>
             <Input
                 label={'Email'}
                 placeholder={'Email'}
@@ -73,18 +68,28 @@ function AdminLogin({ alertStore, accountSessionStore, onClickForgottenPassword,
                 onChange={setPassword}
                 type={showPassword === false ? 'password' : ''}
             />
-            <div className={'ForgottenPassword B2 SemiBold Clickable FlexRow'} onClick={onClickForgottenPassword}>Forgotten Password?</div>
+            <Input
+                label={'Repeat Password'}
+                placeholder={'Repeat Password'}
+                InputProps={{
+                    endAdornment: <InputAdornment position="end" >
+                        <Svg className={'Clickable'} svg={showRepeatPassword === false ? VisibilityOffIcon : VisibilityIcon} onClick={onClickShowRepeatPassword}/>
+                    </InputAdornment>,
+                }}
+                value={repeatPassword}
+                onChange={setRepeatPassword}
+                type={showRepeatPassword === false ? 'password' : ''}
+            />
             <Actions layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL} height={ACTIONS_HEIGHT.HEIGHT_48}>
                 <Button
-                    onClick={onClickLogin}
+                    onClick={onClickRegister}
                     radius={BUTTON_RADIUS.RADIUS_16}
                 >
-                    {logging === true ? <LoadingIndicator /> : 'Login'}
+                    {registering === true ? <LoadingIndicator /> : 'Register'}
                 </Button>
             </Actions>
-            <div className={'RequestAccount B2 Bold Clickable FlexRow'} onClick={onClickRequestAccount}>You don’t have account? Request Admin Account</div>
         </div>
     )
 }
 
-export default inject((stores) => stores)(observer(AdminLogin));
+export default inject((stores) => stores)(observer(AdminRegister));

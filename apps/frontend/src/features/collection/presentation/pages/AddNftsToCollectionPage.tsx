@@ -30,6 +30,7 @@ import { CollectionStatus } from '../../entities/CollectionEntity';
 import AddNftsToCollectionPageState from '../stores/AddNftsToCollectionPageState';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import RepoStore from 'apps/frontend/src/core/presentation/stores/RepoStore';
+import AddNftsStage from '../components/collection-creation/AddNftsStage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore
@@ -59,25 +60,14 @@ function AddNftsToCollectionPage({ appStore, accountSessionStore, repoStore }: P
         <PageLayoutComponent
             className = { 'PageCollectionView' }>
             <PageHeader />
-            <Breadcrumbs crumbs={crumbs} />
             <div className={'PageContent AppContent'} >
-                {addNftsToCollectionPageState.isCollectionEditable() === false && (<CollectionNotEditableContent/>)}
-                {addNftsToCollectionPageState.isCollectionEditable() === true && (
-                    <div className={'NftAddContainer FlexRow'}>
-
-                    </div>
-                )}
+                <Breadcrumbs crumbs={crumbs} />
+                {/* <AddNftsStage /> */}
             </div>
             <PageFooter />
         </PageLayoutComponent>
 
     )
-
-    function CollectionNotEditableContent() {
-        return (<div className={'NotEditableContent'}>
-            Collection is either not yours or is already approved. You can't add NFTs to it.
-        </div>)
-    }
 }
 
 export default inject((stores) => stores)(observer(AddNftsToCollectionPage));

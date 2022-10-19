@@ -8,6 +8,7 @@ import StepAccount from './StepAccount';
 import StepFarmDetails from './StepFarmDetails';
 import StepReview from './StepReview';
 import StepSuccess from './StepSuccess';
+import NavRow, { NavStep } from '../../../../../core/presentation/components/NavRow';
 
 type Props = {
     onClickNavigateLogin: () => void
@@ -16,24 +17,27 @@ type Props = {
 function RequestAdminAccount({ onClickNavigateLogin }: Props) {
     const [state] = useState(new RequestAdminAccountPageState());
 
+    const navSteps: NavStep[] = [
+        {
+            navNumber: 1,
+            navName: 'Account',
+            isActive: state.isStepAccount(),
+        },
+        {
+            navNumber: 2,
+            navName: 'Farm Details',
+            isActive: state.isStepFarmDetails(),
+        },
+        {
+            navNumber: 3,
+            navName: 'Finish',
+            isActive: state.isStepReview(),
+        },
+    ];
+
     return (
         <div className={'RequestAdminAccountForm FlexColumn'}>
-            <div className={'FlexRow NavBar'}>
-                <div
-                    className={`FlexColumn NavItem ${S.CSS.getActiveClassName(state.isStepAccount() === true)}`}>
-                    <div className={'NavNumber B3 FlexRow'}>1</div>
-                    <div className={'B3 SemiBold'}>Account</div>
-                </div>
-                <div className={`FlexColumn NavItem ${S.CSS.getActiveClassName(state.isStepFarmDetails() === true)}`}>
-                    <div className={'NavNumber B3 FlexRow'}>2</div>
-                    <div className={'B3 SemiBold'}>Farm Details</div>
-                </div>
-                <div className={`FlexColumn NavItem ${S.CSS.getActiveClassName(state.isStepReview() === true)}`}>
-                    <div className={'NavNumber B3 FlexRow'}>3</div>
-                    <div className={'B3 SemiBold'}>Finish</div>
-                </div>
-                <div className={'HorizontalSeparator'} />
-            </div>
+            <NavRow navSteps={navSteps}/>
             {state.isStepAccount() === true && (
                 <StepAccount
                     adminEntity={state.adminEntity}

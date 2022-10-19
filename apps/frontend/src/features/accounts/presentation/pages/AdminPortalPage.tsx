@@ -9,6 +9,7 @@ import AdminLogin from '../components/AdminLogin';
 import AdminPortalPageState from '../stores/AdminPortalPageState';
 import RequestAdminAccount from '../components/request-account/RequestAdminAccount';
 import ChangePassword from '../components/ChangePassword';
+import AdminRegister from '../components/AdminRegister';
 
 function UserProfilePage() {
     const [adminPortalPageState] = useState(new AdminPortalPageState());
@@ -23,8 +24,10 @@ function UserProfilePage() {
                     && (<AdminLogin
                         onClickForgottenPassword={adminPortalPageState.setPageForgottenPassword}
                         onClickRequestAccount={adminPortalPageState.setPageRequestAccount}
-                        loginRedirect={adminPortalPageState.setPageChangePassword}
+                        loginRedirect={adminPortalPageState.login}
                     />)}
+                    {adminPortalPageState.isPageRegisterAdminAccount() === true
+                    && (<AdminRegister registerRedirect={adminPortalPageState.setPageLogin}/>)}
                     {adminPortalPageState.isPageRequestAdminAccount() === true
                     && (<RequestAdminAccount onClickNavigateLogin={adminPortalPageState.setPageLogin}/>)}
                     {adminPortalPageState.isPageChangePassword() === true

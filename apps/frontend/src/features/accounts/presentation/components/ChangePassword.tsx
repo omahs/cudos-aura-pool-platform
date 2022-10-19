@@ -14,6 +14,7 @@ import AccountSessionStore from '../stores/AccountSessionStore';
 import RepoStore from '../../../../core/presentation/stores/RepoStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
+import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 
 type Props = {
     accountSessionStore?: AccountSessionStore;
@@ -36,6 +37,9 @@ function ChangePassword({ appStore, accountSessionStore, repoStore }: Props) {
         appStore.useLoading(async () => {
             const userEntity = accountSessionStore.userEntity;
             selfRef.current.miningFarmEntity = await repoStore.miningFarmRepo.fetchMiningFarmByAccountId(userEntity.accountId);
+            if (selfRef.current.miningFarmEntity == null) {
+                selfRef.current.miningFarmEntity = new MiningFarmEntity();
+            }
         });
     }, []);
 

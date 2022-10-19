@@ -17,6 +17,10 @@ export default class AccountStorageRepo implements AccountRepo {
         return this.accountApi.login(username, password, walletAddress, signedTx);
     }
 
+    async register(username: string, password: string, repeatPassword: string): Promise < void > {
+        return this.accountApi.register(username, password, repeatPassword);
+    }
+
     async changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > {
         return this.accountApi.changePassword(username, token, newPassword, newPasswordRepeat);
     }

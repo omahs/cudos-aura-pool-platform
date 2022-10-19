@@ -1,10 +1,10 @@
 const LOCAL_STORAGE_KEY = 'cudos_aura_service_storage';
-const VERSION = 6;
+const VERSION = 8;
 
 const collectionDescription = 'DigiDaigaku is a collection of 2022 unique characters developed by Limit Break, a company founded by world famous game designers Gabriel Leydon and Halbert Nakagawa.  Currently, DigiDaigaku characters live in a mysterious world unknown to outsiders, but in time, exciting details about their world will be revealed. /n Learn more about the project at: https://digidaigaku.com and https://twitter.com/DigiDaigaku'
 const collectionProfileImgUrl = 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200';
 const collectionCoverPictureUrl = 'https://static.dw.com/image/62450424_303.jpeg';
-const collectionOwnerAddress = 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lktde3g6';
+const collectionOwnerAddress = 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0';
 
 const miningFarmsJson = [
     jsonMiningFarm('1', '1', 'Cool Farm', 'Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 10, 'Uzundjovo, Bulgaria', 2, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
@@ -14,9 +14,22 @@ const miningFarmsJson = [
     jsonMiningFarm('5', '5', 'Cudos Farm', 'Cudos Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 100, 'Las Brisas, United States', 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
+const accountsJson = [
+    jsonAccount('1', '1', '1', 123123123123, 123123123123),
+    jsonAccount('2', '2', '1', 123123123123, 123123123123),
+    jsonAccount('3', '3', '1', 123123123123, 123123123123),
+];
+
+const adminsJson = [
+    jsonAdmin('1', '2', 'admin@email.com'),
+];
+
+const superAdminsJson = [
+    jsonSuperAdmin('1', '3', 'superadmin@email.com'),
+];
+
 const usersJson = [
-    jsonUser('1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonUser('2', 'NFT BOG', 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0', '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonUser('1', '1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
 const bitcoinDataJson = jsonBitcoinData(23336, 53.3, 6.25, '29794407589312');
@@ -119,6 +132,9 @@ export default class StorageHelper {
     collectionsJson: any[];
     categoriesJson: any[];
     usersJson: any[];
+    accountsJson: any[];
+    adminsJson: any[];
+    superAdminsJson: any[];
 
     sessionAccount: any;
     sessionUser: any;
@@ -134,6 +150,9 @@ export default class StorageHelper {
         this.collectionsJson = collectionsJson;
         this.categoriesJson = categoriesJson;
         this.usersJson = usersJson;
+        this.accountsJson = accountsJson;
+        this.adminsJson = adminsJson;
+        this.superAdminsJson = superAdminsJson;
 
         this.sessionAccount = null;
         this.sessionUser = null;
@@ -149,7 +168,7 @@ export default class StorageHelper {
 
         return StorageHelper.singleton;
     }
-
+    jsonSuperAdmin
     cloneWeak() {
         return Object.assign(new StorageHelper(), this);
     }
@@ -195,9 +214,36 @@ function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName,
     };
 }
 
-function jsonUser(id, name, address, totalBtcEarned, totalHashPower, timestampJoined, profileImgUrl, coverImgUrl) {
+function jsonSuperAdmin(superAdminId, accountId, email) {
     return {
-        id,
+        superAdminId,
+        accountId,
+        email,
+    }
+}
+
+function jsonAdmin(adminId, accountId, email) {
+    return {
+        adminId,
+        accountId,
+        email,
+    }
+}
+
+function jsonAccount(accountId, type, active, timestampLastLogin, timestampRegister) {
+    return {
+        accountId,
+        type,
+        active,
+        timestampLastLogin,
+        timestampRegister,
+    }
+}
+
+function jsonUser(userId, accountId, name, address, totalBtcEarned, totalHashPower, timestampJoined, profileImgUrl, coverImgUrl) {
+    return {
+        userId,
+        accountId,
         name,
         address,
         totalBtcEarned,

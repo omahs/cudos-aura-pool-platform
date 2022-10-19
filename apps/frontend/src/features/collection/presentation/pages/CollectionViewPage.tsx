@@ -61,8 +61,11 @@ function CollectionViewPage({ collectionViewPageStore, accountSessionStore }: Pr
 
     function isCollectionEditable() {
         const adminEntity = accountSessionStore.accountEntity;
+        if (miningFarmEntity !== null && adminEntity !== null) {
+            return miningFarmEntity.accountId === adminEntity.accountId && collectionEntity.status === CollectionStatus.NOT_SUBMITTED;
+        }
 
-        return miningFarmEntity.accountId === adminEntity.accountId && collectionEntity.status === CollectionStatus.NOT_SUBMITTED;
+        return false
     }
 
     function onClickAddMoreNfts() {

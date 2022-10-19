@@ -7,6 +7,7 @@ export default class AdminPortalPageState {
     static PAGE_FORGOTTEN_PASSWORD = 2;
     static PAGE_REQUEST_ACCOUNT = 3;
     static PAGE_CHANGE_PASSWORD = 4;
+    static PAGE_REGISTER_ACCOUNT = 5;
 
     page: number;
     adminEntity: AdminEntity;
@@ -35,6 +36,10 @@ export default class AdminPortalPageState {
         this.page = AdminPortalPageState.PAGE_CHANGE_PASSWORD;
     }
 
+    setPageRegisterAdminAccount = () => {
+        this.page = AdminPortalPageState.PAGE_REGISTER_ACCOUNT;
+    }
+
     isPageLogin(): boolean {
         return this.page === AdminPortalPageState.PAGE_LOGIN;
     }
@@ -43,7 +48,16 @@ export default class AdminPortalPageState {
         return this.page === AdminPortalPageState.PAGE_REQUEST_ACCOUNT;
     }
 
+    isPageRegisterAdminAccount(): boolean {
+        return this.page === AdminPortalPageState.PAGE_REGISTER_ACCOUNT;
+    }
+
     isPageChangePassword(): boolean {
         return this.page === AdminPortalPageState.PAGE_CHANGE_PASSWORD;
+    }
+
+    login = () => {
+        // TODO: if admin check if approved, if not approved show not approvd page, if approved show change apssword page
+        // if super admin send to approve accounts page
     }
 }

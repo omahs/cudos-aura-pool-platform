@@ -83,6 +83,10 @@ export default class AccountSessionStore {
         }
     }
 
+    register = async (email: string, password: string, repeatPassword): Promise < void > => {
+        await this.accountRepo.register(email, password, repeatPassword);
+    }
+
     // TODO: use session token for password change
     changePassword = async (password: string, passwordRepeat: string): Promise < void > => {
         // await this.accountRepo.changePassword(this.userEntity.name, token, password, passwordRepeat);
