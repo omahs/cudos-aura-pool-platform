@@ -13,10 +13,14 @@ export default class AdminEntity {
         makeAutoObservable(this);
     }
 
-    static toJson(model: AdminEntity) {
+    static toJson(entity: AdminEntity) {
+        if (entity === null) {
+            return null;
+        }
+
         return {
-            'accountId': model.accountId,
-            'email': model.email,
+            'accountId': entity.accountId,
+            'email': entity.email,
         }
     }
 
@@ -25,12 +29,12 @@ export default class AdminEntity {
             return null;
         }
 
-        const model = new AdminEntity();
+        const entity = new AdminEntity();
 
-        model.accountId = (json.accountId ?? model.accountId).toString();
-        model.email = json.email ?? model.email;
+        entity.accountId = (json.accountId ?? entity.accountId).toString();
+        entity.email = json.email ?? entity.email;
 
-        return model;
+        return entity;
     }
 
 }
