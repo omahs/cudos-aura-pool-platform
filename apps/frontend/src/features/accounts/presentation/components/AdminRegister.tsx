@@ -35,7 +35,7 @@ function AdminRegister({ accountSessionStore, registerRedirect }: Props) {
     }
     async function onClickRegister() {
         setRegistering(true);
-        await accountSessionStore.register(email, password, repeatPassword);
+        await accountSessionStore.register(email, password);
         registerRedirect();
         setRegistering(false);
     }

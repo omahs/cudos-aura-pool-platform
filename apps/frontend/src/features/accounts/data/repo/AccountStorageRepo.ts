@@ -16,7 +16,6 @@ export default class AccountStorageRepo implements AccountRepo {
     }
 
     async login(username: string, password: string, walletAddress: string, signedTx: any): Promise < void > {
-
         const currentAccounts = this.storageHelper.accountsJson;
         const currentUsers = this.storageHelper.usersJson;
         const currentAdmins = this.storageHelper.adminsJson;
@@ -26,7 +25,7 @@ export default class AccountStorageRepo implements AccountRepo {
         let accountJson = null;
 
         // admin login
-        if (walletAddress === S.Strings.EMPTY || walletAddress === null || walletAddress === undefined) {
+        if (walletAddress === S.Strings.EMPTY) {
             adminJson = currentAdmins.find((json) => {
                 return json.email === username
             });
@@ -40,10 +39,14 @@ export default class AccountStorageRepo implements AccountRepo {
         } else {
             userJson = currentUsers.find((json) => json.address === walletAddress);
             if (userJson === undefined) {
-                const accountEntity = new AccountEntity();
+                const lastAccountEntity = currentAccounts.last();
+                const nextAccountId = 1 + (lastAccountEntity !== null ? parseInt(lastAccountEntity.accountId) : 0);
 
-                accountEntity.accountId = `${currentAccounts.length + 1}`;
-                accountEntity.type = AccountType.Admin;
+                const lastUserEntity = currentUsers.last();
+                const nextUserId = 1 + (lastUserEntity !== null ? parseInt(lastUserEntity.userId) : 0);
+
+                const accountEntity = new AccountEntity();
+                accountEntity.accountId = nextAccountId.toString();
                 accountEntity.timestampLastLogin = S.NOT_EXISTS;
                 accountEntity.timestampRegister = Date.now() - 100000000;
                 accountEntity.active = S.INT_FALSE;
@@ -52,8 +55,7 @@ export default class AccountStorageRepo implements AccountRepo {
                 currentAccounts.push(accountJson);
 
                 const userEntity = new UserEntity();
-
-                userEntity.userId = `${currentUsers.length + 1}`;
+                userEntity.userId = nextUserId.toString();
                 userEntity.accountId = accountEntity.accountId;
                 userEntity.name = S.Strings.EMPTY;
                 userEntity.address = walletAddress;
@@ -74,25 +76,31 @@ export default class AccountStorageRepo implements AccountRepo {
         this.storageHelper.save();
     }
 
-    async register(email: string, password: string, repeatPassword: string): Promise < void > {
+    async register(email: string, password: string): Promise < void > {
         const currentAccounts = this.storageHelper.accountsJson;
         const currentUsers = this.storageHelper.usersJson;
         const currentAdmins = this.storageHelper.adminsJson;
 
-        const accountEntity = new AccountEntity();
+        const lastAccountEntity = currentAccounts.last();
+        const nextAccountId = 1 + (lastAccountEntity !== null ? parseInt(lastAccountEntity.accountId) : 0);
 
-        accountEntity.accountId = `${currentAccounts.length + 1}`;
-        accountEntity.type = AccountType.Admin;
+        const lastUserEntity = currentUsers.last();
+        const nextUserId = 1 + (lastUserEntity !== null ? parseInt(lastUserEntity.userId) : 0);
+
+        const lastAdminEntity = currentAdmins.last();
+        const nextAdminId = 1 + (lastAdminEntity !== null ? parseInt(lastAdminEntity.adminId) : 0);
+
+        const accountEntity = new AccountEntity();
+        accountEntity.accountId = nextAccountId.toString();
+        accountEntity.type = AccountType.ADMIN;
         accountEntity.timestampLastLogin = S.NOT_EXISTS;
         accountEntity.timestampRegister = Date.now() - 100000000;
         accountEntity.active = S.INT_FALSE;
 
-        const accountJson = AccountEntity.toJson(accountEntity);
-        currentAccounts.push(accountJson);
+        currentAccounts.push(AccountEntity.toJson(accountEntity));
 
         const userEntity = new UserEntity();
-
-        userEntity.userId = `${currentUsers.length + 1}`;
+        userEntity.userId = nextUserId.toString();
         userEntity.accountId = accountEntity.accountId;
         userEntity.name = S.Strings.EMPTY;
         userEntity.address = S.Strings.EMPTY;
@@ -100,17 +108,14 @@ export default class AccountStorageRepo implements AccountRepo {
         userEntity.totalHashPower = 0;
         userEntity.timestampJoined = Date.now() - 100000000;
 
-        const userJson = UserEntity.toJson(userEntity);
-        currentUsers.push(userJson);
+        currentUsers.push(UserEntity.toJson(userEntity));
 
         const adminEntity = new AdminEntity();
-
-        adminEntity.adminId = `${currentAdmins.length + 1}`;
+        adminEntity.adminId = nextAdminId.toString();
         adminEntity.accountId = accountEntity.accountId;
         adminEntity.email = email
 
-        const adminJson = AdminEntity.toJson(adminEntity)
-        currentAdmins.push(adminJson);
+        currentAdmins.push(AdminEntity.toJson(adminEntity));
         this.storageHelper.save();
     }
 
@@ -123,6 +128,7 @@ export default class AccountStorageRepo implements AccountRepo {
         this.storageHelper.sessionUser = null;
         this.storageHelper.sessionAdmin = null;
         this.storageHelper.sessionSuperAdmin = null;
+        this.storageHelper.save();
     }
 
     async fetchSessionAccounts(): Promise < { accountEntity: AccountEntity; userEntity: UserEntity; adminEntity: AdminEntity; superAdminEntity: SuperAdminEntity; } > {

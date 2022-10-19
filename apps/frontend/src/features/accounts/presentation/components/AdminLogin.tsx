@@ -13,8 +13,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import AccountSessionStore from '../stores/AccountSessionStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import S from 'apps/frontend/src/core/utilities/Main';
-import AlertStore from 'apps/frontend/src/core/presentation/stores/AlertStore';
+import S from '../../../../core/utilities/Main';
+import AlertStore from '../../../../core/presentation/stores/AlertStore';
 
 type Props = {
     alertStore: AlertStore;
@@ -37,7 +37,7 @@ function AdminLogin({ alertStore, accountSessionStore, onClickForgottenPassword,
     async function onClickLogin() {
         setLogging(true);
         try {
-            await accountSessionStore.login(email, password);
+            await accountSessionStore.login(email, password, '', null);
             loginRedirect();
         } catch (e) {
             alertStore.show('Account not found');

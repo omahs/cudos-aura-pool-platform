@@ -1,9 +1,9 @@
 import S from '../../../core/utilities/Main';
 
 export enum AccountType {
-    User = 1,
-    Admin = 2,
-    SuperAdmin = 3,
+    USER = 1,
+    ADMIN = 2,
+    SUPER_ADMIN = 3,
 }
 
 export default class AccountEntity {
@@ -16,22 +16,22 @@ export default class AccountEntity {
 
     constructor() {
         this.accountId = S.Strings.EMPTY;
-        this.type = AccountType.User;
+        this.type = AccountType.USER;
         this.active = S.INT_TRUE;
         this.timestampLastLogin = -1;
         this.timestampRegister = -1;
     }
 
     isUser(): boolean {
-        return this.type === AccountType.User;
+        return this.type === AccountType.USER;
     }
 
     isAdmin(): boolean {
-        return this.type === AccountType.Admin;
+        return this.type === AccountType.ADMIN;
     }
 
     isSuperAdmin(): boolean {
-        return this.type === AccountType.SuperAdmin;
+        return this.type === AccountType.SUPER_ADMIN;
     }
 
     static toJson(entity: AccountEntity): any {
