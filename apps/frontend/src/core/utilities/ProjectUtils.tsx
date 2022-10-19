@@ -5,6 +5,10 @@ const QUERY_PATTERN = '?p=';
 export default class ProjectUtils {
 
     static TRANSITION_DURATION = 400;
+    static MOMENT_FORMAT_DATE_AND_TIME = 'DD.MM.yyyy, HH:mm';
+    static MOMENT_FORMAT_DATE = 'DD.MM.yyyy';
+    static DATEPICKER_FORMAT_DATE_AND_TIME = 'dd.MM.yyyy, HH:mm';
+    static DATEPICKER_FORMAT_DATE = 'dd.MM.yyyy';
 
     static makeBgImgStyle(url: string) {
         return {

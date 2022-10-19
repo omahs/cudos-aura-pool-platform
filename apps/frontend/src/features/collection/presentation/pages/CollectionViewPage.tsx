@@ -81,7 +81,7 @@ function CollectionViewPage({ collectionViewPageStore, accountSessionStore }: Pr
             { collectionEntity !== null && (
                 <div className={'PageContent AppContent'} >
                     <Breadcrumbs crumbs={crumbs} />
-                    <ProfileHeader coverPictureUrl={collectionEntity.coverImgUrl} profilePictureUrl={collectionEntity.profileImgurl} />
+                    <ProfileHeader coverPictureUrl={collectionEntity.coverImgUrl} profilePictureUrl={collectionEntity.profileImgUrl} />
                     <div className={'Heading2 CollectionHeadingName'}>{collectionEntity.name}</div>
                     <div className={'ProfileInfo Grid'}>
                         <div className={'FlexColumn B1'}>

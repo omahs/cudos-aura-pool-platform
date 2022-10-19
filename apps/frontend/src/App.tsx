@@ -64,7 +64,7 @@ const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo, nftRep
 const nftViewPageStore = new NftViewPageStore(bitcoinStore, cudosStore, nftRepo, collectionRepo, miningFarmRepo);
 const collectionViewPageStore = new CollectionViewPageStore(nftRepo, collectionRepo, miningFarmRepo);
 const miningFarmViewPageStore = new MiningFarmViewPageStore(miningFarmRepo, collectionRepo);
-const userProfilePageStore = new UserProfilePageStore(accountSessionStore, walletStore, nftRepo, collectionRepo);
+const userProfilePageStore = new UserProfilePageStore(walletStore, nftRepo, collectionRepo);
 const buyNftModalStore = new BuyNftModalStore();
 const resellNftModalStore = new ResellNftModalStore();
 const editMiningFarmModalStore = new EditMiningFarmModalStore(repoStore);
@@ -105,8 +105,7 @@ const App = () => {
                 userProfilePageStore = { userProfilePageStore }
                 buyNftModalStore = { buyNftModalStore }
                 resellNftModalStore = { resellNftModalStore }
-                editMiningFarmModalStore = { editMiningFarmModalStore }
-            >
+                editMiningFarmModalStore = { editMiningFarmModalStore } >
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

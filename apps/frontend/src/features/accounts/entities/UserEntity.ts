@@ -1,4 +1,7 @@
 import BigNumber from 'bignumber.js';
+import moment from 'moment';
+
+import ProjectUtils from '../../../core/utilities/ProjectUtils';
 import S from '../../../core/utilities/Main';
 
 export default class UserEntity {
@@ -10,7 +13,7 @@ export default class UserEntity {
     totalBtcEarned: BigNumber;
     totalHashPower: number;
     timestampJoined: number;
-    profileImgurl: string;
+    profileImgUrl: string;
     coverImgUrl: string;
 
     constructor() {
@@ -21,8 +24,12 @@ export default class UserEntity {
         this.totalBtcEarned = new BigNumber(S.NOT_EXISTS);
         this.totalHashPower = S.NOT_EXISTS;
         this.timestampJoined = S.NOT_EXISTS;
-        this.profileImgurl = S.Strings.EMPTY;
-        this.coverImgUrl = S.Strings.EMPTY;
+        this.profileImgUrl = '/assets/temp/profile-preview.png';
+        this.coverImgUrl = '/assets/temp/profile-cover.png';
+    }
+
+    formatDateJoined(): string {
+        return moment(new Date(this.timestampJoined)).format(ProjectUtils.MOMENT_FORMAT_DATE);
     }
 
     static toJson(entity: UserEntity): any {
@@ -38,7 +45,7 @@ export default class UserEntity {
             'totalBtcEarned': entity.totalBtcEarned.toString(),
             'totalHashPower': entity.totalHashPower,
             'timestampJoined': entity.timestampJoined,
-            'profileImgurl': entity.profileImgurl,
+            'profileImgUrl': entity.profileImgUrl,
             'coverImgUrl': entity.coverImgUrl,
         }
     }
@@ -57,22 +64,10 @@ export default class UserEntity {
         entity.totalBtcEarned = new BigNumber(json.totalBtcEarned) ?? entity.totalBtcEarned;
         entity.totalHashPower = Number(json.totalHashPower) ?? entity.totalHashPower;
         entity.timestampJoined = Number(json.timestampJoined) ?? entity.timestampJoined;
-        entity.profileImgurl = json.profileImgurl ?? entity.profileImgurl;
+        entity.profileImgUrl = json.profileImgUrl ?? entity.profileImgUrl;
         entity.coverImgUrl = json.coverImgUrl ?? entity.coverImgUrl;
 
         return entity;
-    }
-
-    static isEmptyEntity(userEntity: UserEntity): boolean {
-        return userEntity !== null
-        && userEntity.accountId === S.Strings.NOT_EXISTS
-        && userEntity.name === S.Strings.EMPTY
-        && userEntity.address === S.Strings.EMPTY
-        && userEntity.totalBtcEarned.eq(S.NOT_EXISTS)
-        && userEntity.totalHashPower === S.NOT_EXISTS
-        && userEntity.timestampJoined === S.NOT_EXISTS
-        && userEntity.profileImgurl === S.Strings.EMPTY
-        && userEntity.coverImgUrl === S.Strings.EMPTY;
     }
 
 }

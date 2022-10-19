@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react';
 
 import S from '../../../core/utilities/Main';
@@ -35,16 +35,25 @@ function GridView({ gridViewState, defaultContent, children }: React.PropsWithCh
                     />
                 </div>
             </div>
-            { gridViewState.isFetching === true && (<LoadingIndicator margin={'16px'}/>)}
-            { gridViewState.isFetching === false && (children
-                ? <div className={'DefaultContent FlexRow'}>{defaultContent}</div>
-                : <SingleRowTable
-                    legend={['']}
-                    widths={['100%']}
-                    aligns={[ALIGN_CENTER]}
-                    tableStore={gridViewState.tableStore}
-                    content={<div className={`PreviewsGrid Grid ${gridViewState.getGridSettingClass()}`}>{children}</div>}
-                />)}
+
+            { gridViewState.isFetching === true && (
+                <LoadingIndicator margin={'16px'}/>
+            ) }
+
+            { gridViewState.isFetching === false && (
+                <>
+                    { children ? (
+                        <SingleRowTable
+                            legend={['']}
+                            widths={['100%']}
+                            aligns={[ALIGN_CENTER]}
+                            tableStore={gridViewState.tableStore}
+                            content={<div className={`PreviewsGrid Grid ${gridViewState.getGridSettingClass()}`}>{children}</div>} />
+                    ) : (
+                        <div className={'DefaultContent FlexRow'}>{defaultContent}</div>
+                    ) }
+                </>
+            ) }
 
         </div>
     )
