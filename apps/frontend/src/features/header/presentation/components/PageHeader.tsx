@@ -1,25 +1,27 @@
-import Svg from '../../../../core/presentation/components/Svg';
-import SvgAuraPoolLogo from '../../../../public/assets/vectors/aura-pool-logo.svg';
-import { useLocation, useNavigate } from 'react-router-dom';
-
 import React, { useEffect, useRef, useState } from 'react'
-import '../styles/page-header.css'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
+
+import S from '../../../../../src/core/utilities/Main';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import WalletStore from '../../../ledger/presentation/stores/WalletStore';
-import S from '../../../../../src/core/utilities/Main';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
-import { inject, observer } from 'mobx-react';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Popover from '../../../../core/presentation/components/Popover';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import LaunchIcon from '@mui/icons-material/Launch';
 import ProjectUtils from '../../../../core/utilities/ProjectUtils';
 import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import RepoStore from '../../../../core/presentation/stores/RepoStore';
+
+import Svg from '../../../../core/presentation/components/Svg';
+import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
+import Popover from '../../../../core/presentation/components/Popover';
+
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import LaunchIcon from '@mui/icons-material/Launch';
+import SvgAuraPoolLogo from '../../../../public/assets/vectors/aura-pool-logo.svg';
+import '../styles/page-header.css'
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
