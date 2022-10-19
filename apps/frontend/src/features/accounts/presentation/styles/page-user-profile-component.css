@@ -1,5 +1,5 @@
 .PageUserProfile .PageContent {
-    padding: 70px var(--page-spacing-h);
+    padding: 48px var(--page-spacing-h);
 }
 
 .PageUserProfile .ProfileNotFoundPage {
@@ -64,10 +64,4 @@
 
 .PageUserProfile .PageContent .ProfileNavHolder .ProfileNav .NavButton.Active {
     background: #FFFFFF;
-}
-
-.PageUserProfile .DataGridWrapper .FilterHeader {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    margin-bottom: 20px;
-    align-items: end;
 }

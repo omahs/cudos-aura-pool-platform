@@ -1,6 +1,4 @@
 .ProfileHeader.CoverPicture {
-    background-size: cover;
-    background-position: center;
     position: relative;
     height: 300px;
     width: 100%;
@@ -9,7 +7,6 @@
 }
 
 .ProfileHeader.CoverPicture .ProfilePicture {
-    background-size: contain;
     position: absolute;
     left: 20px;
     bottom: -40px;

@@ -22,7 +22,7 @@ export default function CollectionPreview({ collectionEntity, miningFarmName }: 
             <div
                 className="CollectionPreviewImage"
                 style={{
-                    backgroundImage: `url("${collectionEntity.profileImgurl}")`,
+                    backgroundImage: `url("${collectionEntity.profileImgUrl}")`,
                 }} />
             <div className={'MiningFarmName B2'}>{miningFarmName}</div>
             <div className={'CollectionName H2 Bold'}>{collectionEntity.name}</div>

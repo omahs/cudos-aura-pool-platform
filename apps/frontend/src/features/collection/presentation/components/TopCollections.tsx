@@ -47,7 +47,7 @@ export default function TopCollections({ selectedTopCollectionPeriod, cudosPrice
                         <div
                             className={'PreviewImage'}
                             style={{
-                                backgroundImage: `url("${collectionEntity.profileImgurl}")`,
+                                backgroundImage: `url("${collectionEntity.profileImgUrl}")`,
                             }}
                         />
                         <div className={'FlexColumn CollectionPreviewDataColumn'}>

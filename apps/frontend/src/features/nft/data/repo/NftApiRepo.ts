@@ -1,5 +1,3 @@
-import CollectionEntity from '../../../collection/entities/CollectionEntity';
-import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import NftEntity from '../../entities/NftEntity';
 import NftRepo from '../../presentation/repos/NftRepo';
 import NftFilterModel from '../../utilities/NftFilterModel';
@@ -13,7 +11,7 @@ export default class NftApiRepo implements NftRepo {
         this.nftApi = new NftApi();
     }
 
-    async fetchNftById(nftId: string): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } > {
+    async fetchNftById(nftId: string): Promise < NftEntity > {
         return this.nftApi.fetchNftById(nftId);
     }
 

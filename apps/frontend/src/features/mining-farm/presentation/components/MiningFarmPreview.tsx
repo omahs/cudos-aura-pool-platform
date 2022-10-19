@@ -26,7 +26,7 @@ export default function MiningFarmPeview({ miningFarmEntity }: Props) {
                 <div
                     className="MiningFarmPreviewProfileImage"
                     style={{
-                        backgroundImage: `url("${miningFarmEntity.profileImgurl}")`,
+                        backgroundImage: `url("${miningFarmEntity.profileImgUrl}")`,
                     }}
                 />
             </div>

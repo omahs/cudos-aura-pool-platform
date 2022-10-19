@@ -10,17 +10,15 @@ type Props = {
 export default function ProfileHeader(props: Props) {
     return (
         <div
-            className={'ProfileHeader CoverPicture'}
+            className={'ProfileHeader CoverPicture ImgCoverNode'}
             style={{
                 backgroundImage: `url("${props.coverPictureUrl}")`,
-            }}
-        >
+            }} >
             <div
-                className={'ProfilePicture'}
+                className={'ProfilePicture ImgCoverNode'}
                 style={{
                     backgroundImage: `url("${props.profilePictureUrl}")`,
-                }}
-            />
+                }} />
         </div>
     )
 }

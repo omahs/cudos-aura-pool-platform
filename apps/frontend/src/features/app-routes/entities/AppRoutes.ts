@@ -12,4 +12,7 @@ export default class AppRoutes {
     static USER_PROFILE = '/profile';
     static EXPLORE_MINING_FARMS = '/explore-mining-farms';
     static EXPLORE_COLLECTIONS = '/explore-collections';
+    static PAGE_CREATE_COLLECTION = '/create-collection';
+    static ADMIN_PORTAL = '/admin-portal';
+    static ADD_NFTS_TO_COLLECTION = '/add_nfts';
 }

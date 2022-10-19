@@ -20,6 +20,7 @@ import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presen
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
+import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
 
 import '../styles/page-user-profile-component.css';
 
@@ -47,14 +48,13 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
             <PageHeader />
 
             <div className={'PageContent AppContent'} >
-                <ProfileHeader coverPictureUrl={userEntity.coverImgUrl} profilePictureUrl={userEntity.profileImgurl} />
+                <ProfileHeader coverPictureUrl={userEntity.coverImgUrl} profilePictureUrl={userEntity.profileImgUrl} />
                 <div className={'ProfileHeaderDataRow FlexRow FlexGrow'}>
                     <div className={'FlexColumn LeftSide'}>
                         <div className={'H2 Bold'}>{userEntity.name}</div>
                         <div className={'FlexRow InfoBelowUserName'}>
                             <div className={'Addrees'}>{userEntity.address}</div>
-                            {/* TODO: display date correctly */}
-                            <div className={'JoinDate B3'}>{userEntity.timestampJoined}</div>
+                            <div className={'JoinDate B3'}>{userEntity.formatDateJoined()}</div>
                         </div>
                     </div>
                     <div className={'FlexRow RightSide'}>
@@ -84,47 +84,64 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
                         <div onClick={userProfilePageStore.markHistoryPage} className={`NavButton Clickable ${S.CSS.getActiveClassName(userProfilePageStore.isHistoryPage())}`}>History</div>
                     </div>
                 </div>
-                {userProfilePageStore.isNftPage() === true && (
-                    <div className={'DataGridWrapper'}>
-                        <div className={'Grid FilterHeader'}>
-                            <Select
-                                className={'SortBySelect'}
-                                onChange={userProfilePageStore.onChangeSortKey}
-                                value={nftFilterModel.sortKey} >
-                                <MenuItem value = { NftFilterModel.SORT_KEY_NAME }> Name </MenuItem>
-                                <MenuItem value = { NftFilterModel.SORT_KEY_PRICE }> Price </MenuItem>
-                            </Select>
-                            <Actions
-                                layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                                height={ACTIONS_HEIGHT.HEIGHT_48} >
-                                {/* TODO: show all filters */}
-                                <Button
-                                    padding={BUTTON_PADDING.PADDING_24}
-                                    type={BUTTON_TYPE.ROUNDED} >
+
+                <div className = { `ActiveVisibilityHidden ${S.CSS.getActiveClassName(userProfilePageStore.isNftPage())}` } >
+                    {userProfilePageStore.isNftPage() === true && (
+                        <DataGridLayout
+                            header = { (
+                                <>
+                                    <Select
+                                        onChange={userProfilePageStore.onChangeSortKey}
+                                        value={nftFilterModel.sortKey} >
+                                        <MenuItem value = { NftFilterModel.SORT_KEY_NAME }> Name </MenuItem>
+                                        <MenuItem value = { NftFilterModel.SORT_KEY_PRICE }> Price </MenuItem>
+                                    </Select>
+                                    <Actions
+                                        layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
+                                        height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                        {/* TODO: show all filters */}
+                                        <Button
+                                            padding={BUTTON_PADDING.PADDING_24}
+                                            type={BUTTON_TYPE.ROUNDED} >
                                     All Filters
-                                </Button>
-                            </Actions>
-                        </div>
+                                        </Button>
+                                    </Actions>
+                                </>
+                            ) }>
 
-                        { userProfilePageStore.nftEntities === null && (
-                            <LoadingIndicator />
-                        ) }
+                            { userProfilePageStore.nftEntities === null && (
+                                <LoadingIndicator />
+                            ) }
 
-                        { userProfilePageStore.nftEntities !== null && (
-                            <GridView
-                                gridViewState={userProfilePageStore.gridViewState}
-                                defaultContent={<div className={'NoContentFound'}>No Nfts found</div>} >
-                                {userProfilePageStore.nftEntities.map((nftEntity: NftEntity) => {
-                                    return (
-                                        <NftPreview
-                                            key={nftEntity.id}
-                                            nftEntity={nftEntity}
-                                            collectionName={userProfilePageStore.getCollectionName(nftEntity.collectionId)} />
-                                    )
-                                })}
-                            </GridView>
-                        ) }
-                    </div>
+                            { userProfilePageStore.nftEntities !== null && (
+                                <GridView
+                                    gridViewState={userProfilePageStore.gridViewState}
+                                    defaultContent={<div className={'NoContentFound'}>No Nfts found</div>} >
+                                    {userProfilePageStore.nftEntities.map((nftEntity: NftEntity) => {
+                                        return (
+                                            <NftPreview
+                                                key={nftEntity.id}
+                                                nftEntity={nftEntity}
+                                                collectionName={userProfilePageStore.getCollectionName(nftEntity.collectionId)} />
+                                        )
+                                    })}
+                                </GridView>
+                            ) }
+
+                        </DataGridLayout>
+                    ) }
+                </div>
+            </div>
+
+            <div className = { `ActiveVisibilityHidden ${S.CSS.getActiveClassName(userProfilePageStore.isEarningsPage())}` } >
+                {userProfilePageStore.isEarningsPage() === true && (
+                    'earnings'
+                ) }
+            </div>
+
+            <div className = { `ActiveVisibilityHidden ${S.CSS.getActiveClassName(userProfilePageStore.isHistoryPage())}` } >
+                {userProfilePageStore.isHistoryPage() === true && (
+                    'history'
                 ) }
             </div>
 

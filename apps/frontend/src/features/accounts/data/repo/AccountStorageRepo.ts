@@ -1,3 +1,4 @@
+import S from '../../../../core/utilities/Main';
 import BigNumber from 'bignumber.js';
 import StorageHelper from '../../../../core/helpers/StorageHelper';
 import AccountEntity, { AccountType } from '../../entities/AccountEntity';
@@ -17,7 +18,9 @@ export default class AccountStorageRepo implements AccountRepo {
     async login(username: string, password: string, walletAddress: string, signedTx: any): Promise < void > {
         const accountEntity = new AccountEntity();
         accountEntity.accountId = '1';
-        accountEntity.type = AccountType.User;
+        accountEntity.type = walletAddress !== S.Strings.EMPTY ? AccountType.User : AccountType.Admin;
+        accountEntity.timestampLastLogin = S.NOT_EXISTS;
+        accountEntity.timestampRegister = Date.now() - 100000000;
 
         const userEntity = new UserEntity();
         userEntity.accountId = accountEntity.accountId;
@@ -27,9 +30,21 @@ export default class AccountStorageRepo implements AccountRepo {
         userEntity.totalHashPower = 0;
         userEntity.timestampJoined = Date.now() - 100000000;
 
+        let adminEntity = null;
+        if (walletAddress === S.Strings.EMPTY) {
+            adminEntity = new AdminEntity();
+            adminEntity.accountId = accountEntity.accountId;
+            adminEntity.email = 'email@email.com'
+        }
+
         this.storageHelper.sessionAccount = AccountEntity.toJson(accountEntity);
         this.storageHelper.sessionUser = UserEntity.toJson(userEntity);
+        this.storageHelper.sessionAdmin = AdminEntity.toJson(adminEntity);
         this.storageHelper.save();
+    }
+
+    async changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > {
+        // TODO
     }
 
     async logout(): Promise < void > {

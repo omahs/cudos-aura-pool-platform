@@ -1,14 +1,13 @@
-// eslint-disable-next-line max-classes-per-file
 import React from 'react';
+
 import TableCell from '../../entities/TableCell';
 import TableRow from '../../entities/TableRow';
+import Table, { Props as TableProps } from './Table';
 
 import '../styles/single-row-table.css';
-import Table from './Table';
 
-type Props = {
+type Props = TableProps & {
     content: any
-    className: string
 }
 
 export default function SingleRowTable(props: Props) {
@@ -20,7 +19,6 @@ export default function SingleRowTable(props: Props) {
                     new TableCell(props.content, 0),
                 ]),
             ]}
-            className={`SingleRowTable ${props.className}`}
-        />
+            className={`SingleRowTable ${props.className}`} />
     )
 }

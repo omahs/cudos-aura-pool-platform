@@ -12,42 +12,45 @@ export default class GridViewState {
     static DEFAULT_LOOSE_SETTING_SIZE = 12;
     static DEFAULT_DENSE_SETTING_SIZE = 20;
 
+    fetchCallback: () => void;
     looseColumnCount: number;
     denseColumnCount: number;
     maxRows: number;
 
-    tableStore: TableStore;
-
     gridSetting: number;
     isFetching: boolean;
 
+    tableStore: TableStore;
+
     constructor(fetchCallback: () => void, looseColumnCount: number, denseColumnCount: number, maxRows: number) {
+        this.fetchCallback = fetchCallback;
         this.looseColumnCount = looseColumnCount;
         this.denseColumnCount = denseColumnCount;
         this.maxRows = maxRows;
-        this.tableStore = new TableStore(S.NOT_EXISTS, [], fetchCallback, looseColumnCount * maxRows);
 
-        this.resetDefaults();
+        this.gridSetting = GRID_SETTING.LOOSE;
+        this.isFetching = false;
+
+        this.tableStore = new TableStore(S.NOT_EXISTS, [], fetchCallback, this.calculateItemsPerPageByGridSettings());
 
         makeAutoObservable(this);
     }
 
-    resetDefaults = () => {
-        this.isFetching = false;
-        this.setGridSettingAndPreviewCount(GRID_SETTING.LOOSE);
-    }
-
     setGridSettingAndPreviewCount(setting: number) {
         this.gridSetting = setting;
-        switch (setting) {
+        this.tableStore.tableState.itemsPerPage = this.calculateItemsPerPageByGridSettings();
+
+        this.fetchCallback();
+    }
+
+    calculateItemsPerPageByGridSettings() {
+        switch (this.gridSetting) {
             case GRID_SETTING.DENSE:
-                this.tableStore.tableState.itemsPerPage = this.denseColumnCount * this.maxRows
-                break;
+                return this.denseColumnCount * this.maxRows
             case GRID_SETTING.LOOSE:
             default:
-                this.tableStore.tableState.itemsPerPage = this.denseColumnCount * this.maxRows;
+                return this.looseColumnCount * this.maxRows;
         }
-
     }
 
     getFrom() {

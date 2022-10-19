@@ -1,5 +1,3 @@
-/* global TR */
-
 import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,19 +19,25 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Select from '../../../../core/presentation/components/Select';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Button, { BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
+import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
+import AddIcon from '@mui/icons-material/Add';
 
 import '../styles/page-collection-view-component.css';
+import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
+import { CollectionStatus } from '../../entities/CollectionEntity';
 
 type Props = {
     collectionViewPageStore?: CollectionViewPageStore
+    accountSessionStore?: AccountSessionStore
 }
 
-function CollectionViewPage({ collectionViewPageStore }: Props) {
+function CollectionViewPage({ collectionViewPageStore, accountSessionStore }: Props) {
     const collectionEntity = collectionViewPageStore.collectionEntity;
     const miningFarmEntity = collectionViewPageStore.miningFarmEntity;
+    const nftFilterModel = collectionViewPageStore.nftFilterModel;
 
     const { collectionId } = useParams();
     const navigate = useNavigate();
@@ -55,7 +59,15 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
         navigate(`${AppRoutes.MINING_FARM_VIEW}/${miningFarmEntity.id}`)
     }
 
-    const nftFilterModel = collectionViewPageStore.nftFilterModel;
+    function isCollectionEditable() {
+        const adminEntity = accountSessionStore.accountEntity;
+
+        return miningFarmEntity.accountId === adminEntity.accountId && collectionEntity.status === CollectionStatus.NOT_SUBMITTED;
+    }
+
+    function onClickAddMoreNfts() {
+        navigate(`${AppRoutes.ADD_NFTS_TO_COLLECTION}/${collectionEntity.id}`);
+    }
 
     return (
         <PageLayoutComponent
@@ -69,7 +81,7 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
             { collectionEntity !== null && (
                 <div className={'PageContent AppContent'} >
                     <Breadcrumbs crumbs={crumbs} />
-                    <ProfileHeader coverPictureUrl={collectionEntity.coverImgUrl} profilePictureUrl={collectionEntity.profileImgurl} />
+                    <ProfileHeader coverPictureUrl={collectionEntity.coverImgUrl} profilePictureUrl={collectionEntity.profileImgUrl} />
                     <div className={'Heading2 CollectionHeadingName'}>{collectionEntity.name}</div>
                     <div className={'ProfileInfo Grid'}>
                         <div className={'FlexColumn B1'}>
@@ -80,7 +92,7 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
                         <div className={'FlexColumn InfoBox'}>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Floor</div>
-                                <div className={'CollectionInfoValue'}>{collectionEntity.priceDisplay()} CUDOS</div>
+                                <div className={'CollectionInfoValue'}>{collectionEntity.priceDisplay()}</div>
                             </div>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Volume</div>
@@ -114,26 +126,39 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
                             </div>
                         </div>
                     </div>
-                    <div className={'DataGridWrapper'}>
-                        <div className={'Grid FilterHeader'}>
-                            <Select
-                                className={'SortBySelect'}
-                                onChange={collectionViewPageStore.onChangeSortKey}
-                                value={nftFilterModel.sortKey} >
-                                <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                                <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
-                            </Select>
-                            <Actions
-                                layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                                height={ACTIONS_HEIGHT.HEIGHT_48} >
-                                {/* TODO: show all filters */}
-                                <Button
-                                    padding={BUTTON_PADDING.PADDING_24}
-                                    type={BUTTON_TYPE.ROUNDED}>
+                    <div className={'GridHeader FlexRow'}>
+                        <div className={'H2 Bold'}>NFTs in Collection</div>
+                        {isCollectionEditable() && (<Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}>
+                            <Button
+                                radius={BUTTON_RADIUS.RADIUS_16}
+                                onClick={onClickAddMoreNfts}
+                            >
+                                <Svg svg={AddIcon}/>
+                                Add More NFTs
+                            </Button>
+                        </Actions>)}
+                    </div>
+                    <DataGridLayout
+                        header = { (
+                            <>
+                                <Select
+                                    onChange={collectionViewPageStore.onChangeSortKey}
+                                    value={nftFilterModel.sortKey} >
+                                    <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                    <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                                </Select>
+                                <Actions
+                                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
+                                    height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                    {/* TODO: show all filters */}
+                                    <Button
+                                        padding={BUTTON_PADDING.PADDING_24}
+                                        type={BUTTON_TYPE.ROUNDED}>
                                     All Filters
-                                </Button>
-                            </Actions>
-                        </div>
+                                    </Button>
+                                </Actions>
+                            </>
+                        ) } >
 
                         { collectionViewPageStore.nftEntities === null && (
                             <LoadingIndicator />
@@ -153,7 +178,8 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
                                 }) }
                             </GridView>
                         ) }
-                    </div>
+
+                    </DataGridLayout>
                 </div>
             ) }
             <PageFooter />

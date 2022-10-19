@@ -8,7 +8,7 @@ import Svg from './Svg';
 
 interface Crumb {
     name: string;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 type Props = {

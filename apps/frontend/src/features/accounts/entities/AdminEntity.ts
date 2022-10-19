@@ -4,16 +4,23 @@ import { makeAutoObservable } from 'mobx';
 export default class AdminEntity {
 
     accountId: string;
+    email: string;
 
     constructor() {
         this.accountId = S.Strings.NOT_EXISTS;
+        this.email = S.Strings.EMPTY;
 
         makeAutoObservable(this);
     }
 
-    static toJson(model: AdminEntity) {
+    static toJson(entity: AdminEntity) {
+        if (entity === null) {
+            return null;
+        }
+
         return {
-            'accountId': model.accountId,
+            'accountId': entity.accountId,
+            'email': entity.email,
         }
     }
 
@@ -22,11 +29,12 @@ export default class AdminEntity {
             return null;
         }
 
-        const model = new AdminEntity();
+        const entity = new AdminEntity();
 
-        model.accountId = (json.accountId ?? model.accountId).toString();
+        entity.accountId = (json.accountId ?? entity.accountId).toString();
+        entity.email = json.email ?? entity.email;
 
-        return model;
+        return entity;
     }
 
 }

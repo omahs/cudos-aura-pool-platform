@@ -20,8 +20,8 @@ export default class CollectionFilterModel {
         this.sortKey = CollectionFilterModel.SORT_KEY_NAME;
         this.searchString = '';
         this.categoryIds = [];
-        this.from = -1;
-        this.count = -1;
+        this.from = 0;
+        this.count = Number.MAX_SAFE_INTEGER;
 
         makeAutoObservable(this);
     }

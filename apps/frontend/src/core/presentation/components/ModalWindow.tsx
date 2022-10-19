@@ -91,7 +91,7 @@ const ModalWindow = (props: React.PropsWithChildren < ModalWindowProps >) => {
 
         return (
             <div className = { 'ModalWindowContent' }>
-                { props.children };
+                { props.children }
             </div>
         )
     }

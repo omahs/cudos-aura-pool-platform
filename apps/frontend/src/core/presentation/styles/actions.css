@@ -11,6 +11,10 @@
     justify-content:flex-end;
 }
 
+.Actions.Ends {
+    justify-content:space-between;
+}
+
 .Actions.Row > *:not(:first-child) {
 	margin-left:12px;
 }

@@ -3,20 +3,6 @@
     padding: 48px  var(--page-spacing-h);
 }
 
-.PageExploreCollections .ExploreCollections {
-    align-items: center;
-}
-
-.PageExploreCollections .ExploreCollections .PageHeading {
-    margin-bottom: 40px;
-}
-
-.PageExploreCollections .ExploreCollections .SearchBar {
-    margin-bottom: 40px;
-}
-
-.PageExploreCollections .DataGridWrapper .FilterHeader {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    margin-bottom: 20px;
-    align-items: end;
+.PageExploreCollections .SearchBar {
+    width: 420px;
 }

@@ -20,6 +20,8 @@ import LoadingIndicator from '../../../../core/presentation/components/LoadingIn
 import CategoriesSelector from '../components/CategoriesSelector';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import ExplorePageLayout from '../../../../core/presentation/components/ExplorePageLayout';
+import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
 
 import '../styles/page-explore-collections-component.css';
 
@@ -39,74 +41,82 @@ function ExploreCollectionsPage({ appStore, exploreCollectionsPageStore }: Props
     const collectionFilterModel = exploreCollectionsPageStore.collectionFilterModel;
 
     return (
-        <PageLayoutComponent
-            className = { 'PageExploreCollections' } >
+        <PageLayoutComponent className = { 'PageExploreCollections' } >
+
             <PageHeader />
+
             <div className={'PageContent AppContent'} >
-                <div className={'ExploreCollections FlexColumn'}>
-                    <div className={'PageHeading H1 Bold'}>Explore Collections</div>
-                    <div className={'Grid GridColumns3'}>
-                        <div></div>
-                        <Input
-                            inputType={InputType.TEXT}
-                            className={'SearchBar'}
-                            value = {collectionFilterModel.searchString}
-                            onChange = { exploreCollectionsPageStore.onChangeSearchWord }
-                            placeholder = {'Search Collections name'}
-                            InputProps={{
-                                startAdornment: <InputAdornment position="start" >
-                                    <Svg svg={SearchIcon} />
-                                </InputAdornment>,
-                            }}
-                        />
-                        <div></div>
-                    </div>
-                    <CategoriesSelector
-                        selectedCategoryIds = { collectionFilterModel.categoryIds }
-                        onChangeCategories = { exploreCollectionsPageStore.onChangeCategoryIds } />
-                </div>
-                <div className={'DataGridWrapper'}>
-                    <div className={'Grid FilterHeader'}>
-                        <Select
-                            className={'SortBySelect'}
-                            onChange={exploreCollectionsPageStore.onChangeSortKey}
-                            value={collectionFilterModel.sortKey} >
-                            <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                            <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
-                        </Select>
-                        <Actions
-                            layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                            height={ACTIONS_HEIGHT.HEIGHT_48} >
-                            {/* TODO: show all filters */}
-                            <Button
-                                padding={BUTTON_PADDING.PADDING_24}
-                                type={BUTTON_TYPE.ROUNDED} >
-                                All Filters
-                            </Button>
-                        </Actions>
-                    </div>
 
-                    { exploreCollectionsPageStore.collectionEntities === null && (
-                        <LoadingIndicator />
-                    ) }
+                <ExplorePageLayout
+                    header = { (
+                        <>
+                            <div className={'H1 Bold'}>Explore Collections</div>
+                            <Input
+                                inputType={InputType.TEXT}
+                                className={'SearchBar'}
+                                value = {collectionFilterModel.searchString}
+                                onChange = { exploreCollectionsPageStore.onChangeSearchWord }
+                                placeholder = {'Search Collections name'}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start" >
+                                        <Svg svg={SearchIcon} />
+                                    </InputAdornment>,
+                                }} />
+                            <CategoriesSelector
+                                selectedCategoryIds = { collectionFilterModel.categoryIds }
+                                onChangeCategories = { exploreCollectionsPageStore.onChangeCategoryIds } />
+                        </>
+                    ) }>
 
-                    { exploreCollectionsPageStore.collectionEntities !== null && (
-                        <GridView
-                            gridViewState={exploreCollectionsPageStore.gridViewState}
-                            defaultContent={<div className={'NoContentFound'}>No Nfts found</div>} >
-                            { exploreCollectionsPageStore.collectionEntities.map((collectionEntity: CollectionEntity) => {
-                                return (
-                                    <CollectionPreview
-                                        key={collectionEntity.id}
-                                        collectionEntity={collectionEntity}
-                                        miningFarmName={exploreCollectionsPageStore.getMiningFarmName(collectionEntity.farmId)} />
-                                )
-                            }) }
-                        </GridView>
-                    ) }
-                </div>
+                    <DataGridLayout
+                        header = { (
+                            <>
+                                <Select
+                                    onChange={exploreCollectionsPageStore.onChangeSortKey}
+                                    value={collectionFilterModel.sortKey} >
+                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                                </Select>
+                                <Actions
+                                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
+                                    height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                    {/* TODO: show all filters */}
+                                    <Button
+                                        padding={BUTTON_PADDING.PADDING_24}
+                                        type={BUTTON_TYPE.ROUNDED} >
+                                        All Filters
+                                    </Button>
+                                </Actions>
+                            </>
+                        ) } >
+
+                        { exploreCollectionsPageStore.collectionEntities === null && (
+                            <LoadingIndicator />
+                        ) }
+
+                        { exploreCollectionsPageStore.collectionEntities !== null && (
+                            <GridView
+                                gridViewState={exploreCollectionsPageStore.gridViewState}
+                                defaultContent={<div className={'NoContentFound'}>No Nfts found</div>} >
+                                { exploreCollectionsPageStore.collectionEntities.map((collectionEntity: CollectionEntity) => {
+                                    return (
+                                        <CollectionPreview
+                                            key={collectionEntity.id}
+                                            collectionEntity={collectionEntity}
+                                            miningFarmName={exploreCollectionsPageStore.getMiningFarmName(collectionEntity.farmId)} />
+                                    )
+                                }) }
+                            </GridView>
+                        ) }
+
+                    </DataGridLayout>
+
+                </ExplorePageLayout>
+
             </div>
+
             <PageFooter />
+
         </PageLayoutComponent>
     )
 
