@@ -35,7 +35,19 @@ export default class AccountSessionStore {
             return false;
         }
 
-        if (this.accountEntity.isUser() === true) {
+        if (this.accountEntity.isUser() === true || this.accountEntity.isAdmin() === true) {
+            return this.userEntity !== null;
+        }
+
+        return false;
+    }
+
+    isAdmin(): boolean {
+        if (this.accountEntity === null) {
+            return false;
+        }
+
+        if (this.accountEntity.isAdmin() === true) {
             return this.userEntity !== null;
         }
 
@@ -63,12 +75,17 @@ export default class AccountSessionStore {
         this.inited = true;
     }
 
-    login = async (username: string, password: string, walletAddress: string, signedTx: any): Promise < void > => {
+    login = async (username: string, password: string, walletAddress?: string, signedTx?: any): Promise < void > => {
         try {
             await this.accountRepo.login(username, password, walletAddress, signedTx);
         } finally {
             await this.loadSessionAccountsAndSyncWalletStore();
         }
+    }
+
+    // TODO: use session token for password change
+    changePassword = async (password: string, passwordRepeat: string): Promise < void > => {
+        // await this.accountRepo.changePassword(this.userEntity.name, token, password, passwordRepeat);
     }
 
     async logout(): Promise < void > {

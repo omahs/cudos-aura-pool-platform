@@ -29,6 +29,11 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
         return miningFarmEntities.length === 1 ? miningFarmEntities[0] : null;
     }
 
+    async fetchMiningFarmByAccountId(accountId: string): Promise < MiningFarmEntity > {
+        const farmJson = this.storageHelper.miningFarmsJson.find((json: any) => json.accountId === accountId);
+        return MiningFarmEntity.fromJson(farmJson);
+    }
+
     async fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} > {
         let miningFarmsSlice = this.storageHelper.collectionsJson.map((json) => MiningFarmEntity.fromJson(json));
 
@@ -53,5 +58,15 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
             miningFarmEntities: miningFarmsSlice.slice(miningFarmFilterModel.from, miningFarmFilterModel.from + miningFarmFilterModel.count),
             total: miningFarmsSlice.length,
         }
+    }
+
+    async editMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
+        const farmsJson = this.storageHelper.miningFarmsJson.filter((json) => json.id !== miningFarmEntity.id);
+
+        farmsJson.push(miningFarmEntity.toJson());
+
+        this.storageHelper.miningFarmsJson = farmsJson;
+
+        this.storageHelper.save();
     }
 }

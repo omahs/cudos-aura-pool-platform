@@ -26,6 +26,14 @@ export default class AccountEntity {
         return this.type === AccountType.User;
     }
 
+    isAdmin(): boolean {
+        return this.type === AccountType.Admin;
+    }
+
+    isSuperAdmin(): boolean {
+        return this.type === AccountType.SuperAdmin;
+    }
+
     static toJson(entity: AccountEntity): any {
         if (entity === null) {
             return null;

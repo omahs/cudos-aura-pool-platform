@@ -3,6 +3,7 @@ import S from '../../../core/utilities/Main';
 
 export default class UserEntity {
 
+    userId: string;
     accountId: string;
     name: string;
     address: string;
@@ -13,6 +14,7 @@ export default class UserEntity {
     coverImgUrl: string;
 
     constructor() {
+        this.userId = S.Strings.NOT_EXISTS;
         this.accountId = S.Strings.NOT_EXISTS;
         this.name = S.Strings.EMPTY;
         this.address = S.Strings.EMPTY;
@@ -29,6 +31,7 @@ export default class UserEntity {
         }
 
         return {
+            'userId': entity.userId,
             'accountId': entity.accountId,
             'name': entity.name,
             'address': entity.address,
@@ -47,6 +50,7 @@ export default class UserEntity {
 
         const entity = new UserEntity();
 
+        entity.userId = json.userId ?? entity.userId;
         entity.accountId = json.accountId ?? entity.accountId;
         entity.name = json.name ?? entity.name;
         entity.address = json.address ?? entity.address;

@@ -14,4 +14,8 @@ export default class MiningFarmApi {
     async fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} > {
         return null;
     }
+
+    async editMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
+        return null;
+    }
 }
