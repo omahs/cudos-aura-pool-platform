@@ -1,7 +1,4 @@
-import S from '../../../../core/utilities/Main';
 import StorageHelper from '../../../../core/helpers/StorageHelper';
-import CollectionEntity from '../../../collection/entities/CollectionEntity';
-import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import NftEntity from '../../entities/NftEntity';
 import NftRepo from '../../presentation/repos/NftRepo';
 import NftFilterModel from '../../utilities/NftFilterModel';
@@ -14,16 +11,9 @@ export default class NftStorageRepo implements NftRepo {
         this.storageHelper = storageHelper;
     }
 
-    async fetchNftById(nftId: string): Promise < { nftEntity: NftEntity, collectionEntity: CollectionEntity, miningFarmEntity: MiningFarmEntity } > {
+    async fetchNftById(nftId: string): Promise < NftEntity > {
         const nftJson = this.storageHelper.nftsJson.find((json) => json.id === nftId);
-        const collectionJson = this.storageHelper.collectionsJson.find((json) => json.id === nftJson.collectionId);
-        const farmJson = this.storageHelper.miningFarmsJson.find((json) => json.id === collectionJson.farmId);
-
-        return {
-            nftEntity: NftEntity.fromJson(nftJson),
-            collectionEntity: CollectionEntity.fromJson(collectionJson),
-            miningFarmEntity: MiningFarmEntity.fromJson(farmJson),
-        };
+        return NftEntity.fromJson(nftJson)
     }
 
     async fetchNewNftDrops(): Promise < NftEntity[] > {

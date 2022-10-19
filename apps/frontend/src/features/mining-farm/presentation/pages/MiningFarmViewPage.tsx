@@ -4,8 +4,11 @@ import { inject, observer } from 'mobx-react';
 
 import MiningFarmViewPageStore from '../stores/MiningFarmViewPageStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
+import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
+import EditMiningFarmModal from '../components/EditMiningFarmModal';
+import EditMiningFarmModalStore from '../stores/EditMiningFarmModalStore';
 import CollectionFilterModel from '../../../collection/utilities/CollectionFilterModel';
 
 import { MenuItem } from '@mui/material';
@@ -20,13 +23,11 @@ import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presen
 import Button, { BUTTON_COLOR, BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../../../collection/presentation/components/CollectionPreview';
+import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AddIcon from '@mui/icons-material/Add';
 import '../styles/page-mining-farm-view-component.css';
 import Svg from '../../../../core/presentation/components/Svg';
-import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
-import EditMiningFarmModal from '../components/EditMiningFarmModal';
-import EditMiningFarmModalStore from '../stores/EditMiningFarmModalStore';
 import SvgGridNoContent from '../../../../core/presentation/vectors/grid-no-content.svg';
 
 type Props = {
@@ -136,26 +137,27 @@ function MiningFarmViewPage({ appStore, miningFarmViewPageStore, accountSessionS
                             </Button>
                         </Actions>
                     </div>
-                    <div className={'DataGridWrapper'}>
-                        <div className={'Grid FilterHeader'}>
-                            <Select
-                                className={'SortBySelect'}
-                                onChange={miningFarmViewPageStore.onChangeSortKey}
-                                value={collectionFilterModel.sortKey} >
-                                <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                                <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
-                            </Select>
-                            <Actions
-                                layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                                height={ACTIONS_HEIGHT.HEIGHT_48} >
-                                {/* TODO: show all filters */}
-                                <Button
-                                    padding={BUTTON_PADDING.PADDING_24}
-                                    type={BUTTON_TYPE.ROUNDED} >
+                    <DataGridLayout
+                        header = { (
+                            <>
+                                <Select
+                                    onChange={miningFarmViewPageStore.onChangeSortKey}
+                                    value={collectionFilterModel.sortKey} >
+                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                                </Select>
+                                <Actions
+                                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
+                                    height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                    {/* TODO: show all filters */}
+                                    <Button
+                                        padding={BUTTON_PADDING.PADDING_24}
+                                        type={BUTTON_TYPE.ROUNDED} >
                                     All Filters
-                                </Button>
-                            </Actions>
-                        </div>
+                                    </Button>
+                                </Actions>
+                            </>
+                        ) }>
 
                         { miningFarmViewPageStore.collectionEntities === null && (
                             <LoadingIndicator />
@@ -175,7 +177,8 @@ function MiningFarmViewPage({ appStore, miningFarmViewPageStore, accountSessionS
                                 }) }
                             </GridView>
                         ) }
-                    </div>
+
+                    </DataGridLayout>
                 </div>
             ) }
 

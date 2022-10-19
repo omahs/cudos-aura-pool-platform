@@ -72,7 +72,6 @@ function ExploreCollectionsPage({ appStore, exploreCollectionsPageStore }: Props
                         header = { (
                             <>
                                 <Select
-                                    className={'SortBySelect'}
                                     onChange={exploreCollectionsPageStore.onChangeSortKey}
                                     value={collectionFilterModel.sortKey} >
                                     <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>

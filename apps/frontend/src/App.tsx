@@ -16,7 +16,7 @@ import MarketplaceStore from './features/collection/presentation/stores/Marketpl
 import NftStorageRepo from './features/nft/data/repo/NftStorageRepo';
 import ExampleModalStore from './features/ui-kit/presensation/stores/ExampleModalStore';
 import CudosStorageRepo from './features/cudos-data/data/repo/CudosStorageRepo';
-import NftDetailsStore from './features/nft/presentation/stores/NftDetailsStore';
+import NftViewPageStore from './features/nft/presentation/stores/NftViewPageStore';
 import CollectionViewPageStore from './features/collection/presentation/stores/CollectionViewPageStore';
 import MiningFarmViewPageStore from './features/mining-farm/presentation/stores/MiningFarmViewPageStore';
 import WalletStore from './features/ledger/presentation/stores/WalletStore';
@@ -61,7 +61,7 @@ const exploreMiningFarmsPageStore = new ExploreMiningFarmsPageStore(miningFarmRe
 const exploreNftsPageStore = new ExploreNftsPageStore(nftRepo, collectionRepo);
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFarmRepo);
 const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo, nftRepo, miningFarmRepo);
-const nftDetailsStore = new NftDetailsStore(bitcoinStore, cudosStore, nftRepo);
+const nftViewPageStore = new NftViewPageStore(bitcoinStore, cudosStore, nftRepo, collectionRepo, miningFarmRepo);
 const collectionViewPageStore = new CollectionViewPageStore(nftRepo, collectionRepo, miningFarmRepo);
 const miningFarmViewPageStore = new MiningFarmViewPageStore(miningFarmRepo, collectionRepo);
 const userProfilePageStore = new UserProfilePageStore(accountSessionStore, walletStore, nftRepo, collectionRepo);
@@ -99,7 +99,7 @@ const App = () => {
                 exploreMiningFarmsPageStore = { exploreMiningFarmsPageStore }
                 exploreNftsPageStore = { exploreNftsPageStore }
                 marketplaceStore = { marketplaceStore }
-                nftDetailsStore = { nftDetailsStore }
+                nftViewPageStore = { nftViewPageStore }
                 collectionViewPageStore = { collectionViewPageStore }
                 miningFarmViewPageStore = { miningFarmViewPageStore }
                 userProfilePageStore = { userProfilePageStore }

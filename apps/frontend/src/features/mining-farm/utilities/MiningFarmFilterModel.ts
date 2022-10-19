@@ -11,8 +11,8 @@ export default class MiningFarmFilterModel {
     constructor() {
         this.sortKey = MiningFarmFilterModel.SORT_KEY_NAME;
         this.searchString = '';
-        this.from = -1;
-        this.count = -1;
+        this.from = 0;
+        this.count = Number.MAX_SAFE_INTEGER;
     }
 
     static toJson(model) {

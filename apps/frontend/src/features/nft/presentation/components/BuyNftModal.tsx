@@ -1,34 +1,42 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-import ModalWindow from '../../../../core/presentation/components/ModalWindow';
+import S from '../../../../core/utilities/Main';
 import BuyNftModalStore from '../stores/BuyNftModalStore';
+import ResellNftModalStore from '../stores/ResellNftModalStore';
+
+import ModalWindow from '../../../../core/presentation/components/ModalWindow';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import '../styles/buy-nft-modal.css';
+import Button from '../../../../core/presentation/components/Button';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
+
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LaunchIcon from '@mui/icons-material/Launch';
+import '../styles/buy-nft-modal.css';
 
 type Props = {
-    resellNft: () => void;
+    resellNftModalStore?: ResellNftModalStore;
     buyNftModalStore?: BuyNftModalStore;
 }
 
-function BuyNftModal({ resellNft, buyNftModalStore }: Props) {
+function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
     const nftEntity = buyNftModalStore.nftEntity;
 
     function onClickResellNft() {
+        resellNftModalStore.showSignal(buyNftModalStore.nftEntity, buyNftModalStore.cudosPrice, buyNftModalStore.collectionName);
         buyNftModalStore.hide();
-        resellNft();
     }
 
     return (
-        <ModalWindow modalStore = { buyNftModalStore } >
-            <div className={'BuyNftPopup FlexColumn'}>
-                {buyNftModalStore.isStagePreview()
-                    ? <>
+        <ModalWindow
+            className = { 'BuyNftPopup' }
+            modalStore = { buyNftModalStore } >
+
+            <div className = { `Stage Preview FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(buyNftModalStore.isStagePreview())}` } >
+
+                {buyNftModalStore.isStagePreview() && (
+                    <>
                         <div className={'H3 Bold'}>Buy NFT</div>
                         <div className={'BorderContainer FlexRow'}>
                             <div
@@ -50,23 +58,33 @@ function BuyNftModal({ resellNft, buyNftModalStore }: Props) {
                             value={buyNftModalStore.recipient}
                             onChange={buyNftModalStore.setRecipient}
                             label={'Set Rewards Recepient Address'}
-                            placeholder={'e.g bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'}
-                        />
+                            placeholder={'e.g bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'} />
                         <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
-                            <Button radius={BUTTON_RADIUS.DEFAULT} onClick={buyNftModalStore.buyNft}>Complete Purchase</Button>
+                            <Button onClick={buyNftModalStore.buyNft}>Complete Purchase</Button>
                         </Actions>
-                    </> : ''}
-                {buyNftModalStore.isStageProcessing()
-                    ? <div className={'FlexColumn Processing'}>
+                    </>
+                ) }
+
+            </div>
+
+            <div className = { `Stage Processing FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(buyNftModalStore.isStageProcessing())}` } >
+
+                { buyNftModalStore.isStageProcessing() && (
+                    <>
                         <div className={'H2 Bold'}>Processing...</div>
-                        <div className={'FlexColumn'}>
+                        <div className={'Info'}>
                             <div className={'H3'}>Check your wallet for detailed information.</div>
                             <div className={'H3'}>Sign the transaction.</div>
                         </div>
-                    </div> : ''}
+                    </>
+                ) }
 
-                {buyNftModalStore.isStageSuccess()
-                    ? <div className={'FlexColumn Success'}>
+            </div>
+
+            <div className = { `Stage Success FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(buyNftModalStore.isStageSuccess())}` } >
+
+                { buyNftModalStore.isStageSuccess() && (
+                    <>
                         <Svg className={'SuccessSvg'} svg={CheckCircleIcon} size={SvgSize.CUSTOM}/>
                         <div className={'H2 Bold'}>Success!</div>
                         <div className={'H3'}>Transaction was successfully executed.</div>
@@ -75,29 +93,27 @@ function BuyNftModal({ resellNft, buyNftModalStore }: Props) {
                                 className={'NftPicture'}
                                 style={{
                                     backgroundImage: `url("${nftEntity.imageUrl}")`,
-                                }}
-                            />
+                                }} />
                             <div className={'B2 SemiBold Gray'}>{buyNftModalStore.collectionName}</div>
                             <div className={'H2 Bold'}>{nftEntity.name}</div>
                         </div>
                         <div className={'FlexRow TransactionView H3'}>
                             Transaction details
-
                             <a className={'Clickable'} href={buyNftModalStore.getTxLink()} target={'_blank'} rel={'noreferrer'}>
                                 <Svg svg={LaunchIcon} />
                             </a>
                         </div>
                         <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
-                            <Button
-                                radius={BUTTON_RADIUS.DEFAULT}
-                                onClick={onClickResellNft}
-                            >Resell NFT</Button>
-                            <Button
-                                radius={BUTTON_RADIUS.DEFAULT}
-                                onClick={buyNftModalStore.hide}
-                            >View Item</Button>
+                            <Button onClick={onClickResellNft}>
+                                Resell NFT
+                            </Button>
+                            <Button onClick={buyNftModalStore.hide}>
+                                View Item
+                            </Button>
                         </Actions>
-                    </div> : ''}
+                    </>
+                ) }
+
             </div>
 
         </ModalWindow>

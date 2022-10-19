@@ -41,13 +41,13 @@
     max-width: calc(100% - 32px); max-height: 70%;
     background:transparent;
     box-shadow: 0px 3px 20px rgba(27, 32, 49, 0.1);
-    border-radius: 4px;
+    border-radius: 20px;
     scroll-behavior: smooth;
 }
 
-/* .ModalWindowWrapper > .ModalWindow .ModalWindowContent {
-    width: 520px; max-width: 100%;
-} */
+.ModalWindowWrapper > .ModalWindow .ModalWindowContent {
+    width: 630px; max-width: 100%;
+}
 
 .ModalWindowWrapper > .ModalWindow .ModalWindowContent.LargeContent {
     width: 1100px;

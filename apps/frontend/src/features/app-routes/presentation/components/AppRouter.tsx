@@ -70,11 +70,11 @@ function AppRouter({ accountSessionStore }: Props) {
                     ) }
                     <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />
                     <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPage /> } />
-                    <Route path = { AppRoutes.ADMIN_PORTAL } element = { <AdminPortalPage /> } />
                     <Route path = { `${AppRoutes.MINING_FARM_VIEW}/:farmId` } element = { <MiningFarmViewPage /> } />
                     { accountSessionStore.isAdmin() === true && (
                         <Route path = { `${AppRoutes.ADD_NFTS_TO_COLLECTION}/:collectionId` } element = { <AddNftsToCollectionPage /> } />
                     ) }
+                    <Route path = { AppRoutes.ADMIN_PORTAL } element = { <AdminPortalPage /> } />
                 </Routes>
             ) }
         </div>

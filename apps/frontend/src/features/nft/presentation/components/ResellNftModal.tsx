@@ -1,19 +1,21 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-import ModalWindow from '../../../../core/presentation/components/ModalWindow';
+import S from '../../../../core/utilities/Main';
 import ResellNftModalStore from '../stores/ResellNftModalStore';
-import Input, { InputType } from '../../../../core/presentation/components/Input';
+
 import InputAdornment from '@mui/material/InputAdornment';
+import ModalWindow from '../../../../core/presentation/components/ModalWindow';
+import Input, { InputType } from '../../../../core/presentation/components/Input';
 import Checkbox from '../../../../core/presentation/components/Checkbox';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
+import Button from '../../../../core/presentation/components/Button';
+import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LaunchIcon from '@mui/icons-material/Launch';
 import ReportIcon from '@mui/icons-material/Report';
-
 import '../styles/resell-nft-modal.css';
-import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
 
 type Props = {
     resellNftModalStore?: ResellNftModalStore;
@@ -21,17 +23,6 @@ type Props = {
 
 function ResellNftModal({ resellNftModalStore }: Props) {
     const nftEntity = resellNftModalStore.nftEntity;
-
-    return (
-        <ModalWindow modalStore = { resellNftModalStore } >
-            <div className={'ResellNftPopup FlexColumn'}>
-                {resellNftModalStore.isStagePreview() ? <PreviewContent /> : ''}
-                {resellNftModalStore.isStageProcessing() ? <ProcessingContent /> : ''}
-                {resellNftModalStore.isStageSuccess() ? <SuccessContent /> : ''}
-                {resellNftModalStore.isStageFail() ? <FailContent /> : ''}
-            </div>
-        </ModalWindow>
-    )
 
     function PreviewContent() {
         return (
@@ -49,7 +40,7 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                         <div className={'NftName H2 Bold'}>{nftEntity.name}</div>
                         <div className={'Address FlexColumn'}>
                             <div className={'B2 SemiBold Gray'}>Current Rewards Recipient</div>
-                            <div className={'H3 Bold'}>{nftEntity.currentOwnerAddress}</div>
+                            <div className={'H3 Bold Dots'}>{nftEntity.currentOwnerAddress}</div>
                         </div>
                     </div>
                 </div>
@@ -59,9 +50,9 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                     label={'Set NFT Price'}
                     placeholder={'0'}
                     InputProps={{
-                        endAdornment: <InputAdornment position="end" >
-                    CUDOS
-                        </InputAdornment>,
+                        endAdornment: (
+                            <InputAdornment position="end" > CUDOS </InputAdornment>
+                        ),
                     }}
                 />
                 <div className={'CheckBoxText B2 SemiBold'}>Do you want to have immediate auto pay on sale or disperse as per the original payment schedule?</div>
@@ -69,16 +60,14 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                     <Checkbox
                         label={'Auto pay'}
                         value={resellNftModalStore.autoPay}
-                        onChange={resellNftModalStore.toggleAutoPay}
-                    />
+                        onChange={resellNftModalStore.toggleAutoPay} />
                     <Checkbox
                         label={'Original Payment Schedule'}
                         value={resellNftModalStore.originalPaymentSchedule}
-                        onChange={resellNftModalStore.toggleOriginalPaymentSchedule}
-                    />
+                        onChange={resellNftModalStore.toggleOriginalPaymentSchedule} />
                 </div>
                 <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
-                    <Button radius={BUTTON_RADIUS.DEFAULT} onClick={resellNftModalStore.onClickSubmitForSell}>Submit for sell</Button>
+                    <Button onClick={resellNftModalStore.onClickSubmitForSell}>Submit for sell</Button>
                 </Actions>
             </>
         )
@@ -86,62 +75,84 @@ function ResellNftModal({ resellNftModalStore }: Props) {
 
     function ProcessingContent() {
         return (
-            <div className={'Processing FlexColumn'}>
+            <>
                 <div className={'H2 Bold'}>Processing...</div>
-                <div className={'H3'}>Check your wallet for detailed information.</div>
-            </div>
+                <div className={'H3 Info'}>Check your wallet for detailed information.</div>
+            </>
         )
     }
 
     function SuccessContent() {
         return (
-            <div className={'Success FlexColumn'}>
+            <>
                 <Svg className={'BigSvg'} svg={CheckCircleIcon} size={SvgSize.CUSTOM}/>
                 <div className={'H2 Bold'}>Success!</div>
-                <div className={'H3'}>Transaction was successfully executed.</div>
+                <div className={'H3 Info'}>Transaction was successfully executed.</div>
                 <div className={'FlexRow TransactionView H3'}>
-                            Transaction details
-
+                    Transaction details
                     <a className={'Clickable'} href={resellNftModalStore.getTxLink()} target={'_blank'} rel={'noreferrer'}>
                         <Svg svg={LaunchIcon} />
                     </a>
                 </div>
                 <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
                     <Button
-                        radius={BUTTON_RADIUS.DEFAULT}
-                        onClick={resellNftModalStore.hide}
-                    >Close Now</Button>
+                        onClick={resellNftModalStore.hide}>
+                        Close Now
+                    </Button>
                 </Actions>
-            </div>
+            </>
         )
     }
 
     function FailContent() {
         return (
-            <div className={'Fail FlexColumn'}>
+            <>
                 <Svg className={'BigSvg'} svg={ReportIcon} size={SvgSize.CUSTOM}/>
                 <div className={'H2 Bold'}>Error</div>
-                <div className={'H3'}>Transaction was not successful. Check your network or token balance.</div>
+                <div className={'H3 Info'}>Transaction was not successful. Check your network or token balance.</div>
                 <div className={'FlexRow TransactionView H3'}>
                     Transaction details
-
                     <a className={'Clickable'} href={resellNftModalStore.getTxLink()} target={'_blank'} rel={'noreferrer'}>
                         <Svg svg={LaunchIcon} />
                     </a>
                 </div>
                 <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
                     <Button
-                        radius={BUTTON_RADIUS.DEFAULT}
-                        onClick={resellNftModalStore.hide}
-                    >Close</Button>
+                        onClick={resellNftModalStore.hide}>
+                        Close
+                    </Button>
                     <Button
-                        radius={BUTTON_RADIUS.DEFAULT}
-                        onClick={resellNftModalStore.onClickSubmitForSell}
-                    >Try Again</Button>
+                        onClick={resellNftModalStore.onClickSubmitForSell}>
+                        Try Again
+                    </Button>
                 </Actions>
-            </div>
+            </>
         )
     }
+
+    return (
+        <ModalWindow
+            className = { 'ResellNftPopup' }
+            modalStore = { resellNftModalStore } >
+
+            <div className = { `Stage Preview FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(resellNftModalStore.isStagePreview())}` } >
+                { resellNftModalStore.isStagePreview() === true && <PreviewContent /> }
+            </div>
+
+            <div className = { `Stage Processing FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(resellNftModalStore.isStageProcessing())}` } >
+                {resellNftModalStore.isStageProcessing() === true && <ProcessingContent /> }
+            </div>
+
+            <div className = { `Stage Success FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(resellNftModalStore.isStageSuccess())}` } >
+                {resellNftModalStore.isStageSuccess() === true && <SuccessContent /> }
+            </div>
+
+            <div className = { `Stage Fail FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(resellNftModalStore.isStageFail())}` } >
+                {resellNftModalStore.isStageFail() === true && <FailContent /> }
+            </div>
+
+        </ModalWindow>
+    )
 }
 
 export default inject((stores) => stores)(observer(ResellNftModal));
