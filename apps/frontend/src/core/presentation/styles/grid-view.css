@@ -1,3 +1,15 @@
+.GridView {
+    justify-content: center;
+    align-items: center;
+}
+
+.GridView .DefaultContent {
+    width: 100%;
+    min-height: 400px;
+    justify-content: center;
+    align-items: center;
+}
+
 .GridView .GridHeader {
     justify-content: space-between;
     margin-bottom: 20px;

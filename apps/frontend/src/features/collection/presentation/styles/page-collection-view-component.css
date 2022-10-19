@@ -50,11 +50,6 @@
 }
 
 .PageCollectionView .GridHeader {
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.PageCollectionView .GridHeader .FlexRow {
     justify-content: space-between;
 }
 
@@ -62,4 +57,4 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     margin-bottom: 20px;
     align-items: end;
-}
+} 

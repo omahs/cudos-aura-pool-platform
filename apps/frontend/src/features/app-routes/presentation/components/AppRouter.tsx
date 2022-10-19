@@ -21,6 +21,7 @@ import LoadingIndicator from '../../../../core/presentation/components/LoadingIn
 import AdminPortalPage from '../../../accounts/presentation/pages/AdminPortalPage';
 
 import '../styles/app-router.css';
+import AddNftsToCollectionPage from '../../../collection/presentation/pages/AddNftsToCollectionPage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -71,6 +72,9 @@ function AppRouter({ accountSessionStore }: Props) {
                     <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPage /> } />
                     <Route path = { AppRoutes.ADMIN_PORTAL } element = { <AdminPortalPage /> } />
                     <Route path = { `${AppRoutes.MINING_FARM_VIEW}/:farmId` } element = { <MiningFarmViewPage /> } />
+                    { accountSessionStore.isAdmin() === true && (
+                        <Route path = { `${AppRoutes.ADD_NFTS_TO_COLLECTION}/:collectionId` } element = { <AddNftsToCollectionPage /> } />
+                    ) }
                 </Routes>
             ) }
         </div>

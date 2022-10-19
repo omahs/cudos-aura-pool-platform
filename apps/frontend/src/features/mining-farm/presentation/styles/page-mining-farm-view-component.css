@@ -3,6 +3,17 @@
     padding: 24px var(--page-spacing-h);
 }
 
+.PageMiningFarmView .CollectionsOwnedHeader {
+    justify-content: space-between;
+}
+
+.PageMiningFarmView .NoContentFound {
+    margin: 100px 0;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
 .PageMiningFarmView .Grid {
     gap: 50px;
 }

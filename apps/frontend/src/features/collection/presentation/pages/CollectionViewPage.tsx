@@ -21,19 +21,23 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Select from '../../../../core/presentation/components/Select';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Button, { BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
-
+import AddIcon from '@mui/icons-material/Add';
 import '../styles/page-collection-view-component.css';
+import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
+import { CollectionStatus } from '../../entities/CollectionEntity';
 
 type Props = {
     collectionViewPageStore?: CollectionViewPageStore
+    accountSessionStore?: AccountSessionStore
 }
 
-function CollectionViewPage({ collectionViewPageStore }: Props) {
+function CollectionViewPage({ collectionViewPageStore, accountSessionStore }: Props) {
     const collectionEntity = collectionViewPageStore.collectionEntity;
     const miningFarmEntity = collectionViewPageStore.miningFarmEntity;
+    const nftFilterModel = collectionViewPageStore.nftFilterModel;
 
     const { collectionId } = useParams();
     const navigate = useNavigate();
@@ -55,7 +59,15 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
         navigate(`${AppRoutes.MINING_FARM_VIEW}/${miningFarmEntity.id}`)
     }
 
-    const nftFilterModel = collectionViewPageStore.nftFilterModel;
+    function isCollectionEditable() {
+        const adminEntity = accountSessionStore.accountEntity;
+
+        return miningFarmEntity.accountId === adminEntity.accountId && collectionEntity.status === CollectionStatus.NOT_SUBMITTED;
+    }
+
+    function onClickAddMoreNfts() {
+        navigate(`${AppRoutes.ADD_NFTS_TO_COLLECTION}/${collectionEntity.id}`);
+    }
 
     return (
         <PageLayoutComponent
@@ -80,7 +92,7 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
                         <div className={'FlexColumn InfoBox'}>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Floor</div>
-                                <div className={'CollectionInfoValue'}>{collectionEntity.priceDisplay()} CUDOS</div>
+                                <div className={'CollectionInfoValue'}>{collectionEntity.priceDisplay()}</div>
                             </div>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Volume</div>
@@ -113,6 +125,18 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className={'GridHeader FlexRow'}>
+                        <div className={'H2 Bold'}>NFTs in Collection</div>
+                        {isCollectionEditable() && (<Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}>
+                            <Button
+                                radius={BUTTON_RADIUS.RADIUS_16}
+                                onClick={onClickAddMoreNfts}
+                            >
+                                <Svg svg={AddIcon}/>
+                                Add More NFTs
+                            </Button>
+                        </Actions>)}
                     </div>
                     <div className={'DataGridWrapper'}>
                         <div className={'Grid FilterHeader'}>

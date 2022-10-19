@@ -17,16 +17,17 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Select from '../../../../core/presentation/components/Select';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_COLOR, BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Button, { BUTTON_COLOR, BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../../../collection/presentation/components/CollectionPreview';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-
+import AddIcon from '@mui/icons-material/Add';
 import '../styles/page-mining-farm-view-component.css';
 import Svg from '../../../../core/presentation/components/Svg';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import EditMiningFarmModal from '../components/EditMiningFarmModal';
 import EditMiningFarmModalStore from '../stores/EditMiningFarmModalStore';
+import SvgGridNoContent from '../../../../core/presentation/vectors/grid-no-content.svg';
 
 type Props = {
     appStore?: AppStore
@@ -56,6 +57,10 @@ function MiningFarmViewPage({ appStore, miningFarmViewPageStore, accountSessionS
 
     function onClickEditProfile() {
         editMiningFarmModalStore.showSignal(miningFarmEntity);
+    }
+
+    function onClickCreateCollection() {
+        navigate(AppRoutes.PAGE_CREATE_COLLECTION);
     }
 
     return (
@@ -119,7 +124,18 @@ function MiningFarmViewPage({ appStore, miningFarmViewPageStore, accountSessionS
                             </div>
                         </div>
                     </div>
-                    <div className={'H2'}>Collections Owned</div>
+                    <div className={'CollectionsOwnedHeader FlexRow'}>
+                        <div className={'H2'}>Collections Owned</div>
+                        <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}>
+                            <Button
+                                radius={BUTTON_RADIUS.RADIUS_16}
+                                onClick={onClickCreateCollection}
+                            >
+                                <Svg svg={AddIcon}/>
+                                Create Collection
+                            </Button>
+                        </Actions>
+                    </div>
                     <div className={'DataGridWrapper'}>
                         <div className={'Grid FilterHeader'}>
                             <Select
@@ -148,7 +164,7 @@ function MiningFarmViewPage({ appStore, miningFarmViewPageStore, accountSessionS
                         { miningFarmViewPageStore.collectionEntities !== null && (
                             <GridView
                                 gridViewState={miningFarmViewPageStore.gridViewState}
-                                defaultContent={<div className={'NoContentFound'}>No Nfts found</div>} >
+                                defaultContent={<EmptyGridContent/>} >
                                 { miningFarmViewPageStore.collectionEntities.map((collectionEntity: CollectionEntity, index: number) => {
                                     return (
                                         <CollectionPreview
@@ -167,6 +183,26 @@ function MiningFarmViewPage({ appStore, miningFarmViewPageStore, accountSessionS
         </PageLayoutComponent>
     )
 
+    function EmptyGridContent() {
+        return (
+            <div className={'NoContentFound FlexColumn'}>
+                <Svg svg={SvgGridNoContent} />
+                <div className={'H3 Bold'}>No collections in here</div>
+                <div className={'B1'}>Looks like you haven’t created collections yet.</div>
+                <Actions
+                    layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_CENTER}
+                    height={ACTIONS_HEIGHT.HEIGHT_48}
+                >
+                    <Button
+                        onClick={onClickCreateCollection}
+                        radius={BUTTON_RADIUS.RADIUS_16}>
+                        <Svg svg={AddIcon} />
+                        Create First Collection
+                    </Button>
+                </Actions>
+            </div>
+        )
+    }
 }
 
 export default inject((stores) => stores)(observer(MiningFarmViewPage));

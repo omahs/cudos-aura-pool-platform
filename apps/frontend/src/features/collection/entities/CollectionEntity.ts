@@ -1,6 +1,15 @@
 import BigNumber from 'bignumber.js';
 import S from '../../../core/utilities/Main';
 
+export enum CollectionStatus {
+    NOT_SUBMITTED = 'not_submitted',
+    QUEUED = 'queued',
+    APPROVED = 'approved',
+    REJECTED = 'rejected',
+    ISSUED = 'issued',
+    DELETED = 'deleted',
+}
+
 export default class CollectionEntity {
     id: string;
     farmId: string;
@@ -14,6 +23,7 @@ export default class CollectionEntity {
     owners: number;
     profileImgurl: string;
     coverImgUrl: string;
+    status: CollectionStatus;
 
     constructor() {
         this.id = S.Strings.EMPTY;
@@ -28,6 +38,7 @@ export default class CollectionEntity {
         this.owners = S.NOT_EXISTS;
         this.profileImgurl = S.Strings.EMPTY;
         this.coverImgUrl = S.Strings.EMPTY;
+        this.status = CollectionStatus.NOT_SUBMITTED;
     }
 
     toJson(): any {
@@ -44,6 +55,7 @@ export default class CollectionEntity {
             'owners': this.volume,
             'profileImgurl': this.profileImgurl,
             'coverImgUrl': this.coverImgUrl,
+            'status': this.status,
         }
     }
 
@@ -67,6 +79,7 @@ export default class CollectionEntity {
 
         model.profileImgurl = json.profileImgurl ?? model.profileImgurl;
         model.coverImgUrl = json.coverImgUrl ?? model.coverImgUrl;
+        model.status = json.status ?? model.status;
 
         return model;
     }

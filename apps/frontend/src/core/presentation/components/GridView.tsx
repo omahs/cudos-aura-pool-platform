@@ -37,16 +37,17 @@ function GridView({ gridViewState, defaultContent, children }: React.PropsWithCh
                     />
                 </div>
             </div>
-            { gridViewState.isFetching === true
-                ? <LoadingIndicator margin={'16px'}/>
+            { gridViewState.isFetching === true && (<LoadingIndicator margin={'16px'}/>)}
+            {children.length === 0
+                ? <div className={'DefaultContent FlexRow'}>{defaultContent}</div>
                 : <SingleRowTable
                     legend={['']}
                     widths={['100%']}
                     aligns={[ALIGN_CENTER]}
                     tableStore={gridViewState.tableStore}
                     content={<div className={`PreviewsGrid Grid ${gridViewState.getGridSettingClass()}`}>{children}</div>}
-                    noRowsContent={defaultContent}
-                /> }
+                />}
+
         </div>
     )
 }
