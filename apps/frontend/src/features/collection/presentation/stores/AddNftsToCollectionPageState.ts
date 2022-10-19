@@ -1,10 +1,10 @@
-import RepoStore from 'apps/frontend/src/core/presentation/stores/RepoStore';
-import { makeAutoObservable, runInAction } from 'mobx';
+import RepoStore from '../../../../core/presentation/stores/RepoStore';
+import { makeAutoObservable } from 'mobx';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import CollectionEntity from '../../entities/CollectionEntity';
 
-export default class AddNftsToCollectionPageStore {
+export default class AddNftsToCollectionPageState {
     repoStore: RepoStore;
     accountSessionStore: AccountSessionStore;
 
