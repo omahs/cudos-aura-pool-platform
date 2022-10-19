@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
+import { observer } from 'mobx-react';
+
+import S from '../../../core/utilities/Main';
+import GridViewState, { GRID_SETTING } from '../stores/GridViewState';
+
 import LoadingIndicator from '../../../core/presentation/components/LoadingIndicator';
 import SingleRowTable from '../../../core/presentation/components/SingleRowTable';
-import '../styles/grid-view.css';
+import Svg from '../../../core/presentation/components/Svg';
+import { ALIGN_CENTER } from './TableDesktop';
 
 import GridViewIcon from '@mui/icons-material/GridView';
 import GridOnIcon from '@mui/icons-material/GridOn';
-
-import S from '../../../core/utilities/Main';
-import Svg from '../../../core/presentation/components/Svg';
-import GridViewState, { GRID_SETTING } from '../stores/GridViewState';
-import { ALIGN_CENTER } from './TableDesktop';
-import { observer } from 'mobx-react';
+import '../styles/grid-view.css';
 
 type Props = {
     gridViewState: GridViewState;
@@ -18,9 +19,6 @@ type Props = {
 }
 
 function GridView({ gridViewState, defaultContent, children }: React.PropsWithChildren < Props >) {
-    useEffect(() => {
-        gridViewState.resetDefaults();
-    }, [])
 
     return (
         <div className={'GridView'}>
@@ -37,16 +35,21 @@ function GridView({ gridViewState, defaultContent, children }: React.PropsWithCh
                     />
                 </div>
             </div>
-            { gridViewState.isFetching === true
-                ? <LoadingIndicator margin={'16px'}/>
-                : <SingleRowTable
+
+            { gridViewState.isFetching === true && (
+                <LoadingIndicator margin={'16px'} />
+            ) }
+
+            { gridViewState.isFetching === false && (
+                <SingleRowTable
                     legend={['']}
                     widths={['100%']}
                     aligns={[ALIGN_CENTER]}
                     tableStore={gridViewState.tableStore}
                     content={<div className={`PreviewsGrid Grid ${gridViewState.getGridSettingClass()}`}>{children}</div>}
-                    noRowsContent={defaultContent}
-                /> }
+                    noRowsContent={defaultContent} />
+            ) }
+
         </div>
     )
 }

@@ -81,7 +81,6 @@ export default class ResellNftModalStore extends ModalStore {
         this.modalStage = ModalStage.PROCESSING;
 
         // TODO: really buy nftEntity
-
         setTimeout(() => {
             this.modalStage = ModalStage.SUCCESS;
         }, 2000)

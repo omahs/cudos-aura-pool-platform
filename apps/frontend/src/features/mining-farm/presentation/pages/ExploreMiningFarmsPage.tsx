@@ -69,7 +69,6 @@ function ExploreMiningFarmsPage({ appStore, exploreMiningFarmsPageStore }: Props
                         header = { (
                             <>
                                 <Select
-                                    className={'SortBySelect'}
                                     onChange={exploreMiningFarmsPageStore.onChangeSortKey}
                                     value={miningFarmFilterModel.sortKey} >
                                     <MenuItem value = { MiningFarmFilterModel.SORT_KEY_NAME } > Name </MenuItem>

@@ -88,7 +88,6 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
                     <div className={'DataGridWrapper'}>
                         <div className={'Grid FilterHeader'}>
                             <Select
-                                className={'SortBySelect'}
                                 onChange={userProfilePageStore.onChangeSortKey}
                                 value={nftFilterModel.sortKey} >
                                 <MenuItem value = { NftFilterModel.SORT_KEY_NAME }> Name </MenuItem>

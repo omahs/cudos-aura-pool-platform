@@ -1,4 +1,4 @@
-.BuyNftPopup {
+.BuyNftPopup .Stage {
     gap: 24px;
 }
 
@@ -18,7 +18,6 @@
     gap: 10px;
 }
 
-
 .BuyNftPopup .BorderContainer .NftInfo .Price {
     padding-top: 40px;
     gap: 10px;
@@ -29,36 +28,33 @@
     color: var(--color-gray-030);
 }
 
-.BuyNftPopup .Processing {
-    padding: 100px;
-    gap: 24px;
+.BuyNftPopup .Stage.Processing {
     align-items: center;
 }
 
-.BuyNftPopup .Processing .FlexColumn {
-    align-items: center;
+.BuyNftPopup .Stage.Processing .Info {
+    color: var(--color-gray-025);
+    text-align: center;
 }
 
-.BuyNftPopup .Success {
+.BuyNftPopup .Stage.Success {
     align-items: center;
     gap: 14px;
-    padding: 0 100px;
 }
 
-.BuyNftPopup .Success .SuccessSvg {
+.BuyNftPopup .Stage.Success .SuccessSvg {
     width: 70px; height: 70px;
 }
 
-.BuyNftPopup .Success .BorderContainer {
-    padding: 10px 10px 30px 10px;
+.BuyNftPopup .Stage.Success .BorderContainer {
     gap: 5px;
 }
 
-.BuyNftPopup .Success .BorderContainer .NftPicture {
+.BuyNftPopup .Stage.Success .BorderContainer .NftPicture {
     width: 272px; height: 188px;
     margin-bottom: 10px;
 }
 
-.BuyNftPopup .Success .TransactionView {
+.BuyNftPopup .Stage.Success .TransactionView {
     gap: 10px;
 }

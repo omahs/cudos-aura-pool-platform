@@ -20,6 +20,7 @@ import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presen
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../../../collection/presentation/components/CollectionPreview';
+import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
 
 import '../styles/page-mining-farm-view-component.css';
 
@@ -93,26 +94,28 @@ function MiningFarmViewPage({ appStore, miningFarmViewPageStore }: Props) {
                         </div>
                     </div>
                     <div className={'H2'}>Collections Owned</div>
-                    <div className={'DataGridWrapper'}>
-                        <div className={'Grid FilterHeader'}>
-                            <Select
-                                className={'SortBySelect'}
-                                onChange={miningFarmViewPageStore.onChangeSortKey}
-                                value={collectionFilterModel.sortKey} >
-                                <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                                <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
-                            </Select>
-                            <Actions
-                                layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                                height={ACTIONS_HEIGHT.HEIGHT_48} >
-                                {/* TODO: show all filters */}
-                                <Button
-                                    padding={BUTTON_PADDING.PADDING_24}
-                                    type={BUTTON_TYPE.ROUNDED} >
+
+                    <DataGridLayout
+                        header = { (
+                            <>
+                                <Select
+                                    onChange={miningFarmViewPageStore.onChangeSortKey}
+                                    value={collectionFilterModel.sortKey} >
+                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                                </Select>
+                                <Actions
+                                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
+                                    height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                    {/* TODO: show all filters */}
+                                    <Button
+                                        padding={BUTTON_PADDING.PADDING_24}
+                                        type={BUTTON_TYPE.ROUNDED} >
                                     All Filters
-                                </Button>
-                            </Actions>
-                        </div>
+                                    </Button>
+                                </Actions>
+                            </>
+                        ) }>
 
                         { miningFarmViewPageStore.collectionEntities === null && (
                             <LoadingIndicator />
@@ -132,7 +135,8 @@ function MiningFarmViewPage({ appStore, miningFarmViewPageStore }: Props) {
                                 }) }
                             </GridView>
                         ) }
-                    </div>
+
+                    </DataGridLayout>
                 </div>
             ) }
 

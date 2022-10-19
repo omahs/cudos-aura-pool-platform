@@ -20,8 +20,8 @@ export default class NftFilterModel {
         this.searchString = '';
         this.categoryIds = [];
         this.collectionId = '';
-        this.from = -1;
-        this.count = -1;
+        this.from = 0;
+        this.count = Number.MAX_SAFE_INTEGER;
 
         makeAutoObservable(this);
     }

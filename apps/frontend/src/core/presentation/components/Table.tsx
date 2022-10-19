@@ -9,7 +9,7 @@ import TableMobile, { TableMobileProps } from './TableMobile';
 
 import '../styles/table.css';
 
-type Props = TableDesktopProps & TableMobileProps;
+export type Props = TableDesktopProps & TableMobileProps;
 
 export default function Table(props: Props) {
 

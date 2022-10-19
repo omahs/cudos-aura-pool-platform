@@ -1,5 +1,3 @@
-/* global TR */
-
 import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -24,6 +22,7 @@ import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presen
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
+import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
 
 import '../styles/page-collection-view-component.css';
 
@@ -114,26 +113,28 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
                             </div>
                         </div>
                     </div>
-                    <div className={'DataGridWrapper'}>
-                        <div className={'Grid FilterHeader'}>
-                            <Select
-                                className={'SortBySelect'}
-                                onChange={collectionViewPageStore.onChangeSortKey}
-                                value={nftFilterModel.sortKey} >
-                                <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                                <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
-                            </Select>
-                            <Actions
-                                layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                                height={ACTIONS_HEIGHT.HEIGHT_48} >
-                                {/* TODO: show all filters */}
-                                <Button
-                                    padding={BUTTON_PADDING.PADDING_24}
-                                    type={BUTTON_TYPE.ROUNDED}>
+
+                    <DataGridLayout
+                        header = { (
+                            <>
+                                <Select
+                                    onChange={collectionViewPageStore.onChangeSortKey}
+                                    value={nftFilterModel.sortKey} >
+                                    <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                    <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                                </Select>
+                                <Actions
+                                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
+                                    height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                    {/* TODO: show all filters */}
+                                    <Button
+                                        padding={BUTTON_PADDING.PADDING_24}
+                                        type={BUTTON_TYPE.ROUNDED}>
                                     All Filters
-                                </Button>
-                            </Actions>
-                        </div>
+                                    </Button>
+                                </Actions>
+                            </>
+                        ) } >
 
                         { collectionViewPageStore.nftEntities === null && (
                             <LoadingIndicator />
@@ -153,7 +154,8 @@ function CollectionViewPage({ collectionViewPageStore }: Props) {
                                 }) }
                             </GridView>
                         ) }
-                    </div>
+
+                    </DataGridLayout>
                 </div>
             ) }
             <PageFooter />
