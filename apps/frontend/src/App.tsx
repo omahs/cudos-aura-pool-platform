@@ -33,6 +33,7 @@ import CategoriesStore from './features/collection/presentation/stores/Categorie
 import ExploreCollectionsPageStore from './features/collection/presentation/stores/ExploreCollectionsPageStore';
 import ExploreMiningFarmsPageStore from './features/mining-farm/presentation/stores/ExploreMiningFarmsPageStore';
 import ExploreNftsPageStore from './features/nft/presentation/stores/ExploreNftsPageStore';
+import EditMiningFarmModalStore from './features/mining-farm/presentation/stores/EditMiningFarmModalStore';
 
 const storageHelper = new StorageHelper();
 storageHelper.open();
@@ -63,9 +64,10 @@ const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo, nftRep
 const nftViewPageStore = new NftViewPageStore(bitcoinStore, cudosStore, nftRepo, collectionRepo, miningFarmRepo);
 const collectionViewPageStore = new CollectionViewPageStore(nftRepo, collectionRepo, miningFarmRepo);
 const miningFarmViewPageStore = new MiningFarmViewPageStore(miningFarmRepo, collectionRepo);
-const userProfilePageStore = new UserProfilePageStore(walletStore, nftRepo, collectionRepo);
+const userProfilePageStore = new UserProfilePageStore(accountSessionStore, walletStore, nftRepo, collectionRepo);
 const buyNftModalStore = new BuyNftModalStore();
 const resellNftModalStore = new ResellNftModalStore();
+const editMiningFarmModalStore = new EditMiningFarmModalStore(repoStore);
 
 const App = () => {
 
@@ -102,7 +104,9 @@ const App = () => {
                 miningFarmViewPageStore = { miningFarmViewPageStore }
                 userProfilePageStore = { userProfilePageStore }
                 buyNftModalStore = { buyNftModalStore }
-                resellNftModalStore = { resellNftModalStore } >
+                resellNftModalStore = { resellNftModalStore }
+                editMiningFarmModalStore = { editMiningFarmModalStore }
+            >
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>

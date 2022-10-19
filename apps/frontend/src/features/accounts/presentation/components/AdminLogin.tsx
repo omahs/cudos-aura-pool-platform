@@ -10,20 +10,32 @@ import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presen
 import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import AccountSessionStore from '../stores/AccountSessionStore';
+import AppStore from '../../../../core/presentation/stores/AppStore';
+import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 
 type Props = {
-    onClickLogin: (email: string, password: string) => void
+    accountSessionStore?: AccountSessionStore;
     onClickForgottenPassword: () => void
     onClickRequestAccount: () => void
+    loginRedirect: () => void
 }
 
-function AdminLogin({ onClickLogin, onClickForgottenPassword, onClickRequestAccount }: Props) {
+function AdminLogin({ accountSessionStore, onClickForgottenPassword, onClickRequestAccount, loginRedirect }: Props) {
     const [email, setEmail] = useState('');
+    const [logging, setLogging] = useState(false);
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
     function onClickShowPassword() {
         setShowPassword(!showPassword);
+    }
+
+    async function onClickLogin() {
+        setLogging(true);
+        await accountSessionStore.login(email, password);
+        loginRedirect();
+        setLogging(false);
     }
 
     return (
@@ -57,9 +69,11 @@ function AdminLogin({ onClickLogin, onClickForgottenPassword, onClickRequestAcco
             <div className={'ForgottenPassword B2 SemiBold Clickable FlexRow'} onClick={onClickForgottenPassword}>Forgotten Password?</div>
             <Actions layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL} height={ACTIONS_HEIGHT.HEIGHT_48}>
                 <Button
-                    onClick={() => onClickLogin(email, password)}
+                    onClick={onClickLogin}
                     radius={BUTTON_RADIUS.RADIUS_16}
-                >Login</Button>
+                >
+                    {logging === true ? <LoadingIndicator /> : 'Login'}
+                </Button>
             </Actions>
             <div className={'RequestAccount B2 Bold Clickable FlexRow'} onClick={onClickRequestAccount}>You don’t have account? Request Admin Account</div>
         </div>

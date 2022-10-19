@@ -13,6 +13,7 @@ export default class AdminPortalPageState {
     miningFarmEntity: MiningFarmEntity;
 
     constructor() {
+
         this.setPageLogin();
 
         makeAutoObservable(this);
@@ -44,9 +45,5 @@ export default class AdminPortalPageState {
 
     isPageChangePassword(): boolean {
         return this.page === AdminPortalPageState.PAGE_CHANGE_PASSWORD;
-    }
-
-    changePassword(): {
-        // TODO
     }
 }

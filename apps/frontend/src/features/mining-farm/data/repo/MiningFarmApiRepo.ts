@@ -36,4 +36,8 @@ export default class MiningFarmApiRepo implements MiningFarmRepo {
     async fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} > {
         return this.miningFarmApi.fetchMiningFarmsByFilter(miningFarmFilterModel);
     }
+
+    async editMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
+        return this.miningFarmApi.editMiningFarm(miningFarmEntity);
+    }
 }

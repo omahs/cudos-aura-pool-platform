@@ -172,14 +172,7 @@ function StepFarmDetails({ alertStore, miningFarmEntity, imageEntities, onClickC
                         },
                         'multi': true,
                         onReadFileAsBase64: (base64File, responseData, files: any[], i: number) => {
-                            const imageEntity = new ImageEntity();
-                            // TODO upload or generate good id
-
-                            imageEntity.id = Date.now().toString();
-                            imageEntity.base64 = base64File;
-                            imageEntity.sizeBytes = base64File.length;
-                            imageEntity.type = PictureType.FARM_PHOTO;
-
+                            const imageEntity = ImageEntity.new(base64File, PictureType.FARM_PHOTO);
                             imageEntities.push(imageEntity);
 
                             alertStore.show('success');

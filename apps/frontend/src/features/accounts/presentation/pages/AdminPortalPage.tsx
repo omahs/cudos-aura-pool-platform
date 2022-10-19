@@ -7,15 +7,10 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import AdminLogin from '../components/AdminLogin';
 import AdminPortalPageState from '../stores/AdminPortalPageState';
-import AccountSessionStore from '../stores/AccountSessionStore';
 import RequestAdminAccount from '../components/request-account/RequestAdminAccount';
 import ChangePassword from '../components/ChangePassword';
 
-type Props = {
-    accountSessionStore?: AccountSessionStore;
-}
-
-function UserProfilePage({ accountSessionStore }: Props) {
+function UserProfilePage() {
     const [adminPortalPageState] = useState(new AdminPortalPageState());
 
     return (
@@ -28,14 +23,12 @@ function UserProfilePage({ accountSessionStore }: Props) {
                     && (<AdminLogin
                         onClickForgottenPassword={adminPortalPageState.setPageForgottenPassword}
                         onClickRequestAccount={adminPortalPageState.setPageRequestAccount}
-                        onClickLogin={accountSessionStore.login}
+                        loginRedirect={adminPortalPageState.setPageChangePassword}
                     />)}
                     {adminPortalPageState.isPageRequestAdminAccount() === true
                     && (<RequestAdminAccount onClickNavigateLogin={adminPortalPageState.setPageLogin}/>)}
                     {adminPortalPageState.isPageChangePassword() === true
-                    && (<ChangePassword
-                        miningFarmEntity={adminPortalPageState.miningFarmEntity}
-                        onClickLogin={adminPortalPageState.changePassword}/>)}
+                    && (<ChangePassword />)}
                 </div>
             </div>
             <PageFooter />

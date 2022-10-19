@@ -27,6 +27,18 @@ export default class ImageEntity {
         });
     }
 
+    static new(base64File: string, pictureType: PictureType): ImageEntity {
+        const imageEntity = new ImageEntity();
+        // TODO upload or generate good id
+
+        imageEntity.id = Date.now().toString();
+        imageEntity.base64 = base64File;
+        imageEntity.sizeBytes = base64File.length;
+        imageEntity.type = pictureType;
+
+        return imageEntity;
+    }
+
     isMimeTypeKnown(): boolean {
         return this.type !== S.Strings.EMPTY;
     }

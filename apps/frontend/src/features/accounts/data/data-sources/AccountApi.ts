@@ -9,6 +9,10 @@ export default class AccountApi {
         return null;
     }
 
+    async changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > {
+        return null;
+    }
+
     async logout(): Promise < void > {
         return null;
     }
