@@ -3,37 +3,6 @@
     padding: 48px  var(--page-spacing-h);
 }
 
-.PageExploreNfts .PageContent .ExploreNfts {
-    align-items: center;
-}
-
-.PageExploreNfts .PageContent .ExploreNfts .PageHeading {
-    margin-bottom: 40px;
-}
-
-.PageExploreNfts .PageContent .ExploreNfts .SearchBar {
-    margin-bottom: 40px;
-}
-
-.PageExploreNfts .PageContent .ExploreNfts .CategoriesRow {
-    gap: 20px;
-    margin-bottom: 100px;
-}
-
-.PageExploreNfts .PageContent .ExploreNfts .CategoriesRow .CategoryName {
-    padding: 2px 5px;
-    border-radius: 3px;
-    background-color: var(--color-gray-095);
-    font-weight: 600; font-size: 14px;
-}
-
-.PageExploreNfts .PageContent .ExploreNfts .CategoriesRow .CategoryName.Active {
-    background-color: #000;
-    color: #fff;
-}
-
-.PageExploreNfts .DataGridWrapper .FilterHeader {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    margin-bottom: 20px;
-    align-items: end;
+.PageExploreNfts .SearchBar {
+    width: 420px;
 }

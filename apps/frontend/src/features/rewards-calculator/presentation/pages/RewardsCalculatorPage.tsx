@@ -7,31 +7,33 @@ import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presen
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import PageFooter from '../../../../features/footer/presentation/components/PageFooter';
 import PageHeader from '../../../header/presentation/components/PageHeader';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 import Input, { InputType } from '../../../../core/presentation/components/Input';
 import RewardsCalculatorStore from '../stores/RewardsCalculatorStore';
 import TextWithTooltip from '../../../../core/presentation/components/TextWithTooltip';
-import { Slider, InputAdornment } from '@mui/material';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import { Slider, InputAdornment, MenuItem } from '@mui/material';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import SouthEastIcon from '@mui/icons-material/SouthEast';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
-
-import S from '../../../../core/utilities/Main';
-import '../styles/page-rewards-calculator-component.css';
-import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
-import Autocomplete from '../../../../core/presentation/components/Autcomplete';
-import AppRoutes from '../../../app-routes/entities/AppRoutes';
-import AutocompleteOption from '../../../../core/entities/AutocompleteOption';
+import Select from '../../../../core/presentation/components/Select';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
+
+import SvgReplayIcon from '@mui/icons-material/Replay';
+import SvgDriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import '../styles/page-rewards-calculator-component.css';
 
 type Props = {
     rewardsCalculatorStore?: RewardsCalculatorStore
 }
 
 function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
+
     const [networkDifficultyEditEnabled, setNetworkDifficultyEditEnabled] = useState(false);
     const navigate = useNavigate();
+
+    const bitcoinPrice = rewardsCalculatorStore.bitcoinStore.getBitcoinPrice();
+    const bitcoinPriceChange = rewardsCalculatorStore.bitcoinStore.getBitcoinPriceChange();
 
     useEffect(() => {
         async function run() {
@@ -44,17 +46,14 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
         navigate(AppRoutes.EXPLORE_NFTS);
     }
 
+    function onClickResetValues() {
+        rewardsCalculatorStore.resetDefaults();
+        setNetworkDifficultyEditEnabled(false);
+    }
+
     function toggleDifficultyEdit() {
         setNetworkDifficultyEditEnabled(!networkDifficultyEditEnabled);
     }
-
-    const selectedFarmIndex = rewardsCalculatorStore.selectedFarmIndex;
-    const selectedFarmName = rewardsCalculatorStore.getSelectedFarmName();
-
-    const bitcoinPrice = rewardsCalculatorStore.bitcoinStore.getBitcoinPrice();
-    const bitcoinPriceChange = rewardsCalculatorStore.bitcoinStore.getBitcoinPriceChange();
-
-    const networkDifficulty = rewardsCalculatorStore.getNetworkDifficulty();
 
     return (
         <PageLayoutComponent className = { 'PageRewardsCalculator' }>
@@ -69,15 +68,16 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
                             <Button
                                 onClick={onClickExploreNftAndBuy}
                                 padding={BUTTON_PADDING.PADDING_24}
-                                type={BUTTON_TYPE.ROUNDED}
-                            >Explore NFTs & Buy</Button>
+                                type={BUTTON_TYPE.ROUNDED}>
+                                Explore NFTs & Buy
+                            </Button>
                         </Actions>
                     </div>
                     <div className={'H3 RewardsCalculatorSubHeading'}>Here we have some description text that leads the user to properly calculate the rewards</div>
                     <div className={'Grid GridColumns2 LayoutContainer'}>
                         <div className={'FlexSingleCenter MiningFarmForm BorderContainer'}>
                             <div className = { 'FlexColumn MiningFarmFormWidth' } >
-                                <Autocomplete
+                                <Select
                                     label = {
                                         <TextWithTooltip
                                             text={'Select Mining Farm'}
@@ -85,10 +85,13 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
                                         />
                                     }
                                     onChange={rewardsCalculatorStore.selectFarmPool}
-                                    value={selectedFarmIndex === S.NOT_EXISTS ? null : new AutocompleteOption(selectedFarmIndex, selectedFarmName)}
-                                    options = {
-                                        rewardsCalculatorStore.miningFarms.map((farm: MiningFarmEntity, i: number) => new AutocompleteOption(i, farm.name))
-                                    } />
+                                    value={rewardsCalculatorStore.selectedFarmId}>
+                                    { rewardsCalculatorStore.miningFarms.map((miningFarmEntity) => {
+                                        return (
+                                            <MenuItem key = { miningFarmEntity.id } value = { miningFarmEntity.id } > { miningFarmEntity.name } </MenuItem>
+                                        )
+                                    }) }
+                                </Select>
                                 <Input
                                     label = {
                                         <TextWithTooltip
@@ -98,8 +101,7 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
                                     }
                                     inputType={InputType.INTEGER}
                                     value = {rewardsCalculatorStore.hashRateTh}
-                                    onChange = { rewardsCalculatorStore.onChangeHashRate }
-                                />
+                                    onChange = { rewardsCalculatorStore.onChangeHashRate } />
                                 <Slider defaultValue={50}
                                     aria-label="Default"
                                     sx={{
@@ -123,18 +125,22 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
                                         }
                                         inputType={InputType.INTEGER}
                                         readOnly={networkDifficultyEditEnabled === false}
-                                        value={networkDifficulty}
+                                        value={rewardsCalculatorStore.getNetworkDifficulty()}
                                         onChange = { rewardsCalculatorStore.onEditNetworkDifficulty }
                                         gray = { networkDifficultyEditEnabled === false }
                                         InputProps={{
                                             endAdornment: <InputAdornment position="end" >
-                                                <Svg className = { 'EnableEditButton' } size = { SvgSize.CUSTOM } svg={DriveFileRenameOutlineIcon} onClick={toggleDifficultyEdit} />
+                                                <Svg className = { 'EnableEditButton' } size = { SvgSize.CUSTOM } svg={SvgDriveFileRenameOutlineIcon} onClick={toggleDifficultyEdit} />
                                             </InputAdornment>,
-                                        }}
-                                    />
+                                        }} />
                                 </div>
                                 <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
-                                    <Button onClick={rewardsCalculatorStore.resetDefaults} > Calculate values </Button>
+                                    <Button
+                                        disabled = { rewardsCalculatorStore.isDefault() }
+                                        onClick={onClickResetValues}>
+                                        <Svg className = { 'ButtonSvg' } size = { SvgSize.CUSTOM } svg={SvgReplayIcon} />
+                                        Reset values
+                                    </Button>
                                 </Actions>
                             </div>
                         </div>
@@ -157,32 +163,28 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
                                     <TextWithTooltip
                                         className={'DataRowHeading'}
                                         text={'Cost'}
-                                        tooltipText={'info'}
-                                    />
+                                        tooltipText={'info'} />
                                     <div className={'DataRowValue'}>{rewardsCalculatorStore.getPowerCostDisplay()}</div>
                                 </div>
                                 <div className={'DataRow FlexRow'}>
                                     <TextWithTooltip
                                         className={'DataRowHeading'}
                                         text={'Pool Fee'}
-                                        tooltipText={'info'}
-                                    />
+                                        tooltipText={'info'} />
                                     <div className={'DataRowValue'}>{rewardsCalculatorStore.getPoolFeeDisplay()}</div>
                                 </div>
                                 <div className={'DataRow FlexRow'}>
                                     <TextWithTooltip
                                         className={'DataRowHeading'}
                                         text={'Power Consumption'}
-                                        tooltipText={'info'}
-                                    />
+                                        tooltipText={'info'} />
                                     <div className={'DataRowValue'}>{rewardsCalculatorStore.getPowerConsumptionDisplay()}</div>
                                 </div>
                                 <div className={'DataRow FlexRow'}>
                                     <TextWithTooltip
                                         className={'DataRowHeading'}
                                         text={'Block Reward'}
-                                        tooltipText={'info'}
-                                    />
+                                        tooltipText={'info'} />
                                     <div className={'DataRowValue'}>{rewardsCalculatorStore.getBlockRewardDisplay()}</div>
                                 </div>
                             </div>

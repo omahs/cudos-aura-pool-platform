@@ -13,7 +13,7 @@ export default class RewardsCalculatorStore {
     miningFarmRepo: MiningFarmRepo;
 
     miningFarms: MiningFarmEntity[];
-    selectedFarmIndex: number;
+    selectedFarmId: string;
 
     networkDifficultyEdit: string;
     hashRateTh: number;
@@ -23,16 +23,32 @@ export default class RewardsCalculatorStore {
         this.miningFarmRepo = miningFarmRepo;
 
         this.miningFarms = [];
-        this.selectedFarmIndex = S.NOT_EXISTS;
 
         this.resetDefaults();
 
         makeAutoObservable(this);
     }
 
-    resetDefaults = () => {
+    resetDefaults() {
+        this.selectedFarmId = S.Strings.NOT_EXISTS;
         this.networkDifficultyEdit = S.Strings.EMPTY;
         this.hashRateTh = 0;
+    }
+
+    isDefault() {
+        if (this.selectedFarmId !== S.Strings.NOT_EXISTS) {
+            return false;
+        }
+
+        if (this.networkDifficultyEdit !== S.Strings.EMPTY) {
+            return false;
+        }
+
+        if (this.hashRateTh !== 0) {
+            return false;
+        }
+
+        return true;
     }
 
     async init() {
@@ -58,12 +74,12 @@ export default class RewardsCalculatorStore {
         this.hashRateTh = value;
     }
 
-    selectFarmPool = (index: any) => {
-        this.selectedFarmIndex = index.value;
+    selectFarmPool = (miningFarmId: string) => {
+        this.selectedFarmId = miningFarmId;
     }
 
     calculatePowerConsumption(): number {
-        return this.miningFarms[this.selectedFarmIndex].powerConsumptionPerTh * this.hashRateTh;
+        return this.miningFarms[this.selectedFarmId].powerConsumptionPerTh * this.hashRateTh;
     }
 
     calculateMonthlyRewardBtc(): BigNumber {
@@ -76,7 +92,7 @@ export default class RewardsCalculatorStore {
     }
 
     getSelectedFarmName(): string {
-        return this.miningFarms[this.selectedFarmIndex]?.name ?? S.Strings.EMPTY;
+        return this.miningFarms[this.selectedFarmId]?.name ?? S.Strings.EMPTY;
     }
 
     getNetworkDifficulty() {
@@ -96,32 +112,34 @@ export default class RewardsCalculatorStore {
     }
 
     getPowerCostDisplay(): string {
-        const powerCost = this.selectedFarmIndex !== S.NOT_EXISTS
-            && this.miningFarms[this.selectedFarmIndex] !== null
-            ? this.miningFarms[this.selectedFarmIndex].powerCost
-            : S.NOT_EXISTS;
+        let powerCost;
+        if (this.selectedFarmId !== S.Strings.NOT_EXISTS) {
+            powerCost = this.miningFarms[this.selectedFarmId]?.powerCost ?? S.NOT_EXISTS;
+        } else {
+            powerCost = S.NOT_EXISTS;
+        }
 
-        const result = powerCost === S.NOT_EXISTS ? '-' : `$ ${powerCost.toFixed(2)} kW/h`;
-
-        return result;
+        return powerCost === S.NOT_EXISTS ? '-' : `$ ${powerCost.toFixed(2)} kW/h`;
     }
 
     getPoolFeeDisplay(): string {
-        const poolFee = this.selectedFarmIndex !== S.NOT_EXISTS
-            && this.miningFarms[this.selectedFarmIndex] !== null
-            ? this.miningFarms[this.selectedFarmIndex].poolFee
-            : S.NOT_EXISTS;
+        let poolFee;
+        if (this.selectedFarmId !== S.Strings.NOT_EXISTS) {
+            poolFee = this.miningFarms[this.selectedFarmId]?.poolFee ?? S.NOT_EXISTS;
+        } else {
+            poolFee = S.NOT_EXISTS;
+        }
 
-        const result = poolFee === S.NOT_EXISTS ? '-' : `${poolFee}%`;
-
-        return result;
+        return poolFee === S.NOT_EXISTS ? '-' : `${poolFee}%`;
     }
 
     getPowerConsumptionDisplay(): string {
-        const powerConsumptionPerTh = this.selectedFarmIndex !== S.NOT_EXISTS
-            && this.miningFarms[this.selectedFarmIndex] !== null
-            ? this.miningFarms[this.selectedFarmIndex].powerConsumptionPerTh
-            : 0;
+        let powerConsumptionPerTh;
+        if (this.selectedFarmId !== S.Strings.NOT_EXISTS) {
+            powerConsumptionPerTh = this.miningFarms[this.selectedFarmId]?.powerConsumptionPerTh ?? 0;
+        } else {
+            powerConsumptionPerTh = 0;
+        }
 
         const hashRate = this.hashRateTh === S.NOT_EXISTS ? 0 : this.hashRateTh;
 

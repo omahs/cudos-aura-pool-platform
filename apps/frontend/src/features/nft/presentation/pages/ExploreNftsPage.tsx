@@ -20,6 +20,8 @@ import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../components/NftPreview';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import CategoriesSelector from '../../../collection/presentation/components/CategoriesSelector';
+import ExplorePageLayout from '../../../../core/presentation/components/ExplorePageLayout';
+import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
 
 import '../styles/page-explore-nfts-component.css';
 
@@ -39,72 +41,85 @@ function ExploreNftsPage({ appStore, exploreNftsPageStore }: Props) {
     const nftFilterModel = exploreNftsPageStore.nftFilterModel;
 
     return (
-        <PageLayoutComponent
-            className = { 'PageExploreNfts' } >
+        <PageLayoutComponent className = { 'PageExploreNfts' } >
+
             <PageHeader />
+
             <div className={'PageContent AppContent'} >
-                <div className={'ExploreNfts FlexColumn'}>
-                    <div className={'PageHeading H1 Bold'}>Explore NFTs</div>
-                    <Input
-                        inputType={InputType.TEXT}
-                        className={'SearchBar'}
-                        value = {nftFilterModel.searchString}
-                        onChange = { exploreNftsPageStore.onChangeSearchWord }
-                        placeholder = {'Search Collections, Farms and accounts'}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start" >
-                                <Svg svg={SearchIcon} />
-                            </InputAdornment>,
-                        }}
-                    />
-                    <CategoriesSelector
-                        selectedCategoryIds = { nftFilterModel.categoryIds }
-                        onChangeCategories = { exploreNftsPageStore.onChangeCategoryIds } />
-                </div>
-                <div className={'DataGridWrapper'}>
-                    <div className={'Grid FilterHeader'}>
-                        <Select
-                            className={'SortBySelect'}
-                            onChange={exploreNftsPageStore.onChangeSortKey}
-                            value={nftFilterModel.sortKey} >
-                            <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                            <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
-                        </Select>
-                        <Actions
-                            layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                            height={ACTIONS_HEIGHT.HEIGHT_48} >
-                            {/* TODO: show all filters */}
-                            <Button
-                                padding={BUTTON_PADDING.PADDING_24}
-                                type={BUTTON_TYPE.ROUNDED} >
+
+                <ExplorePageLayout
+                    header = { (
+                        <>
+                            <div className={'H2 Bold'}>Explore NFTs</div>
+                            <Input
+                                inputType={InputType.TEXT}
+                                className={'SearchBar'}
+                                value = {nftFilterModel.searchString}
+                                onChange = { exploreNftsPageStore.onChangeSearchWord }
+                                placeholder = {'Search Collections, Farms and accounts'}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start" >
+                                        <Svg svg={SearchIcon} />
+                                    </InputAdornment>,
+                                }} />
+                            <CategoriesSelector
+                                selectedCategoryIds = { nftFilterModel.categoryIds }
+                                onChangeCategories = { exploreNftsPageStore.onChangeCategoryIds } />
+                        </>
+                    ) }>
+
+                    <DataGridLayout
+                        header = { (
+                            <>
+                                <Select
+                                    className={'SortBySelect'}
+                                    onChange={exploreNftsPageStore.onChangeSortKey}
+                                    value={nftFilterModel.sortKey} >
+                                    <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                    <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                                </Select>
+                                <Actions
+                                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
+                                    height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                    {/* TODO: show all filters */}
+                                    <Button
+                                        padding={BUTTON_PADDING.PADDING_24}
+                                        type={BUTTON_TYPE.ROUNDED} >
                             All Filters
-                            </Button>
-                        </Actions>
-                    </div>
+                                    </Button>
+                                </Actions>
+                            </>
+                        ) } >
 
-                    { exploreNftsPageStore.nftEntities === null && (
-                        <LoadingIndicator />
-                    ) }
+                        { exploreNftsPageStore.nftEntities === null && (
+                            <LoadingIndicator />
+                        ) }
 
-                    { exploreNftsPageStore.nftEntities !== null && (
-                        <GridView
-                            gridViewState={exploreNftsPageStore.gridViewState}
-                            defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}>
-                            {exploreNftsPageStore.nftEntities.map(
-                                (nftEntity: NftEntity, index: number) => {
-                                    return (
-                                        <NftPreview
-                                            key={index}
-                                            nftEntity={nftEntity}
-                                            collectionName={exploreNftsPageStore.getCollectioName(nftEntity.collectionId)} />
-                                    )
-                                },
-                            )}
-                        </GridView>
-                    ) }
-                </div>
+                        { exploreNftsPageStore.nftEntities !== null && (
+                            <GridView
+                                gridViewState={exploreNftsPageStore.gridViewState}
+                                defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}>
+                                {exploreNftsPageStore.nftEntities.map(
+                                    (nftEntity: NftEntity, index: number) => {
+                                        return (
+                                            <NftPreview
+                                                key={index}
+                                                nftEntity={nftEntity}
+                                                collectionName={exploreNftsPageStore.getCollectioName(nftEntity.collectionId)} />
+                                        )
+                                    },
+                                )}
+                            </GridView>
+                        ) }
+
+                    </DataGridLayout>
+
+                </ExplorePageLayout>
+
             </div>
+
             <PageFooter />
+
         </PageLayoutComponent>
     )
 
