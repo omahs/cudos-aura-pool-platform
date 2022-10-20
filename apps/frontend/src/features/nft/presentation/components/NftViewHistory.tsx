@@ -12,6 +12,7 @@ import TableCell from '../../../../core/entities/TableCell';
 import TableRow from '../../../../core/entities/TableRow';
 import TextWithTooltip from '../../../../core/presentation/components/TextWithTooltip';
 import Svg from '../../../../core/presentation/components/Svg';
+import NavRowTabs from '../../../../core/presentation/components/NavRowTabs';
 
 const PAGE_STATISTICS = 0;
 const PAGE_EARNINGS = 1;
@@ -57,22 +58,30 @@ const HISTORY_TABLE_ALINGS = [
 export default function NftViewHistory() {
     const [historyPage, setHistoryPage] = useState(PAGE_EARNINGS);
     const [periodSetting, setPeriodSetting] = useState(PERIOD_TODAY);
+    const historyPageTabs = [
+        {
+            navName: HISTORY_PAGES[PAGE_STATISTICS],
+            isActive: historyPage === PAGE_STATISTICS,
+            onClick: () => setHistoryPage(PAGE_STATISTICS),
+        },
+        {
+            navName: HISTORY_PAGES[PAGE_EARNINGS],
+            isActive: historyPage === PAGE_EARNINGS,
+            onClick: () => setHistoryPage(PAGE_EARNINGS),
+        },
+        {
+            navName: HISTORY_PAGES[PAGE_HISTORY],
+            isActive: historyPage === PAGE_HISTORY,
+            onClick: () => setHistoryPage(PAGE_HISTORY),
+        },
+    ]
 
     return (
         <div className={'NftPreviewHistory FlexColumn'}>
-            <div className={'HistoryNavigation FlexRow'}>
-                <div onClick={() => setHistoryPage(PAGE_STATISTICS)} className={`NavButton Clickable ${S.CSS.getActiveClassName(historyPage === PAGE_STATISTICS)}`}>{HISTORY_PAGES[PAGE_STATISTICS]}</div>
-                <div onClick={() => setHistoryPage(PAGE_EARNINGS)} className={`NavButton Clickable ${S.CSS.getActiveClassName(historyPage === PAGE_EARNINGS)}`}>{HISTORY_PAGES[PAGE_EARNINGS]}</div>
-                <div onClick={() => setHistoryPage(PAGE_HISTORY)} className={`NavButton Clickable ${S.CSS.getActiveClassName(historyPage === PAGE_HISTORY)}`}>{HISTORY_PAGES[PAGE_HISTORY]}</div>
-            </div>
+            <NavRowTabs navTabs={historyPageTabs} />
             <div className={'HistoryContainer FlexColumn'}>
                 <div className={'HistoryContainerHeader FlexRow'}>
                     <div className={'Heading3'}>{HISTORY_PAGES[historyPage]}</div>
-                    <div className={`HistoryNavigation FlexRow ${S.CSS.getClassName(historyPage !== PAGE_STATISTICS, 'Hidden')}`}>
-                        <div onClick={() => setPeriodSetting(PERIOD_TODAY)} className={`NavButton Clickable ${S.CSS.getActiveClassName(periodSetting === PERIOD_TODAY)}`}>{PERIOD_SETTINGS[PERIOD_TODAY]}</div>
-                        <div onClick={() => setPeriodSetting(PERIOD_WEEK)} className={`NavButton Clickable ${S.CSS.getActiveClassName(periodSetting === PERIOD_WEEK)}`}>{PERIOD_SETTINGS[PERIOD_WEEK]}</div>
-                        <div onClick={() => setPeriodSetting(PERIOD_MONTH)} className={`NavButton Clickable ${S.CSS.getActiveClassName(periodSetting === PERIOD_MONTH)}`}>{PERIOD_SETTINGS[PERIOD_MONTH]}</div>
-                    </div>
                 </div>
                 <div className={'HistoryDataContainer FlexColumn'}>
                     {historyPage === PAGE_STATISTICS ? <div></div> : ''}

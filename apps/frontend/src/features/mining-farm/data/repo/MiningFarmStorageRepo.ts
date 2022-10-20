@@ -1,7 +1,8 @@
+import S from '../../../../core/utilities/Main';
 import StorageHelper from '../../../../core/helpers/StorageHelper';
 import MiningFarmEntity, { MiningFarmStatus } from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../../presentation/repos/MiningFarmRepo';
-import MiningFarmFilterModel from '../../utilities/MiningFarmFilterModel';
+import MiningFarmFilterModel, { MiningFarmHashPowerFilter } from '../../utilities/MiningFarmFilterModel';
 
 export default class MiningFarmStorageRepo implements MiningFarmRepo {
 
@@ -45,6 +46,27 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
         if (miningFarmFilterModel.searchString !== '') {
             miningFarmsSlice = miningFarmsSlice.filter((json) => {
                 return json.name.toLowerCase().indexOf(miningFarmFilterModel.searchString) !== -1;
+            });
+        }
+
+        if (miningFarmFilterModel.hashPowerFilter !== MiningFarmHashPowerFilter.NONE) {
+            let hashPowerLimit = S.NOT_EXISTS;
+            switch (miningFarmFilterModel.hashPowerFilter) {
+                case MiningFarmHashPowerFilter.BELOW_1000_EH:
+                    hashPowerLimit = 1000;
+                    break;
+                case MiningFarmHashPowerFilter.BELOW_2000_EH:
+                    hashPowerLimit = 2000;
+                    break;
+                case MiningFarmHashPowerFilter.ABOVE_2000_EH:
+                default:
+                    hashPowerLimit = Number.MAX_SAFE_INTEGER;
+                    break;
+
+            }
+
+            miningFarmsSlice = miningFarmsSlice.filter((json) => {
+                return json.hashRateTh <= hashPowerLimit;
             });
         }
 

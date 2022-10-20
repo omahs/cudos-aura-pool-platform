@@ -2,7 +2,7 @@ import S from '../../../../core/utilities/Main';
 import StorageHelper from '../../../../core/helpers/StorageHelper';
 import CollectionEntity, { CollectionStatus } from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
-import CollectionFilterModel from '../../utilities/CollectionFilterModel';
+import CollectionFilterModel, { CollectionHashPowerFilter } from '../../utilities/CollectionFilterModel';
 import CategoryEntity from '../../entities/CategoryEntity';
 
 export default class CollectionStorageRepo implements CollectionRepo {
@@ -63,12 +63,26 @@ export default class CollectionStorageRepo implements CollectionRepo {
             return json.status === collectionFilterModel.status;
         });
 
-        // TODO:  category how do we get it?
-        // if (collectionFilterModel.categoryIds.length > 0) {
-        //     collectionSlice = collectionSlice.filter((json) => {
-        //         // return json.
-        //     });
-        // }
+        if (collectionFilterModel.hashPowerFilter !== CollectionHashPowerFilter.NONE) {
+            let hashPowerLimit = S.NOT_EXISTS;
+            switch (collectionFilterModel.hashPowerFilter) {
+                case CollectionHashPowerFilter.BELOW_1000_EH:
+                    hashPowerLimit = 1000;
+                    break;
+                case CollectionHashPowerFilter.BELOW_2000_EH:
+                    hashPowerLimit = 2000;
+                    break;
+                case CollectionHashPowerFilter.ABOVE_2000_EH:
+                default:
+                    hashPowerLimit = Number.MAX_SAFE_INTEGER;
+                    break;
+
+            }
+
+            collectionSlice = collectionSlice.filter((json) => {
+                return json.hashPower <= hashPowerLimit;
+            });
+        }
 
         collectionSlice.sort((a: CollectionEntity, b: CollectionEntity) => {
             switch (collectionFilterModel.sortKey) {

@@ -1,5 +1,5 @@
 const LOCAL_STORAGE_KEY = 'cudos_aura_service_storage';
-const VERSION = 11;
+const VERSION = 12;
 
 const collectionDescription = 'DigiDaigaku is a collection of 2022 unique characters developed by Limit Break, a company founded by world famous game designers Gabriel Leydon and Halbert Nakagawa.  Currently, DigiDaigaku characters live in a mysterious world unknown to outsiders, but in time, exciting details about their world will be revealed. /n Learn more about the project at: https://digidaigaku.com and https://twitter.com/DigiDaigaku'
 const collectionProfileImgUrl = 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200';
@@ -7,11 +7,11 @@ const collectionCoverPictureUrl = 'https://static.dw.com/image/62450424_303.jpeg
 const collectionOwnerAddress = 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0';
 
 const miningFarmsJson = [
-    jsonMiningFarm('1', '1', 'Cool Farm', 'Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 10, 'Uzundjovo, Bulgaria', 2, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
-    jsonMiningFarm('2', '2', 'Not so Cool Farm', 'Not so Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 15, 'Las Brisas, United States', 1, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
-    jsonMiningFarm('3', '3', 'Razorlabs Farm', 'Razorlabs Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 30, 'Las Brisas, United States', 3, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
-    jsonMiningFarm('4', '4', 'Limechain Farm', 'Limechain Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 8, 'Las Brisas, United States', 10, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 2),
-    jsonMiningFarm('5', '5', 'Cudos Farm', 'Cudos Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 100, 'Las Brisas, United States', 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 2),
+    jsonMiningFarm('1', '1', 'Cool Farm', 'Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, ['0'], ['1'], ['1'], 1234, collectionOwnerAddress, 10, 'Uzundjovo, Bulgaria', 2, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
+    jsonMiningFarm('2', '2', 'Not so Cool Farm', 'Not so Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, ['0'], ['1'], ['1'], 3000, collectionOwnerAddress, 15, 'Las Brisas, United States', 1, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
+    jsonMiningFarm('3', '3', 'Razorlabs Farm', 'Razorlabs Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, ['0'], ['1'], ['1'], 344, collectionOwnerAddress, 30, 'Las Brisas, United States', 3, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
+    jsonMiningFarm('4', '4', 'Limechain Farm', 'Limechain Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, ['0'], ['1'], ['1'], 5674, collectionOwnerAddress, 8, 'Las Brisas, United States', 10, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 2),
+    jsonMiningFarm('5', '5', 'Cudos Farm', 'Cudos Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, ['0'], ['1'], ['1'], 2000, collectionOwnerAddress, 100, 'Las Brisas, United States', 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 2),
 ];
 
 const accountsJson = [
@@ -192,7 +192,7 @@ export default class StorageHelper {
     }
 }
 
-function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName, primaryAccountOwnerEmail, description, manufacturerId, minerId, energySourceId, ownerAddress, powerCost, machinesLocation, poolFee, powerConsumptionPerTh, profileImgUrl, coverImgUrl, status) {
+function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName, primaryAccountOwnerEmail, description, manufacturerIds, minerIds, energySourceIds, hashRateTh, ownerAddress, powerCost, machinesLocation, poolFee, powerConsumptionPerTh, profileImgUrl, coverImgUrl, status) {
     return {
         id,
         accountId,
@@ -201,9 +201,10 @@ function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName,
         primaryAccountOwnerName,
         primaryAccountOwnerEmail,
         description,
-        manufacturerId,
-        minerId,
-        energySourceId,
+        manufacturerIds,
+        minerIds,
+        energySourceIds,
+        hashRateTh,
         ownerAddress,
         powerCost,
         machinesLocation,

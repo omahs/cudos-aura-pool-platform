@@ -94,7 +94,7 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
                                         onChange={userProfilePageStore.onChangeSortKey}
                                         value={nftFilterModel.sortKey} >
                                         <MenuItem value = { NftFilterModel.SORT_KEY_NAME }> Name </MenuItem>
-                                        <MenuItem value = { NftFilterModel.SORT_KEY_PRICE }> Price </MenuItem>
+                                        <MenuItem value = { NftFilterModel.SORT_KEY_POPULAR }> Popular </MenuItem>
                                     </Select>
                                     <Actions
                                         layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
