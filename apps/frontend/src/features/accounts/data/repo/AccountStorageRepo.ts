@@ -93,12 +93,16 @@ export default class AccountStorageRepo implements AccountRepo {
         const currentAccounts = this.storageHelper.accountsJson;
         const currentUsers = this.storageHelper.usersJson;
         const currentAdmins = this.storageHelper.adminsJson;
+        const currentSuperAdmins = this.storageHelper.superAdminsJson;
 
         const adminJson = currentAdmins.find((json) => {
             return json.email === email
         });
+        const superAdminJson = currentSuperAdmins.find((json) => {
+            return json.email === email;
+        });
 
-        if (adminJson !== undefined) {
+        if (adminJson !== undefined || superAdminJson !== undefined) {
             throw Error('Email is aleady in use');
         }
 

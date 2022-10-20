@@ -6,9 +6,9 @@ import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 import Svg from '../../../../core/presentation/components/Svg';
 import SvgAuraPoolLogo from '../../../../public/assets/vectors/aura-pool-logo.svg';
-import '../styles/page-admin-header.css'
+import '../styles/page-super-admin-header.css'
 
-function PageAdminHeader() {
+function PageSuperAdminHeader() {
     const navigate = useNavigate();
 
     function onClickLogo() {
@@ -19,10 +19,10 @@ function PageAdminHeader() {
         <header className={'PageAdminHeader FlexRow FlexSplit'}>
             <div className={'LogoHeader FlexRow'}>
                 <Svg className={'SVG IconLogoWithText Clickable'} svg={ SvgAuraPoolLogo } onClick = { onClickLogo } />
-                <div className={'AdminPortalNav B2 SemiBold'}>Admin Portal</div>
+                <div className={'AdminPortalNav B2 SemiBold'}>Super Admin</div>
             </div>
         </header>
     )
 }
 
-export default inject((stores) => stores)(observer(PageAdminHeader));
+export default inject((stores) => stores)(observer(PageSuperAdminHeader));
