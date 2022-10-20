@@ -72,7 +72,7 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
     async editMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
         const farmsJson = this.storageHelper.miningFarmsJson.filter((json) => json.id !== miningFarmEntity.id);
 
-        farmsJson.push(miningFarmEntity.toJson());
+        farmsJson.push(MiningFarmEntity.toJson(miningFarmEntity));
 
         this.storageHelper.miningFarmsJson = farmsJson;
 

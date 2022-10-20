@@ -6,6 +6,7 @@ import AdminEntity from '../../entities/AdminEntity';
 import SuperAdminEntity from '../../entities/SuperAdminEntity';
 import UserEntity from '../../entities/UserEntity';
 import AccountRepo from '../../presentation/repos/AccountRepo';
+import MiningFarmEntity, { MiningFarmStatus } from '../../../mining-farm/entities/MiningFarmEntity';
 
 export default class AccountStorageRepo implements AccountRepo {
 
@@ -87,6 +88,7 @@ export default class AccountStorageRepo implements AccountRepo {
     async register(email: string, password: string, name: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
         const currentAccounts = this.storageHelper.accountsJson;
         const currentAdmins = this.storageHelper.adminsJson;
+        const currentMiningFarms = this.storageHelper.miningFarmsJson;
 
         const accountJson = currentAccounts.find((json) => {
             return json.email === email;
@@ -96,11 +98,9 @@ export default class AccountStorageRepo implements AccountRepo {
             throw Error('Email is aleady in use');
         }
 
+        // account
         const lastAccountEntity = currentAccounts.last();
         const nextAccountId = 1 + (lastAccountEntity !== null ? parseInt(lastAccountEntity.accountId) : 0);
-
-        const lastAdminEntity = currentAdmins.last();
-        const nextAdminId = 1 + (lastAdminEntity !== null ? parseInt(lastAdminEntity.adminId) : 0);
 
         const accountEntity = new AccountEntity();
         accountEntity.accountId = nextAccountId.toString();
@@ -113,12 +113,27 @@ export default class AccountStorageRepo implements AccountRepo {
 
         currentAccounts.push(AccountEntity.toJson(accountEntity));
 
+        // admin
+        const lastAdminEntity = currentAdmins.last();
+        const nextAdminId = 1 + (lastAdminEntity !== null ? parseInt(lastAdminEntity.adminId) : 0);
+
         const adminEntity = new AdminEntity();
         adminEntity.adminId = nextAdminId.toString();
         adminEntity.accountId = accountEntity.accountId;
         adminEntity.cudosWalletAddress = cudosWalletAddress;
 
         currentAdmins.push(AdminEntity.toJson(adminEntity));
+
+        // mining farm
+        const lastMiningFarmEntity = currentMiningFarms.last();
+        const nextMiningFarmId = 1 + (lastMiningFarmEntity !== null ? parseInt(lastMiningFarmEntity.id) : 0);
+
+        const miningFarmEntity = new MiningFarmEntity();
+        miningFarmEntity.id = nextMiningFarmId.toString();
+        miningFarmEntity.accountId = accountEntity.accountId;
+
+        currentMiningFarms.push(MiningFarmEntity.toJson(miningFarmEntity));
+
         this.storageHelper.save();
     }
 

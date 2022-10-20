@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import WalletStore from '../../../ledger/presentation/stores/WalletStore';
+import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRepo';
 import AccountEntity from '../../entities/AccountEntity';
 import AdminEntity from '../../entities/AdminEntity';
 import SuperAdminEntity from '../../entities/SuperAdminEntity';
@@ -10,18 +11,22 @@ export default class AccountSessionStore {
 
     walletStore: WalletStore;
     accountRepo: AccountRepo;
+    miningFarmRepo: MiningFarmRepo;
 
     inited: boolean;
+    approvedMiningFarm: boolean;
     accountEntity: AccountEntity;
     userEntity: UserEntity;
     adminEntity: AdminEntity;
     superAdminEntity: SuperAdminEntity;
 
-    constructor(walletStore: WalletStore, accountRepo: AccountRepo) {
+    constructor(walletStore: WalletStore, accountRepo: AccountRepo, miningFarmRepo: MiningFarmRepo) {
         this.walletStore = walletStore;
         this.accountRepo = accountRepo;
+        this.miningFarmRepo = miningFarmRepo;
 
         this.inited = false;
+        this.approvedMiningFarm = false;
         this.accountEntity = new AccountEntity();
         this.userEntity = new UserEntity();
         this.adminEntity = new AdminEntity();
@@ -66,11 +71,15 @@ export default class AccountSessionStore {
         return false;
     }
 
+    hasApprovedMiningFarm(): boolean {
+        return this.approvedMiningFarm;
+    }
+
     async login(username: string, password: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
         try {
             await this.accountRepo.login(username, password, cudosWalletAddress, signedTx);
         } finally {
-            await this.loadSessionAccountsAndSyncWalletStore();
+            await this.loadSessionAccountsAndSync();
         }
     }
 
@@ -87,7 +96,7 @@ export default class AccountSessionStore {
         try {
             this.accountRepo.confirmBitcoinAddress();
         } finally {
-            await this.loadSessionAccountsAndSyncWalletStore();
+            await this.loadSessionAccountsAndSync();
         }
     }
 
@@ -96,7 +105,7 @@ export default class AccountSessionStore {
         // await this.accountRepo.changePassword(this.userEntity.name, token, password, passwordRepeat);
     }
 
-    async loadSessionAccountsAndSyncWalletStore() {
+    async loadSessionAccountsAndSync() {
         await this.loadSessionAccounts();
         if (this.isUser() === true) {
             await this.walletStore.tryConnect();
@@ -111,6 +120,10 @@ export default class AccountSessionStore {
             if (this.adminEntity.cudosWalletAddress !== this.walletStore.getAddress()) {
                 await this.walletStore.disconnect();
             }
+
+            const miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmByAccountId(this.accountEntity.accountId);
+            this.approvedMiningFarm = miningFarmEntity.isApproved();
+
             console.log('Logged as admin => wallet:', this.walletStore.isConnected())
         } else if (this.isSuperAdmin() === true) {
             console.log('Logged as super admin => wallet:', false);

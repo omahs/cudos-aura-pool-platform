@@ -44,7 +44,7 @@ export default class MiningFarmFilterModel {
         model.searchString = json.searchString ?? model.searchString;
         model.from = parseInt(json.from ?? model.from);
         model.count = parseInt(json.count ?? model.count);
-        model.status = parseInt(json.status ?? model.status);
+        model.status = json.status ?? model.status;
 
         return model;
     }

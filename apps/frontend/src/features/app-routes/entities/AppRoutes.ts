@@ -21,6 +21,7 @@ export default class AppRoutes {
     static USER_PROFILE = '/profile';
 
     // farm admin
+    static CREDIT_MINING_FARM_DETAILS = '/credit-mining-farm-details'
     static PAGE_CREATE_COLLECTION = '/create-collection';
     // static ADMIN_PORTAL = '/admin-portal';
     static ADD_NFTS_TO_COLLECTION = '/add_nfts';

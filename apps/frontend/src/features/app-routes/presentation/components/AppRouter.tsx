@@ -25,6 +25,7 @@ import LoginPage from '../../../accounts/presentation/pages/LoginPage';
 import RegisterPage from '../../../accounts/presentation/pages/RegisterPage';
 import SuperAdminApprovePage from '../../../accounts/presentation/pages/SuperAdminApprovePage';
 import BitcoinConfirmPage from '../../../accounts/presentation/pages/BitcoinConfirmPage';
+import CreditMiningFarmDetailsPage from '../../../mining-farm/presentation/pages/CreditMiningFarmDetailsPage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -54,6 +55,10 @@ function AppRouter({ accountSessionStore }: Props) {
             const adminEntity = accountSessionStore.adminEntity;
             if (adminEntity.isBitcointAddressConfirmed() === false) {
                 return <BitcoinConfirmPage />
+            }
+
+            if (accountSessionStore.hasApprovedMiningFarm() === false) {
+                return <CreditMiningFarmDetailsPage />
             }
 
             return <MarketplacePage />;
@@ -98,8 +103,11 @@ function AppRouter({ accountSessionStore }: Props) {
                         <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePage /> } />
                     ) }
                     {/* admin */}
-                    { accountSessionStore.isAdmin() === true && (
-                        <Route path = { `${AppRoutes.ADD_NFTS_TO_COLLECTION}/:collectionId` } element = { <AddNftsToCollectionPage /> } />
+                    { accountSessionStore.isAdmin() === true && accountSessionStore.hasApprovedMiningFarm() === true && (
+                        <>
+                            <Route path = { AppRoutes.CREDIT_MINING_FARM_DETAILS } element = { <CreditMiningFarmDetailsPage /> } />
+                            <Route path = { `${AppRoutes.ADD_NFTS_TO_COLLECTION}/:collectionId` } element = { <AddNftsToCollectionPage /> } />
+                        </>
                     ) }
                 </Routes>
             ) }
