@@ -81,6 +81,14 @@ export default class AccountStorageRepo implements AccountRepo {
         const currentUsers = this.storageHelper.usersJson;
         const currentAdmins = this.storageHelper.adminsJson;
 
+        const adminJson = currentAdmins.find((json) => {
+            return json.email === email
+        });
+
+        if (adminJson !== undefined) {
+            throw Error('Email is aleady in use');
+        }
+
         const lastAccountEntity = currentAccounts.last();
         const nextAccountId = 1 + (lastAccountEntity !== null ? parseInt(lastAccountEntity.accountId) : 0);
 

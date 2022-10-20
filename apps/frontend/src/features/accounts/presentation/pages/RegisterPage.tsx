@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
-
-import '../styles/page-register.css';
 import { inject, observer } from 'mobx-react';
-import Input, { InputType } from '../../../../core/presentation/components/Input';
+import { useNavigate } from 'react-router-dom';
+
+import AccountSessionStore from '../stores/AccountSessionStore';
+import AlertStore from '../../../../core/presentation/stores/AlertStore';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
+
 import { InputAdornment } from '@mui/material';
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import Input from '../../../../core/presentation/components/Input';
 import Svg from '../../../../core/presentation/components/Svg';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import AccountSessionStore from '../stores/AccountSessionStore';
-import AppStore from '../../../../core/presentation/stores/AppStore';
+import Button from '../../../../core/presentation/components/Button';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import S from '../../../../core/utilities/Main';
-import AlertStore from '../../../../core/presentation/stores/AlertStore';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
-import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import Box, { BoxWidth } from '../../../../core/presentation/components/Box';
-import { useNavigate } from 'react-router-dom';
-import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import PageAdminHeader from '../../../header/presentation/components/PageAdminHeader';
+
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import '../styles/page-register.css';
 
 type Props = {
     alertStore?: AlertStore;
@@ -52,14 +52,14 @@ function RegisterPage({ alertStore, accountSessionStore }: Props) {
     async function onClickRegister() {
         setRegistering(true);
         await accountSessionStore.register(email, password, fullname);
-        // TO DO: redirect to farm details
         setRegistering(false);
+        navigate(AppRoutes.HOME);
     }
 
     return (
         <PageLayoutComponent className = { 'PageRegister' }>
 
-            <PageHeader />
+            <PageAdminHeader />
 
             <div className = { 'PageContent AppContent' } >
 
@@ -71,8 +71,8 @@ function RegisterPage({ alertStore, accountSessionStore }: Props) {
                         <Input
                             label={'Full Name'}
                             placeholder={'John Doe'}
-                            value={email}
-                            onChange={setEmail} />
+                            value={fullname}
+                            onChange={setFullname} />
                         <Input
                             label={'Email'}
                             placeholder={'exampleemail@mail.com'}

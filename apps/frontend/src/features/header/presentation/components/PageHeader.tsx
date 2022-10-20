@@ -26,56 +26,35 @@ import '../styles/page-header.css'
 type Props = {
     accountSessionStore?: AccountSessionStore,
     walletStore?: WalletStore,
-    repoStore?: RepoStore,
 }
 
-function PageHeader({ accountSessionStore, walletStore, repoStore }: Props) {
+function PageHeader({ accountSessionStore, walletStore }: Props) {
     const navigate = useNavigate();
     const location = useLocation();
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-    const selfRef = useRef({
-        miningFarmEntity: null,
-    })
-
-    useEffect(() => {
-        if (accountSessionStore.isAdmin() === true
-            && (selfRef.current.miningFarmEntity === null || selfRef.current.miningFarmEntity.accountId !== accountSessionStore.accountEntity.accountId)
-        ) {
-            const accountId = accountSessionStore.accountEntity.accountId;
-            repoStore.miningFarmRepo.fetchMiningFarmByAccountId(accountId).then((miningFarmEntity: MiningFarmEntity) => {
-
-                selfRef.current.miningFarmEntity = miningFarmEntity;
-            });
-        }
-    })
-
-    function isLocationMarketplace(): boolean {
-        return location.pathname !== AppRoutes.REWARDS_CALCULATOR && location.pathname !== AppRoutes.USER_PROFILE;
-    }
-
-    function isLocationAdminPortal(): boolean {
-        return location.pathname === AppRoutes.ADMIN_PORTAL;
-    }
-
     function onClickAddress() {
-        if (accountSessionStore.isAdmin() === true) {
-            navigate(`${AppRoutes.MINING_FARM_VIEW}/${selfRef.current.miningFarmEntity.id}`);
-        } else {
-            navigate(AppRoutes.USER_PROFILE);
-        }
+        navigate(AppRoutes.USER_PROFILE);
+    }
+
+    function onClickLogo() {
+        navigate(AppRoutes.HOME);
+    }
+
+    function onClickMarketplace() {
+        navigate(AppRoutes.MARKETPLACE);
+    }
+
+    function onClickRewardsCalculator() {
+        navigate(AppRoutes.REWARDS_CALCULATOR);
     }
 
     function onClickAddressMenu(event) {
         setAnchorEl(event.target.parentNode.parentNode);
     }
 
-    const handleClose = () => {
+    function handleClose() {
         setAnchorEl(null);
-    };
-
-    function onClickLogo() {
-        navigate(AppRoutes.MARKETPLACE);
     }
 
     function onClickCopyAddress() {
@@ -94,25 +73,22 @@ function PageHeader({ accountSessionStore, walletStore, repoStore }: Props) {
         await accountSessionStore.login('', '', walletStore.getAddress(), '');
     }
 
-    const open = Boolean(anchorEl);
-
     return (
-        <footer className={'PageHeader FlexRow FlexSplit'}>
+        <header className={'PageHeader FlexRow FlexSplit'}>
             <div className={'LogoHeader FlexRow'}>
                 <Svg className={'SVG IconLogoWithText Clickable'} svg={ SvgAuraPoolLogo } onClick = { onClickLogo } />
-                {isLocationAdminPortal() === true && (<div className={'AdminPortalNav B2 SemiBold'}>Admin Portal</div>)}
             </div>
 
-            {isLocationAdminPortal() === false && (<div className={'StartRightBlock FlexRow'}>
-                <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(isLocationMarketplace())}`} onClick={() => navigate(AppRoutes.MARKETPLACE)}>Marketplace</div>
-                <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(location.pathname === AppRoutes.REWARDS_CALCULATOR)}`} onClick={() => navigate(AppRoutes.REWARDS_CALCULATOR)}>Rewards Calculator</div>
+            <div className={'StartRightBlock FlexRow'}>
+                <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(location.pathname === AppRoutes.MARKETPLACE)}`} onClick={onClickMarketplace}>Marketplace</div>
+                <div className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(location.pathname === AppRoutes.REWARDS_CALCULATOR)}`} onClick={onClickRewardsCalculator}>Rewards Calculator</div>
 
                 {walletStore.isConnected()
                     ? <>
                         <div
                             className={`B1 SemiBold Clickable ${S.CSS.getActiveClassName(location.pathname === AppRoutes.USER_PROFILE)}`}
                             onClick={onClickAddress}>
-                            {accountSessionStore.isAdmin() === true ? 'Farm Profile' : 'Profile'}
+                            Profile
                         </div>
                         <div className={'VerticalSeparator'} />
                         <div className={'FlexRow BalanceRow B2'}>
@@ -126,7 +102,7 @@ function PageHeader({ accountSessionStore, walletStore, repoStore }: Props) {
                         </div>
 
                         <Popover
-                            open={open}
+                            open={anchorEl !== null}
                             anchorEl={anchorEl}
                             onClose={handleClose}
                             anchorOrigin={{
@@ -156,8 +132,8 @@ function PageHeader({ accountSessionStore, walletStore, repoStore }: Props) {
                         </Actions>
                     </>
                 }
-            </div>)}
-        </footer>
+            </div>
+        </header>
     )
 }
 
