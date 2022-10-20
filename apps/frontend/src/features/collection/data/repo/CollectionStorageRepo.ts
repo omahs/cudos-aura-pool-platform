@@ -59,6 +59,10 @@ export default class CollectionStorageRepo implements CollectionRepo {
             });
         }
 
+        collectionSlice = collectionSlice.filter((json) => {
+            return json.status === collectionFilterModel.status;
+        });
+
         // TODO:  category how do we get it?
         // if (collectionFilterModel.categoryIds.length > 0) {
         //     collectionSlice = collectionSlice.filter((json) => {

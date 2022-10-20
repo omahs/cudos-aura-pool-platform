@@ -7,11 +7,11 @@ const collectionCoverPictureUrl = 'https://static.dw.com/image/62450424_303.jpeg
 const collectionOwnerAddress = 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0';
 
 const miningFarmsJson = [
-    jsonMiningFarm('1', '1', 'Cool Farm', 'Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 10, 'Uzundjovo, Bulgaria', 2, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('2', '2', 'Not so Cool Farm', 'Not so Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 15, 'Las Brisas, United States', 1, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('3', '3', 'Razorlabs Farm', 'Razorlabs Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 30, 'Las Brisas, United States', 3, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('4', '4', 'Limechain Farm', 'Limechain Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 8, 'Las Brisas, United States', 10, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('5', '5', 'Cudos Farm', 'Cudos Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 100, 'Las Brisas, United States', 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonMiningFarm('1', '1', 'Cool Farm', 'Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 10, 'Uzundjovo, Bulgaria', 2, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
+    jsonMiningFarm('2', '2', 'Not so Cool Farm', 'Not so Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 15, 'Las Brisas, United States', 1, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
+    jsonMiningFarm('3', '3', 'Razorlabs Farm', 'Razorlabs Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 30, 'Las Brisas, United States', 3, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
+    jsonMiningFarm('4', '4', 'Limechain Farm', 'Limechain Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 8, 'Las Brisas, United States', 10, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 2),
+    jsonMiningFarm('5', '5', 'Cudos Farm', 'Cudos Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 100, 'Las Brisas, United States', 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 2),
 ];
 
 const accountsJson = [
@@ -84,28 +84,28 @@ const nftsJson = [
 ]
 
 const collectionsJson = [
-    jsonCollection('1', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('2', '1', 'OTHER COLLECTION', collectionDescription, collectionOwnerAddress, 4030, 15000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('3', '1', 'CUDOS COLLECTION', collectionDescription, collectionOwnerAddress, 4200, 2000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('4', '1', 'LIMECHAIN COLLECTION', collectionDescription, collectionOwnerAddress, 4600, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('5', '1', 'RAZORLABS COLLECTION', collectionDescription, collectionOwnerAddress, 7000, 20020, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('6', '1', 'VALIO COLLECTION', collectionDescription, collectionOwnerAddress, 1040, 13000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('7', '1', 'KAMEN COLLECTION', collectionDescription, collectionOwnerAddress, 34000, 15000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('8', '1', 'TOSHO COLLECTION', collectionDescription, collectionOwnerAddress, 43000, 14050, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('9', '1', 'GINKA COLLECTION', collectionDescription, collectionOwnerAddress, 24000, 17000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '3'),
-    jsonCollection('10', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 41000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '3'),
-    jsonCollection('11', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 40200, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '3'),
-    jsonCollection('12', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '3'),
-    jsonCollection('13', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('14', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12020, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('15', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 3200, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('16', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 2020, 120000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('17', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 8020, 10000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('18', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 5050, 47000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('19', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 7000, 112000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('20', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4530, 23000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('21', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 5000, 17000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('22', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 600, 13000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
+    jsonCollection('1', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('2', '1', 'OTHER COLLECTION', collectionDescription, collectionOwnerAddress, 4030, 15000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('3', '1', 'CUDOS COLLECTION', collectionDescription, collectionOwnerAddress, 4200, 2000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('4', '1', 'LIMECHAIN COLLECTION', collectionDescription, collectionOwnerAddress, 4600, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('5', '1', 'RAZORLABS COLLECTION', collectionDescription, collectionOwnerAddress, 7000, 20020, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('6', '1', 'VALIO COLLECTION', collectionDescription, collectionOwnerAddress, 1040, 13000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('7', '1', 'KAMEN COLLECTION', collectionDescription, collectionOwnerAddress, 34000, 15000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('8', '1', 'TOSHO COLLECTION', collectionDescription, collectionOwnerAddress, 43000, 14050, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('9', '1', 'GINKA COLLECTION', collectionDescription, collectionOwnerAddress, 24000, 17000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'issued'),
+    jsonCollection('10', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 41000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'issued'),
+    jsonCollection('11', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 40200, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'issued'),
+    jsonCollection('12', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'issued'),
+    jsonCollection('13', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('14', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12020, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('15', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 3200, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('16', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 2020, 120000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('17', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 8020, 10000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('18', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 5050, 47000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('19', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 7000, 112000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('20', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4530, 23000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('21', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 5000, 17000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('22', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 600, 13000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
 ]
 
 const categoriesJson = [
@@ -192,7 +192,7 @@ export default class StorageHelper {
     }
 }
 
-function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName, primaryAccountOwnerEmail, description, manufacturerId, minerId, energySourceId, ownerAddress, powerCost, machinesLocation, poolFee, powerConsumptionPerTh, profileImgUrl, coverImgUrl) {
+function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName, primaryAccountOwnerEmail, description, manufacturerId, minerId, energySourceId, ownerAddress, powerCost, machinesLocation, poolFee, powerConsumptionPerTh, profileImgUrl, coverImgUrl, status) {
     return {
         id,
         accountId,
@@ -211,6 +211,7 @@ function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName,
         powerConsumptionPerTh,
         profileImgUrl,
         coverImgUrl,
+        status,
     };
 }
 
