@@ -19,6 +19,8 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import Box, { BoxWidth } from '../../../../core/presentation/components/Box';
+import { useNavigate } from 'react-router-dom';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 type Props = {
     alertStore?: AlertStore;
@@ -26,12 +28,18 @@ type Props = {
 }
 
 function RegisterPage({ alertStore, accountSessionStore }: Props) {
+    const navigate = useNavigate();
+    const [fullname, setFullname] = useState('');
     const [email, setEmail] = useState('');
     const [registering, setRegistering] = useState(false);
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+    function onClickLogin() {
+        navigate(AppRoutes.LOGIN);
+    }
 
     function onClickShowPassword() {
         setShowPassword(!showPassword);
@@ -43,7 +51,7 @@ function RegisterPage({ alertStore, accountSessionStore }: Props) {
 
     async function onClickRegister() {
         setRegistering(true);
-        await accountSessionStore.register(email, password);
+        await accountSessionStore.register(email, password, fullname);
         // TO DO: redirect to farm details
         setRegistering(false);
     }
@@ -57,12 +65,17 @@ function RegisterPage({ alertStore, accountSessionStore }: Props) {
 
                 <Box boxWidth = { BoxWidth.SMALL } >
                     <div className={'Title H2 Bold'}>Sign Up</div>
-                    <div className={'Subtitle'}>Fill your credentials in order to register an account</div>
+                    <div className={'Subtitle'}>Fill in your email, password and the required farm details in order to sign up</div>
 
                     <div className = { 'InputsCnt' } >
                         <Input
+                            label={'Full Name'}
+                            placeholder={'John Doe'}
+                            value={email}
+                            onChange={setEmail} />
+                        <Input
                             label={'Email'}
-                            placeholder={'Email'}
+                            placeholder={'exampleemail@mail.com'}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end" >
                                     <Svg svg={AlternateEmailIcon}/>
@@ -72,7 +85,7 @@ function RegisterPage({ alertStore, accountSessionStore }: Props) {
                             onChange={setEmail} />
                         <Input
                             label={'Password'}
-                            placeholder={'Password'}
+                            placeholder={'***************'}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end" >
                                     <Svg className={'Clickable'} svg={showPassword === false ? VisibilityOffIcon : VisibilityIcon} onClick={onClickShowPassword}/>
@@ -83,7 +96,7 @@ function RegisterPage({ alertStore, accountSessionStore }: Props) {
                             type={showPassword === false ? 'password' : 'text'} />
                         <Input
                             label={'Repeat Password'}
-                            placeholder={'Repeat Password'}
+                            placeholder={'***************'}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">
                                     <Svg className={'Clickable'} svg={showRepeatPassword === false ? VisibilityOffIcon : VisibilityIcon} onClick={onClickShowRepeatPassword}/>
@@ -99,6 +112,10 @@ function RegisterPage({ alertStore, accountSessionStore }: Props) {
                             {registering === true ? <LoadingIndicator /> : 'Register'}
                         </Button>
                     </Actions>
+
+                    <div className={'BottomAction B2 Clickable'} onClick={onClickLogin}>
+                        Already have an account? <span className = { 'Bold' }>Login</span>
+                    </div>
                 </Box>
 
             </div>

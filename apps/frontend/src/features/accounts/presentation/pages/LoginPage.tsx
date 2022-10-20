@@ -102,7 +102,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
                         </Button>
                     </Actions>
 
-                    <div className={'RequestAccount B2 Clickable'} onClick={onClickRegister}>
+                    <div className={'BottomAction B2 Clickable'} onClick={onClickRegister}>
                         You don’t have account? <span className = { 'Bold' }>Request Admin Account</span>
                     </div>
                 </Box>

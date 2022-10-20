@@ -9,7 +9,7 @@ export default class AccountApi {
         return null;
     }
 
-    async register(username: string, password: string): Promise < void > {
+    async register(username: string, password: string, fullname: string): Promise < void > {
         return null;
     }
 
