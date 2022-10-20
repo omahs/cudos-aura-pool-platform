@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
+import SearchIcon from '@mui/icons-material/Search';
 import MiningFarmViewPageStore from '../stores/MiningFarmViewPageStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
@@ -9,9 +10,9 @@ import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import EditMiningFarmModal from '../components/EditMiningFarmModal';
 import EditMiningFarmModalStore from '../stores/EditMiningFarmModalStore';
-import CollectionFilterModel from '../../../collection/utilities/CollectionFilterModel';
+import CollectionFilterModel, { CollectionHashPowerFilter } from '../../../collection/utilities/CollectionFilterModel';
 
-import { MenuItem } from '@mui/material';
+import { InputAdornment, MenuItem } from '@mui/material';
 import ProfileHeader from '../../../collection/presentation/components/ProfileHeader';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
@@ -29,6 +30,7 @@ import AddIcon from '@mui/icons-material/Add';
 import '../styles/page-mining-farm-view-component.css';
 import Svg from '../../../../core/presentation/components/Svg';
 import SvgGridNoContent from '../../../../core/presentation/vectors/grid-no-content.svg';
+import Input, { InputType } from '../../../../core/presentation/components/Input';
 
 type Props = {
     appStore?: AppStore
@@ -139,24 +141,37 @@ function MiningFarmViewPage({ appStore, miningFarmViewPageStore, accountSessionS
                     </div>
                     <DataGridLayout
                         header = { (
-                            <>
+                            <div className={'GridFilterHeader'}>
+                                <div className={'LeftHeaderPart FlexRow'}>
+                                    <Input
+                                        inputType={InputType.TEXT}
+                                        className={'SearchBar'}
+                                        value = {collectionFilterModel.searchString}
+                                        onChange = { miningFarmViewPageStore.onChangeSearchWord }
+                                        placeholder = {'Search Collections name'}
+                                        InputProps={{
+                                            startAdornment: <InputAdornment position="start" >
+                                                <Svg svg={SearchIcon} />
+                                            </InputAdornment>,
+                                        }} />
+                                    <Select
+                                        label={'Hashing Power'}
+                                        onChange={miningFarmViewPageStore.onChangeHashPowerFilter}
+                                        value={collectionFilterModel.hashPowerFilter} >
+                                        <MenuItem value = { CollectionHashPowerFilter.NONE } >All </MenuItem>
+                                        <MenuItem value = { CollectionHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
+                                        <MenuItem value = { CollectionHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
+                                        <MenuItem value = { CollectionHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
+                                    </Select>
+                                </div>
+                                <div></div>
                                 <Select
                                     onChange={miningFarmViewPageStore.onChangeSortKey}
                                     value={collectionFilterModel.sortKey} >
                                     <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
                                     <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
                                 </Select>
-                                <Actions
-                                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                                    height={ACTIONS_HEIGHT.HEIGHT_48} >
-                                    {/* TODO: show all filters */}
-                                    <Button
-                                        padding={BUTTON_PADDING.PADDING_24}
-                                        type={BUTTON_TYPE.ROUNDED} >
-                                    All Filters
-                                    </Button>
-                                </Actions>
-                            </>
+                            </div>
                         ) }>
 
                         { miningFarmViewPageStore.collectionEntities === null && (

@@ -94,7 +94,7 @@ function ExploreCollectionsPage({ appStore, exploreCollectionsPageStore }: Props
                                         label={'Hashing Power'}
                                         onChange={exploreCollectionsPageStore.onChangeHashPowerFilter}
                                         value={collectionFilterModel.hashPowerFilter} >
-                                        <MenuItem value = { CollectionHashPowerFilter.NONE } >All </MenuItem>
+                                        <MenuItem value = { CollectionHashPowerFilter.NONE } > </MenuItem>
                                         <MenuItem value = { CollectionHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
                                         <MenuItem value = { CollectionHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
                                         <MenuItem value = { CollectionHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>

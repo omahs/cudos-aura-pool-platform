@@ -3,7 +3,7 @@ import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../repos/MiningFarmRepo';
-import CollectionFilterModel from '../../../collection/utilities/CollectionFilterModel';
+import CollectionFilterModel, { CollectionHashPowerFilter } from '../../../collection/utilities/CollectionFilterModel';
 import GridViewState from '../../../../core/presentation/stores/GridViewState';
 
 export default class MiningFarmViewPageStore {
@@ -77,4 +77,13 @@ export default class MiningFarmViewPageStore {
         this.fetch();
     }
 
+    onChangeHashPowerFilter = (collectionHashPowerfilter: CollectionHashPowerFilter) => {
+        this.collectionFilterModel.hashPowerFilter = collectionHashPowerfilter;
+        this.fetch();
+    }
+
+    onChangeSearchWord = (searchString: string) => {
+        this.collectionFilterModel.searchString = searchString;
+        this.fetch();
+    }
 }
