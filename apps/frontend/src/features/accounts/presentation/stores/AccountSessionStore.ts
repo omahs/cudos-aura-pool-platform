@@ -54,6 +54,18 @@ export default class AccountSessionStore {
         return false;
     }
 
+    isSuperAdmin(): boolean {
+        if (this.accountEntity === null) {
+            return false;
+        }
+
+        if (this.accountEntity.isSuperAdmin() === true) {
+            return this.userEntity !== null;
+        }
+
+        return false;
+    }
+
     async loadSessionAccountsAndSyncWalletStore() {
         await this.loadSessionAccounts();
         if (this.isUser() === true) {

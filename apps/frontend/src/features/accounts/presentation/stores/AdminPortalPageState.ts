@@ -1,6 +1,9 @@
 import { makeAutoObservable } from 'mobx';
+import { useNavigate } from 'react-router-dom';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import AdminEntity from '../../entities/AdminEntity';
+import AccountSessionStore from './AccountSessionStore';
 
 export default class AdminPortalPageState {
     static PAGE_LOGIN = 1;
@@ -54,10 +57,5 @@ export default class AdminPortalPageState {
 
     isPageChangePassword(): boolean {
         return this.page === AdminPortalPageState.PAGE_CHANGE_PASSWORD;
-    }
-
-    login = () => {
-        // TODO: if admin check if approved, if not approved show not approvd page, if approved show change apssword page
-        // if super admin send to approve accounts page
     }
 }
