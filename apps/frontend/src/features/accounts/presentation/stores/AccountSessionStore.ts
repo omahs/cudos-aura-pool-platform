@@ -87,7 +87,7 @@ export default class AccountSessionStore {
         this.inited = true;
     }
 
-    login = async (username: string, password: string, walletAddress: string, signedTx: any): Promise < void > => {
+    async login(username: string, password: string, walletAddress: string, signedTx: any): Promise < void > {
         try {
             await this.accountRepo.login(username, password, walletAddress, signedTx);
         } finally {
@@ -95,8 +95,8 @@ export default class AccountSessionStore {
         }
     }
 
-    register = async (email: string, password: string): Promise < void > => {
-        await this.accountRepo.register(email, password);
+    async register(email: string, password: string, fullname: string): Promise < void > {
+        await this.accountRepo.register(email, password, fullname);
     }
 
     // TODO: use session token for password change

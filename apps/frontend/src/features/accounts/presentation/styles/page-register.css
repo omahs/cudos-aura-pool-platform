@@ -27,3 +27,8 @@
 .PageRegister .RegisterActions {
     margin-top: 24px;
 }
+
+.PageRegister .BottomAction {
+    text-align: center;
+    margin-top: 24px;
+}

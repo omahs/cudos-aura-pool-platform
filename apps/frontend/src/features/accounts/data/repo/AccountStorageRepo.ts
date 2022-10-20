@@ -89,10 +89,18 @@ export default class AccountStorageRepo implements AccountRepo {
         this.storageHelper.save();
     }
 
-    async register(email: string, password: string): Promise < void > {
+    async register(email: string, password: string, fullname: string): Promise < void > {
         const currentAccounts = this.storageHelper.accountsJson;
         const currentUsers = this.storageHelper.usersJson;
         const currentAdmins = this.storageHelper.adminsJson;
+
+        const adminJson = currentAdmins.find((json) => {
+            return json.email === email
+        });
+
+        if (adminJson !== undefined) {
+            throw Error('Email is aleady in use');
+        }
 
         const lastAccountEntity = currentAccounts.last();
         const nextAccountId = 1 + (lastAccountEntity !== null ? parseInt(lastAccountEntity.accountId) : 0);
@@ -126,7 +134,8 @@ export default class AccountStorageRepo implements AccountRepo {
         const adminEntity = new AdminEntity();
         adminEntity.adminId = nextAdminId.toString();
         adminEntity.accountId = accountEntity.accountId;
-        adminEntity.email = email
+        adminEntity.email = email;
+        adminEntity.fullname = fullname;
 
         currentAdmins.push(AdminEntity.toJson(adminEntity));
         this.storageHelper.save();

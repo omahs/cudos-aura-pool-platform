@@ -21,7 +21,7 @@ const accountsJson = [
 ];
 
 const adminsJson = [
-    jsonAdmin('1', '2', 'admin@email.com'),
+    jsonAdmin('1', '2', 'admin@email.com', 'Default Admin'),
 ];
 
 const superAdminsJson = [
@@ -223,11 +223,12 @@ function jsonSuperAdmin(superAdminId, accountId, email) {
     }
 }
 
-function jsonAdmin(adminId, accountId, email) {
+function jsonAdmin(adminId, accountId, email, fullname) {
     return {
         adminId,
         accountId,
         email,
+        fullname,
     }
 }
 

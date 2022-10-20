@@ -18,12 +18,11 @@ import CollectionViewPage from '../../../collection/presentation/pages/Collectio
 import MiningFarmViewPage from '../../../mining-farm/presentation/pages/MiningFarmViewPage';
 
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import AdminPortalPage from '../../../accounts/presentation/pages/AdminPortalPage';
 
 import '../styles/app-router.css';
 import AddNftsToCollectionPage from '../../../collection/presentation/pages/AddNftsToCollectionPage';
 import LoginPage from '../../../accounts/presentation/pages/LoginPage';
-import RegsiterPage from '../../../accounts/presentation/pages/RegsiterPage';
+import RegisterPage from '../../../accounts/presentation/pages/RegisterPage';
 import SuperAdminApprovePage from '../../../accounts/presentation/pages/SuperAdminApprovePage';
 
 type Props = {
@@ -89,7 +88,7 @@ function AppRouter({ accountSessionStore }: Props) {
 
                     {/* Auth */}
                     <Route path = { AppRoutes.LOGIN } element = { <LoginPage /> } />
-                    <Route path = { AppRoutes.REGISTER } element = { <RegsiterPage /> } />
+                    <Route path = { AppRoutes.REGISTER } element = { <RegisterPage /> } />
 
                     {/* profile */}
                     { accountSessionStore.isUser() === true && (
@@ -101,7 +100,6 @@ function AppRouter({ accountSessionStore }: Props) {
                     { accountSessionStore.isSuperAdmin() === true && (
                         <Route path = { `${AppRoutes.ADD_NFTS_TO_COLLECTION}/:collectionId` } element = { <AddNftsToCollectionPage /> } />
                     ) }
-                    <Route path = { AppRoutes.ADMIN_PORTAL } element = { <AdminPortalPage /> } />
                 </Routes>
             ) }
         </div>
