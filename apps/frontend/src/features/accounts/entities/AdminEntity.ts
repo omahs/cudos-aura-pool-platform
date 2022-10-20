@@ -16,6 +16,10 @@ export default class AdminEntity {
         makeAutoObservable(this);
     }
 
+    isBitcointAddressConfirmed(): boolean {
+        return this.bitcoinWalletAddress !== '';
+    }
+
     static toJson(entity: AdminEntity) {
         if (entity === null) {
             return null;

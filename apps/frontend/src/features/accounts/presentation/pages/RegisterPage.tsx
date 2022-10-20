@@ -57,7 +57,7 @@ function RegisterPage({ alertStore, walletStore, accountSessionStore }: Props) {
         // prepare a signed tx for register
         await accountSessionStore.register(email, password, name, walletStore.getAddress(), '');
         setRegistering(false);
-        navigate(AppRoutes.HOME);
+        navigate(AppRoutes.LOGIN);
     }
 
     return (

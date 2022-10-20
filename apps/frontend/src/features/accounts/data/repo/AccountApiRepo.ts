@@ -21,12 +21,16 @@ export default class AccountStorageRepo implements AccountRepo {
         return this.accountApi.register(email, password, name, cudosWalletAddress, signedTx);
     }
 
-    async changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > {
-        return this.accountApi.changePassword(username, token, newPassword, newPasswordRepeat);
-    }
-
     async logout(): Promise < void > {
         return this.accountApi.logout();
+    }
+
+    async confirmBitcoinAddress(): Promise < void > {
+        return this.accountApi.confirmBitcoinAddress();
+    }
+
+    async changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > {
+        return this.accountApi.changePassword(username, token, newPassword, newPasswordRepeat);
     }
 
     async fetchSessionAccounts(): Promise < { accountEntity: AccountEntity; userEntity: UserEntity; adminEntity: AdminEntity; superAdminEntity: SuperAdminEntity; } > {

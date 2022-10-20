@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import WalletStore from '../../../ledger/presentation/stores/WalletStore';
 import AccountEntity from '../../entities/AccountEntity';
 import AdminEntity from '../../entities/AdminEntity';
@@ -66,6 +66,36 @@ export default class AccountSessionStore {
         return false;
     }
 
+    async login(username: string, password: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
+        try {
+            await this.accountRepo.login(username, password, cudosWalletAddress, signedTx);
+        } finally {
+            await this.loadSessionAccountsAndSyncWalletStore();
+        }
+    }
+
+    async register(email: string, password: string, name: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
+        await this.accountRepo.register(email, password, name, cudosWalletAddress, signedTx);
+    }
+
+    async logout(): Promise < void > {
+        await this.walletStore.disconnect();
+        this.accountRepo.logout();
+    }
+
+    async confirmBitcoinAddress(): Promise < void > {
+        try {
+            this.accountRepo.confirmBitcoinAddress();
+        } finally {
+            await this.loadSessionAccountsAndSyncWalletStore();
+        }
+    }
+
+    // TODO: use session token for password change
+    async changePassword(password: string, passwordRepeat: string): Promise < void > {
+        // await this.accountRepo.changePassword(this.userEntity.name, token, password, passwordRepeat);
+    }
+
     async loadSessionAccountsAndSyncWalletStore() {
         await this.loadSessionAccounts();
         if (this.isUser() === true) {
@@ -89,34 +119,14 @@ export default class AccountSessionStore {
 
     async loadSessionAccounts() {
         const { accountEntity, userEntity, adminEntity, superAdminEntity } = await this.accountRepo.fetchSessionAccounts();
-        this.accountEntity = accountEntity;
-        this.userEntity = userEntity;
-        this.adminEntity = adminEntity;
-        this.superAdminEntity = superAdminEntity;
+        runInAction(() => {
+            this.accountEntity = accountEntity;
+            this.userEntity = userEntity;
+            this.adminEntity = adminEntity;
+            this.superAdminEntity = superAdminEntity;
 
-        this.inited = true;
-    }
-
-    async login(username: string, password: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
-        try {
-            await this.accountRepo.login(username, password, cudosWalletAddress, signedTx);
-        } finally {
-            await this.loadSessionAccountsAndSyncWalletStore();
-        }
-    }
-
-    async register(email: string, password: string, name: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
-        await this.accountRepo.register(email, password, name, cudosWalletAddress, signedTx);
-    }
-
-    // TODO: use session token for password change
-    changePassword = async (password: string, passwordRepeat: string): Promise < void > => {
-        // await this.accountRepo.changePassword(this.userEntity.name, token, password, passwordRepeat);
-    }
-
-    async logout(): Promise < void > {
-        await this.walletStore.disconnect();
-        this.accountRepo.logout();
+            this.inited = true;
+        });
     }
 
     isInited(): boolean {

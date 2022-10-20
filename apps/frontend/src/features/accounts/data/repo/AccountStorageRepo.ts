@@ -122,16 +122,26 @@ export default class AccountStorageRepo implements AccountRepo {
         this.storageHelper.save();
     }
 
-    async changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > {
-        // TODO
-    }
-
     async logout(): Promise < void > {
         this.storageHelper.sessionAccount = null;
         this.storageHelper.sessionUser = null;
         this.storageHelper.sessionAdmin = null;
         this.storageHelper.sessionSuperAdmin = null;
         this.storageHelper.save();
+    }
+
+    async confirmBitcoinAddress(): Promise < void > {
+        const adminJson = this.storageHelper.adminsJson.find((json) => {
+            return json.accountId === this.storageHelper.sessionAdmin.accountId;
+        });
+
+        this.storageHelper.sessionAdmin.bitcoinWalletAddress = 'bc2qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
+        adminJson.bitcoinWalletAddress = 'bc2qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
+        this.storageHelper.save();
+    }
+
+    async changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > {
+        // TODO
     }
 
     async fetchSessionAccounts(): Promise < { accountEntity: AccountEntity; userEntity: UserEntity; adminEntity: AdminEntity; superAdminEntity: SuperAdminEntity; } > {
