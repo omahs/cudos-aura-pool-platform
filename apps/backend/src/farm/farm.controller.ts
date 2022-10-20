@@ -56,6 +56,7 @@ export class FarmController {
       return this.farmService.createOne(createFarmDto, req.user.id);
   }
 
+  //@TODO farm update should be possible only if farm is in given status
   @ApiBearerAuth('access-token')
   @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Put(':id')
