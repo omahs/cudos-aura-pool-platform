@@ -52,6 +52,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
             await accountSessionStore.login(email, password, '', null);
             // TO DO: redirect to farm details
         } catch (e) {
+            console.log(e);
             alertStore.show('Wrong username/password');
         }
         setLogging(false);

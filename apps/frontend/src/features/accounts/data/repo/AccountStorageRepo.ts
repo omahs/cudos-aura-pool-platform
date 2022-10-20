@@ -19,8 +19,10 @@ export default class AccountStorageRepo implements AccountRepo {
         const currentAccounts = this.storageHelper.accountsJson;
         const currentUsers = this.storageHelper.usersJson;
         const currentAdmins = this.storageHelper.adminsJson;
+        const currentSuperAdmins = this.storageHelper.superAdminsJson;
 
         let adminJson = null;
+        let superAdminJson = null;
         let userJson = null;
         let accountJson = null;
 
@@ -30,12 +32,22 @@ export default class AccountStorageRepo implements AccountRepo {
                 return json.email === username
             });
 
-            if (adminJson === undefined) {
+            superAdminJson = currentSuperAdmins.find((json) => {
+                return json.email === username
+            });
+
+            if (adminJson === undefined && superAdminJson === undefined) {
                 throw Error('Account not found');
             }
 
-            userJson = currentUsers.find((json) => json.accountId === adminJson.accountId);
-            accountJson = currentAccounts.find((json) => json.accountId === adminJson.accountId);
+            if (adminJson !== undefined) {
+                userJson = currentUsers.find((json) => json.accountId === adminJson.accountId);
+                accountJson = currentAccounts.find((json) => json.accountId === adminJson.accountId);
+            } else if (superAdminJson !== undefined) {
+                userJson = currentUsers.find((json) => json.accountId === superAdminJson.accountId);
+                accountJson = currentAccounts.find((json) => json.accountId === superAdminJson.accountId);
+            }
+
         } else {
             userJson = currentUsers.find((json) => json.address === walletAddress);
             if (userJson === undefined) {
@@ -73,6 +85,7 @@ export default class AccountStorageRepo implements AccountRepo {
         this.storageHelper.sessionAccount = accountJson ?? null;
         this.storageHelper.sessionUser = userJson ?? null;
         this.storageHelper.sessionAdmin = adminJson ?? null;
+        this.storageHelper.sessionSuperAdmin = superAdminJson ?? null;
         this.storageHelper.save();
     }
 

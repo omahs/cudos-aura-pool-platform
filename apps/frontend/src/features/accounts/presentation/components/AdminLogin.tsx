@@ -40,6 +40,7 @@ function AdminLogin({ alertStore, accountSessionStore, onClickForgottenPassword,
             await accountSessionStore.login(email, password, '', null);
             loginRedirect();
         } catch (e) {
+            console.log(e);
             alertStore.show('Account not found');
         }
         setLogging(false);

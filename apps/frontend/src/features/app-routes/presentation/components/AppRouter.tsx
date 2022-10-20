@@ -24,6 +24,7 @@ import '../styles/app-router.css';
 import AddNftsToCollectionPage from '../../../collection/presentation/pages/AddNftsToCollectionPage';
 import LoginPage from '../../../accounts/presentation/pages/LoginPage';
 import RegsiterPage from '../../../accounts/presentation/pages/RegsiterPage';
+import SuperAdminApprovePage from '../../../accounts/presentation/pages/SuperAdminApprovePage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -48,6 +49,22 @@ function AppRouter({ accountSessionStore }: Props) {
         }
     }
 
+    function getIndexPage() {
+        console.log(accountSessionStore.isAdmin())
+        console.log(accountSessionStore.isSuperAdmin())
+        if (accountSessionStore.isAdmin() === false && accountSessionStore.isSuperAdmin() === false) {
+            return <MarketplacePage />;
+        }
+
+        if (accountSessionStore.isAdmin() === true) {
+            return <MarketplacePage />;
+        }
+
+        if (accountSessionStore.isSuperAdmin() === true) {
+            return <SuperAdminApprovePage />;
+        }
+    }
+
     return (
         <div
             className={`AppRouter ${transitionStage}`}
@@ -59,8 +76,7 @@ function AppRouter({ accountSessionStore }: Props) {
 
             { accountSessionStore.isInited() === true && (
                 <Routes location = { displayLocation } >
-                    <Route index = { true } element = { <MarketplacePage /> } />
-                    <Route path = { '*' } element = { <NotFoundPage /> } />
+                    <Route index = { true } element = { getIndexPage() } />
                     <Route path = { AppRoutes.UiKIt } element = { <UiKitPage /> } />
                     <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPage /> } />
                     <Route path = { AppRoutes.MARKETPLACE } element = { <MarketplacePage /> } />
@@ -80,6 +96,9 @@ function AppRouter({ accountSessionStore }: Props) {
                         <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePage /> } />
                     ) }
                     { accountSessionStore.isAdmin() === true && (
+                        <Route path = { `${AppRoutes.ADD_NFTS_TO_COLLECTION}/:collectionId` } element = { <AddNftsToCollectionPage /> } />
+                    ) }
+                    { accountSessionStore.isSuperAdmin() === true && (
                         <Route path = { `${AppRoutes.ADD_NFTS_TO_COLLECTION}/:collectionId` } element = { <AddNftsToCollectionPage /> } />
                     ) }
                     <Route path = { AppRoutes.ADMIN_PORTAL } element = { <AdminPortalPage /> } />
