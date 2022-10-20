@@ -1,4 +1,7 @@
+import moment from 'moment';
+
 import S from '../../../core/utilities/Main';
+import ProjectUtils from '../../../core/utilities/ProjectUtils';
 
 export enum AccountType {
     USER = 1,
@@ -11,13 +14,19 @@ export default class AccountEntity {
     accountId: string;
     type: AccountType;
     active: number;
+    emailVerified: number;
+    name: string;
+    email: string;
     timestampLastLogin: number;
     timestampRegister: number;
 
     constructor() {
-        this.accountId = S.Strings.EMPTY;
+        this.accountId = '';
         this.type = AccountType.USER;
         this.active = S.INT_TRUE;
+        this.emailVerified = S.INT_FALSE;
+        this.name = '';
+        this.email = '';
         this.timestampLastLogin = -1;
         this.timestampRegister = -1;
     }
@@ -34,6 +43,10 @@ export default class AccountEntity {
         return this.type === AccountType.SUPER_ADMIN;
     }
 
+    formatDateJoined(): string {
+        return moment(new Date(this.timestampRegister)).format(ProjectUtils.MOMENT_FORMAT_DATE);
+    }
+
     static toJson(entity: AccountEntity): any {
         if (entity === null) {
             return null;
@@ -43,6 +56,9 @@ export default class AccountEntity {
             'accountId': entity.accountId,
             'type': entity.type,
             'active': entity.active,
+            'emailVerified': entity.emailVerified,
+            'name': entity.name,
+            'email': entity.email,
             'timestampLastLogin': entity.timestampLastLogin,
             'timestampRegister': entity.timestampRegister,
         }
@@ -58,6 +74,9 @@ export default class AccountEntity {
         entity.accountId = (json.accountId ?? entity.accountId).toString();
         entity.type = parseInt(json.type ?? entity.type);
         entity.active = parseInt(json.active ?? entity.active);
+        entity.emailVerified = parseInt(json.emailVerified ?? entity.emailVerified);
+        entity.name = json.name ?? entity.name;
+        entity.email = json.email ?? entity.email;
         entity.timestampLastLogin = parseInt(json.timestampLastLogin ?? entity.timestampLastLogin);
         entity.timestampRegister = parseInt(json.timestampRegister ?? entity.timestampRegister);
 

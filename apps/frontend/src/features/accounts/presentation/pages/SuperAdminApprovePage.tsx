@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
-
-import '../styles/page-super-admin-approve-component.css';
-import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import { inject, observer } from 'mobx-react';
-import PageHeader from '../../../header/presentation/components/PageHeader';
-import PageFooter from '../../../footer/presentation/components/PageFooter';
+
 import SuperAdminApprovePageState from '../stores/SuperAdminApprovePageState';
-import Table from '../../../../core/presentation/components/Table';
-import { ALIGN_CENTER, ALIGN_LEFT } from '../../../../core/presentation/components/TableDesktop';
 import RepoStore from '../../../../core/presentation/stores/RepoStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import TableCell from '../../../../core/entities/TableCell';
+
+import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
+import PageFooter from '../../../footer/presentation/components/PageFooter';
+import Table from '../../../../core/presentation/components/Table';
+import { ALIGN_CENTER, ALIGN_LEFT } from '../../../../core/presentation/components/TableDesktop';
 import Checkbox from '../../../../core/presentation/components/Checkbox';
 import TableRow from '../../../../core/entities/TableRow';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
+import PageSuperAdminHeader from '../../../header/presentation/components/PageSuperAdminHeader';
+
+import '../styles/page-super-admin-approve-component.css';
 
 type Props = {
     repoStore?: RepoStore;
@@ -83,7 +85,7 @@ function SuperAdminApprovePage({ repoStore, appStore }: Props) {
     return (
         <PageLayoutComponent
             className = { 'PageSuperAdminApprove' }>
-            <PageHeader />
+            <PageSuperAdminHeader />
             <div className={'FlexRow TableHeader'}>
                 <div className={'H2 Bold'}>Mining Farms of Approval</div>
                 <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>

@@ -6,6 +6,7 @@ import AdminEntity from '../../entities/AdminEntity';
 import SuperAdminEntity from '../../entities/SuperAdminEntity';
 import UserEntity from '../../entities/UserEntity';
 import AccountRepo from '../../presentation/repos/AccountRepo';
+import MiningFarmEntity, { MiningFarmStatus } from '../../../mining-farm/entities/MiningFarmEntity';
 
 export default class AccountStorageRepo implements AccountRepo {
 
@@ -15,7 +16,7 @@ export default class AccountStorageRepo implements AccountRepo {
         this.storageHelper = storageHelper;
     }
 
-    async login(username: string, password: string, walletAddress: string, signedTx: any): Promise < void > {
+    async login(email: string, password: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
         const currentAccounts = this.storageHelper.accountsJson;
         const currentUsers = this.storageHelper.usersJson;
         const currentAdmins = this.storageHelper.adminsJson;
@@ -27,29 +28,26 @@ export default class AccountStorageRepo implements AccountRepo {
         let accountJson = null;
 
         // admin login
-        if (walletAddress === S.Strings.EMPTY) {
-            adminJson = currentAdmins.find((json) => {
-                return json.email === username
+        if (email !== '' || password !== '') {
+            accountJson = currentAccounts.find((json) => {
+                return json.email === email;
             });
 
-            superAdminJson = currentSuperAdmins.find((json) => {
-                return json.email === username
-            });
-
-            if (adminJson === undefined && superAdminJson === undefined) {
+            if (accountJson === undefined) {
                 throw Error('Account not found');
             }
 
-            if (adminJson !== undefined) {
-                userJson = currentUsers.find((json) => json.accountId === adminJson.accountId);
-                accountJson = currentAccounts.find((json) => json.accountId === adminJson.accountId);
-            } else if (superAdminJson !== undefined) {
-                userJson = currentUsers.find((json) => json.accountId === superAdminJson.accountId);
-                accountJson = currentAccounts.find((json) => json.accountId === superAdminJson.accountId);
-            }
-
+            userJson = currentUsers.find((json) => {
+                return json.accountId === accountJson.accountId;
+            });
+            adminJson = currentAdmins.find((json) => {
+                return json.accountId === accountJson.accountId;
+            });
+            superAdminJson = currentSuperAdmins.find((json) => {
+                return json.accountId === accountJson.accountId;
+            });
         } else {
-            userJson = currentUsers.find((json) => json.address === walletAddress);
+            userJson = currentUsers.find((json) => json.cudosWalletAddress === cudosWalletAddress);
             if (userJson === undefined) {
                 const lastAccountEntity = currentAccounts.last();
                 const nextAccountId = 1 + (lastAccountEntity !== null ? parseInt(lastAccountEntity.accountId) : 0);
@@ -59,9 +57,9 @@ export default class AccountStorageRepo implements AccountRepo {
 
                 const accountEntity = new AccountEntity();
                 accountEntity.accountId = nextAccountId.toString();
+                accountEntity.emailVerified = S.INT_TRUE;
                 accountEntity.timestampLastLogin = S.NOT_EXISTS;
                 accountEntity.timestampRegister = Date.now() - 100000000;
-                accountEntity.active = S.INT_FALSE;
 
                 accountJson = AccountEntity.toJson(accountEntity);
                 currentAccounts.push(accountJson);
@@ -69,11 +67,9 @@ export default class AccountStorageRepo implements AccountRepo {
                 const userEntity = new UserEntity();
                 userEntity.userId = nextUserId.toString();
                 userEntity.accountId = accountEntity.accountId;
-                userEntity.name = S.Strings.EMPTY;
-                userEntity.address = walletAddress;
+                userEntity.cudosWalletAddress = cudosWalletAddress;
                 userEntity.totalBtcEarned = new BigNumber(0);
                 userEntity.totalHashPower = 0;
-                userEntity.timestampJoined = Date.now() - 100000000;
 
                 userJson = UserEntity.toJson(userEntity);
                 currentUsers.push(userJson);
@@ -89,60 +85,56 @@ export default class AccountStorageRepo implements AccountRepo {
         this.storageHelper.save();
     }
 
-    async register(email: string, password: string, fullname: string): Promise < void > {
+    async register(email: string, password: string, name: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
         const currentAccounts = this.storageHelper.accountsJson;
-        const currentUsers = this.storageHelper.usersJson;
         const currentAdmins = this.storageHelper.adminsJson;
+        const currentMiningFarms = this.storageHelper.miningFarmsJson;
 
-        const adminJson = currentAdmins.find((json) => {
-            return json.email === email
-        });
+        const accountJson = currentAccounts.find((json) => {
+            return json.email === email;
+        })
 
-        if (adminJson !== undefined) {
+        if (accountJson !== undefined) {
             throw Error('Email is aleady in use');
         }
 
+        // account
         const lastAccountEntity = currentAccounts.last();
         const nextAccountId = 1 + (lastAccountEntity !== null ? parseInt(lastAccountEntity.accountId) : 0);
-
-        const lastUserEntity = currentUsers.last();
-        const nextUserId = 1 + (lastUserEntity !== null ? parseInt(lastUserEntity.userId) : 0);
-
-        const lastAdminEntity = currentAdmins.last();
-        const nextAdminId = 1 + (lastAdminEntity !== null ? parseInt(lastAdminEntity.adminId) : 0);
 
         const accountEntity = new AccountEntity();
         accountEntity.accountId = nextAccountId.toString();
         accountEntity.type = AccountType.ADMIN;
+        accountEntity.emailVerified = S.INT_TRUE;
+        accountEntity.name = name;
+        accountEntity.email = email;
         accountEntity.timestampLastLogin = S.NOT_EXISTS;
         accountEntity.timestampRegister = Date.now() - 100000000;
-        accountEntity.active = S.INT_FALSE;
 
         currentAccounts.push(AccountEntity.toJson(accountEntity));
 
-        const userEntity = new UserEntity();
-        userEntity.userId = nextUserId.toString();
-        userEntity.accountId = accountEntity.accountId;
-        userEntity.name = S.Strings.EMPTY;
-        userEntity.address = S.Strings.EMPTY;
-        userEntity.totalBtcEarned = new BigNumber(0);
-        userEntity.totalHashPower = 0;
-        userEntity.timestampJoined = Date.now() - 100000000;
-
-        currentUsers.push(UserEntity.toJson(userEntity));
+        // admin
+        const lastAdminEntity = currentAdmins.last();
+        const nextAdminId = 1 + (lastAdminEntity !== null ? parseInt(lastAdminEntity.adminId) : 0);
 
         const adminEntity = new AdminEntity();
         adminEntity.adminId = nextAdminId.toString();
         adminEntity.accountId = accountEntity.accountId;
-        adminEntity.email = email;
-        adminEntity.fullname = fullname;
+        adminEntity.cudosWalletAddress = cudosWalletAddress;
 
         currentAdmins.push(AdminEntity.toJson(adminEntity));
-        this.storageHelper.save();
-    }
 
-    async changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > {
-        // TODO
+        // mining farm
+        const lastMiningFarmEntity = currentMiningFarms.last();
+        const nextMiningFarmId = 1 + (lastMiningFarmEntity !== null ? parseInt(lastMiningFarmEntity.id) : 0);
+
+        const miningFarmEntity = new MiningFarmEntity();
+        miningFarmEntity.id = nextMiningFarmId.toString();
+        miningFarmEntity.accountId = accountEntity.accountId;
+
+        currentMiningFarms.push(MiningFarmEntity.toJson(miningFarmEntity));
+
+        this.storageHelper.save();
     }
 
     async logout(): Promise < void > {
@@ -151,6 +143,20 @@ export default class AccountStorageRepo implements AccountRepo {
         this.storageHelper.sessionAdmin = null;
         this.storageHelper.sessionSuperAdmin = null;
         this.storageHelper.save();
+    }
+
+    async confirmBitcoinAddress(): Promise < void > {
+        const adminJson = this.storageHelper.adminsJson.find((json) => {
+            return json.accountId === this.storageHelper.sessionAdmin.accountId;
+        });
+
+        this.storageHelper.sessionAdmin.bitcoinWalletAddress = 'bc2qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
+        adminJson.bitcoinWalletAddress = 'bc2qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
+        this.storageHelper.save();
+    }
+
+    async changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > {
+        // TODO
     }
 
     async fetchSessionAccounts(): Promise < { accountEntity: AccountEntity; userEntity: UserEntity; adminEntity: AdminEntity; superAdminEntity: SuperAdminEntity; } > {

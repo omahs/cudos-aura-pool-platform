@@ -1,20 +1,23 @@
-import S from '../../../core/utilities/Main';
 import { makeAutoObservable } from 'mobx';
 
 export default class AdminEntity {
 
     adminId: string;
     accountId: string;
-    email: string;
-    fullname: string;
+    cudosWalletAddress: string;
+    bitcoinWalletAddress: string;
 
     constructor() {
-        this.adminId = S.Strings.NOT_EXISTS;
-        this.accountId = S.Strings.NOT_EXISTS;
-        this.email = S.Strings.EMPTY;
-        this.fullname = S.Strings.EMPTY;
+        this.adminId = '';
+        this.accountId = '';
+        this.cudosWalletAddress = '';
+        this.bitcoinWalletAddress = '';
 
         makeAutoObservable(this);
+    }
+
+    isBitcointAddressConfirmed(): boolean {
+        return this.bitcoinWalletAddress !== '';
     }
 
     static toJson(entity: AdminEntity) {
@@ -25,8 +28,8 @@ export default class AdminEntity {
         return {
             'adminId': entity.adminId,
             'accountId': entity.accountId,
-            'email': entity.email,
-            'fullname': entity.fullname,
+            'cudosWalletAddress': entity.cudosWalletAddress,
+            'bitcoinWalletAddress': entity.bitcoinWalletAddress,
         }
     }
 
@@ -39,8 +42,8 @@ export default class AdminEntity {
 
         entity.adminId = (json.adminId ?? entity.adminId).toString();
         entity.accountId = (json.accountId ?? entity.accountId).toString();
-        entity.email = json.email ?? entity.email;
-        entity.fullname = json.fullname ?? entity.fullname;
+        entity.cudosWalletAddress = (json.cudosWalletAddress ?? entity.cudosWalletAddress).toString();
+        entity.bitcoinWalletAddress = (json.bitcoinWalletAddress ?? entity.bitcoinWalletAddress).toString();
 
         return entity;
     }

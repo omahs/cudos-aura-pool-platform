@@ -22,8 +22,8 @@ export default class SuperAdminApprovePageState {
     constructor(repoStore: RepoStore) {
         this.repoStore = repoStore;
 
-        this.miningFarmsTableState = new TableStore(0, [], () => {}, 5);
-        this.collectionsTableState = new TableStore(0, [], () => {}, 5);
+        this.miningFarmsTableState = new TableStore(0, [], this.fetchMiningFarmEntities, 5);
+        this.collectionsTableState = new TableStore(0, [], this.fetchCollectionEntities, 5);
 
         this.miningFarmEntities = [];
         this.collectionEntities = [];
@@ -49,7 +49,7 @@ export default class SuperAdminApprovePageState {
         this.fetchCollectionEntities();
     }
 
-    fetchMiningFarmEntities(): void {
+    fetchMiningFarmEntities = (): void => {
         const miningFarmFilter = new MiningFarmFilterModel();
         miningFarmFilter.from = this.miningFarmsTableState.tableState.from;
         miningFarmFilter.count = this.miningFarmsTableState.tableState.itemsPerPage;
@@ -62,7 +62,7 @@ export default class SuperAdminApprovePageState {
 
     }
 
-    fetchCollectionEntities(): void {
+    fetchCollectionEntities = (): void => {
         const collectionFilter = new CollectionFilterModel();
         collectionFilter.from = this.collectionsTableState.tableState.from;
         collectionFilter.count = this.collectionsTableState.tableState.itemsPerPage;
@@ -75,11 +75,11 @@ export default class SuperAdminApprovePageState {
 
     }
 
-    isMiningFarmEntitySelected(miningFarmId: string) {
+    isMiningFarmEntitySelected(miningFarmId: string): number {
         return this.selectedMiningFarmEntities.has(miningFarmId) ? S.INT_TRUE : S.INT_FALSE;
     }
 
-    isCollectionEntitySelected(collectionId: string) {
+    isCollectionEntitySelected(collectionId: string): number {
         return this.selectedCollectionEntities.has(collectionId) ? S.INT_TRUE : S.INT_FALSE;
     }
 

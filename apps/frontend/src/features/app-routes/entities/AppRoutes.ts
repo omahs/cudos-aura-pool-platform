@@ -3,7 +3,7 @@ export default class AppRoutes {
     // public
     static HOME = '/';
     static NOT_FOUND = '/not-found';
-    static UiKIt = '/ui-kit';
+    static UI_KIT = '/ui-kit';
     static REWARDS_CALCULATOR = '/rewards-calculator';
     static MARKETPLACE = '/marketplace';
     static EXPLORE_NFTS = '/explore-nfts';
@@ -21,7 +21,8 @@ export default class AppRoutes {
     static USER_PROFILE = '/profile';
 
     // farm admin
+    static CREDIT_MINING_FARM_DETAILS = '/credit-mining-farm-details'
     static PAGE_CREATE_COLLECTION = '/create-collection';
-    static ADMIN_PORTAL = '/admin-portal';
+    // static ADMIN_PORTAL = '/admin-portal';
     static ADD_NFTS_TO_COLLECTION = '/add_nfts';
 }

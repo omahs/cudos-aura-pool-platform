@@ -21,15 +21,17 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import '../styles/page-register.css';
+import WalletStore from '../../../ledger/presentation/stores/WalletStore';
 
 type Props = {
     alertStore?: AlertStore;
+    walletStore?: WalletStore;
     accountSessionStore?: AccountSessionStore;
 }
 
-function RegisterPage({ alertStore, accountSessionStore }: Props) {
+function RegisterPage({ alertStore, walletStore, accountSessionStore }: Props) {
     const navigate = useNavigate();
-    const [fullname, setFullname] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [registering, setRegistering] = useState(false);
     const [password, setPassword] = useState('');
@@ -51,9 +53,11 @@ function RegisterPage({ alertStore, accountSessionStore }: Props) {
 
     async function onClickRegister() {
         setRegistering(true);
-        await accountSessionStore.register(email, password, fullname);
+        await walletStore.connectKeplr();
+        // prepare a signed tx for register
+        await accountSessionStore.register(email, password, name, walletStore.getAddress(), '');
         setRegistering(false);
-        navigate(AppRoutes.HOME);
+        navigate(AppRoutes.LOGIN);
     }
 
     return (
@@ -71,8 +75,8 @@ function RegisterPage({ alertStore, accountSessionStore }: Props) {
                         <Input
                             label={'Full Name'}
                             placeholder={'John Doe'}
-                            value={fullname}
-                            onChange={setFullname} />
+                            value={name}
+                            onChange={setName} />
                         <Input
                             label={'Email'}
                             placeholder={'exampleemail@mail.com'}

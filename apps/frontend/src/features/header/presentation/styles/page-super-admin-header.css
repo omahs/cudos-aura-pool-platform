@@ -1,4 +1,4 @@
-.PageAdminHeader {
+.PageSuperAdminHeader {
     padding: 20px var(--page-spacing-h);
     justify-content: space-between;
     align-items: center;
@@ -6,11 +6,11 @@
     background-color: #fff;
 }
 
-.PageAdminHeader .LogoHeader {
+.PageSuperAdminHeader .LogoHeader {
     gap: 30px;
 }
 
-.PageAdminHeader .LogoHeader .AdminPortalNav {
+.PageSuperAdminHeader .LogoHeader .AdminPortalNav {
     border-radius: 6px;
     padding: 10px;
     background-color: var(--color-gray-090);

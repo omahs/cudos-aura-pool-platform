@@ -1,5 +1,5 @@
 const LOCAL_STORAGE_KEY = 'cudos_aura_service_storage';
-const VERSION = 12;
+const VERSION = 13;
 
 const collectionDescription = 'DigiDaigaku is a collection of 2022 unique characters developed by Limit Break, a company founded by world famous game designers Gabriel Leydon and Halbert Nakagawa.  Currently, DigiDaigaku characters live in a mysterious world unknown to outsiders, but in time, exciting details about their world will be revealed. /n Learn more about the project at: https://digidaigaku.com and https://twitter.com/DigiDaigaku'
 const collectionProfileImgUrl = 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200';
@@ -15,21 +15,21 @@ const miningFarmsJson = [
 ];
 
 const accountsJson = [
-    jsonAccount('1', 1, '1', 123123123123, 123123123123),
-    jsonAccount('2', 2, '1', 123123123123, 123123123123),
-    jsonAccount('3', 3, '1', 123123123123, 123123123123),
+    // jsonAccount('1', 1, 1, 1, 'Account 1', 'user@email.com', 123123123123, 123123123123),
+    // jsonAccount('2', 2, 1, 1, 'Account 2', 'admin@email.com', 123123123123, 123123123123),
+    jsonAccount('3', 3, 1, 1, 'Account 3', 'superadmin@email.com', 123123123123, 123123123123),
 ];
 
 const adminsJson = [
-    jsonAdmin('1', '2', 'admin@email.com', 'Default Admin'),
+    // jsonAdmin('1', '2'),
 ];
 
 const superAdminsJson = [
-    jsonSuperAdmin('1', '3', 'superadmin@email.com'),
+    jsonSuperAdmin('1', '3'),
 ];
 
 const usersJson = [
-    jsonUser('1', '1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
+    // jsonUser('1', '1', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
 const bitcoinDataJson = jsonBitcoinData(23336, 53.3, 6.25, '29794407589312');
@@ -216,45 +216,45 @@ function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName,
     };
 }
 
-function jsonSuperAdmin(superAdminId, accountId, email) {
-    return {
-        superAdminId,
-        accountId,
-        email,
-    }
-}
-
-function jsonAdmin(adminId, accountId, email, fullname) {
-    return {
-        adminId,
-        accountId,
-        email,
-        fullname,
-    }
-}
-
-function jsonAccount(accountId, type, active, timestampLastLogin, timestampRegister) {
+function jsonAccount(accountId, type, active, emailVerified, name, email, timestampLastLogin, timestampRegister) {
     return {
         accountId,
         type,
         active,
+        emailVerified,
+        name,
+        email,
         timestampLastLogin,
         timestampRegister,
     }
 }
 
-function jsonUser(userId, accountId, name, address, totalBtcEarned, totalHashPower, timestampJoined, profileImgUrl, coverImgUrl) {
+function jsonUser(userId, accountId, cudosWalletAddress, totalBtcEarned, totalHashPower, profileImgUrl, coverImgUrl) {
     return {
         userId,
         accountId,
-        name,
-        address,
+        cudosWalletAddress,
         totalBtcEarned,
         totalHashPower,
-        timestampJoined,
         profileImgUrl,
         coverImgUrl,
     };
+}
+
+function jsonAdmin(adminId, accountId, cudosWalletAddress, bitcoindWalletAddress) {
+    return {
+        adminId,
+        accountId,
+        cudosWalletAddress,
+        bitcoindWalletAddress,
+    }
+}
+
+function jsonSuperAdmin(superAdminId, accountId) {
+    return {
+        superAdminId,
+        accountId,
+    }
 }
 
 function jsonBitcoinData(price, priceChange, blockReward, networkDifficulty) {

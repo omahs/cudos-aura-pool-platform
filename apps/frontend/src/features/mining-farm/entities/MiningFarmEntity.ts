@@ -47,32 +47,40 @@ export default class MiningFarmEntity {
         this.profileImgUrl = S.Strings.EMPTY;
         this.coverImgUrl = S.Strings.EMPTY;
         this.farmPhotoUrls = [];
-        this.status = MiningFarmStatus.APPROVED;
+        this.status = MiningFarmStatus.NOT_APPROVED;
 
         makeAutoObservable(this);
     }
 
-    toJson(): any {
+    isApproved(): boolean {
+        return this.status === MiningFarmStatus.APPROVED;
+    }
+
+    static toJson(entity: MiningFarmEntity): any {
+        if (entity === null) {
+            return null;
+        }
+
         return {
-            'id': this.id,
-            'accountId': this.accountId,
-            'name': this.name,
-            'legalName': this.legalName,
-            'primaryAccountOwnerName': this.primaryAccountOwnerName,
-            'primaryAccountOwnerEmail': this.primaryAccountOwnerName,
-            'description': this.description,
-            'manufacturerIds': this.manufacturerIds,
-            'minerIds': this.minerIds,
-            'energySourceIds': this.energySourceIds,
-            'hashRateTh': this.hashRateTh,
-            'powerCost': this.powerCost,
-            'machinesLocation': this.machinesLocation,
-            'poolFee': this.poolFee,
-            'powerConsumptionPerTh': this.powerConsumptionPerTh,
-            'profileImgUrl': this.profileImgUrl,
-            'coverImgUrl': this.coverImgUrl,
-            'farmPhotoUrls': JSON.stringify(this.farmPhotoUrls),
-            'status': this.status,
+            'id': entity.id,
+            'accountId': entity.accountId,
+            'name': entity.name,
+            'legalName': entity.legalName,
+            'primaryAccountOwnerName': entity.primaryAccountOwnerName,
+            'primaryAccountOwnerEmail': entity.primaryAccountOwnerName,
+            'description': entity.description,
+            'manufacturerIds': entity.manufacturerIds,
+            'minerIds': entity.minerIds,
+            'energySourceIds': entity.energySourceIds,
+            'hashRateTh': entity.hashRateTh,
+            'powerCost': entity.powerCost,
+            'machinesLocation': entity.machinesLocation,
+            'poolFee': entity.poolFee,
+            'powerConsumptionPerTh': entity.powerConsumptionPerTh,
+            'profileImgUrl': entity.profileImgUrl,
+            'coverImgUrl': entity.coverImgUrl,
+            'farmPhotoUrls': JSON.stringify(entity.farmPhotoUrls),
+            'status': entity.status,
         }
     }
 
@@ -81,7 +89,7 @@ export default class MiningFarmEntity {
             return null;
         }
         const model = new MiningFarmEntity();
-        console.log(json);
+
         model.id = json.id ?? model.id;
         model.accountId = json.accountId ?? model.accountId;
         model.name = json.name ?? model.name;
