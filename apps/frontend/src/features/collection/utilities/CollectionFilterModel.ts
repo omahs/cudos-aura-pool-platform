@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import S from '../../../core/utilities/Main';
+import { CollectionStatus } from '../entities/CollectionEntity';
 
 export default class CollectionFilterModel {
 
@@ -13,6 +14,7 @@ export default class CollectionFilterModel {
     categoryIds: string[];
     from: number;
     count: number;
+    status: CollectionStatus;
 
     constructor() {
         this.sessionAccount = S.INT_FALSE;
@@ -22,6 +24,7 @@ export default class CollectionFilterModel {
         this.categoryIds = [];
         this.from = 0;
         this.count = Number.MAX_SAFE_INTEGER;
+        this.status = CollectionStatus.APPROVED;
 
         makeAutoObservable(this);
     }
@@ -39,6 +42,7 @@ export default class CollectionFilterModel {
             categoryIds: model.categoryIds,
             from: model.from,
             count: model.count,
+            status: model.status,
         }
     }
 
@@ -56,6 +60,7 @@ export default class CollectionFilterModel {
         model.categoryIds = (json.categoryIds ?? model.categoryIds).map((j) => j.toString());
         model.from = parseInt(json.from ?? model.from);
         model.count = parseInt(json.count ?? model.count);
+        model.status = parseInt(json.status ?? model.status);
 
         return model;
     }

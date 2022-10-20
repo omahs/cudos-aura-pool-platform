@@ -1,3 +1,5 @@
+import { MiningFarmStatus } from '../entities/MiningFarmEntity';
+
 export default class MiningFarmFilterModel {
 
     static SORT_KEY_NAME = 1;
@@ -7,12 +9,14 @@ export default class MiningFarmFilterModel {
     searchString: string;
     from: number;
     count: number;
+    status: MiningFarmStatus;
 
     constructor() {
         this.sortKey = MiningFarmFilterModel.SORT_KEY_NAME;
         this.searchString = '';
         this.from = 0;
         this.count = Number.MAX_SAFE_INTEGER;
+        this.status = MiningFarmStatus.APPROVED;
     }
 
     static toJson(model) {
@@ -25,6 +29,7 @@ export default class MiningFarmFilterModel {
             searchString: model.searchString,
             from: model.from,
             count: model.count,
+            status: model.status,
         }
     }
 
@@ -39,6 +44,7 @@ export default class MiningFarmFilterModel {
         model.searchString = json.searchString ?? model.searchString;
         model.from = parseInt(json.from ?? model.from);
         model.count = parseInt(json.count ?? model.count);
+        model.status = parseInt(json.status ?? model.status);
 
         return model;
     }

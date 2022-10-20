@@ -48,7 +48,11 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
             });
         }
 
-        miningFarmsSlice = miningFarmsSlice.sort((a: MiningFarmEntity, b: MiningFarmEntity) => {
+        miningFarmsSlice = miningFarmsSlice.filter((json) => {
+            return json.status === miningFarmFilterModel.status;
+        });
+
+        miningFarmsSlice.sort((a: MiningFarmEntity, b: MiningFarmEntity) => {
             switch (miningFarmFilterModel.sortKey) {
                 case MiningFarmFilterModel.SORT_KEY_POPULAR:
                     // TODO: what does popular farm mean, how to compare?

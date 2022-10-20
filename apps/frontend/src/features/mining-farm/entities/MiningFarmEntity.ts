@@ -1,6 +1,12 @@
 import { makeAutoObservable } from 'mobx';
 import S from '../../../core/utilities/Main';
 
+export enum MiningFarmStatus {
+    APPROVED = 1,
+    NOT_APPROVED = 2,
+    DELETED = 3,
+}
+
 export default class MiningFarmEntity {
     id: string;
     accountId: string;
@@ -20,6 +26,7 @@ export default class MiningFarmEntity {
     profileImgUrl: string;
     coverImgUrl: string;
     farmPhotoUrls: string[];
+    status: MiningFarmStatus;
 
     constructor() {
         this.id = S.Strings.EMPTY;
@@ -40,6 +47,7 @@ export default class MiningFarmEntity {
         this.profileImgUrl = S.Strings.EMPTY;
         this.coverImgUrl = S.Strings.EMPTY;
         this.farmPhotoUrls = [];
+        this.status = MiningFarmStatus.APPROVED;
 
         makeAutoObservable(this);
     }
@@ -64,6 +72,7 @@ export default class MiningFarmEntity {
             'profileImgUrl': this.profileImgUrl,
             'coverImgUrl': this.coverImgUrl,
             'farmPhotoUrls': JSON.stringify(this.farmPhotoUrls),
+            'status': this.status,
         }
     }
 
@@ -91,6 +100,7 @@ export default class MiningFarmEntity {
         model.profileImgUrl = json.profileImgUrl ?? model.profileImgUrl;
         model.coverImgUrl = json.coverImgUrl ?? model.coverImgUrl;
         model.farmPhotoUrls = json.farmPhotoUrls ?? model.farmPhotoUrls;
+        model.status = parseInt(json.status ?? model.status);
 
         return model;
     }

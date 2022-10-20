@@ -9,6 +9,5 @@ export default interface MiningFarmRepo {
     fetchMiningFarmById(miningFarmId: string): Promise < MiningFarmEntity >;
     fetchMiningFarmByAccountId(accountId: string): Promise < MiningFarmEntity >;
     fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} >;
-
     editMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void >;
 }
