@@ -13,12 +13,12 @@ export default class AccountStorageRepo implements AccountRepo {
         this.accountApi = new AccountApi();
     }
 
-    async login(username: string, password: string, walletAddress: string, signedTx: any): Promise < void > {
-        return this.accountApi.login(username, password, walletAddress, signedTx);
+    async login(username: string, password: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
+        return this.accountApi.login(username, password, cudosWalletAddress, signedTx);
     }
 
-    async register(username: string, password: string, fullname: string): Promise < void > {
-        return this.accountApi.register(username, password, fullname);
+    async register(email: string, password: string, name: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
+        return this.accountApi.register(email, password, name, cudosWalletAddress, signedTx);
     }
 
     async changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > {

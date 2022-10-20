@@ -39,6 +39,7 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
         })
     }, [])
 
+    const accountEntity = accountSessionStore.accountEntity;
     const userEntity = accountSessionStore.userEntity;
     const nftFilterModel = userProfilePageStore.nftFilterModel;
 
@@ -51,10 +52,10 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
                 <ProfileHeader coverPictureUrl={userEntity.coverImgUrl} profilePictureUrl={userEntity.profileImgUrl} />
                 <div className={'ProfileHeaderDataRow FlexRow FlexGrow'}>
                     <div className={'FlexColumn LeftSide'}>
-                        <div className={'H2 Bold'}>{userEntity.name}</div>
+                        <div className={'H2 Bold'}>{accountEntity.name}</div>
                         <div className={'FlexRow InfoBelowUserName'}>
-                            <div className={'Addrees'}>{userEntity.address}</div>
-                            <div className={'JoinDate B3'}>{userEntity.formatDateJoined()}</div>
+                            <div className={'Addrees'}>{userEntity.cudosWalletAddress}</div>
+                            <div className={'JoinDate B3'}>{accountEntity.formatDateJoined()}</div>
                         </div>
                     </div>
                     <div className={'FlexRow RightSide'}>

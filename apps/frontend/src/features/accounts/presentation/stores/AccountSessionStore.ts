@@ -71,9 +71,19 @@ export default class AccountSessionStore {
         if (this.isUser() === true) {
             await this.walletStore.tryConnect();
 
-            if (this.userEntity.address !== this.walletStore.getAddress()) {
+            if (this.userEntity.cudosWalletAddress !== this.walletStore.getAddress()) {
                 await this.walletStore.disconnect();
             }
+            console.log('Logged as user => wallet:', this.walletStore.isConnected())
+        } else if (this.isAdmin() === true) {
+            await this.walletStore.tryConnect();
+
+            if (this.adminEntity.cudosWalletAddress !== this.walletStore.getAddress()) {
+                await this.walletStore.disconnect();
+            }
+            console.log('Logged as admin => wallet:', this.walletStore.isConnected())
+        } else if (this.isSuperAdmin() === true) {
+            console.log('Logged as super admin => wallet:', false);
         }
     }
 
@@ -87,16 +97,16 @@ export default class AccountSessionStore {
         this.inited = true;
     }
 
-    async login(username: string, password: string, walletAddress: string, signedTx: any): Promise < void > {
+    async login(username: string, password: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
         try {
-            await this.accountRepo.login(username, password, walletAddress, signedTx);
+            await this.accountRepo.login(username, password, cudosWalletAddress, signedTx);
         } finally {
             await this.loadSessionAccountsAndSyncWalletStore();
         }
     }
 
-    async register(email: string, password: string, fullname: string): Promise < void > {
-        await this.accountRepo.register(email, password, fullname);
+    async register(email: string, password: string, name: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
+        await this.accountRepo.register(email, password, name, cudosWalletAddress, signedTx);
     }
 
     // TODO: use session token for password change

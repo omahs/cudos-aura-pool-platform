@@ -81,7 +81,7 @@ export default class MiningFarmEntity {
             return null;
         }
         const model = new MiningFarmEntity();
-        console.log(json);
+
         model.id = json.id ?? model.id;
         model.accountId = json.accountId ?? model.accountId;
         model.name = json.name ?? model.name;
