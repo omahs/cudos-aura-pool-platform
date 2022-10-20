@@ -122,7 +122,7 @@ export default class AccountSessionStore {
             }
 
             const miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmByAccountId(this.accountEntity.accountId);
-            this.approvedMiningFarm = miningFarmEntity.isApproved();
+            this.approvedMiningFarm = miningFarmEntity?.isApproved() ?? false;
 
             console.log('Logged as admin => wallet:', this.walletStore.isConnected())
         } else if (this.isSuperAdmin() === true) {
