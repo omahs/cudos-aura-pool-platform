@@ -22,6 +22,8 @@ import AdminPortalPage from '../../../accounts/presentation/pages/AdminPortalPag
 
 import '../styles/app-router.css';
 import AddNftsToCollectionPage from '../../../collection/presentation/pages/AddNftsToCollectionPage';
+import LoginPage from '../../../accounts/presentation/pages/LoginPage';
+import RegsiterPage from '../../../accounts/presentation/pages/RegsiterPage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -65,12 +67,18 @@ function AppRouter({ accountSessionStore }: Props) {
                     <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPage /> } />
                     <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPage /> } />
                     <Route path = { AppRoutes.EXPLORE_MINING_FARMS } element = { <ExploreMiningFarmsPage /> } />
-                    { accountSessionStore.isUser() === true && (
-                        <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePage /> } />
-                    ) }
                     <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />
                     <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPage /> } />
                     <Route path = { `${AppRoutes.MINING_FARM_VIEW}/:farmId` } element = { <MiningFarmViewPage /> } />
+
+                    {/* Auth */}
+                    <Route path = { AppRoutes.LOGIN } element = { <LoginPage /> } />
+                    <Route path = { AppRoutes.REGISTER } element = { <RegsiterPage /> } />
+
+                    {/* profile */}
+                    { accountSessionStore.isUser() === true && (
+                        <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePage /> } />
+                    ) }
                     { accountSessionStore.isAdmin() === true && (
                         <Route path = { `${AppRoutes.ADD_NFTS_TO_COLLECTION}/:collectionId` } element = { <AddNftsToCollectionPage /> } />
                     ) }
