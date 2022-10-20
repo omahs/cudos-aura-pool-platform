@@ -48,7 +48,7 @@ export default class AccountSessionStore {
         }
 
         if (this.accountEntity.isAdmin() === true) {
-            return this.userEntity !== null;
+            return this.adminEntity !== null;
         }
 
         return false;
@@ -60,7 +60,7 @@ export default class AccountSessionStore {
         }
 
         if (this.accountEntity.isSuperAdmin() === true) {
-            return this.userEntity !== null;
+            return this.superAdminEntity !== null;
         }
 
         return false;

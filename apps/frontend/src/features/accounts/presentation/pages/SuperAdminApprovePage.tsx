@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import '../styles/page-admin-portal-component.css';
+import '../styles/page-super-admin-approve-component.css';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import { inject, observer } from 'mobx-react';
 import PageHeader from '../../../header/presentation/components/PageHeader';
@@ -13,6 +13,8 @@ import AppStore from '../../../../core/presentation/stores/AppStore';
 import TableCell from '../../../../core/entities/TableCell';
 import Checkbox from '../../../../core/presentation/components/Checkbox';
 import TableRow from '../../../../core/entities/TableRow';
+import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
 
 type Props = {
     repoStore?: RepoStore;
@@ -47,7 +49,7 @@ function SuperAdminApprovePage({ repoStore, appStore }: Props) {
             rowCells.push(new TableCell(
                 <Checkbox
                     label={''}
-                    value={() => superAdminApprovePageState.isMiningFarmEntitySelected(miningFarmEntity.id)}
+                    value={superAdminApprovePageState.isMiningFarmEntitySelected(miningFarmEntity.id)}
                     onChange={() => superAdminApprovePageState.toggleMiningFarmSelection(miningFarmEntity.id)}
                 />,
                 0,
@@ -67,7 +69,7 @@ function SuperAdminApprovePage({ repoStore, appStore }: Props) {
             rowCells.push(new TableCell(
                 <Checkbox
                     label={''}
-                    value={() => superAdminApprovePageState.isCollectionEntitySelected(collectionEntity.id)}
+                    value={superAdminApprovePageState.isCollectionEntitySelected(collectionEntity.id)}
                     onChange={() => superAdminApprovePageState.toggleCollectionSelection(collectionEntity.id)}
                 />,
                 0,
@@ -80,16 +82,28 @@ function SuperAdminApprovePage({ repoStore, appStore }: Props) {
 
     return (
         <PageLayoutComponent
-            className = { 'PageAdminPortal' }>
+            className = { 'PageSuperAdminApprove' }>
             <PageHeader />
+            <div className={'FlexRow TableHeader'}>
+                <div className={'H2 Bold'}>Mining Farms of Approval</div>
+                <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                    <Button radius={BUTTON_RADIUS.RADIUS_16} onClick={superAdminApprovePageState.approveMiningFarms}>Approve Selected Farms</Button>
+                </Actions>
+            </div>
             <Table
                 className={'New Farms'}
                 legend={TABLE_LEGEND}
                 widths={TABLE_WIDTHS}
                 aligns={TABLE_ALINGS}
-                tableStore={superAdminApprovePageState.farmsTableState}
+                tableStore={superAdminApprovePageState.miningFarmsTableState}
                 rows={renderFarmsRows()}
             />
+            <div className={'FlexRow TableHeader'}>
+                <div className={'H1 Bold'}>Collections of Approval</div>
+                <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                    <Button radius={BUTTON_RADIUS.RADIUS_16} onClick={superAdminApprovePageState.approveCollections}>Approve Selected Collections</Button>
+                </Actions>
+            </div>
             <Table
                 className={'New Collections'}
                 legend={TABLE_LEGEND}

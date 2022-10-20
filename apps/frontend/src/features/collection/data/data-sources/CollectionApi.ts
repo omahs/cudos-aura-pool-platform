@@ -20,4 +20,6 @@ export default class CollectionApi {
     async fetchCollectionsByFilter(collectionFilterModel: CollectionFilterModel): Promise < { collectionEntities: CollectionEntity[], total: number } > {
         return null;
     }
+
+    async approveCollections(collectionIds: string[]): Promise < void > {}
 }

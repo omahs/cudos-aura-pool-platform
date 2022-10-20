@@ -32,4 +32,9 @@ export default class CollectionStorageRepo implements CollectionRepo {
     async fetchCollectionsByFilter(collectionFilterModel: CollectionFilterModel): Promise < { collectionEntities: CollectionEntity[], total: number } > {
         return this.collectionApi.fetchCollectionsByFilter(collectionFilterModel);
     }
+
+    async approveCollections(collectionIds: string[]): Promise < void > {
+        return this.collectionApi.approveCollections(collectionIds);
+    }
+
 }

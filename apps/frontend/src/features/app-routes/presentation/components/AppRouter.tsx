@@ -49,12 +49,6 @@ function AppRouter({ accountSessionStore }: Props) {
     }
 
     function getIndexPage() {
-        console.log(accountSessionStore.isAdmin())
-        console.log(accountSessionStore.isSuperAdmin())
-        if (accountSessionStore.isAdmin() === false && accountSessionStore.isSuperAdmin() === false) {
-            return <MarketplacePage />;
-        }
-
         if (accountSessionStore.isAdmin() === true) {
             return <MarketplacePage />;
         }
@@ -62,6 +56,8 @@ function AppRouter({ accountSessionStore }: Props) {
         if (accountSessionStore.isSuperAdmin() === true) {
             return <SuperAdminApprovePage />;
         }
+
+        return <MarketplacePage />;
     }
 
     return (

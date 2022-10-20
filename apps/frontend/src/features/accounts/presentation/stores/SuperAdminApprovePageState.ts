@@ -5,6 +5,7 @@ import CollectionEntity, { CollectionStatus } from '../../../collection/entities
 import CollectionFilterModel from '../../../collection/utilities/CollectionFilterModel';
 import MiningFarmEntity, { MiningFarmStatus } from '../../../mining-farm/entities/MiningFarmEntity';
 import MiningFarmFilterModel from '../../../mining-farm/utilities/MiningFarmFilterModel';
+import S from '../../../../core/utilities/Main';
 
 export default class SuperAdminApprovePageState {
     repoStore: RepoStore;
@@ -75,11 +76,11 @@ export default class SuperAdminApprovePageState {
     }
 
     isMiningFarmEntitySelected(miningFarmId: string) {
-        return this.selectedMiningFarmEntities.has(miningFarmId);
+        return this.selectedMiningFarmEntities.has(miningFarmId) ? S.INT_TRUE : S.INT_FALSE;
     }
 
     isCollectionEntitySelected(collectionId: string) {
-        return this.selectedCollectionEntities.has(collectionId);
+        return this.selectedCollectionEntities.has(collectionId) ? S.INT_TRUE : S.INT_FALSE;
     }
 
     toggleMiningFarmSelection(miningFarmId: string) {
@@ -95,9 +96,19 @@ export default class SuperAdminApprovePageState {
         if (this.selectedCollectionEntities.has(collectionId)) {
             this.selectedCollectionEntities.delete(collectionId);
         } else {
-            const collectionEntity = this.miningFarmEntities.find((entity: MiningFarmEntity) => { return entity.id === collectionId });
+            const collectionEntity = this.collectionEntities.find((entity: CollectionEntity) => { return entity.id === collectionId });
             this.selectedCollectionEntities.set(collectionId, collectionEntity);
         }
+    }
+
+    approveMiningFarms = async () => {
+        await this.repoStore.miningFarmRepo.approveFarms(Array.from(this.selectedMiningFarmEntities.keys()));
+        this.fetch();
+    }
+
+    approveCollections = async () => {
+        await this.repoStore.collectionRepo.approveCollections(Array.from(this.selectedCollectionEntities.keys()));
+        this.fetch();
     }
 
 }

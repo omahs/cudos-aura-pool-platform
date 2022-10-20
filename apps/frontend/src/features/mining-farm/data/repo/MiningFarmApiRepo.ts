@@ -40,4 +40,9 @@ export default class MiningFarmApiRepo implements MiningFarmRepo {
     async editMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
         return this.miningFarmApi.editMiningFarm(miningFarmEntity);
     }
+
+    async approveFarms(miningFarmIds: string[]): Promise < void > {
+        return this.miningFarmApi.approveFarms(miningFarmIds);
+    }
+
 }

@@ -1,6 +1,6 @@
 import S from '../../../../core/utilities/Main';
 import StorageHelper from '../../../../core/helpers/StorageHelper';
-import CollectionEntity from '../../entities/CollectionEntity';
+import CollectionEntity, { CollectionStatus } from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
 import CollectionFilterModel from '../../utilities/CollectionFilterModel';
 import CategoryEntity from '../../entities/CategoryEntity';
@@ -84,6 +84,17 @@ export default class CollectionStorageRepo implements CollectionRepo {
             collectionEntities: collectionSlice.slice(collectionFilterModel.from, collectionFilterModel.from + collectionFilterModel.count),
             total: collectionSlice.length,
         }
+    }
+
+    async approveCollections(collectionIds: string[]): Promise < void > {
+        const colelctionJsons = this.storageHelper.collectionsJson;
+
+        collectionIds.forEach((id) => {
+            colelctionJsons.find((json) => json.id === id).status = CollectionStatus.APPROVED;
+        })
+
+        this.storageHelper.collectionsJson = colelctionJsons;
+        this.storageHelper.save();
     }
 
 }

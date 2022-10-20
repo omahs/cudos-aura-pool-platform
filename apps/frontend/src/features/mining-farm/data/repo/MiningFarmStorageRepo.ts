@@ -1,5 +1,5 @@
 import StorageHelper from '../../../../core/helpers/StorageHelper';
-import MiningFarmEntity from '../../entities/MiningFarmEntity';
+import MiningFarmEntity, { MiningFarmStatus } from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../../presentation/repos/MiningFarmRepo';
 import MiningFarmFilterModel from '../../utilities/MiningFarmFilterModel';
 
@@ -40,7 +40,7 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
     }
 
     async fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} > {
-        let miningFarmsSlice = this.storageHelper.collectionsJson.map((json) => MiningFarmEntity.fromJson(json));
+        let miningFarmsSlice = this.storageHelper.miningFarmsJson.map((json) => MiningFarmEntity.fromJson(json));
 
         if (miningFarmFilterModel.searchString !== '') {
             miningFarmsSlice = miningFarmsSlice.filter((json) => {
@@ -78,4 +78,16 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
 
         this.storageHelper.save();
     }
+
+    async approveFarms(miningFarmIds: string[]): Promise < void > {
+        const miningFarmJsons = this.storageHelper.miningFarmsJson;
+
+        miningFarmIds.forEach((id) => {
+            miningFarmJsons.find((json) => json.id === id).status = MiningFarmStatus.APPROVED;
+        })
+
+        this.storageHelper.miningFarmsJson = miningFarmJsons;
+        this.storageHelper.save();
+    }
+
 }
