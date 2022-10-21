@@ -12,6 +12,8 @@ import CreditMiningFarmPageState from '../stores/CreditMiningFarmPageState';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import RepoStore from '../../../../core/presentation/stores/RepoStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
+import StepReview from '../components/credit-farm/StepReview';
+import StepSuccess from '../components/credit-farm/StepSuccess';
 
 type Props = {
     accountSessionStore?: AccountSessionStore;
@@ -41,21 +43,51 @@ function CreditMiningFarmDetailsPage({ accountSessionStore, repoStore, appStore 
         },
     ];
 
+    function CreditHeading() {
+        if (state.isNewFarm === true) {
+            return (<>
+                <div className={'H3 Bold FullLine'}>Welcome to AuraPool</div>
+                <div className={'B1 FullLine'}>Follow the steps to create your Farm Profile</div>
+            </>)
+        }
+
+        return (<>
+            <div className={'H3 Bold FullLine'}>Edit Farm Profile</div>
+            <div className={'B1 FullLine'}>Review and update your Farm Profile details and submit for review.</div>
+        </>)
+    }
+
     return (
         <PageLayoutComponent className = { 'PageCreditMiningFarmDetails' }>
 
             <PageAdminHeader />
             <div className = { 'PageContent AppContent' } >
-                <NavRow navSteps={navSteps}/>
-                {state.miningFarmEntity !== null
-                && (<StepFarmDetails
-                    miningFarmEntity={state.miningFarmEntity}
-                    imageEntities={state.imageEntities}
-                    onClickContinue={state.setStepReview}
-                />)}
-                <div>CreditPage</div>
-            </div>
+                <div className={'RequestAdminAccountForm FlexColumn'}>
+                    {state.isStepSuccess() === false && (<NavRow navSteps={navSteps}/>)}
 
+                    {state.miningFarmEntity !== null && state.isStepFarmDetails() === true
+                    && (<>
+                        <CreditHeading />
+                        <StepFarmDetails
+                            miningFarmEntity={state.miningFarmEntity}
+                            imageEntities={state.imageEntities}
+                            onClickContinue={state.setStepReview}
+                        />
+                    </>)}
+                    {state.miningFarmEntity !== null && state.isStepReview() === true
+                    && (<StepReview
+                        adminEntity={accountSessionStore.adminEntity}
+                        miningFarmEntity={state.miningFarmEntity}
+                        imageEntities={state.imageEntities}
+                        onClickContinue={state.finishCreation}
+                        onClickBack={state.setStepFarmDetails}
+                    />)}
+
+                    {state.isStepSuccess() === true && (
+                        <StepSuccess adminEntity={accountSessionStore.adminEntity}/>
+                    )}
+                </div>
+            </div>
             <PageFooter />
 
         </PageLayoutComponent>

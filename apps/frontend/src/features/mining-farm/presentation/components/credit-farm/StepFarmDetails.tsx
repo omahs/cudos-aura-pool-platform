@@ -49,8 +49,6 @@ function StepFarmDetails({ alertStore, miningFarmEntity, imageEntities, onClickC
 
     return (
         <>
-            <div className={'H3 Bold FullLine'}>Welcome to AuraPool</div>
-            <div className={'B1 FullLine'}>Follow the steps to create your Farm Profile</div>
             <div className={'B2 Bold FullLine'}>1. Fill in the general farm details</div>
             <Input
                 label={'Farm Name'}

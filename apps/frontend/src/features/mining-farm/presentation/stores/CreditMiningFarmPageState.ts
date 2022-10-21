@@ -17,6 +17,7 @@ export default class CreditMiningFarmPageState {
     step: number;
     miningFarmEntity: MiningFarmEntity;
     imageEntities: ImageEntity[];
+    isNewFarm: boolean;
 
     constructor(accountSessionStore: AccountSessionStore, repoStore: RepoStore) {
         this.accountSessionStore = accountSessionStore;
@@ -25,6 +26,7 @@ export default class CreditMiningFarmPageState {
         this.setStepFarmDetails();
         this.miningFarmEntity = null;
         this.imageEntities = [];
+        this.isNewFarm = false;
 
         makeAutoObservable(this);
     }
@@ -36,6 +38,7 @@ export default class CreditMiningFarmPageState {
         if (miningFarmEntity === null) {
             miningFarmEntity = new MiningFarmEntity();
             miningFarmEntity.accountId = accountId;
+            this.isNewFarm = true;
         }
 
         this.miningFarmEntity = miningFarmEntity;

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import '../../styles/step-review.css';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
 import Button, { BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../../core/presentation/components/Button';
-import AdminEntity from '../../../entities/AdminEntity';
 import MiningFarmEntity from '../../../../mining-farm/entities/MiningFarmEntity';
 import ManufacturerEntity from '../../../../mining-farm/entities/ManufacturerEntity';
 import MinerEntity from '../../../../mining-farm/entities/MinerEntity';
@@ -13,6 +12,7 @@ import ImageEntity from '../../../../upload-file/entities/ImageEntity';
 import Checkbox from '../../../../../core/presentation/components/Checkbox';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Svg from '../../../../../core/presentation/components/Svg';
+import AdminEntity from '../../../../../features/accounts/entities/AdminEntity';
 
 type Props = {
     adminEntity: AdminEntity
