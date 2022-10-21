@@ -27,10 +27,10 @@ export default class AccountSessionStore {
 
         this.inited = false;
         this.approvedMiningFarm = false;
-        this.accountEntity = new AccountEntity();
-        this.userEntity = new UserEntity();
-        this.adminEntity = new AdminEntity();
-        this.superAdminEntity = new SuperAdminEntity();
+        this.accountEntity = null;
+        this.userEntity = null;
+        this.adminEntity = null;
+        this.superAdminEntity = null;
 
         makeAutoObservable(this);
     }
@@ -89,7 +89,11 @@ export default class AccountSessionStore {
 
     async logout(): Promise < void > {
         await this.walletStore.disconnect();
-        this.accountRepo.logout();
+        await this.accountRepo.logout();
+        this.accountEntity = null;
+        this.userEntity = null;
+        this.adminEntity = null;
+        this.superAdminEntity = null;
     }
 
     async confirmBitcoinAddress(): Promise < void > {
@@ -110,15 +114,24 @@ export default class AccountSessionStore {
         if (this.isUser() === true) {
             await this.walletStore.tryConnect();
 
-            if (this.userEntity.cudosWalletAddress !== this.walletStore.getAddress()) {
-                await this.walletStore.disconnect();
+            if (this.walletStore.isConnected() === true) {
+                if (this.userEntity.cudosWalletAddress !== this.walletStore.getAddress()) {
+                    await this.logout();
+                    window.location.reload();
+                    return;
+                }
             }
+
             console.log('Logged as user => wallet:', this.walletStore.isConnected())
         } else if (this.isAdmin() === true) {
             await this.walletStore.tryConnect();
 
-            if (this.adminEntity.cudosWalletAddress !== this.walletStore.getAddress()) {
-                await this.walletStore.disconnect();
+            if (this.walletStore.isConnected() === true) {
+                if (this.adminEntity.cudosWalletAddress !== this.walletStore.getAddress()) {
+                    await this.logout();
+                    window.location.reload();
+                    return;
+                }
             }
 
             const miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmBySessionAccountId();
