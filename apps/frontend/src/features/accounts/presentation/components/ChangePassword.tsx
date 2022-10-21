@@ -35,8 +35,7 @@ function ChangePassword({ appStore, accountSessionStore, repoStore }: Props) {
 
     useEffect(() => {
         appStore.useLoading(async () => {
-            const userEntity = accountSessionStore.userEntity;
-            selfRef.current.miningFarmEntity = await repoStore.miningFarmRepo.fetchMiningFarmByAccountId(userEntity.accountId);
+            selfRef.current.miningFarmEntity = await repoStore.miningFarmRepo.fetchMiningFarmBySessionAccountId();
             if (selfRef.current.miningFarmEntity == null) {
                 selfRef.current.miningFarmEntity = new MiningFarmEntity();
             }

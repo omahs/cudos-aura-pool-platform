@@ -38,8 +38,8 @@ export default class MiningFarmCreditPageStore {
         await this.fetch();
     }
 
-    async initByAccountId(accountId: string) {
-        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmByAccountId(accountId);
+    async initByAccountId() {
+        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmBySessionAccountId();
         this.collectionFilterModel.farmId = this.miningFarmEntity.id;
         await this.fetch();
     }

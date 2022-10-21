@@ -8,7 +8,7 @@ import PageAdminHeader from '../../../header/presentation/components/PageAdminHe
 import '../styles/page-credit-mining-farm-details.css';
 import NavRow, { NavStep } from '../../../../core/presentation/components/NavRow';
 import StepFarmDetails from '../components/credit-farm/StepFarmDetails';
-import CreditMiningFarmPageState from '../stores/CreditMiningFarmPageState';
+import CreditMiningFarmDetailsPageState from '../stores/CreditMiningFarmDetailsPageState';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import RepoStore from '../../../../core/presentation/stores/RepoStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
@@ -22,7 +22,7 @@ type Props = {
 }
 
 function CreditMiningFarmDetailsPage({ accountSessionStore, repoStore, appStore }: Props) {
-    const [state] = useState(new CreditMiningFarmPageState(accountSessionStore, repoStore));
+    const [state] = useState(new CreditMiningFarmDetailsPageState(accountSessionStore, repoStore));
 
     useEffect(() => {
         appStore.useLoading(() => {

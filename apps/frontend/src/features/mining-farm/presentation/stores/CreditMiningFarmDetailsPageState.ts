@@ -4,9 +4,9 @@ import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import AdminEntity from '../../../accounts/entities/AdminEntity';
 import ImageEntity from '../../../upload-file/entities/ImageEntity';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
-import RepoStore from 'apps/frontend/src/core/presentation/stores/RepoStore';
+import RepoStore from '../../../../core/presentation/stores/RepoStore';
 
-export default class CreditMiningFarmPageState {
+export default class CreditMiningFarmDetailsPageState {
     static STEP_FARM_DETAILS = 1;
     static STEP_REVIEW = 2;
     static STEP_SUCCESS = 3;
@@ -33,7 +33,7 @@ export default class CreditMiningFarmPageState {
 
     fetch = async () => {
         const accountId = this.accountSessionStore.accountEntity.accountId;
-        let miningFarmEntity = await this.repoStore.miningFarmRepo.fetchMiningFarmByAccountId(accountId);
+        let miningFarmEntity = await this.repoStore.miningFarmRepo.fetchMiningFarmBySessionAccountId();
 
         if (miningFarmEntity === null) {
             miningFarmEntity = new MiningFarmEntity();
