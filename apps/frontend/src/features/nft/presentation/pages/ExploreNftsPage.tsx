@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import NftEntity from '../../entities/NftEntity';
-import NftFilterModel, { HashPowerFilter, NftHashPowerFilter, NftPriceSortDirection } from '../../utilities/NftFilterModel';
+import NftFilterModel, { NftHashPowerFilter, NftPriceSortDirection } from '../../utilities/NftFilterModel';
 import ExploreNftsPageStore from '../stores/ExploreNftsPageStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 
@@ -74,47 +74,46 @@ function ExploreNftsPage({ appStore, exploreNftsPageStore }: Props) {
                     ) }>
 
                     <DataGridLayout
-                        header = { (
-                            <div className={'GridFilterHeader'}>
-                                <div className={'LeftHeaderPart FlexRow'}>
-                                    <Input
-                                        inputType={InputType.TEXT}
-                                        className={'SearchBar'}
-                                        value = {nftFilterModel.searchString}
-                                        onChange = { exploreNftsPageStore.onChangeSearchWord }
-                                        placeholder = {'Search Collections, Farms and accounts'}
-                                        InputProps={{
-                                            startAdornment: <InputAdornment position="start" >
-                                                <Svg svg={SearchIcon} />
-                                            </InputAdornment>,
-                                        }} />
-                                    <Select
-                                        label={'Hashing Power'}
-                                        onChange={exploreNftsPageStore.onChangeHashPowerFilter}
-                                        value={nftFilterModel.hashPowerFilter} >
-                                        <MenuItem value = { NftHashPowerFilter.NONE } > None</MenuItem>
-                                        <MenuItem value = { NftHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
-                                        <MenuItem value = { NftHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
-                                        <MenuItem value = { NftHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
-                                    </Select>
-                                    <Select
-                                        label={'Price'}
-                                        onChange={exploreNftsPageStore.onChangeSortPriceDirection}
-                                        value={nftFilterModel.sortPriceDirection} >
-                                        <MenuItem value = { NftPriceSortDirection.NONE } >None</MenuItem>
-                                        <MenuItem value = { NftPriceSortDirection.HIGH_TO_LOW } > Low to High </MenuItem>
-                                        <MenuItem value = { NftPriceSortDirection.LOW_TO_HIGH } > High to Low </MenuItem>
-                                    </Select>
-                                </div>
-                                <div></div>
+                        headerLeft = { (
+                            <>
+                                <Input
+                                    inputType={InputType.TEXT}
+                                    className={'SearchBar'}
+                                    value = {nftFilterModel.searchString}
+                                    onChange = { exploreNftsPageStore.onChangeSearchWord }
+                                    placeholder = {'Search Collections, Farms and accounts'}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start" >
+                                            <Svg svg={SearchIcon} />
+                                        </InputAdornment>,
+                                    }} />
                                 <Select
-                                    label={'Sort by'}
-                                    onChange={exploreNftsPageStore.onChangeSortKey}
-                                    value={nftFilterModel.sortKey} >
-                                    <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                                    <MenuItem value = { NftFilterModel.SORT_KEY_POPULAR } > Popular </MenuItem>
+                                    label={'Hashing Power'}
+                                    onChange={exploreNftsPageStore.onChangeHashPowerFilter}
+                                    value={nftFilterModel.hashPowerFilter} >
+                                    <MenuItem value = { NftHashPowerFilter.NONE } > None</MenuItem>
+                                    <MenuItem value = { NftHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
+                                    <MenuItem value = { NftHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
+                                    <MenuItem value = { NftHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
                                 </Select>
-                            </div>
+                                <Select
+                                    label={'Price'}
+                                    onChange={exploreNftsPageStore.onChangeSortPriceDirection}
+                                    value={nftFilterModel.sortPriceDirection} >
+                                    <MenuItem value = { NftPriceSortDirection.NONE } >None</MenuItem>
+                                    <MenuItem value = { NftPriceSortDirection.HIGH_TO_LOW } > Low to High </MenuItem>
+                                    <MenuItem value = { NftPriceSortDirection.LOW_TO_HIGH } > High to Low </MenuItem>
+                                </Select>
+                            </>
+                        ) }
+                        headerRight = { (
+                            <Select
+                                label={'Sort by'}
+                                onChange={exploreNftsPageStore.onChangeSortKey}
+                                value={nftFilterModel.sortKey} >
+                                <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                <MenuItem value = { NftFilterModel.SORT_KEY_POPULAR } > Popular </MenuItem>
+                            </Select>
                         ) } >
 
                         { exploreNftsPageStore.nftEntities === null && (

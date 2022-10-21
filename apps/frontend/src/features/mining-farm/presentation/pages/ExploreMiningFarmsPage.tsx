@@ -14,8 +14,6 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import Svg from '../../../../core/presentation/components/Svg';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import MiningFarmPeview from '../components/MiningFarmPreview';
@@ -75,46 +73,45 @@ function ExploreMiningFarmsPage({ appStore, exploreMiningFarmsPageStore }: Props
                     ) }>
 
                     <DataGridLayout
-                        header = { (
-                            <div className={'GridFilterHeader'}>
-                                <div className={'LeftHeaderPart FlexRow'}>
-                                    <Input
-                                        inputType={InputType.TEXT}
-                                        className={'SearchBar'}
-                                        value = {miningFarmFilterModel.searchString}
-                                        onChange = { exploreMiningFarmsPageStore.onChangeSearchWord}
-                                        placeholder = {'Search Collections name'}
-                                        InputProps={{
-                                            startAdornment: <InputAdornment position="start" >
-                                                <Svg svg={SearchIcon} />
-                                            </InputAdornment>,
-                                        }} />
-                                    <Select
-                                        label={'Hashing Power'}
-                                        onChange={exploreMiningFarmsPageStore.onChangeHashPowerFilter}
-                                        value={miningFarmFilterModel.hashPowerFilter} >
-                                        <MenuItem value = { MiningFarmHashPowerFilter.NONE } > None </MenuItem>
-                                        <MenuItem value = { MiningFarmHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
-                                        <MenuItem value = { MiningFarmHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
-                                        <MenuItem value = { MiningFarmHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
-                                    </Select>
-                                    <Select
-                                        label={'Price'}
-                                        onChange={exploreMiningFarmsPageStore.onChangeSortPriceDirection}
-                                        value={miningFarmFilterModel.sortPriceDirection} >
-                                        <MenuItem value = { MiningFarmPriceSortDirection.NONE } > None </MenuItem>
-                                        <MenuItem value = { MiningFarmPriceSortDirection.HIGH_TO_LOW } > Low to High </MenuItem>
-                                        <MenuItem value = { MiningFarmPriceSortDirection.LOW_TO_HIGH } > High to Low </MenuItem>
-                                    </Select>
-                                </div>
-                                <div></div>
+                        headerLeft = { (
+                            <>
+                                <Input
+                                    inputType={InputType.TEXT}
+                                    className={'SearchBar'}
+                                    value = {miningFarmFilterModel.searchString}
+                                    onChange = { exploreMiningFarmsPageStore.onChangeSearchWord}
+                                    placeholder = {'Search Collections name'}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start" >
+                                            <Svg svg={SearchIcon} />
+                                        </InputAdornment>,
+                                    }} />
                                 <Select
-                                    onChange={exploreMiningFarmsPageStore.onChangeSortKey}
-                                    value={miningFarmFilterModel.sortKey} >
-                                    <MenuItem value = { MiningFarmFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                                    <MenuItem value = { MiningFarmFilterModel.SORT_KEY_POPULAR } > Popular </MenuItem>
+                                    label={'Hashing Power'}
+                                    onChange={exploreMiningFarmsPageStore.onChangeHashPowerFilter}
+                                    value={miningFarmFilterModel.hashPowerFilter} >
+                                    <MenuItem value = { MiningFarmHashPowerFilter.NONE } > None </MenuItem>
+                                    <MenuItem value = { MiningFarmHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
+                                    <MenuItem value = { MiningFarmHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
+                                    <MenuItem value = { MiningFarmHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
                                 </Select>
-                            </div>
+                                <Select
+                                    label={'Price'}
+                                    onChange={exploreMiningFarmsPageStore.onChangeSortPriceDirection}
+                                    value={miningFarmFilterModel.sortPriceDirection} >
+                                    <MenuItem value = { MiningFarmPriceSortDirection.NONE } > None </MenuItem>
+                                    <MenuItem value = { MiningFarmPriceSortDirection.HIGH_TO_LOW } > Low to High </MenuItem>
+                                    <MenuItem value = { MiningFarmPriceSortDirection.LOW_TO_HIGH } > High to Low </MenuItem>
+                                </Select>
+                            </>
+                        ) }
+                        headerRight = { (
+                            <Select
+                                onChange={exploreMiningFarmsPageStore.onChangeSortKey}
+                                value={miningFarmFilterModel.sortKey} >
+                                <MenuItem value = { MiningFarmFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                <MenuItem value = { MiningFarmFilterModel.SORT_KEY_POPULAR } > Popular </MenuItem>
+                            </Select>
                         ) } >
 
                         { exploreMiningFarmsPageStore.miningFarmEntities === null && (

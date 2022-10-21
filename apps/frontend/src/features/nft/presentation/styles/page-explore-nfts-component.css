@@ -2,14 +2,3 @@
 .PageExploreNfts .PageContent {
     padding: 48px  var(--page-spacing-h);
 }
-
-.PageExploreNfts .PageContent .GridFilterHeader {
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
-}
-
-.PageExploreNfts .PageContent .GridFilterHeader .LeftHeaderPart {
-    justify-content: flex-start;
-    align-items: flex-end;
-    gap: 20px;
-}

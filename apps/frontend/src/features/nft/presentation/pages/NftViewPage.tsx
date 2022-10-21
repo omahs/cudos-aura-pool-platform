@@ -31,19 +31,19 @@ import '../styles/page-nft-view-component.css';
 
 type Props = {
     walletStore?: WalletStore;
-    nftViewPageStore?: ViewNftPageStore;
+    viewNftPageStore?: ViewNftPageStore;
     buyNftModalStore?: BuyNftModalStore;
     resellNftModalStore?: ResellNftModalStore;
 }
 
-function NftViewPage({ walletStore, nftViewPageStore, buyNftModalStore, resellNftModalStore }: Props) {
+function NftViewPage({ walletStore, viewNftPageStore, buyNftModalStore, resellNftModalStore }: Props) {
 
     const { nftId } = useParams();
     const navigate = useNavigate();
 
-    const nftEntity = nftViewPageStore.nftEntity;
-    const collectionEntity = nftViewPageStore.collectionEntity;
-    const miningFarmEntity = nftViewPageStore.miningFarm;
+    const nftEntity = viewNftPageStore.nftEntity;
+    const collectionEntity = viewNftPageStore.collectionEntity;
+    const miningFarmEntity = viewNftPageStore.miningFarm;
 
     // TODO: get crumbs from router
     const crumbs = [
@@ -53,7 +53,7 @@ function NftViewPage({ walletStore, nftViewPageStore, buyNftModalStore, resellNf
 
     useEffect(() => {
         async function run() {
-            await nftViewPageStore.init(nftId);
+            await viewNftPageStore.init(nftId);
         }
 
         run();
@@ -64,11 +64,11 @@ function NftViewPage({ walletStore, nftViewPageStore, buyNftModalStore, resellNf
     }
 
     function onClickBuyNft() {
-        buyNftModalStore.showSignal(nftEntity, nftViewPageStore.cudosPrice, collectionEntity.name);
+        buyNftModalStore.showSignal(nftEntity, viewNftPageStore.cudosPrice, collectionEntity.name);
     }
 
     function onClickResellNft() {
-        resellNftModalStore.showSignal(nftEntity, nftViewPageStore.cudosPrice, collectionEntity.name);
+        resellNftModalStore.showSignal(nftEntity, viewNftPageStore.cudosPrice, collectionEntity.name);
     }
 
     return (
@@ -149,13 +149,13 @@ function NftViewPage({ walletStore, nftViewPageStore, buyNftModalStore, resellNf
                                     <div className={'DataLabel'}>Estimated Profit per Day</div>
                                     <div className={'DataValue FlexRow'}>
                                     0.002 BTC
-                                        <div className={'SubPrice'}>${(0.002 * nftViewPageStore.bitcoinPrice).toFixed(2)}</div></div>
+                                        <div className={'SubPrice'}>${(0.002 * viewNftPageStore.bitcoinPrice).toFixed(2)}</div></div>
                                 </div>
                                 <div className={'DataRow FlexRow'}>
                                     <div className={'DataLabel'}>Estimated Profit per Week</div>
                                     <div className={'DataValue FlexRow'}>
                                     0.014 BTC
-                                        <div className={'SubPrice'}>${(0.014 * nftViewPageStore.bitcoinPrice).toFixed(2)}</div></div>
+                                        <div className={'SubPrice'}>${(0.014 * viewNftPageStore.bitcoinPrice).toFixed(2)}</div></div>
                                 </div>
                                 <div className={'DataRow FlexRow'}>
                                     <div className={'DataLabel'}>Estimated Profit per Month</div>
@@ -182,15 +182,15 @@ function NftViewPage({ walletStore, nftViewPageStore, buyNftModalStore, resellNf
                                     <div className={'DataValue NftPrice FlexRow'}>
                                         <Svg svg={SvgCudos}/>
                                         <div className={'H3 Bold'}>{nftEntity.price.toFixed(0)} CUDOS</div>
-                                        <div className={'SubPrice B2 SemiBold'}>{nftViewPageStore.getNftPriceText()}</div>
+                                        <div className={'SubPrice B2 SemiBold'}>{viewNftPageStore.getNftPriceText()}</div>
                                     </div>
                                 </div>
                                 { walletStore.isConnected() && (
                                     <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
-                                        { nftViewPageStore.isNftListed() === true && (
+                                        { viewNftPageStore.isNftListed() === true && (
                                             <Button onClick={onClickBuyNft}>Buy now for {nftEntity.price.toFixed(0)} CUDOS </Button>
                                         ) }
-                                        { nftViewPageStore.isNftListed() === false && nftViewPageStore.isOwner(walletStore.getAddress()) && (
+                                        { viewNftPageStore.isNftListed() === false && viewNftPageStore.isOwner(walletStore.getAddress()) && (
                                             <Button onClick={onClickResellNft}>Resell NFT</Button>
                                         ) }
                                     </Actions>
@@ -203,15 +203,15 @@ function NftViewPage({ walletStore, nftViewPageStore, buyNftModalStore, resellNf
                     <DataGridLayout
                         header = { null } >
 
-                        { nftViewPageStore.nftEntities === null && (
+                        { viewNftPageStore.nftEntities === null && (
                             <LoadingIndicator />
                         ) }
 
-                        { nftViewPageStore.nftEntities !== null && (
+                        { viewNftPageStore.nftEntities !== null && (
                             <GridView
-                                gridViewState={nftViewPageStore.gridViewState}
+                                gridViewState={viewNftPageStore.gridViewState}
                                 defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}>
-                                { nftViewPageStore.nftEntities.map((nftEntityRef: NftEntity) => {
+                                { viewNftPageStore.nftEntities.map((nftEntityRef: NftEntity) => {
                                     return (
                                         <NftPreview
                                             key={nftEntityRef.id}
