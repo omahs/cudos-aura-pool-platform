@@ -6,7 +6,7 @@ import CreditCollectionStore from '../../stores/CreditCollectionStore';
 import '../../styles/collection-details-form.css';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
+import Button, { BUTTON_PADDING, BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
 import UploaderComponent from '../../../../../core/presentation/components/UploaderComponent';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Input, { InputType } from '../../../../../core/presentation/components/Input';
@@ -15,19 +15,12 @@ import InfoGrayBox from '../../../../../core/presentation/components/InfoGrayBox
 import Checkbox from '../../../../../core/presentation/components/Checkbox';
 
 type Props = {
+    onClickNextStep: () => void
     creditCollectionStore?: CreditCollectionStore;
 }
 
-function CollectionDetailsForm({ creditCollectionStore }: Props) {
+function CollectionDetailsForm({ onClickNextStep, creditCollectionStore }: Props) {
     const collectionEntity = creditCollectionStore.collectionEntity;
-
-    function isProfilePictureEmpty() {
-        return collectionEntity.profileImgUrl === S.Strings.EMPTY
-    }
-
-    function isCoverPictureEmpty() {
-        return collectionEntity.coverImgUrl === S.Strings.EMPTY
-    }
 
     return (
         <div className={'CollectionDetailsForm FlexColumn'}>
@@ -38,9 +31,9 @@ function CollectionDetailsForm({ creditCollectionStore }: Props) {
                 style={{
                     backgroundImage: `url("${collectionEntity.profileImgUrl}")`,
                 }}
-                className={`MainImagePreview ImagePreview FlexRow ${S.CSS.getClassName(isProfilePictureEmpty(), 'Empty')}`}
+                className={`MainImagePreview ImagePreview FlexRow ${S.CSS.getClassName(creditCollectionStore.isProfilePictureEmpty(), 'Empty')}`}
             >
-                {isProfilePictureEmpty() === true && (
+                {creditCollectionStore.isProfilePictureEmpty() === true && (
                     <div className={'EmptyPictureSvg'}>
                         <Svg svg={InsertPhotoIcon} size={SvgSize.CUSTOM}/>
                     </div>
@@ -76,9 +69,9 @@ function CollectionDetailsForm({ creditCollectionStore }: Props) {
                 style={{
                     backgroundImage: `url("${collectionEntity.coverImgUrl}")`,
                 }}
-                className={`BannerImagePreview ImagePreview FlexRow ${S.CSS.getClassName(isCoverPictureEmpty(), 'Empty')}`}
+                className={`BannerImagePreview ImagePreview FlexRow ${S.CSS.getClassName(creditCollectionStore.isCoverPictureEmpty(), 'Empty')}`}
             >
-                {isCoverPictureEmpty() === true && (
+                {creditCollectionStore.isCoverPictureEmpty() === true && (
                     <div className={'EmptyPictureSvg'}>
                         <Svg svg={InsertPhotoIcon} size={SvgSize.CUSTOM}/>
                     </div>
@@ -135,7 +128,7 @@ function CollectionDetailsForm({ creditCollectionStore }: Props) {
                     label={<TextWithTooltip text={'Secondary Sale Royalties'} tooltipText={'Secondary Sale Royalties'} />}
                     placeholder={'Enter royalties...'}
                     value={creditCollectionStore.getCollectionRoyaltiesInputValue()}
-                    type={InputType.INTEGER}
+                    inputType={InputType.INTEGER}
                     onChange={creditCollectionStore.onChangeCollectionRoyalties}
                 />
                 <div className={'InputInfoLabel'}>Suggested: 0%, 1%, 2%, 6%. Maxium: 10%.</div>
@@ -146,7 +139,7 @@ function CollectionDetailsForm({ creditCollectionStore }: Props) {
                     label={<TextWithTooltip text={'Maintenance Fees (per month)'} tooltipText={'Maintenance Fees (per month)'} />}
                     placeholder={'Enter royalties...'}
                     value={creditCollectionStore.getCollectionMaintenanceFeesInputValue()}
-                    type={InputType.INTEGER}
+                    inputType={InputType.INTEGER}
                     onChange={creditCollectionStore.onChangeMaintenanceFees}
                 />
                 <div className={'InputInfoLabel'}>Maintenance fee calculation formula:</div>
@@ -175,6 +168,10 @@ function CollectionDetailsForm({ creditCollectionStore }: Props) {
                 value={creditCollectionStore.getPricePerNft()}
                 onChange={creditCollectionStore.onChangePricePerNft}
             />
+
+            <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}>
+                <Button padding={BUTTON_PADDING.PADDING_48} onClick={onClickNextStep}>NextStep</Button>
+            </Actions>
         </div>
     )
 }

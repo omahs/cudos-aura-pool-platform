@@ -43,6 +43,6 @@ export default function Actions({ className, height, layout, children }: React.P
 
 Actions.defaultProps = {
     className: '',
-    height: ACTIONS_HEIGHT.HEIGHT_32,
+    height: ACTIONS_HEIGHT.HEIGHT_48,
     layout: ACTIONS_LAYOUT.LAYOUT_ROW_LEFT,
 }

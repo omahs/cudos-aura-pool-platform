@@ -71,7 +71,7 @@ const userProfilePageStore = new UserProfilePageStore(walletStore, nftRepo, coll
 
 const creditMiningFarmDetailsPageStore = new CreditMiningFarmDetailsPageStore(accountSessionStore, miningFarmRepo);
 const creditCollectionNftsPageStore = new CreditCollectionNftsPageStore(accountSessionStore, miningFarmRepo, collectionRepo);
-const creditCollectionStore = new CreditCollectionStore(accountSessionStore, collectionRepo);
+const creditCollectionStore = new CreditCollectionStore(accountSessionStore, collectionRepo, nftRepo);
 
 const editMiningFarmModalStore = new EditMiningFarmModalStore(miningFarmRepo);
 const creditCollectionSuccessModalStore = new CreditCollectionSuccessModalStore();

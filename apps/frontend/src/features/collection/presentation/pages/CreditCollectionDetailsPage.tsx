@@ -11,7 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import CollectionDetailsForm from '../components/credit-collection/CollectionDetailsForm';
-import NftCreditSidePreview from '../components/credit-collection/NftCreditSidePreview';
+import CollectionCreditSidePreview, { CollectionCreditSidePreviewSize } from '../components/credit-collection/CollectionCreditSidePreview';
 import AddNftsForm from '../components/credit-collection/AddNftsForm';
 import FinishCreditForm from '../components/credit-collection/FinishCreditForm';
 import NavRow from '../../../../core/presentation/components/NavRow';
@@ -37,7 +37,7 @@ function CreditCollectionDetailsPage({ creditCollectionStore, appStore }: Props)
 
     useEffect(() => {
         appStore.useLoading(async () => {
-            await creditCollectionStore.fetch(collectionId);
+            await creditCollectionStore.init(collectionId);
         })
     }, []);
 
@@ -84,19 +84,27 @@ function CreditCollectionDetailsPage({ creditCollectionStore, appStore }: Props)
                         && (<>
                             <div className={'Grid FormAndPreviewContainer'}>
                                 <div className={'FormContainer FlexColumn'}>
-                                    <NavRow navSteps={navSteps} />
+                                    <NavRow className={'FormNav'} navSteps={navSteps} />
 
                                     {step === CreditCollectionDetailsSteps.COLLECTION_DETAILS && (
-                                        <CollectionDetailsForm />
+                                        <CollectionDetailsForm onClickNextStep={() => setStep(CreditCollectionDetailsSteps.ADD_NFTS)} />
                                     )}
                                     {step === CreditCollectionDetailsSteps.ADD_NFTS && (
                                         <AddNftsForm />
                                     )}
-                                    {step === CreditCollectionDetailsSteps.ADD_NFTS && (
+                                    {step === CreditCollectionDetailsSteps.FINISH && (
                                         <FinishCreditForm />
                                     )}
                                 </div>
-                                <NftCreditSidePreview />
+                                {step === CreditCollectionDetailsSteps.COLLECTION_DETAILS && (
+                                    <CollectionCreditSidePreview size={CollectionCreditSidePreviewSize.SMALL}/>
+                                )}
+                                {step === CreditCollectionDetailsSteps.ADD_NFTS && (
+                                    <AddNftsForm />
+                                )}
+                                {step === CreditCollectionDetailsSteps.FINISH && (
+                                    <CollectionCreditSidePreview />
+                                )}
                             </div>
                             {step === CreditCollectionDetailsSteps.ADD_NFTS && (
                                 <CollectionAddNftsTable />

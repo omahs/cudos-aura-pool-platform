@@ -4,6 +4,7 @@ import '../styles/nav-row.css';
 
 type Props = {
     navSteps: NavStep[];
+    className?: string;
 }
 
 export type NavStep = {
@@ -12,9 +13,9 @@ export type NavStep = {
     isActive: boolean;
 }
 
-export default function NavRow({ navSteps }: Props) {
+export default function NavRow({ className, navSteps }: Props) {
     return (
-        <div className={'FlexRow NavBar'}>
+        <div className={`FlexRow NavBar ${className}`}>
             {navSteps.map((navStep: NavStep) => {
                 return (<div
                     key={navStep.navNumber}

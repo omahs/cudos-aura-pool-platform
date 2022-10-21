@@ -1,37 +1,68 @@
-import RepoStore from '../../../../../core/presentation/stores/RepoStore';
-import AccountSessionStore from '../../../../accounts/presentation/stores/AccountSessionStore';
 import { observer } from 'mobx-react';
 import React from 'react';
-import CollectionEntity from '../../../entities/CollectionEntity';
-import AddNftsToCollectionStepState from '../../stores/AddNftsToCollectionPageState copy';
 import '../../styles/add-nfts-form.css';
+import CreditCollectionStore from '../../stores/CreditCollectionStore';
+import Svg, { SvgSize } from '../../../../../core/presentation/components/Svg';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
+import Button, { BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
+import UploaderComponent from '../../../../../core/presentation/components/UploaderComponent';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 type Props = {
-    navSteps: {stepNumber: number, stepName: string}[];
-    collectionEntity: CollectionEntity;
-    accountSessionStore: AccountSessionStore;
+    onClickNextStep: () => void
+    creditCollectionStore?: CreditCollectionStore;
 }
-function AddNftsForm({ navSteps, collectionEntity }: Props) {
-    // const [addNftsToCollectionStepState] = new AddNftsToCollectionStepState(collectionEntity, repoStore, accountSessionStore);
 
-    // return (
-    //     <div className={'AddNftsForm'} >
-    //         {addNftsToCollectionPageState.isCollectionEditable() === false && (<CollectionNotEditableContent/>)}
-    //         {addNftsToCollectionPageState.isCollectionEditable() === true && (
-    //             <div className={'NftAddContainer FlexRow'}>
-    //                 <div className={'NftAddForm FlexColumn'}>
+function AddNftsForm({ onClickNextStep, creditCollectionStore }: Props) {
+    const nftEntities = creditCollectionStore.nftEntities;
+    const selectedNftEntity = creditCollectionStore.selectedNftEntity;
 
-    //                 </div>
-    //             </div>
-    //         )}
-    //     </div>
-    // )
+    return (
+        <div className={'AddNftsForm FlexColumn'}>
+            <div className={'H3 Bold'}>Add NFTs to Collection</div>
+            <div className={'B1'}>Fill in the needed information for the NFTs.</div>
+            <div className={'HorizontalSeparator'}></div>
+            <div
+                style={{
+                    backgroundImage: `url("${selectedNftEntity.imageUrl}")`,
+                }}
+                className={`MainImagePreview ImagePreview FlexRow ${S.CSS.getClassName(creditCollectionStore.isSelectedNftImageEmpty(), 'Empty')}`}
+            >
+                {creditCollectionStore.isSelectedNftImageEmpty() === true && (
+                    <div className={'EmptyPictureSvg'}>
+                        <Svg svg={InsertPhotoIcon} size={SvgSize.CUSTOM}/>
+                    </div>
+                )}
+            </div>
+            <div className={'ImageLabel FlexColumn'}>
+                <div className={'B2 Bold'}>Main Image</div>
+                <div className={'B3 SemiBold'}>File Format: <span className={'Gray'}>.svg, .png, .jpeg, .gif</span></div>
+            </div>
+            <div className={'B1 SemiBold'}>600 x 400 recommended</div>
+            <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_LEFT} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                <Button
+                    radius={BUTTON_RADIUS.RADIUS_16}
+                >
+                    <Svg svg={FileUploadIcon}/>
+                        Upload file
+                    <UploaderComponent
+                        id = { this }
+                        params = { {
+                            'maxSize': 73400320, // 70MB
+                            'onExceedLimit': () => {
+                                this.props.alertStore.show('', 'Максималният размер на файловете е 70MB!');
+                            },
+                            'multi': true,
+                            onReadFileAsBase64: (base64File, responseData, files: any[], i: number) => {
+                                selectedNftEntity.imageUrl = base64File;
+                            },
+                        } } />
+                </Button>
+            </Actions>
+        </div>
+    )
 
-    // function CollectionNotEditableContent() {
-    //     return (<div className={'NotEditableContent'}>
-    //         Collection is either not yours or is already approved. You can't add NFTs to it.
-    //     </div>)
-    // }
 }
 
 export default (observer(AddNftsForm));

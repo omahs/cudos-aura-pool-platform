@@ -4,31 +4,71 @@ import AccountSessionStore from '../../../accounts/presentation/stores/AccountSe
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../repos/CollectionRepo';
 import BigNumber from 'bignumber.js';
+import NftEntity from '../../../nft/entities/NftEntity';
+import NftRepo from '../../../nft/presentation/repos/NftRepo';
+import NftFilterModel from '../../../nft/utilities/NftFilterModel';
 
 export default class CreditCollectionNftsPageStore {
     accountSessionStore: AccountSessionStore;
-    collectionRepo: CollectionRepo
+    collectionRepo: CollectionRepo;
+    nftRepo: NftRepo;
 
     collectionEntity: CollectionEntity;
+    nftEntities: NftEntity[];
+    selectedNftEntity: NftEntity;
+
     defaultHashAndPriceValues: number;
     hashPowerPerNft: number;
     pricePerNft: number;
 
-    constructor(accountSessionStore: AccountSessionStore, collectionRepo: CollectionRepo) {
+    constructor(accountSessionStore: AccountSessionStore, collectionRepo: CollectionRepo, nftRepo: NftRepo) {
         this.accountSessionStore = accountSessionStore;
         this.collectionRepo = collectionRepo;
+        this.nftRepo = nftRepo;
 
-        this.collectionEntity = null;
-        this.defaultHashAndPriceValues = S.INT_FALSE;
-        this.hashPowerPerNft = S.NOT_EXISTS;
-        this.pricePerNft = S.NOT_EXISTS;
+        this.nullate();
 
         makeAutoObservable(this);
     }
 
+    init = async (collectionId: string) => {
+        this.nullate();
+
+        this.fetch(collectionId);
+    }
+
+    nullate() {
+        this.collectionEntity = null;
+        this.nftEntities = [];
+        this.selectedNftEntity = null;
+
+        this.defaultHashAndPriceValues = S.INT_FALSE;
+        this.hashPowerPerNft = S.NOT_EXISTS;
+        this.pricePerNft = S.NOT_EXISTS;
+    }
+
     async fetch(collectionId: string) {
-        const collectionEntity = await this.collectionRepo.fetchCollectionById(collectionId);
-        this.collectionEntity = collectionEntity;
+        this.collectionEntity = await this.collectionRepo.fetchCollectionById(collectionId);
+        const nftFilter = new NftFilterModel();
+        nftFilter.collectionId = collectionId;
+        nftFilter.count = Number.MAX_SAFE_INTEGER;
+
+        const { nftEntities } = await this.nftRepo.fetchNftsByFilter(nftFilter);
+        this.nftEntities = nftEntities;
+
+        this.selectedNftEntity = new NftEntity();
+    }
+
+    isSelectedNftImageEmpty(): boolean {
+        return this.selectedNftEntity.imageUrl === S.Strings.EMPTY
+    }
+
+    isProfilePictureEmpty(): boolean {
+        return this.collectionEntity.profileImgUrl === S.Strings.EMPTY
+    }
+
+    isCoverPictureEmpty(): boolean {
+        return this.collectionEntity.coverImgUrl === S.Strings.EMPTY
     }
 
     onChangeCollectionName = (name: string) => {
