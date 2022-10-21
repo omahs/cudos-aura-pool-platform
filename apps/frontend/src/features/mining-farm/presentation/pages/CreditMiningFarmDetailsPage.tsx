@@ -44,7 +44,7 @@ function CreditMiningFarmDetailsPage({ accountSessionStore, repoStore, appStore 
     ];
 
     function CreditHeading() {
-        if (state.isNewFarm === true) {
+        if (state.miningFarmEntity.isNew() === true) {
             return (<>
                 <div className={'H3 Bold FullLine'}>Welcome to AuraPool</div>
                 <div className={'B1 FullLine'}>Follow the steps to create your Farm Profile</div>

@@ -52,6 +52,10 @@ export default class MiningFarmEntity {
         makeAutoObservable(this);
     }
 
+    isNew(): boolean {
+        return this.id === S.Strings.EMPTY;
+    }
+
     isApproved(): boolean {
         return this.status === MiningFarmStatus.APPROVED;
     }
