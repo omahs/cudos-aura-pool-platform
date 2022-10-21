@@ -67,8 +67,10 @@ export default class CreditMiningFarmDetailsPageState {
 
     finishCreation = async () => {
         this.miningFarmEntity.accountId = this.accountSessionStore.accountEntity.accountId;
+        this.miningFarmEntity.markApproved();
         await this.miningFarmRepo.creditMiningFarm(this.miningFarmEntity);
 
+        console.log(this.miningFarmEntity);
         runInAction(() => {
             this.setStepSuccess();
         });
