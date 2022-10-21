@@ -32,8 +32,12 @@ export default class CreditMiningFarmPageStore {
         makeAutoObservable(this);
     }
 
-    async init(farmId: string) {
-        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(farmId);
+    async init(farmId = '') {
+        if (farmId === '') {
+            this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmBySessionAccountId();
+        } else {
+            this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(farmId);
+        }
         this.collectionFilterModel.farmId = this.miningFarmEntity.id;
         await this.fetch();
     }
@@ -49,6 +53,7 @@ export default class CreditMiningFarmPageStore {
 
         this.collectionFilterModel.from = this.gridViewState.getFrom();
         this.collectionFilterModel.count = this.gridViewState.getItemsPerPage();
+        console.log(this.collectionFilterModel.farmId);
 
         const { collectionEntities, total } = await this.collectionRepo.fetchCollectionsByFilter(this.collectionFilterModel);
         const miningFarmEntities = await this.miningFarmRepo.fetchMiningFarmsByIds(collectionEntities.map((collectionEntity) => {

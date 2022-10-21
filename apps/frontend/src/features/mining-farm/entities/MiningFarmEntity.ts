@@ -44,8 +44,8 @@ export default class MiningFarmEntity {
         this.machinesLocation = S.Strings.EMPTY;
         this.poolFee = S.NOT_EXISTS;
         this.powerConsumptionPerTh = S.NOT_EXISTS;
-        this.profileImgUrl = S.Strings.EMPTY;
-        this.coverImgUrl = S.Strings.EMPTY;
+        this.profileImgUrl = '/assets/temp/profile-preview.png';
+        this.coverImgUrl = '/assets/temp/profile-cover.png';
         this.farmPhotoUrls = [];
         this.status = MiningFarmStatus.NOT_APPROVED;
 

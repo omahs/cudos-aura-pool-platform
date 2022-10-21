@@ -138,7 +138,7 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
                                     <Button
                                         disabled = { rewardsCalculatorStore.isDefault() }
                                         onClick={onClickResetValues}>
-                                        <Svg className = { 'ButtonSvg' } size = { SvgSize.CUSTOM } svg={SvgReplayIcon} />
+                                        <Svg size = { SvgSize.CUSTOM } svg={SvgReplayIcon} />
                                         Reset values
                                     </Button>
                                 </Actions>

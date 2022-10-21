@@ -25,7 +25,7 @@ import Button, { BUTTON_COLOR } from '../../../../core/presentation/components/B
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../../../collection/presentation/components/CollectionPreview';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
-import Svg from '../../../../core/presentation/components/Svg';
+import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
 import Input from '../../../../core/presentation/components/Input';
 
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -44,12 +44,6 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
     const { farmId } = useParams();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        appStore.useLoading(async () => {
-            await creditMiningFarmPageStore.init(farmId);
-        });
-    }, []);
-
     const miningFarmEntity = creditMiningFarmPageStore.miningFarmEntity;
     const collectionFilterModel = creditMiningFarmPageStore.collectionFilterModel;
 
@@ -59,8 +53,19 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
         { name: `Farm Owner: ${miningFarmEntity?.name ?? ''}`, onClick: () => {} },
     ]
 
-    function onClickEditProfile() {
+    useEffect(() => {
+        appStore.useLoading(async () => {
+            await creditMiningFarmPageStore.init(farmId);
+        });
+    }, []);
+
+    function onClickProfileImages() {
         editMiningFarmModalStore.showSignal(miningFarmEntity);
+
+    }
+
+    function onClickEditProfile() {
+        navigate(AppRoutes.CREDIT_MINING_FARM_DETAILS);
     }
 
     function onClickCreateCollection() {
@@ -83,20 +88,27 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
 
             { miningFarmEntity !== null && (
                 <div className={'PageContent AppContent'} >
-                    <Breadcrumbs crumbs={crumbs}/>
+                    { farmId !== undefined && (
+                        <Breadcrumbs crumbs={crumbs}/>
+                    ) }
                     <ProfileHeader coverPictureUrl={miningFarmEntity.coverImgUrl} profilePictureUrl={miningFarmEntity.profileImgUrl} />
 
-                    {accountSessionStore.isAdmin() === true
-                        && accountSessionStore.accountEntity.accountId === miningFarmEntity.accountId
-                        && (<Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_RIGHT}>
+                    { accountSessionStore.isAdmin() === true && accountSessionStore.accountEntity.accountId === miningFarmEntity.accountId && (
+                        <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}>
+                            <Button
+                                onClick={onClickProfileImages}
+                                color={BUTTON_COLOR.SCHEME_3} >
+                                <Svg size = { SvgSize.CUSTOM } svg={BorderColorIcon} />
+                                Profile images
+                            </Button>
                             <Button
                                 onClick={onClickEditProfile}
-                                color={BUTTON_COLOR.SCHEME_3}
-                            >
-                                <Svg svg={BorderColorIcon} />
+                                color={BUTTON_COLOR.SCHEME_3} >
+                                <Svg size = { SvgSize.CUSTOM } svg={BorderColorIcon} />
                                 Edit Profile
                             </Button>
-                        </Actions>)}
+                        </Actions>
+                    ) }
                     <div className={'H2'}>{miningFarmEntity.name}</div>
                     <div className={'Grid GridColumns2'}>
                         <div className={'FarmDescription'}>{miningFarmEntity.description}</div>

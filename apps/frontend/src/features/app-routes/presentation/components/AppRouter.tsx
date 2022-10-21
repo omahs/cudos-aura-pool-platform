@@ -63,7 +63,7 @@ function AppRouter({ accountSessionStore }: Props) {
                 return <CreditMiningFarmDetailsPage />
             }
 
-            return <MarketplacePage />;
+            return <CreditMiningFarmPage />;
         }
 
         if (accountSessionStore.isSuperAdmin() === true) {

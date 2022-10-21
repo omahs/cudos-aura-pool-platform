@@ -1,16 +1,7 @@
 .PageCreditMiningFarmDetails .PageContent {
-    display: flex;
-    justify-content: center;
+    padding: 48px var(--page-spacing-h);
 }
 
-.PageCreditMiningFarmDetails .PageContent .FormContainer{
-    justify-self: center;
-    align-self: center;
-    width: 640px;
-    gap: 40px;
-    align-items: center;
-}
-
-.PageCreditMiningFarmDetails .PageContent .FullLine{
-    width: 100%;
+.PageCreditMiningFarmDetails .PageContent .NavRow {
+    margin-bottom: 40px;
 }

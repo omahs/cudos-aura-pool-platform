@@ -13,7 +13,10 @@ import AccountSessionStore from '../../../accounts/presentation/stores/AccountSe
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import StepReview from '../components/credit-farm/StepReview';
 import StepSuccess from '../components/credit-farm/StepSuccess';
-import BorderShadowPaddingContainer from '../../../../core/presentation/components/BorderShadowPaddingContainer';
+import BorderShadowPaddingContainer, { ContainerWidth } from '../../../../core/presentation/components/BorderShadowPaddingContainer';
+import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
+import S from '../../../../core/utilities/Main';
+import AnimationContainer from '../../../../core/presentation/components/AnimationContainer';
 
 type Props = {
     creditMiningFarmDetailsPageStore?: CreditMiningFarmDetailsPageState;
@@ -59,33 +62,40 @@ function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, account
         <PageLayoutComponent className = { 'PageCreditMiningFarmDetails' }>
 
             <PageAdminHeader />
+
             <div className = { 'PageContent AppContent' } >
-                <BorderShadowPaddingContainer className={'FormContainer FlexColumn'}>
-                    {creditMiningFarmDetailsPageStore.isStepSuccess() === false && (<NavRow navSteps={navSteps}/>)}
 
-                    {creditMiningFarmDetailsPageStore.miningFarmEntity !== null && creditMiningFarmDetailsPageStore.isStepFarmDetails() === true
-                    && (<>
-                        <CreditHeading />
-                        <StepFarmDetails
-                            miningFarmEntity={creditMiningFarmDetailsPageStore.miningFarmEntity}
-                            imageEntities={creditMiningFarmDetailsPageStore.imageEntities}
-                            onClickContinue={creditMiningFarmDetailsPageStore.setStepReview}
-                        />
-                    </>)}
-                    {creditMiningFarmDetailsPageStore.miningFarmEntity !== null && creditMiningFarmDetailsPageStore.isStepReview() === true
-                    && (<StepReview
-                        adminEntity={accountSessionStore.adminEntity}
-                        miningFarmEntity={creditMiningFarmDetailsPageStore.miningFarmEntity}
-                        imageEntities={creditMiningFarmDetailsPageStore.imageEntities}
-                        onClickContinue={creditMiningFarmDetailsPageStore.finishCreation}
-                        onClickBack={creditMiningFarmDetailsPageStore.setStepFarmDetails}
-                    />)}
+                { creditMiningFarmDetailsPageStore.miningFarmEntity === null && (
+                    <LoadingIndicator />
+                ) }
 
-                    {creditMiningFarmDetailsPageStore.isStepSuccess() === true && (
-                        <StepSuccess adminEntity={accountSessionStore.adminEntity}/>
-                    )}
-                </BorderShadowPaddingContainer>
+                { creditMiningFarmDetailsPageStore.miningFarmEntity !== null && (
+                    <BorderShadowPaddingContainer className={'FormContainer FlexColumn'} containerWidth = { ContainerWidth.MEDIUM } >
+
+                        <div className = { 'NavRow' } >
+                            { creditMiningFarmDetailsPageStore.isStepSuccess() === false && (
+                                <NavRow navSteps={navSteps}/>
+                            ) }
+                        </div>
+
+                        <AnimationContainer className = { 'Step StepDetails' } active = { creditMiningFarmDetailsPageStore.isStepFarmDetails() }>
+                            <CreditHeading />
+                            <StepFarmDetails />
+                        </AnimationContainer>
+
+                        <AnimationContainer className = { 'Step StepReview' } active = { creditMiningFarmDetailsPageStore.isStepReview() }>
+                            <StepReview />
+                        </AnimationContainer>
+
+                        <AnimationContainer className = { 'Step StepSuccess' } active = { creditMiningFarmDetailsPageStore.isStepSuccess() } >
+                            <StepSuccess />
+                        </AnimationContainer>
+
+                    </BorderShadowPaddingContainer>
+                ) }
+
             </div>
+
             <PageFooter />
 
         </PageLayoutComponent>

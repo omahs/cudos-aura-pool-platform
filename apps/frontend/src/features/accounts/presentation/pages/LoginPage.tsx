@@ -16,6 +16,7 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import Box, { BoxWidth } from '../../../../core/presentation/components/Box';
 import PageAdminHeader from '../../../header/presentation/components/PageAdminHeader';
+import BorderShadowPaddingContainer, { ContainerWidth } from '../../../../core/presentation/components/BorderShadowPaddingContainer';
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -65,7 +66,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
 
             <div className = { 'PageContent AppContent' } >
 
-                <Box boxWidth = { BoxWidth.SMALL } >
+                <BorderShadowPaddingContainer containerWidth = { ContainerWidth.SMALL } >
                     <div className={'Title H2 Bold'}>Log in</div>
                     <div className={'Subtitle'}>Fill your credentials in order to access your account</div>
 
@@ -106,7 +107,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
                     <div className={'BottomAction B2 Clickable'} onClick={onClickRegister}>
                         You don’t have account? <span className = { 'Bold' }>Request Admin Account</span>
                     </div>
-                </Box>
+                </BorderShadowPaddingContainer>
 
             </div>
 

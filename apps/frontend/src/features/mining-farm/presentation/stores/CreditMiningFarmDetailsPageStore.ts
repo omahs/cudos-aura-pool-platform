@@ -2,10 +2,9 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import ImageEntity from '../../../upload-file/entities/ImageEntity';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
-import RepoStore from '../../../../core/presentation/stores/RepoStore';
 import MiningFarmRepo from '../repos/MiningFarmRepo';
 
-export default class CreditMiningFarmDetailsPageState {
+export default class CreditMiningFarmDetailsPageStore {
 
     static STEP_FARM_DETAILS = 1;
     static STEP_REVIEW = 2;
@@ -42,27 +41,27 @@ export default class CreditMiningFarmDetailsPageState {
     }
 
     setStepFarmDetails = () => {
-        this.step = CreditMiningFarmDetailsPageState.STEP_FARM_DETAILS;
+        this.step = CreditMiningFarmDetailsPageStore.STEP_FARM_DETAILS;
     }
 
     setStepReview = () => {
-        this.step = CreditMiningFarmDetailsPageState.STEP_REVIEW;
+        this.step = CreditMiningFarmDetailsPageStore.STEP_REVIEW;
     }
 
     setStepSuccess = () => {
-        this.step = CreditMiningFarmDetailsPageState.STEP_SUCCESS;
+        this.step = CreditMiningFarmDetailsPageStore.STEP_SUCCESS;
     }
 
     isStepFarmDetails(): boolean {
-        return this.step === CreditMiningFarmDetailsPageState.STEP_FARM_DETAILS;
+        return this.step === CreditMiningFarmDetailsPageStore.STEP_FARM_DETAILS;
     }
 
     isStepReview(): boolean {
-        return this.step === CreditMiningFarmDetailsPageState.STEP_REVIEW;
+        return this.step === CreditMiningFarmDetailsPageStore.STEP_REVIEW;
     }
 
     isStepSuccess(): boolean {
-        return this.step === CreditMiningFarmDetailsPageState.STEP_SUCCESS;
+        return this.step === CreditMiningFarmDetailsPageStore.STEP_SUCCESS;
     }
 
     finishCreation = async () => {
@@ -70,7 +69,6 @@ export default class CreditMiningFarmDetailsPageState {
         this.miningFarmEntity.markApproved();
         await this.miningFarmRepo.creditMiningFarm(this.miningFarmEntity);
 
-        console.log(this.miningFarmEntity);
         runInAction(() => {
             this.setStepSuccess();
         });

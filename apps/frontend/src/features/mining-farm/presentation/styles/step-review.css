@@ -1,4 +1,8 @@
-.ReviewDataContainer {
+.StepMiningFarmPreview {
+    gap: 40px;
+}
+
+.StepMiningFarmPreview .ReviewDataContainer {
     border: 1px solid var(--color-gray-060);
     border-radius: 20px;
     padding: 24px;
@@ -7,23 +11,23 @@
     box-sizing: border-box;
 }
 
-.ReviewDataContainer .DataRow {
+.StepMiningFarmPreview .ReviewDataContainer .DataRow {
     justify-content: space-between;
     align-items: center;
 }
 
-.ReviewDataContainer .DataRow .DataLabel {
+.StepMiningFarmPreview .ReviewDataContainer .DataRow .DataLabel {
     color: var(--color-gray-030);
 }
 
-.TermsAgreeRow {
+.StepMiningFarmPreview .TermsAgreeRow {
     width: 100%;
 }
 
-.ButtonRow {
+.StepMiningFarmPreview .ButtonRow {
     width: 100%;
 }
 
-.Description {
+.StepMiningFarmPreview .Description {
     overflow-wrap: anywhere;
 }

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import AccountSessionStore from '../stores/AccountSessionStore';
 import AlertStore from '../../../../core/presentation/stores/AlertStore';
+import WalletStore from '../../../ledger/presentation/stores/WalletStore';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 import { InputAdornment } from '@mui/material';
@@ -16,12 +17,12 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import Box, { BoxWidth } from '../../../../core/presentation/components/Box';
 import PageAdminHeader from '../../../header/presentation/components/PageAdminHeader';
+import BorderShadowPaddingContainer, { ContainerWidth } from '../../../../core/presentation/components/BorderShadowPaddingContainer';
 
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import '../styles/page-register.css';
-import WalletStore from '../../../ledger/presentation/stores/WalletStore';
 
 type Props = {
     alertStore?: AlertStore;
@@ -67,7 +68,7 @@ function RegisterPage({ alertStore, walletStore, accountSessionStore }: Props) {
 
             <div className = { 'PageContent AppContent' } >
 
-                <Box boxWidth = { BoxWidth.SMALL } >
+                <BorderShadowPaddingContainer containerWidth = { ContainerWidth.SMALL } >
                     <div className={'Title H2 Bold'}>Sign Up</div>
                     <div className={'Subtitle'}>Fill in your email, password and the required farm details in order to sign up</div>
 
@@ -120,7 +121,7 @@ function RegisterPage({ alertStore, walletStore, accountSessionStore }: Props) {
                     <div className={'BottomAction B2 Clickable'} onClick={onClickLogin}>
                         Already have an account? <span className = { 'Bold' }>Login</span>
                     </div>
-                </Box>
+                </BorderShadowPaddingContainer>
 
             </div>
 
