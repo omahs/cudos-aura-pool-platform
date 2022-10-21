@@ -24,10 +24,10 @@ import Button, { BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
 import AddIcon from '@mui/icons-material/Add';
-import '../styles/page-add-nfts-to-collections.css';
+import '../styles/page-credit-collection-nfts.css';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import { CollectionStatus } from '../../entities/CollectionEntity';
-import AddNftsToCollectionPageState from '../stores/AddNftsToCollectionPageState';
+import CreditCollectionNftsPageState from '../stores/CreditCollectionNftsPageState';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import RepoStore from 'apps/frontend/src/core/presentation/stores/RepoStore';
 import AddNftsStage from '../components/collection-creation/AddNftsStage';
@@ -38,15 +38,15 @@ type Props = {
     repoStore?: RepoStore
 }
 
-function AddNftsToCollectionPage({ appStore, accountSessionStore, repoStore }: Props) {
+function CreditCollectionNftsPage({ appStore, accountSessionStore, repoStore }: Props) {
 
     const { collectionId } = useParams();
-    const [addNftsToCollectionPageState] = useState(new AddNftsToCollectionPageState(repoStore, accountSessionStore));
+    const [creditCollectionNftsPageState] = useState(new CreditCollectionNftsPageState(repoStore, accountSessionStore));
     const navigate = useNavigate();
 
     useEffect(() => {
         appStore.useLoading(async () => {
-            await addNftsToCollectionPageState.init(collectionId);
+            await creditCollectionNftsPageState.init(collectionId);
         })
     }, []);
 
@@ -58,7 +58,7 @@ function AddNftsToCollectionPage({ appStore, accountSessionStore, repoStore }: P
 
     return (
         <PageLayoutComponent
-            className = { 'PageCollectionView' }>
+            className = { 'PageCreditCollectionNfts' }>
             <PageHeader />
             <div className={'PageContent AppContent'} >
                 <Breadcrumbs crumbs={crumbs} />
@@ -70,4 +70,4 @@ function AddNftsToCollectionPage({ appStore, accountSessionStore, repoStore }: P
     )
 }
 
-export default inject((stores) => stores)(observer(AddNftsToCollectionPage));
+export default inject((stores) => stores)(observer(CreditCollectionNftsPage));

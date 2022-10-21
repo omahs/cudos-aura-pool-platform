@@ -11,7 +11,7 @@ export default class AppRoutes {
     static EXPLORE_MINING_FARMS = '/explore-mining-farms';
     static NFT_VIEW = '/nft-view';
     static COLLECTION_VIEW = '/collection-view';
-    static MINING_FARM_VIEW = '/mining-farm-view';
+    static MINING_FARM_CREDIT = '/mining-farm-credit';
 
     // auth
     static LOGIN = '/login';
@@ -22,9 +22,7 @@ export default class AppRoutes {
 
     // farm admin
     static CREDIT_MINING_FARM_DETAILS = '/credit-mining-farm-details'
-    static MINING_FARM_CREDIT = '/mining-farm-credit';
     static MINING_FARM_ANALYTICS = '/mining-farm-analytics';
-    static PAGE_CREATE_COLLECTION = '/create-collection';
-    // static ADMIN_PORTAL = '/admin-portal';
-    static ADD_NFTS_TO_COLLECTION = '/add_nfts';
+    static CREDIT_COLLECTION_DETAILS = '/credit-collection-details';
+    static CREDIT_COLLECTION_NFTS = '/credit-collection-nfts';
 }

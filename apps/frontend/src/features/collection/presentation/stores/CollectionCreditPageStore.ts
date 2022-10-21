@@ -8,7 +8,7 @@ import NftRepo from '../../../nft/presentation/repos/NftRepo';
 import NftFilterModel from '../../../nft/utilities/NftFilterModel';
 import GridViewState from '../../../../core/presentation/stores/GridViewState';
 
-export default class CollectionViewPageStore {
+export default class CollectionCreditPageStore {
 
     nftRepo: NftRepo;
     collectionRepo: CollectionRepo;
