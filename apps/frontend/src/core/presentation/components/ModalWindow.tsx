@@ -8,6 +8,7 @@ import ModalStore from '../stores/ModalStore';
 import SvgClose from '../vectors/modal-close.svg';
 import '../styles/modal-window.css';
 import Svg from './Svg';
+import AnimationContainer from './AnimationContainer';
 
 const outerClose = false;
 let modalCounter = 0;
@@ -96,15 +97,15 @@ const ModalWindow = (props: React.PropsWithChildren < ModalWindowProps >) => {
         )
     }
 
-    const cssClassVisible = S.CSS.getActiveClassName(modalStore.visible);
     const cssClassContentFullScreen = S.CSS.getClassName(props.contentFullscreen, 'ModalFullScreen');
     const cssClassContentFullScreenBlack = S.CSS.getClassName(props.contentFullscreenBlack, 'ModalFullScreenBlack');
     const cssClassContentPadding = S.CSS.getClassName(props.contentPadding, 'ModalPadding');
     const cssClassContentBox = S.CSS.getClassName(props.contentBox, 'ModalBox');
     return (
-        <div
-            className = { `ModalWindowWrapper ${props.className} Transition ActiveVisibilityHidden ${cssClassVisible} ${cssClassContentFullScreen} ${cssClassContentFullScreenBlack} ${cssClassContentPadding} ${cssClassContentBox}`}
+        <AnimationContainer
+            className = { `ModalWindowWrapper ${props.className} ${cssClassContentFullScreen} ${cssClassContentFullScreenBlack} ${cssClassContentPadding} ${cssClassContentBox}`}
             onClick = { props.isRemovable === true ? modalStore.hide : undefined }
+            active = { modalStore.visible }
             onWheel = { onWheel } >
 
             { outerClose === true && props.hasClose === true && renderClose() }
@@ -125,7 +126,7 @@ const ModalWindow = (props: React.PropsWithChildren < ModalWindowProps >) => {
 
             </div>
 
-        </div>
+        </AnimationContainer>
     );
 
 }

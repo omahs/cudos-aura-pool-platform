@@ -21,6 +21,7 @@ import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentati
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
+import AnimationContainer from '../../../../core/presentation/components/AnimationContainer';
 
 import '../styles/page-user-profile.css';
 
@@ -86,7 +87,7 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
                     </div>
                 </div>
 
-                <div className = { `ActiveVisibilityHidden ${S.CSS.getActiveClassName(userProfilePageStore.isNftPage())}` } >
+                <AnimationContainer active = { userProfilePageStore.isNftPage() } >
                     {userProfilePageStore.isNftPage() === true && (
                         <DataGridLayout
                             header = { (
@@ -131,19 +132,19 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
 
                         </DataGridLayout>
                     ) }
-                </div>
-            </div>
+                </AnimationContainer>
 
-            <div className = { `ActiveVisibilityHidden ${S.CSS.getActiveClassName(userProfilePageStore.isEarningsPage())}` } >
-                {userProfilePageStore.isEarningsPage() === true && (
-                    'earnings'
-                ) }
-            </div>
+                <AnimationContainer active = { userProfilePageStore.isEarningsPage() } >
+                    {userProfilePageStore.isEarningsPage() === true && (
+                        'earnings'
+                    ) }
+                </AnimationContainer>
 
-            <div className = { `ActiveVisibilityHidden ${S.CSS.getActiveClassName(userProfilePageStore.isHistoryPage())}` } >
-                {userProfilePageStore.isHistoryPage() === true && (
-                    'history'
-                ) }
+                <AnimationContainer active = { userProfilePageStore.isHistoryPage() } >
+                    {userProfilePageStore.isHistoryPage() === true && (
+                        'history'
+                    ) }
+                </AnimationContainer>
             </div>
 
             <PageFooter />

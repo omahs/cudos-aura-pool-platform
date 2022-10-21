@@ -2,8 +2,8 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-import S from '../../utilities/Main';
 import AlertStore from '../stores/AlertStore';
+import AnimationContainer from './AnimationContainer';
 
 import '../styles/alert.css';
 
@@ -47,7 +47,7 @@ function Alert({ alertStore }: Props) {
     }
 
     return (
-        <div className = { `AlertWrapper Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(alertStore.isVisible())}` } >
+        <AnimationContainer className = { 'AlertWrapper' } active = { alertStore.isVisible() } >
             <div className = { 'Alert ShadowDark' } >
                 <div className = { 'Msg ScrollView' } >{alertStore.msg}</div>
 
@@ -80,7 +80,7 @@ function Alert({ alertStore }: Props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </AnimationContainer>
     )
 
 }

@@ -10,6 +10,7 @@ import Input, { InputType } from '../../../../core/presentation/components/Input
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import Button from '../../../../core/presentation/components/Button';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
+import AnimationContainer from '../../../../core/presentation/components/AnimationContainer';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -33,7 +34,7 @@ function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
             className = { 'BuyNftPopup' }
             modalStore = { buyNftModalStore } >
 
-            <div className = { `Stage Preview FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(buyNftModalStore.isStagePreview())}` } >
+            <AnimationContainer className = { 'Stage Preview FlexColumn' } active = { buyNftModalStore.isStagePreview() } >
 
                 {buyNftModalStore.isStagePreview() && (
                     <>
@@ -65,9 +66,9 @@ function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
                     </>
                 ) }
 
-            </div>
+            </AnimationContainer>
 
-            <div className = { `Stage Processing FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(buyNftModalStore.isStageProcessing())}` } >
+            <AnimationContainer className = { 'Stage Processing FlexColumn' } active = { buyNftModalStore.isStageProcessing() } >
 
                 { buyNftModalStore.isStageProcessing() && (
                     <>
@@ -79,9 +80,9 @@ function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
                     </>
                 ) }
 
-            </div>
+            </AnimationContainer>
 
-            <div className = { `Stage Success FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(buyNftModalStore.isStageSuccess())}` } >
+            <AnimationContainer className = { 'Stage Success FlexColumn' } active = { buyNftModalStore.isStageSuccess() } >
 
                 { buyNftModalStore.isStageSuccess() && (
                     <>
@@ -114,7 +115,7 @@ function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
                     </>
                 ) }
 
-            </div>
+            </AnimationContainer>
 
         </ModalWindow>
     )
