@@ -26,6 +26,8 @@ import RegisterPage from '../../../accounts/presentation/pages/RegisterPage';
 import SuperAdminApprovePage from '../../../accounts/presentation/pages/SuperAdminApprovePage';
 import BitcoinConfirmPage from '../../../accounts/presentation/pages/BitcoinConfirmPage';
 import CreditMiningFarmDetailsPage from '../../../mining-farm/presentation/pages/CreditMiningFarmDetailsPage';
+import MiningFarmCreditPage from '../../../mining-farm/presentation/pages/MiningFarmCreditPage';
+import MiningFarmAnalyticsPage from '../../../mining-farm/presentation/pages/MiningFarmAnalyticsPage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -106,6 +108,8 @@ function AppRouter({ accountSessionStore }: Props) {
                     { accountSessionStore.isAdmin() === true && accountSessionStore.hasApprovedMiningFarm() === true && (
                         <>
                             <Route path = { AppRoutes.CREDIT_MINING_FARM_DETAILS } element = { <CreditMiningFarmDetailsPage /> } />
+                            <Route path = { AppRoutes.MINING_FARM_CREDIT } element = { <MiningFarmCreditPage /> } />
+                            <Route path = { AppRoutes.MINING_FARM_ANALYTICS } element = { <MiningFarmAnalyticsPage /> } />
                             <Route path = { `${AppRoutes.ADD_NFTS_TO_COLLECTION}/:collectionId` } element = { <AddNftsToCollectionPage /> } />
                         </>
                     ) }
