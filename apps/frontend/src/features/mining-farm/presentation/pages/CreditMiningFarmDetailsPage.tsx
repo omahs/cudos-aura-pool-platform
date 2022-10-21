@@ -60,7 +60,7 @@ function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, account
 
             <PageAdminHeader />
             <div className = { 'PageContent AppContent' } >
-                <BorderShadowPaddingContainer className={'FormContainer FlexColumn'}>
+                <BorderShadowPaddingContainer className={'FormContainer'}>
                     {creditMiningFarmDetailsPageStore.isStepSuccess() === false && (<NavRow navSteps={navSteps}/>)}
 
                     {creditMiningFarmDetailsPageStore.miningFarmEntity !== null && creditMiningFarmDetailsPageStore.isStepFarmDetails() === true

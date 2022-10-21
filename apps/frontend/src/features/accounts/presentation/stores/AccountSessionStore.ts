@@ -110,7 +110,14 @@ export default class AccountSessionStore {
     }
 
     async loadSessionAccountsAndSync() {
-        await this.loadSessionAccounts();
+        const { accountEntity, userEntity, adminEntity, superAdminEntity } = await this.accountRepo.fetchSessionAccounts();
+        runInAction(() => {
+            this.accountEntity = accountEntity;
+            this.userEntity = userEntity;
+            this.adminEntity = adminEntity;
+            this.superAdminEntity = superAdminEntity;
+        });
+
         if (this.isUser() === true) {
             await this.walletStore.tryConnect();
 
@@ -141,18 +148,8 @@ export default class AccountSessionStore {
         } else if (this.isSuperAdmin() === true) {
             console.log('Logged as super admin => wallet:', false);
         }
-    }
 
-    async loadSessionAccounts() {
-        const { accountEntity, userEntity, adminEntity, superAdminEntity } = await this.accountRepo.fetchSessionAccounts();
-        runInAction(() => {
-            this.accountEntity = accountEntity;
-            this.userEntity = userEntity;
-            this.adminEntity = adminEntity;
-            this.superAdminEntity = superAdminEntity;
-
-            this.inited = true;
-        });
+        this.inited = true;
     }
 
     isInited(): boolean {

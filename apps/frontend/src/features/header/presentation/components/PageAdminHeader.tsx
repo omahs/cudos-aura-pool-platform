@@ -12,7 +12,7 @@ import SvgAuraPoolLogo from '../../../../public/assets/vectors/aura-pool-logo.sv
 import '../styles/page-admin-header.css'
 
 type Props = {
-    accountSessionStore: AccountSessionStore;
+    accountSessionStore?: AccountSessionStore;
 };
 
 function PageAdminHeader({ accountSessionStore }: Props) {
