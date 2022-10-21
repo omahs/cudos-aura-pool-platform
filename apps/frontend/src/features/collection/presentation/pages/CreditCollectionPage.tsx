@@ -3,7 +3,6 @@ import { inject, observer } from 'mobx-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import ProjectUtils from '../../../../core/utilities/ProjectUtils';
-import CollectionCreditPageStore from '../stores/CollectionCreditPageStore';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import NftEntity from '../../../nft/entities/NftEntity';
@@ -28,23 +27,24 @@ import DataGridLayout from '../../../../core/presentation/components/DataGridLay
 import AddIcon from '@mui/icons-material/Add';
 
 import '../styles/page-collection-credit-component.css';
+import CreditCollectionPageStore from '../stores/CreditCollectionPageStore';
 
 type Props = {
-    collectionCreditPageStore?: CollectionCreditPageStore
+    creditCollectionPageStore?: CreditCollectionPageStore
     accountSessionStore?: AccountSessionStore
 }
 
-function CollectionCreditPage({ collectionCreditPageStore, accountSessionStore }: Props) {
-    const collectionEntity = collectionCreditPageStore.collectionEntity;
-    const miningFarmEntity = collectionCreditPageStore.miningFarmEntity;
-    const nftFilterModel = collectionCreditPageStore.nftFilterModel;
+function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }: Props) {
+    const collectionEntity = creditCollectionPageStore.collectionEntity;
+    const miningFarmEntity = creditCollectionPageStore.miningFarmEntity;
+    const nftFilterModel = creditCollectionPageStore.nftFilterModel;
 
     const { collectionId } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
         async function run() {
-            await collectionCreditPageStore.init(collectionId);
+            await creditCollectionPageStore.init(collectionId);
         }
         run();
     }, []);
@@ -56,7 +56,7 @@ function CollectionCreditPage({ collectionCreditPageStore, accountSessionStore }
     ]
 
     function onClickFarmLink() {
-        navigate(`${AppRoutes.MINING_FARM_CREDIT}/${miningFarmEntity.id}`)
+        navigate(`${AppRoutes.CREDIT_MINING_FARM}/${miningFarmEntity.id}`)
     }
 
     function isCollectionEditable() {
@@ -145,7 +145,7 @@ function CollectionCreditPage({ collectionCreditPageStore, accountSessionStore }
                         header = { (
                             <>
                                 <Select
-                                    onChange={collectionCreditPageStore.onChangeSortKey}
+                                    onChange={creditCollectionPageStore.onChangeSortKey}
                                     value={nftFilterModel.sortKey} >
                                     <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
                                     <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
@@ -163,15 +163,15 @@ function CollectionCreditPage({ collectionCreditPageStore, accountSessionStore }
                             </>
                         ) } >
 
-                        { collectionCreditPageStore.nftEntities === null && (
+                        { creditCollectionPageStore.nftEntities === null && (
                             <LoadingIndicator />
                         ) }
 
-                        { collectionCreditPageStore.nftEntities !== null && (
+                        { creditCollectionPageStore.nftEntities !== null && (
                             <GridView
-                                gridViewState={collectionCreditPageStore.gridViewState}
+                                gridViewState={creditCollectionPageStore.gridViewState}
                                 defaultContent={<div className={'NoContentFound'}>No Nfts found</div>}>
-                                { collectionCreditPageStore.nftEntities.map((nftEntity: NftEntity) => {
+                                { creditCollectionPageStore.nftEntities.map((nftEntity: NftEntity) => {
                                     return (
                                         <NftPreview
                                             key={nftEntity.id}
@@ -191,4 +191,4 @@ function CollectionCreditPage({ collectionCreditPageStore, accountSessionStore }
     )
 }
 
-export default inject((stores) => stores)(observer(CollectionCreditPage));
+export default inject((stores) => stores)(observer(creditCollectionPage));

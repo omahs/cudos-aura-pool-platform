@@ -45,27 +45,27 @@ export default class CreditMiningFarmDetailsPageState {
     }
 
     setStepFarmDetails = () => {
-        this.step = CreditMiningFarmPageState.STEP_FARM_DETAILS;
+        this.step = CreditMiningFarmDetailsPageState.STEP_FARM_DETAILS;
     }
 
     setStepReview = () => {
-        this.step = CreditMiningFarmPageState.STEP_REVIEW;
+        this.step = CreditMiningFarmDetailsPageState.STEP_REVIEW;
     }
 
     setStepSuccess = () => {
-        this.step = CreditMiningFarmPageState.STEP_SUCCESS;
+        this.step = CreditMiningFarmDetailsPageState.STEP_SUCCESS;
     }
 
     isStepFarmDetails(): boolean {
-        return this.step === CreditMiningFarmPageState.STEP_FARM_DETAILS;
+        return this.step === CreditMiningFarmDetailsPageState.STEP_FARM_DETAILS;
     }
 
     isStepReview(): boolean {
-        return this.step === CreditMiningFarmPageState.STEP_REVIEW;
+        return this.step === CreditMiningFarmDetailsPageState.STEP_REVIEW;
     }
 
     isStepSuccess(): boolean {
-        return this.step === CreditMiningFarmPageState.STEP_SUCCESS;
+        return this.step === CreditMiningFarmDetailsPageState.STEP_SUCCESS;
     }
 
     finishCreation = () => {

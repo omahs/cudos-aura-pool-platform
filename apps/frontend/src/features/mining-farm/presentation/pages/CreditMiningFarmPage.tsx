@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
 import SearchIcon from '@mui/icons-material/Search';
-import MiningFarmCreditPageStore from '../stores/MiningFarmCreditPageStore';
+import CreditMiningFarmPageStore from '../stores/CreditMiningFarmPageStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
@@ -35,23 +35,23 @@ import '../styles/page-mining-farm-credit-component.css';
 
 type Props = {
     appStore?: AppStore
-    miningFarmCreditPageStore?: MiningFarmCreditPageStore,
+    creditMiningFarmPageStore?: CreditMiningFarmPageStore,
     accountSessionStore?: AccountSessionStore
     editMiningFarmModalStore?: EditMiningFarmModalStore
 }
 
-function MiningFarmCreditPage({ appStore, miningFarmCreditPageStore, accountSessionStore, editMiningFarmModalStore }: Props) {
+function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSessionStore, editMiningFarmModalStore }: Props) {
     const { farmId } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
         appStore.useLoading(async () => {
-            await miningFarmCreditPageStore.init(farmId);
+            await creditMiningFarmPageStore.init(farmId);
         });
     }, []);
 
-    const miningFarmEntity = miningFarmCreditPageStore.miningFarmEntity;
-    const collectionFilterModel = miningFarmCreditPageStore.collectionFilterModel;
+    const miningFarmEntity = creditMiningFarmPageStore.miningFarmEntity;
+    const collectionFilterModel = creditMiningFarmPageStore.collectionFilterModel;
 
     const crumbs = [
         { name: 'Marketplace', onClick: () => { navigate(AppRoutes.MARKETPLACE) } },
@@ -144,7 +144,7 @@ function MiningFarmCreditPage({ appStore, miningFarmCreditPageStore, accountSess
                                     <Input
                                         className={'SearchBar'}
                                         value = {collectionFilterModel.searchString}
-                                        onChange = { miningFarmCreditPageStore.onChangeSearchWord }
+                                        onChange = { creditMiningFarmPageStore.onChangeSearchWord }
                                         placeholder = {'Search Collections name'}
                                         InputProps={{
                                             startAdornment: <InputAdornment position="start" >
@@ -153,7 +153,7 @@ function MiningFarmCreditPage({ appStore, miningFarmCreditPageStore, accountSess
                                         }} />
                                     <Select
                                         label={'Hashing Power'}
-                                        onChange={miningFarmCreditPageStore.onChangeHashPowerFilter}
+                                        onChange={creditMiningFarmPageStore.onChangeHashPowerFilter}
                                         value={collectionFilterModel.hashPowerFilter} >
                                         <MenuItem value = { CollectionHashPowerFilter.NONE } >All </MenuItem>
                                         <MenuItem value = { CollectionHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
@@ -163,7 +163,7 @@ function MiningFarmCreditPage({ appStore, miningFarmCreditPageStore, accountSess
                                 </div>
                                 <div></div>
                                 <Select
-                                    onChange={miningFarmCreditPageStore.onChangeSortKey}
+                                    onChange={creditMiningFarmPageStore.onChangeSortKey}
                                     value={collectionFilterModel.sortKey} >
                                     <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
                                     <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
@@ -171,20 +171,20 @@ function MiningFarmCreditPage({ appStore, miningFarmCreditPageStore, accountSess
                             </div>
                         ) }>
 
-                        { miningFarmCreditPageStore.collectionEntities === null && (
+                        { creditMiningFarmPageStore.collectionEntities === null && (
                             <LoadingIndicator />
                         ) }
 
-                        { miningFarmCreditPageStore.collectionEntities !== null && (
+                        { creditMiningFarmPageStore.collectionEntities !== null && (
                             <GridView
-                                gridViewState={miningFarmCreditPageStore.gridViewState}
+                                gridViewState={creditMiningFarmPageStore.gridViewState}
                                 defaultContent={<EmptyGridContent/>} >
-                                { miningFarmCreditPageStore.collectionEntities.map((collectionEntity: CollectionEntity, index: number) => {
+                                { creditMiningFarmPageStore.collectionEntities.map((collectionEntity: CollectionEntity, index: number) => {
                                     return (
                                         <CollectionPreview
                                             key={index}
                                             collectionEntity={collectionEntity}
-                                            miningFarmName={miningFarmCreditPageStore.getMiningFarmName(collectionEntity.farmId)} />
+                                            miningFarmName={creditMiningFarmPageStore.getMiningFarmName(collectionEntity.farmId)} />
                                     )
                                 }) }
                             </GridView>
@@ -218,4 +218,4 @@ function MiningFarmCreditPage({ appStore, miningFarmCreditPageStore, accountSess
     }
 }
 
-export default inject((stores) => stores)(observer(MiningFarmCreditPage));
+export default inject((stores) => stores)(observer(CreditMiningFarmPage));

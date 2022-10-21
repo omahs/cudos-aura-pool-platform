@@ -14,8 +14,8 @@ import ExploreCollectionsPage from '../../../collection/presentation/pages/Explo
 import ExploreMiningFarmsPage from '../../../mining-farm/presentation/pages/ExploreMiningFarmsPage';
 import UserProfilePage from '../../../accounts/presentation/pages/UserProfilePage';
 import NftViewPage from '../../../nft/presentation/pages/NftViewPage';
-import CollectionCreditPage from '../../../collection/presentation/pages/CollectionCreditPage';
-import MiningFarmCreditPage from '../../../mining-farm/presentation/pages/MiningFarmCreditPage';
+import CreditCollectionPage from '../../../collection/presentation/pages/CreditCollectionPage';
+import CreditMiningFarmPage from '../../../mining-farm/presentation/pages/CreditMiningFarmPage';
 
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 
@@ -93,8 +93,8 @@ function AppRouter({ accountSessionStore }: Props) {
                     <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPage /> } />
                     <Route path = { AppRoutes.EXPLORE_MINING_FARMS } element = { <ExploreMiningFarmsPage /> } />
                     <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />
-                    <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionCreditPage /> } />
-                    <Route path = { `${AppRoutes.MINING_FARM_CREDIT}/:farmId` } element = { <MiningFarmCreditPage /> } />
+                    <Route path = { `${AppRoutes.CREDIT_COLLECTION}/:collectionId` } element = { <CreditCollectionPage /> } />
+                    <Route path = { `${AppRoutes.CREDIT_MINING_FARM}/:farmId` } element = { <CreditMiningFarmPage /> } />
 
                     {/* Auth */}
                     <Route path = { AppRoutes.LOGIN } element = { <LoginPage /> } />

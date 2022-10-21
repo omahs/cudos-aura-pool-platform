@@ -14,7 +14,7 @@ export default function CollectionPreview({ collectionEntity, miningFarmName }: 
     const navigate = useNavigate();
 
     const onClickNft = () => {
-        navigate(`${AppRoutes.COLLECTION_VIEW}/${collectionEntity.id}`);
+        navigate(`${AppRoutes.CREDIT_COLLECTION}/${collectionEntity.id}`);
     }
 
     return (
