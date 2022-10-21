@@ -353,7 +353,7 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                     <Table
                         widths = { ['30%', '70%'] }
                         legend = { ['Column1', 'Column 2'] }
-                        tableStore = { new TableState(0, [], () => {
+                        tableState = { new TableState(0, [], () => {
                             // used to fetech new data
                         }) }
                         rows = { [

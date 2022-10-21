@@ -91,7 +91,7 @@ export default function NftViewHistory() {
                             legend={EARNINGS_TABLE_LEGEND}
                             widths={EARNINGS_TABLE_WIDTHS}
                             aligns={EARNINGS_TABLE_ALINGS}
-                            tableStore={new TableState(0, [], () => {}, 5)}
+                            tableState={new TableState(0, [], () => {}, 5)}
                             rows={renderEarningsRows()}
                         /> : ''}
                     {historyPage === PAGE_HISTORY
@@ -100,7 +100,7 @@ export default function NftViewHistory() {
                             legend={HISTORY_TABLE_LEGEND}
                             widths={HISTORY_TABLE_WIDTHS}
                             aligns={HISTORY_TABLE_ALINGS}
-                            tableStore={new TableState(0, [], () => {}, 5)}
+                            tableState={new TableState(0, [], () => {}, 5)}
                             rows={renderHistoryRows()}
                         /> : ''}
                 </div>

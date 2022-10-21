@@ -125,20 +125,23 @@ export default class MiningFarmEntity {
     parseHashRateFromString(hashRateString: string) {
         const [hashRate, unit] = hashRateString.split(' ');
         const hashRateParsed = Number(hashRate);
-
-        switch (unit.toLowerCase()) {
-            case 'eh/s':
-                this.hashRateTh = hashRateParsed * 1000000;
-                return;
-            case 'ph/s':
-                this.hashRateTh = hashRateParsed * 1000;
-                return;
-            case 'th/s':
-                this.hashRateTh = hashRateParsed;
-                return;
-            default:
-                this.hashRateTh = S.NOT_EXISTS;
+        if (unit !== undefined) {
+            switch (unit.toLowerCase()) {
+                case 'eh/s':
+                    this.hashRateTh = hashRateParsed * 1000000;
+                    return;
+                case 'ph/s':
+                    this.hashRateTh = hashRateParsed * 1000;
+                    return;
+                case 'th/s':
+                    this.hashRateTh = hashRateParsed;
+                    return;
+                default:
+                    this.hashRateTh = S.NOT_EXISTS;
+            }
         }
+
+        this.hashRateTh = hashRateParsed;
     }
 
     displayHashRate(): string {

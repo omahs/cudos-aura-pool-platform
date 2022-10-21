@@ -125,7 +125,7 @@ const TableDesktop = ({ className, widths, legend, aligns, tableState, rows, col
             legendRow.push((
                 <div
                     key = { i }
-                    className = { `TableCell FlexRow ${getCellAlign(i)} ${S.CSS.getClassName(tableStore.isTableSortIndexClickable(i), 'Clickable')} ${S.CSS.getClassName(tableStore.getTableSortIndex() === i, 'Sorted')}` }
+                    className = { `TableCell FlexRow ${getCellAlign(i)} ${S.CSS.getClassName(tableState.isTableSortIndexClickable(i), 'Clickable')} ${S.CSS.getClassName(tableState.getTableSortIndex() === i, 'Sorted')}` }
                     style = { getCellStyle(i) }
                     onClick = { onClickLegendCell.bind(null, i) }
                     draggable = { draggable }
@@ -148,12 +148,12 @@ const TableDesktop = ({ className, widths, legend, aligns, tableState, rows, col
     }
 
     function renderSortArrow(index: number) {
-        const sortIndex = tableStore.getTableSortIndex();
+        const sortIndex = tableState.getTableSortIndex();
         if (sortIndex !== index) {
             return null;
         }
 
-        return tableStore.tableFilterState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
+        return tableState.tableFilterState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
     }
 
     function renderRows() {
@@ -163,7 +163,7 @@ const TableDesktop = ({ className, widths, legend, aligns, tableState, rows, col
             );
         }
 
-        const tableSortIndex = tableStore.getTableSortIndex();
+        const tableSortIndex = tableState.getTableSortIndex();
         const resultRows = [];
 
         for (let i = 0; i < rows.length; ++i) {
@@ -197,7 +197,7 @@ const TableDesktop = ({ className, widths, legend, aligns, tableState, rows, col
             { renderLegend() }
             { renderRows() }
             { showPaging === true && (
-                <TablePaging tableStore = { tableStore } />
+                <TablePaging tableState = { tableState } />
             ) }
         </div>
     )

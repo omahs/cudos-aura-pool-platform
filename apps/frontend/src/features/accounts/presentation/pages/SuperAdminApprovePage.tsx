@@ -95,7 +95,7 @@ function SuperAdminApprovePage({ superAdminApprovePageStore, appStore }: Props) 
                 legend={TABLE_LEGEND}
                 widths={TABLE_WIDTHS}
                 aligns={TABLE_ALINGS}
-                tableStore={superAdminApprovePageStore.miningFarmsTableState}
+                tableState={superAdminApprovePageStore.miningFarmsTableState}
                 rows={renderFarmsRows()}
             />
             <div className={'FlexRow TableHeader'}>
@@ -109,7 +109,7 @@ function SuperAdminApprovePage({ superAdminApprovePageStore, appStore }: Props) 
                 legend={TABLE_LEGEND}
                 widths={TABLE_WIDTHS}
                 aligns={TABLE_ALINGS}
-                tableStore={superAdminApprovePageStore.collectionsTableState}
+                tableState={superAdminApprovePageStore.collectionsTableState}
                 rows={renderCollectionsRows()}
             />
             <PageFooter />

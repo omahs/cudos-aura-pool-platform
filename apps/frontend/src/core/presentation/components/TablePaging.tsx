@@ -10,12 +10,12 @@ import SvgArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import '../styles/table-paging.css';
 
 type Props = {
-    tableStore: TableState;
+    tableState: TableState;
     noVerticalPadding: boolean,
     noHorizontalPadding: boolean,
 }
 
-function TablePaging({ tableStore, noVerticalPadding, noHorizontalPadding }: Props) {
+function TablePaging({ tableState, noVerticalPadding, noHorizontalPadding }: Props) {
 
     function renderPreviousNode() {
         return (
@@ -31,7 +31,7 @@ function TablePaging({ tableStore, noVerticalPadding, noHorizontalPadding }: Pro
 
     function renderPageNode(key: number, text: string | React.ReactNode | number, active: boolean, page: number) {
         const onClickHandler = page === S.NOT_EXISTS ? undefined : () => {
-            tableStore.updateTablePage(page * tableStore.tableFilterState.itemsPerPage);
+            tableState.updateTablePage(page * tableState.tableFilterState.itemsPerPage);
         };
 
         return (
@@ -46,7 +46,7 @@ function TablePaging({ tableStore, noVerticalPadding, noHorizontalPadding }: Pro
         );
     }
 
-    const tableFilterState = tableStore.tableFilterState;
+    const tableFilterState = tableState.tableFilterState;
 
     const pageOffset = 2;
     const cntPage = Math.floor(tableFilterState.from / tableFilterState.itemsPerPage);

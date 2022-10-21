@@ -69,11 +69,11 @@ function TableMobile({ className, legend, tableState, rows, onClickRow, onClickL
     }
 
     function renderLegend() {
-        const tableSortIndex = tableStore.getTableSortIndex();
+        const tableSortIndex = tableState.getTableSortIndex();
         const sortOptions = [];
 
         for (let i = 0; i < legend.length; ++i) {
-            if (tableStore.isTableSortIndexClickable(i) === false) {
+            if (tableState.isTableSortIndexClickable(i) === false) {
                 continue;
             }
 
@@ -126,12 +126,12 @@ function TableMobile({ className, legend, tableState, rows, onClickRow, onClickL
     }
 
     function renderSortArrow(index: number) {
-        const sortIndex = tableStore.getTableSortIndex();
+        const sortIndex = tableState.getTableSortIndex();
         if (sortIndex !== index) {
             return null;
         }
 
-        return tableStore.tableFilterState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
+        return tableState.tableFilterState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
     }
 
     function renderRows() {
@@ -188,7 +188,7 @@ function TableMobile({ className, legend, tableState, rows, onClickRow, onClickL
             { renderLegend() }
             { renderRows() }
             { showPaging === true && (
-                <TablePaging tableStore = { tableStore } />
+                <TablePaging tableState = { tableState } />
             ) }
         </div>
     )
