@@ -1,3 +1,4 @@
+import NftEntity from '../../../nft/entities/NftEntity';
 import CategoryEntity from '../../entities/CategoryEntity';
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionFilterModel from '../../utilities/CollectionFilterModel';
@@ -21,5 +22,7 @@ export default class CollectionApi {
         return null;
     }
 
-    async approveCollections(collectionIds: string[]): Promise < void > {}
+    async creditCollection(collectionEntity: CollectionEntity, nftEntities: NftEntity[]): Promise < { collectionEntity: CollectionEntity, nftEntities: NftEntity[] } > {
+        return null;
+    }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
@@ -16,15 +16,15 @@ import StepSuccess from '../components/credit-farm/StepSuccess';
 import BorderShadowPaddingContainer from '../../../../core/presentation/components/BorderShadowPaddingContainer';
 
 type Props = {
-    creditMiningFarmDetailsPageState?: CreditMiningFarmDetailsPageState;
+    creditMiningFarmDetailsPageStore?: CreditMiningFarmDetailsPageState;
     accountSessionStore?: AccountSessionStore;
     appStore?: AppStore;
 }
 
-function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageState, accountSessionStore, appStore }: Props) {
+function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, accountSessionStore, appStore }: Props) {
     useEffect(() => {
         appStore.useLoading(() => {
-            creditMiningFarmDetailsPageState.fetch();
+            creditMiningFarmDetailsPageStore.fetch();
         });
     }, []);
 
@@ -32,17 +32,17 @@ function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageState, account
         {
             navNumber: 1,
             navName: 'Farm Details',
-            isActive: creditMiningFarmDetailsPageState.isStepFarmDetails(),
+            isActive: creditMiningFarmDetailsPageStore.isStepFarmDetails(),
         },
         {
             navNumber: 2,
             navName: 'Finish',
-            isActive: creditMiningFarmDetailsPageState.isStepReview(),
+            isActive: creditMiningFarmDetailsPageStore.isStepReview(),
         },
     ];
 
     function CreditHeading() {
-        if (creditMiningFarmDetailsPageState.miningFarmEntity.isNew() === true) {
+        if (creditMiningFarmDetailsPageStore.miningFarmEntity.isNew() === true) {
             return (<>
                 <div className={'H3 Bold FullLine'}>Welcome to AuraPool</div>
                 <div className={'B1 FullLine'}>Follow the steps to create your Farm Profile</div>
@@ -61,27 +61,27 @@ function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageState, account
             <PageAdminHeader />
             <div className = { 'PageContent AppContent' } >
                 <BorderShadowPaddingContainer className={'FormContainer FlexColumn'}>
-                    {creditMiningFarmDetailsPageState.isStepSuccess() === false && (<NavRow navSteps={navSteps}/>)}
+                    {creditMiningFarmDetailsPageStore.isStepSuccess() === false && (<NavRow navSteps={navSteps}/>)}
 
-                    {creditMiningFarmDetailsPageState.miningFarmEntity !== null && creditMiningFarmDetailsPageState.isStepFarmDetails() === true
+                    {creditMiningFarmDetailsPageStore.miningFarmEntity !== null && creditMiningFarmDetailsPageStore.isStepFarmDetails() === true
                     && (<>
                         <CreditHeading />
                         <StepFarmDetails
-                            miningFarmEntity={creditMiningFarmDetailsPageState.miningFarmEntity}
-                            imageEntities={creditMiningFarmDetailsPageState.imageEntities}
-                            onClickContinue={creditMiningFarmDetailsPageState.setStepReview}
+                            miningFarmEntity={creditMiningFarmDetailsPageStore.miningFarmEntity}
+                            imageEntities={creditMiningFarmDetailsPageStore.imageEntities}
+                            onClickContinue={creditMiningFarmDetailsPageStore.setStepReview}
                         />
                     </>)}
-                    {creditMiningFarmDetailsPageState.miningFarmEntity !== null && creditMiningFarmDetailsPageState.isStepReview() === true
+                    {creditMiningFarmDetailsPageStore.miningFarmEntity !== null && creditMiningFarmDetailsPageStore.isStepReview() === true
                     && (<StepReview
                         adminEntity={accountSessionStore.adminEntity}
-                        miningFarmEntity={creditMiningFarmDetailsPageState.miningFarmEntity}
-                        imageEntities={creditMiningFarmDetailsPageState.imageEntities}
-                        onClickContinue={creditMiningFarmDetailsPageState.finishCreation}
-                        onClickBack={creditMiningFarmDetailsPageState.setStepFarmDetails}
+                        miningFarmEntity={creditMiningFarmDetailsPageStore.miningFarmEntity}
+                        imageEntities={creditMiningFarmDetailsPageStore.imageEntities}
+                        onClickContinue={creditMiningFarmDetailsPageStore.finishCreation}
+                        onClickBack={creditMiningFarmDetailsPageStore.setStepFarmDetails}
                     />)}
 
-                    {creditMiningFarmDetailsPageState.isStepSuccess() === true && (
+                    {creditMiningFarmDetailsPageStore.isStepSuccess() === true && (
                         <StepSuccess adminEntity={accountSessionStore.adminEntity}/>
                     )}
                 </BorderShadowPaddingContainer>

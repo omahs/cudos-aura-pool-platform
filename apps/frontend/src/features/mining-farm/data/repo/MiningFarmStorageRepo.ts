@@ -118,8 +118,7 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
             this.storageHelper.miningFarmsJson.push(MiningFarmEntity.toJson(miningFarmEntity));
         }
 
-        miningFarmEntity.id = miningFarmJson.id;
-        miningFarmEntity.accountId = miningFarmJson.accountId;
+        Object.assign(miningFarmEntity, MiningFarmEntity.fromJson(miningFarmEntity));
 
         this.storageHelper.save();
     }

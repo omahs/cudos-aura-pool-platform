@@ -4,6 +4,7 @@ import CollectionEntity, { CollectionStatus } from '../../entities/CollectionEnt
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
 import CollectionFilterModel, { CollectionHashPowerFilter } from '../../utilities/CollectionFilterModel';
 import CategoryEntity from '../../entities/CategoryEntity';
+import NftEntity from '../../../nft/entities/NftEntity';
 
 export default class CollectionStorageRepo implements CollectionRepo {
 
@@ -100,14 +101,52 @@ export default class CollectionStorageRepo implements CollectionRepo {
         }
     }
 
-    async approveCollections(collectionIds: string[]): Promise < void > {
-        const colelctionJsons = this.storageHelper.collectionsJson;
+    async creditCollection(collectionEntity: CollectionEntity, nftEntities: NftEntity[]) {
+        const collectionsJson = this.storageHelper.collectionsJson;
 
-        collectionIds.forEach((id) => {
-            colelctionJsons.find((json) => json.id === id).status = CollectionStatus.APPROVED;
-        })
+        let collectionJson = collectionsJson.find((json) => {
+            return json.id === collectionEntity.id;
+        });
 
-        this.storageHelper.collectionsJson = colelctionJsons;
+        if (collectionJson !== undefined) {
+            Object.assign(collectionJson, CollectionEntity.toJson(collectionEntity));
+        } else {
+            const lastCollectionEntity = collectionsJson.last();
+            const nextCollectionId = 1 + (lastCollectionEntity !== null ? parseInt(lastCollectionEntity.id) : 0);
+
+            collectionJson = CollectionEntity.toJson(collectionEntity);
+            collectionJson.id = nextCollectionId.toString();
+
+            collectionsJson.push(collectionJson);
+        }
+
+        Object.assign(collectionEntity, CollectionEntity.fromJson(collectionJson));
+
+        if (nftEntities !== null) {
+            const nftsJson = this.storageHelper.nftsJson;
+
+            nftEntities.forEach((nftEntity) => {
+                let nftJson = nftsJson.find((json) => {
+                    return json.id === nftEntity.id;
+                });
+
+                if (nftJson !== undefined) {
+                    Object.assign(nftJson, NftEntity.toJson(nftEntity));
+                } else {
+                    const lastNftEntity = nftsJson.last();
+                    const nextNftId = 1 + (lastNftEntity !== null ? parseInt(lastNftEntity.id) : 0);
+
+                    nftJson = NftEntity.toJson(nftEntity);
+                    nftJson.id = nextNftId.toString();
+                    nftJson.collectionId = collectionJson.id;
+
+                    nftsJson.push(nftJson);
+                }
+
+                Object.assign(nftEntity, NftEntity.fromJson(nftJson));
+            });
+        }
+
         this.storageHelper.save();
     }
 

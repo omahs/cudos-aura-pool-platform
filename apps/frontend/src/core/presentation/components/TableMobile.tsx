@@ -15,7 +15,7 @@ import '../styles/table-mobile.css';
 export type TableMobileProps = {
     className?: string;
     legend: any[];
-    tableStore: TableState;
+    tableState: TableState;
     rows: TableRow[];
     onClickRow?: (i: number) => void,
     onClickLegend?: (sortKey: number, i: number) => void;
@@ -25,7 +25,7 @@ export type TableMobileProps = {
     showPaging?: boolean,
 }
 
-function TableMobile({ className, legend, tableStore, rows, onClickRow, onClickLegend, firstRowActionIndex, lastRowActionIndex, itemsSize, showPaging }: TableMobileProps) {
+function TableMobile({ className, legend, tableState, rows, onClickRow, onClickLegend, firstRowActionIndex, lastRowActionIndex, itemsSize, showPaging }: TableMobileProps) {
 
     const [sortDropDownOpened, setSortDropDownOpened] = useState(false);
     const [sortDropDownAnchor, setSortDropDownAnchor] = useState(null);
@@ -46,19 +46,19 @@ function TableMobile({ className, legend, tableStore, rows, onClickRow, onClickL
     }
 
     function onClickLegendCell(index: number) {
-        if (tableStore.isTableSortIndexClickable(index) === false) {
+        if (tableState.isTableSortIndexClickable(index) === false) {
             return;
         }
 
-        const sortKey = tableStore.getTableSortKey(index);
-        if (Math.abs(tableStore.tableState.sortKey) === sortKey) {
-            tableStore.updateTableSortDirection();
+        const sortKey = tableState.getTableSortKey(index);
+        if (Math.abs(tableState.tableFilterState.sortKey) === sortKey) {
+            tableState.updateTableSortDirection();
         } else {
-            tableStore.updateTableSort(sortKey);
+            tableState.updateTableSort(sortKey);
         }
 
         if (onClickLegend !== null) {
-            onClickLegend(tableStore.tableState.sortKey, index);
+            onClickLegend(tableState.tableFilterState.sortKey, index);
         }
     }
 
@@ -131,7 +131,7 @@ function TableMobile({ className, legend, tableStore, rows, onClickRow, onClickL
             return null;
         }
 
-        return tableStore.tableState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
+        return tableStore.tableFilterState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
     }
 
     function renderRows() {

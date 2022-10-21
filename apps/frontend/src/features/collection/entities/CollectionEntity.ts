@@ -41,21 +41,29 @@ export default class CollectionEntity {
         this.status = CollectionStatus.NOT_SUBMITTED;
     }
 
-    toJson(): any {
+    markApproved() {
+        this.status = CollectionStatus.APPROVED;
+    }
+
+    static toJson(entity: CollectionEntity): any {
+        if (entity === null) {
+            return null;
+        }
+
         return {
-            'id': this.id,
-            'farmId': this.farmId,
-            'name': this.name,
-            'description': this.description,
-            'ownerAddress': this.description,
-            'hashPower': this.hashPower,
-            'price': this.price,
-            'volume': this.volume,
-            'items': this.volume,
-            'owners': this.volume,
-            'profileImgUrl': this.profileImgUrl,
-            'coverImgUrl': this.coverImgUrl,
-            'status': this.status,
+            'id': entity.id,
+            'farmId': entity.farmId,
+            'name': entity.name,
+            'description': entity.description,
+            'ownerAddress': entity.description,
+            'hashPower': entity.hashPower,
+            'price': entity.price,
+            'volume': entity.volume,
+            'items': entity.volume,
+            'owners': entity.volume,
+            'profileImgUrl': entity.profileImgUrl,
+            'coverImgUrl': entity.coverImgUrl,
+            'status': entity.status,
         }
     }
 

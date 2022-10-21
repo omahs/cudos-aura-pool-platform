@@ -20,7 +20,7 @@ export default class GridViewState {
     gridSetting: number;
     isFetching: boolean;
 
-    tableStore: TableState;
+    tableState: TableState;
 
     constructor(fetchCallback: () => void, looseColumnCount: number, denseColumnCount: number, maxRows: number) {
         this.fetchCallback = fetchCallback;
@@ -31,14 +31,14 @@ export default class GridViewState {
         this.gridSetting = GRID_SETTING.LOOSE;
         this.isFetching = false;
 
-        this.tableStore = new TableState(S.NOT_EXISTS, [], fetchCallback, this.calculateItemsPerPageByGridSettings());
+        this.tableState = new TableState(S.NOT_EXISTS, [], fetchCallback, this.calculateItemsPerPageByGridSettings());
 
         makeAutoObservable(this);
     }
 
     setGridSettingAndPreviewCount(setting: number) {
         this.gridSetting = setting;
-        this.tableStore.tableState.itemsPerPage = this.calculateItemsPerPageByGridSettings();
+        this.tableState.tableFilterState.itemsPerPage = this.calculateItemsPerPageByGridSettings();
 
         this.fetchCallback();
     }
@@ -54,15 +54,15 @@ export default class GridViewState {
     }
 
     getFrom() {
-        return this.tableStore.tableState.from;
+        return this.tableState.tableFilterState.from;
     }
 
     getItemsPerPage() {
-        return this.tableStore.tableState.itemsPerPage;
+        return this.tableState.tableFilterState.itemsPerPage;
     }
 
     getItemCount() {
-        return this.tableStore.tableState.total;
+        return this.tableState.tableFilterState.total;
     }
 
     getGridSettingClass() {
@@ -78,6 +78,6 @@ export default class GridViewState {
     }
 
     setTotalItems(count: number) {
-        this.tableStore.tableState.total = count;
+        this.tableState.tableFilterState.total = count;
     }
 }

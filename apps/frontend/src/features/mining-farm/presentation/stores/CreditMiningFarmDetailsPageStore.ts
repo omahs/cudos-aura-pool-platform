@@ -3,6 +3,7 @@ import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import ImageEntity from '../../../upload-file/entities/ImageEntity';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import RepoStore from '../../../../core/presentation/stores/RepoStore';
+import MiningFarmRepo from '../repos/MiningFarmRepo';
 
 export default class CreditMiningFarmDetailsPageState {
 
@@ -11,15 +12,15 @@ export default class CreditMiningFarmDetailsPageState {
     static STEP_SUCCESS = 3;
 
     accountSessionStore: AccountSessionStore;
-    repoStore: RepoStore;
+    miningFarmRepo: MiningFarmRepo;
 
     step: number;
     miningFarmEntity: MiningFarmEntity;
     imageEntities: ImageEntity[];
 
-    constructor(accountSessionStore: AccountSessionStore, repoStore: RepoStore) {
+    constructor(accountSessionStore: AccountSessionStore, miningFarmRepo: MiningFarmRepo) {
         this.accountSessionStore = accountSessionStore;
-        this.repoStore = repoStore;
+        this.miningFarmRepo = miningFarmRepo;
 
         this.setStepFarmDetails();
         this.miningFarmEntity = null;
@@ -29,7 +30,7 @@ export default class CreditMiningFarmDetailsPageState {
     }
 
     async fetch() {
-        let miningFarmEntity = await this.repoStore.miningFarmRepo.fetchMiningFarmBySessionAccountId();
+        let miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmBySessionAccountId();
 
         runInAction(() => {
             if (miningFarmEntity === null) {
@@ -66,7 +67,7 @@ export default class CreditMiningFarmDetailsPageState {
 
     finishCreation = async () => {
         this.miningFarmEntity.accountId = this.accountSessionStore.accountEntity.accountId;
-        await this.repoStore.miningFarmRepo.creditMiningFarm(this.miningFarmEntity);
+        await this.miningFarmRepo.creditMiningFarm(this.miningFarmEntity);
 
         runInAction(() => {
             this.setStepSuccess();

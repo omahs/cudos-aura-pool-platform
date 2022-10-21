@@ -1,19 +1,22 @@
-import RepoStore from '../../../../core/presentation/stores/RepoStore';
 import { makeAutoObservable } from 'mobx';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import CollectionEntity from '../../entities/CollectionEntity';
+import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRepo';
+import CollectionRepo from '../repos/CollectionRepo';
 
-export default class CreditCollectionNftsPageState {
-    repoStore: RepoStore;
+export default class CreditCollectionNftsPageStore {
     accountSessionStore: AccountSessionStore;
+    miningFarmRepo: MiningFarmRepo;
+    collectionRepo: CollectionRepo
 
     collectionEntity: CollectionEntity;
     miningFarmEntity: MiningFarmEntity;
 
-    constructor(repoStore: RepoStore, accountSessionStore: AccountSessionStore) {
-        this.repoStore = repoStore;
+    constructor(accountSessionStore: AccountSessionStore, miningFarmRepo: MiningFarmRepo, collectionRepo: CollectionRepo) {
         this.accountSessionStore = accountSessionStore;
+        this.miningFarmRepo = miningFarmRepo;
+        this.collectionRepo = collectionRepo;
 
         this.collectionEntity = null;
         this.miningFarmEntity = null;
@@ -22,8 +25,8 @@ export default class CreditCollectionNftsPageState {
     }
 
     async init(collectionId: string) {
-        this.collectionEntity = await this.repoStore.collectionRepo.fetchCollectionById(collectionId);
-        this.miningFarmEntity = await this.repoStore.miningFarmRepo.fetchMiningFarmById(this.collectionEntity.farmId);
+        this.collectionEntity = await this.collectionRepo.fetchCollectionById(collectionId);
+        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(this.collectionEntity.farmId);
     }
 
     isCollectionEditable() {
