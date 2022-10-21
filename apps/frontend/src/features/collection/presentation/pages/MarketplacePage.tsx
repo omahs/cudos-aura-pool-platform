@@ -91,7 +91,7 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                     {marketplaceStore.newNftDropsEntities.slice(0, 4).map((nftEntity: NftEntity, index: number) => <NftPreviewInPicture
                         key={index}
                         nftEntity={nftEntity}
-                        onClick={() => navigate(`${AppRoutes.NFT_VIEW}/${nftEntity.id}`)}
+                        onClick={() => navigate(`${AppRoutes.VIEW_NFT}/${nftEntity.id}`)}
                         collectionEntity={marketplaceStore.getCollectionById(nftEntity.collectionId)}
                     />)}
                 </Slider>
@@ -100,7 +100,7 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                     {marketplaceStore.trendingNftEntities.slice(0, 4).map((nftEntity: NftEntity, index: number) => <NftPreview
                         key={index}
                         nftEntity={nftEntity}
-                        onClick={() => navigate(`${AppRoutes.NFT_VIEW}/${nftEntity.id}`)}
+                        onClick={() => navigate(`${AppRoutes.VIEW_NFT}/${nftEntity.id}`)}
                         collectionEntity={marketplaceStore.getCollectionById(nftEntity.collectionId)}
                     />)}
                 </Slider>

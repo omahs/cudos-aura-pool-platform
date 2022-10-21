@@ -16,7 +16,7 @@ import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presen
 import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
 import PageSuperAdminHeader from '../../../header/presentation/components/PageSuperAdminHeader';
 
-import '../styles/page-super-admin-approve-component.css';
+import '../styles/page-super-admin-approve.css';
 
 type Props = {
     repoStore?: RepoStore;

@@ -22,7 +22,7 @@ import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
 
-import '../styles/page-user-profile-component.css';
+import '../styles/page-user-profile.css';
 
 type Props = {
     appStore?: AppStore
