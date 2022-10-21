@@ -64,7 +64,7 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
     }
 
     function onClickCreateCollection() {
-        navigate(AppRoutes.PAGE_CREATE_COLLECTION);
+        navigate(AppRoutes.CREDIT_COLLECTION_DETAILS);
     }
 
     return (

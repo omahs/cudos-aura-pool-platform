@@ -9,9 +9,9 @@ export default class AppRoutes {
     static EXPLORE_NFTS = '/explore-nfts';
     static EXPLORE_COLLECTIONS = '/explore-collections';
     static EXPLORE_MINING_FARMS = '/explore-mining-farms';
-    static NFT_VIEW = '/nft-view';
-    static CREDIT_COLLECTION = '/collection-view';
-    static CREDIT_MINING_FARM = '/mining-farm-credit';
+    static VIEW_NFT = '/view-nft';
+    static CREDIT_COLLECTION = '/credit-collection';
+    static CREDIT_MINING_FARM = '/credit-mining-farm';
 
     // auth
     static LOGIN = '/login';
