@@ -12,8 +12,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment } from '@mui/material';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Button, { ButtonPadding, ButtonType } from '../../../../core/presentation/components/Button';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import TopCollections from '../components/TopCollections';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
@@ -105,12 +105,12 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                     />)}
                 </Slider>
                 <Actions
-                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
-                    height={ACTIONS_HEIGHT.HEIGHT_48} >
+                    layout={ActionsLayout.LAYOUT_ROW_CENTER}
+                    height={ActionsHeight.HEIGHT_48} >
                     {/* TODO: redirect */}
                     <Button
-                        padding={BUTTON_PADDING.PADDING_24}
-                        type={BUTTON_TYPE.ROUNDED}
+                        padding={ButtonPadding.PADDING_24}
+                        type={ButtonType.ROUNDED}
                         onClick={onClickSeeAllNfts} >
                         See All NFTs
                     </Button>
@@ -122,12 +122,12 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                     topCollectionEntities={marketplaceStore.topCollectionEntities}
                     changeTopCollectionPeriod={marketplaceStore.changeTopCollectionPeriod} />
                 <Actions
-                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
-                    height={ACTIONS_HEIGHT.HEIGHT_48}>
+                    layout={ActionsLayout.LAYOUT_ROW_CENTER}
+                    height={ActionsHeight.HEIGHT_48}>
                     <Button
                         onClick={onClickSeeAllCollections}
-                        padding={BUTTON_PADDING.PADDING_24}
-                        type={BUTTON_TYPE.ROUNDED}>
+                        padding={ButtonPadding.PADDING_24}
+                        type={ButtonType.ROUNDED}>
                         See All Collections
                     </Button>
                 </Actions>
@@ -141,12 +141,12 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                         />)}
                     </div>
                     <Actions
-                        layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
-                        height={ACTIONS_HEIGHT.HEIGHT_48}>
+                        layout={ActionsLayout.LAYOUT_ROW_CENTER}
+                        height={ActionsHeight.HEIGHT_48}>
                         <Button
                             onClick={onClickSeeAllFarms}
-                            padding={BUTTON_PADDING.PADDING_24}
-                            type={BUTTON_TYPE.ROUNDED}>
+                            padding={ButtonPadding.PADDING_24}
+                            type={ButtonType.ROUNDED}>
                         See All Farms
                         </Button>
                     </Actions>

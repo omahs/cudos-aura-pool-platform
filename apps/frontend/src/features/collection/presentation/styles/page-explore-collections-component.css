@@ -2,14 +2,3 @@
 .PageExploreCollections .PageContent {
     padding: 48px  var(--page-spacing-h);
 }
-
-.PageExploreCollections .PageContent .GridFilterHeader {
-    display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr) minmax(0, 1fr);
-}
-
-.PageExploreCollections .PageContent .GridFilterHeader .LeftHeaderPart {
-    justify-content: flex-start;
-    align-items: flex-end;
-    gap: 20px;
-}

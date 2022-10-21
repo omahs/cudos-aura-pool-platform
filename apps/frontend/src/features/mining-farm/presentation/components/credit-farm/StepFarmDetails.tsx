@@ -4,8 +4,8 @@ import '../../styles/step-farm-details.css';
 import Input, { InputType } from '../../../../../core/presentation/components/Input';
 import { InputAdornment } from '@mui/material';
 import Svg from '../../../../../core/presentation/components/Svg';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../../core/presentation/components/Actions';
+import Button, { ButtonRadius } from '../../../../../core/presentation/components/Button';
 import Autocomplete from '../../../../../core/presentation/components/Autcomplete';
 import AutocompleteOption from '../../../../../core/entities/AutocompleteOption';
 import ManufacturerEntity from '../../../entities/ManufacturerEntity';
@@ -153,9 +153,9 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
             <div className={'Uploader FlexColumn'}>
                 <div className={'B3 SemiBold'}>Upload files here</div>
                 <div className={'B3 SemiBold'}>File Format: <span className={'Gray'}>.svg, .png, .jpeg</span></div>
-                <Actions layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                <Actions layout={ActionsLayout.LAYOUT_COLUMN_CENTER} height={ActionsHeight.HEIGHT_48}>
                     <Button
-                        radius={BUTTON_RADIUS.RADIUS_16}
+                        radius={ButtonRadius.RADIUS_16}
                     >
                         <Svg svg={FileUploadIcon}/>
                         Upload file
@@ -193,11 +193,11 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                     })
                 )}
             </div>
-            <Actions layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_RIGHT} height={ACTIONS_HEIGHT.HEIGHT_48}>
+            <Actions layout={ActionsLayout.LAYOUT_COLUMN_RIGHT} height={ActionsHeight.HEIGHT_48}>
                 <Button
                     disabled={shouldButtonBeDisabled()}
                     onClick={creditMiningFarmDetailsPageStore.setStepReview}
-                    radius={BUTTON_RADIUS.RADIUS_16}
+                    radius={ButtonRadius.RADIUS_16}
                 >Next Step</Button>
             </Actions>
         </div>

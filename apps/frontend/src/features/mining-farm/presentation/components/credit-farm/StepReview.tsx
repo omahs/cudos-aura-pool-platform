@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import '../../styles/step-review.css';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../../core/presentation/components/Button';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../../core/presentation/components/Actions';
+import Button, { ButtonPadding, ButtonType } from '../../../../../core/presentation/components/Button';
 import ManufacturerEntity from '../../../../mining-farm/entities/ManufacturerEntity';
 import MinerEntity from '../../../../mining-farm/entities/MinerEntity';
 import EnergySourceEntity from '../../../../mining-farm/entities/EnergySourceEntity';
@@ -77,10 +77,10 @@ function StepReview({ accountSessionStore, creditMiningFarmDetailsPageStore }: P
                     onChange={setAcceptedTerms}
                 />
             </div>
-            <Actions className={'ButtonRow'} layout={ACTIONS_LAYOUT.LAYOUT_ROW_ENDS} height={ACTIONS_HEIGHT.HEIGHT_48}>
+            <Actions className={'ButtonRow'} layout={ActionsLayout.LAYOUT_ROW_ENDS} height={ActionsHeight.HEIGHT_48}>
                 <Button
                     onClick={creditMiningFarmDetailsPageStore.setStepFarmDetails}
-                    type={BUTTON_TYPE.TEXT_INLINE}
+                    type={ButtonType.TEXT_INLINE}
                 >
                     <Svg svg={ArrowBackIcon} />
                     Back
@@ -88,7 +88,7 @@ function StepReview({ accountSessionStore, creditMiningFarmDetailsPageStore }: P
                 <Button
                     disabled={!acceptedTerms}
                     onClick={creditMiningFarmDetailsPageStore.finishCreation}
-                    padding={BUTTON_PADDING.PADDING_48}
+                    padding={ButtonPadding.PADDING_48}
                 >Finish</Button>
             </Actions>
         </div>

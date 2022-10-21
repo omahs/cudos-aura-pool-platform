@@ -17,9 +17,6 @@ import Select from '../../../../core/presentation/components/Select';
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../components/CollectionPreview';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import CategoriesSelector from '../components/CategoriesSelector';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import ExplorePageLayout from '../../../../core/presentation/components/ExplorePageLayout';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
 
@@ -76,38 +73,37 @@ function ExploreCollectionsPage({ appStore, exploreCollectionsPageStore }: Props
                     ) }>
 
                     <DataGridLayout
-                        header = { (
-                            <div className={'GridFilterHeader'}>
-                                <div className={'LeftHeaderPart FlexRow'}>
-                                    <Input
-                                        inputType={InputType.TEXT}
-                                        className={'SearchBar'}
-                                        value = {collectionFilterModel.searchString}
-                                        onChange = { exploreCollectionsPageStore.onChangeSearchWord }
-                                        placeholder = {'Search Collections name'}
-                                        InputProps={{
-                                            startAdornment: <InputAdornment position="start" >
-                                                <Svg svg={SearchIcon} />
-                                            </InputAdornment>,
-                                        }} />
-                                    <Select
-                                        label={'Hashing Power'}
-                                        onChange={exploreCollectionsPageStore.onChangeHashPowerFilter}
-                                        value={collectionFilterModel.hashPowerFilter} >
-                                        <MenuItem value = { CollectionHashPowerFilter.NONE } > </MenuItem>
-                                        <MenuItem value = { CollectionHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
-                                        <MenuItem value = { CollectionHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
-                                        <MenuItem value = { CollectionHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
-                                    </Select>
-                                </div>
-                                <div></div>
+                        headerLeft = { (
+                            <>
+                                <Input
+                                    inputType={InputType.TEXT}
+                                    className={'SearchBar'}
+                                    value = {collectionFilterModel.searchString}
+                                    onChange = { exploreCollectionsPageStore.onChangeSearchWord }
+                                    placeholder = {'Search Collections name'}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start" >
+                                            <Svg svg={SearchIcon} />
+                                        </InputAdornment>,
+                                    }} />
                                 <Select
-                                    onChange={exploreCollectionsPageStore.onChangeSortKey}
-                                    value={collectionFilterModel.sortKey} >
-                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                                    label={'Hashing Power'}
+                                    onChange={exploreCollectionsPageStore.onChangeHashPowerFilter}
+                                    value={collectionFilterModel.hashPowerFilter} >
+                                    <MenuItem value = { CollectionHashPowerFilter.NONE } > </MenuItem>
+                                    <MenuItem value = { CollectionHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
+                                    <MenuItem value = { CollectionHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
+                                    <MenuItem value = { CollectionHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
                                 </Select>
-                            </div>
+                            </>
+                        ) }
+                        headerRight = { (
+                            <Select
+                                onChange={exploreCollectionsPageStore.onChangeSortKey}
+                                value={collectionFilterModel.sortKey} >
+                                <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                            </Select>
                         ) } >
 
                         { exploreCollectionsPageStore.collectionEntities === null && (

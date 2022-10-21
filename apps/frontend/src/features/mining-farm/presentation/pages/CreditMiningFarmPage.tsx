@@ -20,8 +20,8 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Select from '../../../../core/presentation/components/Select';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_COLOR } from '../../../../core/presentation/components/Button';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
+import Button, { ButtonColor } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../../../collection/presentation/components/CollectionPreview';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
@@ -94,16 +94,16 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
                     <ProfileHeader coverPictureUrl={miningFarmEntity.coverImgUrl} profilePictureUrl={miningFarmEntity.profileImgUrl} />
 
                     { accountSessionStore.isAdmin() === true && accountSessionStore.accountEntity.accountId === miningFarmEntity.accountId && (
-                        <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}>
+                        <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_RIGHT}>
                             <Button
                                 onClick={onClickProfileImages}
-                                color={BUTTON_COLOR.SCHEME_3} >
+                                color={ButtonColor.SCHEME_3} >
                                 <Svg size = { SvgSize.CUSTOM } svg={BorderColorIcon} />
                                 Profile images
                             </Button>
                             <Button
                                 onClick={onClickEditProfile}
-                                color={BUTTON_COLOR.SCHEME_3} >
+                                color={ButtonColor.SCHEME_3} >
                                 <Svg size = { SvgSize.CUSTOM } svg={BorderColorIcon} />
                                 Edit Profile
                             </Button>
@@ -142,7 +142,7 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
                     </div>
                     <div className={'CollectionsOwnedHeader FlexRow'}>
                         <div className={'H2'}>Collections Owned</div>
-                        <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}>
+                        <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_CENTER}>
                             <Button onClick={onClickCreateCollection} >
                                 <Svg svg={AddIcon}/>
                                 Create Collection
@@ -217,8 +217,8 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
                 <div className={'H3 Bold'}>No collections in here</div>
                 <div className={'B1'}>Looks like you haven’t created collections yet.</div>
                 <Actions
-                    layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_CENTER}
-                    height={ACTIONS_HEIGHT.HEIGHT_48}
+                    layout={ActionsLayout.LAYOUT_COLUMN_CENTER}
+                    height={ActionsHeight.HEIGHT_48}
                 >
                     <Button onClick={onClickCreateCollection}>
                         <Svg svg={AddIcon} />

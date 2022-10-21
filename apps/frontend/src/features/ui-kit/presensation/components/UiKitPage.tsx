@@ -10,9 +10,9 @@ import TableState from '../../../../core/presentation/stores/TableState';
 
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
-import Button, { BUTTON_COLOR, BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Button, { ButtonColor, ButtonPadding, ButtonRadius, ButtonType } from '../../../../core/presentation/components/Button';
 import Input from '../../../../core/presentation/components/Input';
 import Select from '../../../../core/presentation/components/Select';
 import { MenuItem } from '@mui/material'
@@ -318,31 +318,31 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                             Button rounded color 1 default padding default radius
                         </Button>
                         <Button
-                            color = { BUTTON_COLOR.SCHEME_2 }
-                            padding = { BUTTON_PADDING.PADDING_24 }
-                            radius = { BUTTON_RADIUS.MAX }>
+                            color = { ButtonColor.SCHEME_2 }
+                            padding = { ButtonPadding.PADDING_24 }
+                            radius = { ButtonRadius.MAX }>
                             <Svg size = { SvgSize.CUSTOM } svg = { AcUnitIcon } />
                             Button rounded color 2 24 padding max radius
                         </Button>
                         <Button
-                            color = { BUTTON_COLOR.SCHEME_3 }
-                            padding = { BUTTON_PADDING.PADDING_48 } >
+                            color = { ButtonColor.SCHEME_3 }
+                            padding = { ButtonPadding.PADDING_48 } >
                             Button rounded color 3 48 padding
                         </Button>
                     </Actions>
-                    <Actions height = { ACTIONS_HEIGHT.HEIGHT_42 } layout = { ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL } >
+                    <Actions height = { ActionsHeight.HEIGHT_42 } layout = { ActionsLayout.LAYOUT_COLUMN_FULL } >
                         <Button
-                            type = { BUTTON_TYPE.TEXT_INLINE }>
+                            type = { ButtonType.TEXT_INLINE }>
                             Button inline color 1 default padding default radius
                         </Button>
                         <Button
-                            type = { BUTTON_TYPE.TEXT_INLINE }
-                            color = { BUTTON_COLOR.SCHEME_2 } >
+                            type = { ButtonType.TEXT_INLINE }
+                            color = { ButtonColor.SCHEME_2 } >
                             Button inline color 2 default padding default radius
                         </Button>
                         <Button
-                            type = { BUTTON_TYPE.TEXT_INLINE }
-                            color = { BUTTON_COLOR.SCHEME_3 } >
+                            type = { ButtonType.TEXT_INLINE }
+                            color = { ButtonColor.SCHEME_3 } >
                             Button inline color 3 default padding default radius
                         </Button>
                     </Actions>
@@ -415,10 +415,10 @@ export default inject((stores) => stores)(observer(UiKitPage));
 //             </Select>
 
 //             <Actions>
-//                 <Button type = {BUTTON_TYPE.ROUNDED } color = { BUTTON_COLOR.SCHEME_1 } >button 01</Button>
-//                 <Button type = {BUTTON_TYPE.ROUNDED } color = { BUTTON_COLOR.SCHEME_2 } >button 02</Button>
-//                 <Button type = { BUTTON_TYPE.TEXT_INLINE } color = { BUTTON_COLOR.SCHEME_1 } >button 03</Button>
-//                 <Button type = { BUTTON_TYPE.TEXT_INLINE } color = { BUTTON_COLOR.SCHEME_2 } >button 04</Button>
+//                 <Button type = {ButtonType.ROUNDED } color = { ButtonColor.SCHEME_1 } >button 01</Button>
+//                 <Button type = {ButtonType.ROUNDED } color = { ButtonColor.SCHEME_2 } >button 02</Button>
+//                 <Button type = { ButtonType.TEXT_INLINE } color = { ButtonColor.SCHEME_1 } >button 03</Button>
+//                 <Button type = { ButtonType.TEXT_INLINE } color = { ButtonColor.SCHEME_2 } >button 04</Button>
 //             </Actions>
 //         </div>
 //         <Tooltip title = { 'some info' } arrow ><span>TOOLTIP</span></Tooltip>

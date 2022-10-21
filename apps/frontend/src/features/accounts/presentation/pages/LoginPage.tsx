@@ -9,12 +9,11 @@ import AlertStore from '../../../../core/presentation/stores/AlertStore';
 import { InputAdornment } from '@mui/material';
 import Input from '../../../../core/presentation/components/Input';
 import Svg from '../../../../core/presentation/components/Svg';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import Button from '../../../../core/presentation/components/Button';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
-import Box, { BoxWidth } from '../../../../core/presentation/components/Box';
 import PageAdminHeader from '../../../header/presentation/components/PageAdminHeader';
 import BorderShadowPaddingContainer, { ContainerWidth } from '../../../../core/presentation/components/BorderShadowPaddingContainer';
 
@@ -98,7 +97,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
 
                     <div className={'ForgottenPassword B2 SemiBold Clickable'} onClick={onClickForgottenPassword}>Forgotten Password?</div>
 
-                    <Actions className = { 'LoginActions' } layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                    <Actions className = { 'LoginActions' } layout={ActionsLayout.LAYOUT_COLUMN_FULL} height={ActionsHeight.HEIGHT_48}>
                         <Button onClick={onClickLogin}>
                             {logging === true ? <LoadingIndicator /> : 'Login'}
                         </Button>

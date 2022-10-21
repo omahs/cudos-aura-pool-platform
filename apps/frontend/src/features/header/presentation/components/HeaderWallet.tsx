@@ -7,8 +7,8 @@ import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 
 import Svg from '../../../../core/presentation/components/Svg';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
+import Button, { ButtonRadius } from '../../../../core/presentation/components/Button';
 import Popover from '../../../../core/presentation/components/Popover';
 
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -90,14 +90,14 @@ function HeaderWallet({ accountSessionStore, walletStore }: Props) {
                                 <Svg className={'Clickable'} svg={FileCopyIcon} onClick={onClickCopyAddress}/>
                                 <a href={`${CHAIN_DETAILS.EXPLORER_URL[walletStore.selectedNetwork]}/accounts/${walletStore.getAddress()}`} target={'_blank'} rel="noreferrer"><Svg svg={LaunchIcon} /></a>
                             </div>
-                            <Actions layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
-                                <Button radius={BUTTON_RADIUS.RADIUS_16} onClick={onClickDisconnect}>Logout</Button>
+                            <Actions layout={ActionsLayout.LAYOUT_COLUMN_CENTER} height={ActionsHeight.HEIGHT_48}>
+                                <Button radius={ButtonRadius.RADIUS_16} onClick={onClickDisconnect}>Logout</Button>
                             </Actions>
                         </div>
                     </Popover>
                 </>
                 : <>
-                    <Actions height={ACTIONS_HEIGHT.HEIGHT_48}>
+                    <Actions height={ActionsHeight.HEIGHT_48}>
                         <Button onClick={onClickLogin}>Connect Wallet</Button>
                     </Actions>
                 </>

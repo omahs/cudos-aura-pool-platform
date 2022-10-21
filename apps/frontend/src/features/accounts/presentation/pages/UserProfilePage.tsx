@@ -16,11 +16,12 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Select from '../../../../core/presentation/components/Select';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
+import Button, { ButtonPadding, ButtonType } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
+import AnimationContainer from '../../../../core/presentation/components/AnimationContainer';
 
 import '../styles/page-user-profile.css';
 
@@ -86,7 +87,7 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
                     </div>
                 </div>
 
-                <div className = { `ActiveVisibilityHidden ${S.CSS.getActiveClassName(userProfilePageStore.isNftPage())}` } >
+                <AnimationContainer active = { userProfilePageStore.isNftPage() } >
                     {userProfilePageStore.isNftPage() === true && (
                         <DataGridLayout
                             header = { (
@@ -98,12 +99,12 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
                                         <MenuItem value = { NftFilterModel.SORT_KEY_POPULAR }> Popular </MenuItem>
                                     </Select>
                                     <Actions
-                                        layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                                        height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                        layout={ActionsLayout.LAYOUT_ROW_RIGHT}
+                                        height={ActionsHeight.HEIGHT_48} >
                                         {/* TODO: show all filters */}
                                         <Button
-                                            padding={BUTTON_PADDING.PADDING_24}
-                                            type={BUTTON_TYPE.ROUNDED} >
+                                            padding={ButtonPadding.PADDING_24}
+                                            type={ButtonType.ROUNDED} >
                                     All Filters
                                         </Button>
                                     </Actions>
@@ -131,19 +132,19 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
 
                         </DataGridLayout>
                     ) }
-                </div>
-            </div>
+                </AnimationContainer>
 
-            <div className = { `ActiveVisibilityHidden ${S.CSS.getActiveClassName(userProfilePageStore.isEarningsPage())}` } >
-                {userProfilePageStore.isEarningsPage() === true && (
-                    'earnings'
-                ) }
-            </div>
+                <AnimationContainer active = { userProfilePageStore.isEarningsPage() } >
+                    {userProfilePageStore.isEarningsPage() === true && (
+                        'earnings'
+                    ) }
+                </AnimationContainer>
 
-            <div className = { `ActiveVisibilityHidden ${S.CSS.getActiveClassName(userProfilePageStore.isHistoryPage())}` } >
-                {userProfilePageStore.isHistoryPage() === true && (
-                    'history'
-                ) }
+                <AnimationContainer active = { userProfilePageStore.isHistoryPage() } >
+                    {userProfilePageStore.isHistoryPage() === true && (
+                        'history'
+                    ) }
+                </AnimationContainer>
             </div>
 
             <PageFooter />

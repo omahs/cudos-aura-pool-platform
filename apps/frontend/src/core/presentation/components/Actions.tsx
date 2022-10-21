@@ -3,7 +3,7 @@ import React from 'react';
 import '../styles/actions.css';
 
 /* each member of the enum corresponds to a CSS class */
-export enum ACTIONS_LAYOUT {
+export enum ActionsLayout {
     LAYOUT_ROW_LEFT = 'Row',
     LAYOUT_ROW_CENTER = 'Row Center',
     LAYOUT_ROW_RIGHT = 'Row Right',
@@ -15,7 +15,7 @@ export enum ACTIONS_LAYOUT {
 }
 
 /* each member of the enum corresponds to a CSS class */
-export enum ACTIONS_HEIGHT {
+export enum ActionsHeight {
    HEIGHT_32 = 'H32',
    HEIGHT_36 = 'H36',
    HEIGHT_42 = 'H42',
@@ -27,8 +27,8 @@ export enum ACTIONS_HEIGHT {
 
 type Props = {
     className?: string;
-    height?: ACTIONS_HEIGHT;
-    layout?: ACTIONS_LAYOUT;
+    height?: ActionsHeight;
+    layout?: ActionsLayout;
 }
 
 export default function Actions({ className, height, layout, children }: React.PropsWithChildren < Props >) {
@@ -43,6 +43,6 @@ export default function Actions({ className, height, layout, children }: React.P
 
 Actions.defaultProps = {
     className: '',
-    height: ACTIONS_HEIGHT.HEIGHT_48,
-    layout: ACTIONS_LAYOUT.LAYOUT_ROW_LEFT,
+    height: ActionsHeight.HEIGHT_48,
+    layout: ActionsLayout.LAYOUT_ROW_LEFT,
 }
