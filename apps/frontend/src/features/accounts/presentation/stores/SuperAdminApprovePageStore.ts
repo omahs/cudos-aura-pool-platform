@@ -51,26 +51,26 @@ export default class SuperAdminApprovePageStore {
 
     fetchMiningFarmEntities = (): void => {
         const miningFarmFilter = new MiningFarmFilterModel();
-        miningFarmFilter.from = this.miningFarmsTableState.tableState.from;
-        miningFarmFilter.count = this.miningFarmsTableState.tableState.itemsPerPage;
+        miningFarmFilter.from = this.miningFarmsTableState.tableFilterState.from;
+        miningFarmFilter.count = this.miningFarmsTableState.tableFilterState.itemsPerPage;
         miningFarmFilter.status = MiningFarmStatus.NOT_APPROVED;
 
         this.repoStore.miningFarmRepo.fetchMiningFarmsByFilter(miningFarmFilter).then(({ miningFarmEntities, total }) => {
             this.miningFarmEntities = miningFarmEntities;
-            this.miningFarmsTableState.tableState.total = total;
+            this.miningFarmsTableState.tableFilterState.total = total;
         });
 
     }
 
     fetchCollectionEntities = (): void => {
         const collectionFilter = new CollectionFilterModel();
-        collectionFilter.from = this.collectionsTableState.tableState.from;
-        collectionFilter.count = this.collectionsTableState.tableState.itemsPerPage;
+        collectionFilter.from = this.collectionsTableState.tableFilterState.from;
+        collectionFilter.count = this.collectionsTableState.tableFilterState.itemsPerPage;
         collectionFilter.status = CollectionStatus.QUEUED;
 
         this.repoStore.collectionRepo.fetchCollectionsByFilter(collectionFilter).then(({ collectionEntities, total }) => {
             this.collectionEntities = collectionEntities;
-            this.collectionsTableState.tableState.total = total;
+            this.collectionsTableState.tableFilterState.total = total;
         });
 
     }

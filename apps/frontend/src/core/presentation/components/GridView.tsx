@@ -47,7 +47,7 @@ function GridView({ gridViewState, defaultContent, children }: React.PropsWithCh
                             legend={['']}
                             widths={['100%']}
                             aligns={[ALIGN_CENTER]}
-                            tableStore={gridViewState.tableStore}
+                            tableState={gridViewState.tableState}
                             content={<div className={`PreviewsGrid Grid ${gridViewState.getGridSettingClass()}`}>{children}</div>} />
                     ) : (
                         <div className={'DefaultContent FlexRow'}>{defaultContent}</div>

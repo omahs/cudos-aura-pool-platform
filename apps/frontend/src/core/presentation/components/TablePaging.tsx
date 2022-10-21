@@ -31,7 +31,7 @@ function TablePaging({ tableStore, noVerticalPadding, noHorizontalPadding }: Pro
 
     function renderPageNode(key: number, text: string | React.ReactNode | number, active: boolean, page: number) {
         const onClickHandler = page === S.NOT_EXISTS ? undefined : () => {
-            tableStore.updateTablePage(page * tableStore.tableState.itemsPerPage);
+            tableStore.updateTablePage(page * tableStore.tableFilterState.itemsPerPage);
         };
 
         return (
@@ -46,11 +46,11 @@ function TablePaging({ tableStore, noVerticalPadding, noHorizontalPadding }: Pro
         );
     }
 
-    const tableState = tableStore.tableState;
+    const tableFilterState = tableStore.tableFilterState;
 
     const pageOffset = 2;
-    const cntPage = Math.floor(tableState.from / tableState.itemsPerPage);
-    const totalPages = Math.floor((tableState.total + (tableState.itemsPerPage - 1)) / tableState.itemsPerPage);
+    const cntPage = Math.floor(tableFilterState.from / tableFilterState.itemsPerPage);
+    const totalPages = Math.floor((tableFilterState.total + (tableFilterState.itemsPerPage - 1)) / tableFilterState.itemsPerPage);
 
     let startPage = cntPage - pageOffset;
     let endPage = cntPage + pageOffset + 1;

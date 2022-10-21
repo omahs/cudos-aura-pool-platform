@@ -20,7 +20,7 @@ export default function Table(props: Props) {
                 widths = { props.widths }
                 legend = { props.legend }
                 aligns = { props.aligns }
-                tableStore = { props.tableStore }
+                tableState = { props.tableState }
                 onClickRow = { props.onClickRow }
                 onClickLegend = { props.onClickLegend }
                 rows = { props.rows }
@@ -31,7 +31,7 @@ export default function Table(props: Props) {
             <TableMobile
                 className = { props.className }
                 legend = { props.legend }
-                tableStore = { props.tableStore }
+                tableState = { props.tableState }
                 onClickRow = { props.onClickRow }
                 onClickLegend = { props.onClickLegend }
                 rows = { props.rows}
