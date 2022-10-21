@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import RequestAdminAccountPageState from '../../stores/RequestAdminAccountPageState';
 import S from '../../../../../core/utilities/Main';
 import StepAccount from './StepAccount';
-import StepFarmDetails from './StepFarmDetails';
+import StepFarmDetails from '../../../../mining-farm/presentation/components/credit-farm/StepFarmDetails';
 import StepReview from './StepReview';
 import StepSuccess from './StepSuccess';
 import NavRow, { NavStep } from '../../../../../core/presentation/components/NavRow';

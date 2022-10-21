@@ -6,20 +6,20 @@ import { InputAdornment } from '@mui/material';
 import Svg from '../../../../../core/presentation/components/Svg';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
 import Button, { BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
-import AdminEntity from '../../../entities/AdminEntity';
-import MiningFarmEntity from '../../../../mining-farm/entities/MiningFarmEntity';
+import AdminEntity from '../../../../accounts/entities/AdminEntity';
+import MiningFarmEntity from '../../../entities/MiningFarmEntity';
 import Autocomplete from '../../../../../core/presentation/components/Autcomplete';
 import AutocompleteOption from '../../../../../core/entities/AutocompleteOption';
-import ManufacturerEntity from '../../../../mining-farm/entities/ManufacturerEntity';
-import MinerEntity from '../../../../mining-farm/entities/MinerEntity';
-import EnergySourceEntity from '../../../../mining-farm/entities/EnergySourceEntity';
+import ManufacturerEntity from '../../../entities/ManufacturerEntity';
+import MinerEntity from '../../../entities/MinerEntity';
+import EnergySourceEntity from '../../../entities/EnergySourceEntity';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { inject, observer } from 'mobx-react';
 import UploaderComponent from '../../../../../core/presentation/components/UploaderComponent';
 import AlertStore from '../../../../../core/presentation/stores/AlertStore';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import ImageEntity, { PictureType } from '../../../../../features/upload-file/entities/ImageEntity';
+import ImageEntity, { PictureType } from '../../../../upload-file/entities/ImageEntity';
 import CloseIcon from '@mui/icons-material/Close';
 
 type Props = {

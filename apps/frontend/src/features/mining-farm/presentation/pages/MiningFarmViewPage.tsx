@@ -11,7 +11,6 @@ import CollectionEntity from '../../../collection/entities/CollectionEntity';
 import EditMiningFarmModal from '../components/EditMiningFarmModal';
 import EditMiningFarmModalStore from '../stores/EditMiningFarmModalStore';
 import CollectionFilterModel, { CollectionHashPowerFilter } from '../../../collection/utilities/CollectionFilterModel';
-
 import { InputAdornment, MenuItem } from '@mui/material';
 import ProfileHeader from '../../../collection/presentation/components/ProfileHeader';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
@@ -21,7 +20,7 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Select from '../../../../core/presentation/components/Select';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_COLOR, BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Button, { BUTTON_COLOR, BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../../../collection/presentation/components/CollectionPreview';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
