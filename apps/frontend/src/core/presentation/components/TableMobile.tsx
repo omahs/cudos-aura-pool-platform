@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import TableRow from '../../entities/TableRow';
 import S from '../../utilities/Main';
-import TableStore from '../stores/TableStore';
+import TableState from '../stores/TableState';
 
 import TablePaging from './TablePaging';
 import Popover from './Popover';
@@ -15,7 +15,7 @@ import '../styles/table-mobile.css';
 export type TableMobileProps = {
     className?: string;
     legend: any[];
-    tableStore: TableStore;
+    tableStore: TableState;
     rows: TableRow[];
     onClickRow?: (i: number) => void,
     onClickLegend?: (sortKey: number, i: number) => void;

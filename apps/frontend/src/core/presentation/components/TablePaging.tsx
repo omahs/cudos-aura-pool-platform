@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import S from '../../utilities/Main';
-import TableStore from '../stores/TableStore';
+import TableState from '../stores/TableState';
 
 import SvgArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import SvgArrowRight from '@mui/icons-material/KeyboardArrowRight';
@@ -10,7 +10,7 @@ import SvgArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import '../styles/table-paging.css';
 
 type Props = {
-    tableStore: TableStore;
+    tableStore: TableState;
     noVerticalPadding: boolean,
     noHorizontalPadding: boolean,
 }

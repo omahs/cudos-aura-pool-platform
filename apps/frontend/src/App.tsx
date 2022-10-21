@@ -34,6 +34,8 @@ import ExploreCollectionsPageStore from './features/collection/presentation/stor
 import ExploreMiningFarmsPageStore from './features/mining-farm/presentation/stores/ExploreMiningFarmsPageStore';
 import ExploreNftsPageStore from './features/nft/presentation/stores/ExploreNftsPageStore';
 import EditMiningFarmModalStore from './features/mining-farm/presentation/stores/EditMiningFarmModalStore';
+import CreditMiningFarmDetailsPageState from './features/mining-farm/presentation/stores/CreditMiningFarmDetailsPageStore';
+import SuperAdminApprovePageStore from './features/accounts/presentation/stores/SuperAdminApprovePageStore';
 
 const storageHelper = new StorageHelper();
 storageHelper.open();
@@ -68,6 +70,8 @@ const userProfilePageStore = new UserProfilePageStore(walletStore, nftRepo, coll
 const buyNftModalStore = new BuyNftModalStore();
 const resellNftModalStore = new ResellNftModalStore();
 const editMiningFarmModalStore = new EditMiningFarmModalStore(repoStore);
+const creditMiningFarmDetailsPageState = new CreditMiningFarmDetailsPageState(accountSessionStore, repoStore);
+const superAdminApprovePageState = new SuperAdminApprovePageStore(repoStore);
 
 const App = () => {
 
@@ -105,7 +109,10 @@ const App = () => {
                 userProfilePageStore = { userProfilePageStore }
                 buyNftModalStore = { buyNftModalStore }
                 resellNftModalStore = { resellNftModalStore }
-                editMiningFarmModalStore = { editMiningFarmModalStore } >
+                editMiningFarmModalStore = { editMiningFarmModalStore } 
+                creditMiningFarmDetailsPageState = { creditMiningFarmDetailsPageState }
+                superAdminApprovePageState = { superAdminApprovePageState }
+                >
                 <BrowserRouter>
                     <AppRouter />
                 </BrowserRouter>
