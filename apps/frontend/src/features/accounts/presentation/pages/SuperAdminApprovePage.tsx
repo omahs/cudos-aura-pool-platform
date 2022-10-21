@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import SuperAdminApprovePageState from '../stores/SuperAdminApprovePageState';
+import SuperAdminApprovePageStore from '../stores/SuperAdminApprovePageStore';
 import RepoStore from '../../../../core/presentation/stores/RepoStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import TableCell from '../../../../core/entities/TableCell';
@@ -19,7 +19,7 @@ import PageSuperAdminHeader from '../../../header/presentation/components/PageSu
 import '../styles/page-super-admin-approve.css';
 
 type Props = {
-    repoStore?: RepoStore;
+    superAdminApprovePageState?: SuperAdminApprovePageStore;
     appStore?: AppStore;
 }
 
@@ -30,8 +30,7 @@ const TABLE_ALINGS = [
     ALIGN_CENTER,
 ]
 
-function SuperAdminApprovePage({ repoStore, appStore }: Props) {
-    const [superAdminApprovePageState] = useState(new SuperAdminApprovePageState(repoStore));
+function SuperAdminApprovePage({ superAdminApprovePageState, appStore }: Props) {
 
     const miningFarmEntities = superAdminApprovePageState.miningFarmEntities;
     const collectionEntities = superAdminApprovePageState.collectionEntities;

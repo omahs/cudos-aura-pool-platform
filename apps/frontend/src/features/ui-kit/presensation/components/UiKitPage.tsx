@@ -6,7 +6,7 @@ import AppRoutes from '../../../app-routes/entities/AppRoutes';
 
 import AlertStore from '../../../../core/presentation/stores/AlertStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
-import TableStore from '../../../../core/presentation/stores/TableStore';
+import TableState from '../../../../core/presentation/stores/TableState';
 
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 
@@ -353,7 +353,7 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                     <Table
                         widths = { ['30%', '70%'] }
                         legend = { ['Column1', 'Column 2'] }
-                        tableStore = { new TableStore(0, [], () => {
+                        tableStore = { new TableState(0, [], () => {
                             // used to fetech new data
                         }) }
                         rows = { [

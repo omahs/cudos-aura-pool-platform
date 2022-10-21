@@ -1,5 +1,5 @@
 import RepoStore from '../../../../core/presentation/stores/RepoStore';
-import TableStore from '../../../../core/presentation/stores/TableStore';
+import TableState from '../../../../core/presentation/stores/TableState';
 import { makeAutoObservable } from 'mobx';
 import CollectionEntity, { CollectionStatus } from '../../../collection/entities/CollectionEntity';
 import CollectionFilterModel from '../../../collection/utilities/CollectionFilterModel';
@@ -7,11 +7,11 @@ import MiningFarmEntity, { MiningFarmStatus } from '../../../mining-farm/entitie
 import MiningFarmFilterModel from '../../../mining-farm/utilities/MiningFarmFilterModel';
 import S from '../../../../core/utilities/Main';
 
-export default class SuperAdminApprovePageState {
+export default class SuperAdminApprovePageStore {
     repoStore: RepoStore;
 
-    miningFarmsTableState: TableStore;
-    collectionsTableState: TableStore;
+    miningFarmsTableState: TableState;
+    collectionsTableState: TableState;
 
     miningFarmEntities: MiningFarmEntity[];
     collectionEntities: CollectionEntity[];
@@ -22,8 +22,8 @@ export default class SuperAdminApprovePageState {
     constructor(repoStore: RepoStore) {
         this.repoStore = repoStore;
 
-        this.miningFarmsTableState = new TableStore(0, [], this.fetchMiningFarmEntities, 5);
-        this.collectionsTableState = new TableStore(0, [], this.fetchCollectionEntities, 5);
+        this.miningFarmsTableState = new TableState(0, [], this.fetchMiningFarmEntities, 5);
+        this.collectionsTableState = new TableState(0, [], this.fetchCollectionEntities, 5);
 
         this.miningFarmEntities = [];
         this.collectionEntities = [];

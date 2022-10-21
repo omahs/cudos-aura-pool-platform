@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import TableStore from './TableStore';
+import TableState from './TableState';
 import S from '../../utilities/Main';
 
 export enum GRID_SETTING {
@@ -20,7 +20,7 @@ export default class GridViewState {
     gridSetting: number;
     isFetching: boolean;
 
-    tableStore: TableStore;
+    tableStore: TableState;
 
     constructor(fetchCallback: () => void, looseColumnCount: number, denseColumnCount: number, maxRows: number) {
         this.fetchCallback = fetchCallback;
@@ -31,7 +31,7 @@ export default class GridViewState {
         this.gridSetting = GRID_SETTING.LOOSE;
         this.isFetching = false;
 
-        this.tableStore = new TableStore(S.NOT_EXISTS, [], fetchCallback, this.calculateItemsPerPageByGridSettings());
+        this.tableStore = new TableState(S.NOT_EXISTS, [], fetchCallback, this.calculateItemsPerPageByGridSettings());
 
         makeAutoObservable(this);
     }

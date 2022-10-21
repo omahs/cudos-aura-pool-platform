@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import S from '../../utilities/Main';
 
-import TableStore from '../stores/TableStore';
+import TableState from '../stores/TableState';
 import TablePaging from './TablePaging';
 import Scrollable from './Scrollable';
 import TableRow from '../../entities/TableRow';
@@ -17,7 +17,7 @@ export type TableDesktopProps = {
     widths: string[];
     legend: string[];
     aligns?: number[];
-    tableStore: TableStore;
+    tableStore: TableState;
     rows: TableRow[];
     columnsOrderMap?: Map < number, number >;
     onChangeColumnsOrderIndex?: (oldIndex: number, newIndex: number) => void;

@@ -6,7 +6,7 @@ import SvgEthereum from '../../../../public/assets/vectors/ethereum-logo.svg';
 
 import '../styles/nft-view-history.css'
 import { ALIGN_CENTER, ALIGN_LEFT } from '../../../../core/presentation/components/TableDesktop';
-import TableStore from '../../../../core/presentation/stores/TableStore';
+import TableState from '../../../../core/presentation/stores/TableState';
 import Table from '../../../../core/presentation/components/Table';
 import TableCell from '../../../../core/entities/TableCell';
 import TableRow from '../../../../core/entities/TableRow';
@@ -91,7 +91,7 @@ export default function NftViewHistory() {
                             legend={EARNINGS_TABLE_LEGEND}
                             widths={EARNINGS_TABLE_WIDTHS}
                             aligns={EARNINGS_TABLE_ALINGS}
-                            tableStore={new TableStore(0, [], () => {}, 5)}
+                            tableStore={new TableState(0, [], () => {}, 5)}
                             rows={renderEarningsRows()}
                         /> : ''}
                     {historyPage === PAGE_HISTORY
@@ -100,7 +100,7 @@ export default function NftViewHistory() {
                             legend={HISTORY_TABLE_LEGEND}
                             widths={HISTORY_TABLE_WIDTHS}
                             aligns={HISTORY_TABLE_ALINGS}
-                            tableStore={new TableStore(0, [], () => {}, 5)}
+                            tableStore={new TableState(0, [], () => {}, 5)}
                             rows={renderHistoryRows()}
                         /> : ''}
                 </div>

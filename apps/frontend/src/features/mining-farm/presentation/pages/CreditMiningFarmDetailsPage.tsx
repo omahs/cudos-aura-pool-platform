@@ -8,25 +8,22 @@ import PageAdminHeader from '../../../header/presentation/components/PageAdminHe
 import '../styles/page-credit-mining-farm-details.css';
 import NavRow, { NavStep } from '../../../../core/presentation/components/NavRow';
 import StepFarmDetails from '../components/credit-farm/StepFarmDetails';
-import CreditMiningFarmDetailsPageState from '../stores/CreditMiningFarmDetailsPageState';
+import CreditMiningFarmDetailsPageState from '../stores/CreditMiningFarmDetailsPageStore';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
-import RepoStore from '../../../../core/presentation/stores/RepoStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import StepReview from '../components/credit-farm/StepReview';
 import StepSuccess from '../components/credit-farm/StepSuccess';
 
 type Props = {
+    creditMiningFarmDetailsPageState?: CreditMiningFarmDetailsPageState;
     accountSessionStore?: AccountSessionStore;
-    repoStore?: RepoStore;
     appStore?: AppStore;
 }
 
-function CreditMiningFarmDetailsPage({ accountSessionStore, repoStore, appStore }: Props) {
-    const [state] = useState(new CreditMiningFarmDetailsPageState(accountSessionStore, repoStore));
-
+function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageState, accountSessionStore, appStore }: Props) {
     useEffect(() => {
         appStore.useLoading(() => {
-            state.fetch();
+            creditMiningFarmDetailsPageState.fetch();
         });
     }, []);
 
@@ -34,17 +31,17 @@ function CreditMiningFarmDetailsPage({ accountSessionStore, repoStore, appStore 
         {
             navNumber: 1,
             navName: 'Farm Details',
-            isActive: state.isStepFarmDetails(),
+            isActive: creditMiningFarmDetailsPageState.isStepFarmDetails(),
         },
         {
             navNumber: 2,
             navName: 'Finish',
-            isActive: state.isStepReview(),
+            isActive: creditMiningFarmDetailsPageState.isStepReview(),
         },
     ];
 
     function CreditHeading() {
-        if (state.miningFarmEntity.isNew() === true) {
+        if (creditMiningFarmDetailsPageState.miningFarmEntity.isNew() === true) {
             return (<>
                 <div className={'H3 Bold FullLine'}>Welcome to AuraPool</div>
                 <div className={'B1 FullLine'}>Follow the steps to create your Farm Profile</div>
@@ -63,27 +60,27 @@ function CreditMiningFarmDetailsPage({ accountSessionStore, repoStore, appStore 
             <PageAdminHeader />
             <div className = { 'PageContent AppContent' } >
                 <div className={'RequestAdminAccountForm FlexColumn'}>
-                    {state.isStepSuccess() === false && (<NavRow navSteps={navSteps}/>)}
+                    {creditMiningFarmDetailsPageState.isStepSuccess() === false && (<NavRow navSteps={navSteps}/>)}
 
-                    {state.miningFarmEntity !== null && state.isStepFarmDetails() === true
+                    {creditMiningFarmDetailsPageState.miningFarmEntity !== null && creditMiningFarmDetailsPageState.isStepFarmDetails() === true
                     && (<>
                         <CreditHeading />
                         <StepFarmDetails
-                            miningFarmEntity={state.miningFarmEntity}
-                            imageEntities={state.imageEntities}
-                            onClickContinue={state.setStepReview}
+                            miningFarmEntity={creditMiningFarmDetailsPageState.miningFarmEntity}
+                            imageEntities={creditMiningFarmDetailsPageState.imageEntities}
+                            onClickContinue={creditMiningFarmDetailsPageState.setStepReview}
                         />
                     </>)}
-                    {state.miningFarmEntity !== null && state.isStepReview() === true
+                    {creditMiningFarmDetailsPageState.miningFarmEntity !== null && creditMiningFarmDetailsPageState.isStepReview() === true
                     && (<StepReview
                         adminEntity={accountSessionStore.adminEntity}
-                        miningFarmEntity={state.miningFarmEntity}
-                        imageEntities={state.imageEntities}
-                        onClickContinue={state.finishCreation}
-                        onClickBack={state.setStepFarmDetails}
+                        miningFarmEntity={creditMiningFarmDetailsPageState.miningFarmEntity}
+                        imageEntities={creditMiningFarmDetailsPageState.imageEntities}
+                        onClickContinue={creditMiningFarmDetailsPageState.finishCreation}
+                        onClickBack={creditMiningFarmDetailsPageState.setStepFarmDetails}
                     />)}
 
-                    {state.isStepSuccess() === true && (
+                    {creditMiningFarmDetailsPageState.isStepSuccess() === true && (
                         <StepSuccess adminEntity={accountSessionStore.adminEntity}/>
                     )}
                 </div>

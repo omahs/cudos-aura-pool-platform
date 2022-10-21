@@ -2,11 +2,11 @@ import { makeAutoObservable, makeObservable, observable } from 'mobx';
 import S from '../../utilities/Main';
 
 /* eslint-disable max-classes-per-file */
-export default class TableStore {
+export default class TableState {
 
     tableSortKeyToIndex: Map < number, number >;
     tableSortIndexToKey: Map < number, number >;
-    @observable tableState: TableState;
+    @observable tableFilterState: TableFilterState;
     onUpdateTable: () => void;
 
     constructor(defaultSortKey: number, keys: Array < Array < number > >, callback: () => void, itemsPerPage = 10) {
@@ -18,7 +18,7 @@ export default class TableStore {
             this.tableSortIndexToKey.set(pair[1], pair[0]);
         })
 
-        this.tableState = new TableState(defaultSortKey, itemsPerPage);
+        this.tableFilterState = new TableFilterState(defaultSortKey, itemsPerPage);
 
         this.onUpdateTable = callback;
 
@@ -30,7 +30,7 @@ export default class TableStore {
     }
 
     getTableSortIndex() {
-        return this.tableSortKeyToIndex.get(Math.abs(this.tableState.sortKey)) || S.NOT_EXISTS;
+        return this.tableSortKeyToIndex.get(Math.abs(this.tableFilterState.sortKey)) || S.NOT_EXISTS;
     }
 
     setSortMapping(keys: Array < Array < number > >) {
@@ -48,27 +48,27 @@ export default class TableStore {
     }
 
     updateTableSortDirection() {
-        this.tableState.sortKey *= -1;
+        this.tableFilterState.sortKey *= -1;
         this.onUpdateTable();
     }
 
     updateTableSort(sortKey: number) {
-        this.tableState.sortKey = sortKey;
+        this.tableFilterState.sortKey = sortKey;
         this.onUpdateTable();
     }
 
     updateTablePage(from: number) {
-        this.tableState.from = from;
+        this.tableFilterState.from = from;
         this.onUpdateTable();
     }
 
     resetTablePaging() {
-        this.tableState.from = 0;
+        this.tableFilterState.from = 0;
     }
 
 }
 
-export class TableState {
+export class TableFilterState {
 
     sortKey: number;
     itemsPerPage: number;
