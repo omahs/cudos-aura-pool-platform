@@ -3,7 +3,7 @@ import React from 'react';
 import '../../styles/step-success.css';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
 import Button, { BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
-import AdminEntity from '../../../entities/AdminEntity';
+import AdminEntity from '../../../../accounts/entities/AdminEntity';
 import { inject, observer } from 'mobx-react';
 import Svg from '../../../../../core/presentation/components/Svg';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
