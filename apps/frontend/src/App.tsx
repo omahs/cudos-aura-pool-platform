@@ -36,6 +36,8 @@ import EditMiningFarmModalStore from './features/mining-farm/presentation/stores
 import CreditMiningFarmDetailsPageStore from './features/mining-farm/presentation/stores/CreditMiningFarmDetailsPageStore';
 import SuperAdminApprovePageStore from './features/accounts/presentation/stores/SuperAdminApprovePageStore';
 import CreditCollectionNftsPageStore from './features/collection/presentation/stores/CreditCollectionNftsPageStore';
+import CreditCollectionStore from './features/collection/presentation/stores/CreditCollectionStore';
+import CreditCollectionSuccessModalStore from './features/collection/presentation/stores/CreditCollectionSuccessModalStore';
 
 const storageHelper = new StorageHelper();
 storageHelper.open();
@@ -69,8 +71,10 @@ const userProfilePageStore = new UserProfilePageStore(walletStore, nftRepo, coll
 
 const creditMiningFarmDetailsPageStore = new CreditMiningFarmDetailsPageStore(accountSessionStore, miningFarmRepo);
 const creditCollectionNftsPageStore = new CreditCollectionNftsPageStore(accountSessionStore, miningFarmRepo, collectionRepo);
+const creditCollectionStore = new CreditCollectionStore(accountSessionStore, collectionRepo);
 
 const editMiningFarmModalStore = new EditMiningFarmModalStore(miningFarmRepo);
+const creditCollectionSuccessModalStore = new CreditCollectionSuccessModalStore();
 const buyNftModalStore = new BuyNftModalStore();
 const resellNftModalStore = new ResellNftModalStore();
 
@@ -110,9 +114,12 @@ const App = () => {
                 buyNftModalStore = { buyNftModalStore }
                 resellNftModalStore = { resellNftModalStore }
                 editMiningFarmModalStore = { editMiningFarmModalStore }
+                creditCollectionSuccessModalStore = { creditCollectionSuccessModalStore }
                 creditMiningFarmDetailsPageStore = { creditMiningFarmDetailsPageStore }
                 superAdminApprovePageStore = { superAdminApprovePageStore }
                 creditCollectionNftsPageStore = { creditCollectionNftsPageStore }
+                creditCollectionStore = { creditCollectionStore }
+
             >
                 <BrowserRouter>
                     <AppRouter />

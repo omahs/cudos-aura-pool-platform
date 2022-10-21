@@ -29,7 +29,7 @@ import AccountSessionStore from '../../../accounts/presentation/stores/AccountSe
 import { CollectionStatus } from '../../entities/CollectionEntity';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import RepoStore from 'apps/frontend/src/core/presentation/stores/RepoStore';
-import AddNftsStage from '../components/collection-creation/AddNftsStage';
+import AddNftsStage from '../components/credit-collection/AddNftsForm';
 import CreditCollectionNftsPageStore from '../stores/CreditCollectionNftsPageStore';
 
 type Props = {
