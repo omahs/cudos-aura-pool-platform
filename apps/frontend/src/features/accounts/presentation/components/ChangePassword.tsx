@@ -6,7 +6,7 @@ import Input from '../../../../core/presentation/components/Input';
 import { InputAdornment } from '@mui/material';
 import Svg from '../../../../core/presentation/components/Svg';
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
+import Button, { ButtonRadius } from '../../../../core/presentation/components/Button';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -93,7 +93,7 @@ function ChangePassword({ appStore, accountSessionStore, repoStore }: Props) {
             <Actions layout={ActionsLayout.LAYOUT_COLUMN_FULL} height={ActionsHeight.HEIGHT_48}>
                 <Button
                     onClick={onClickLogin}
-                    radius={BUTTON_RADIUS.RADIUS_16}
+                    radius={ButtonRadius.RADIUS_16}
                 >
                     {logging === true ? <LoadingIndicator /> : 'Access your account'}
                 </Button>

@@ -21,7 +21,7 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Select from '../../../../core/presentation/components/Select';
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_COLOR } from '../../../../core/presentation/components/Button';
+import Button, { ButtonColor } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../../../collection/presentation/components/CollectionPreview';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
@@ -97,13 +97,13 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
                         <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_RIGHT}>
                             <Button
                                 onClick={onClickProfileImages}
-                                color={BUTTON_COLOR.SCHEME_3} >
+                                color={ButtonColor.SCHEME_3} >
                                 <Svg size = { SvgSize.CUSTOM } svg={BorderColorIcon} />
                                 Profile images
                             </Button>
                             <Button
                                 onClick={onClickEditProfile}
-                                color={BUTTON_COLOR.SCHEME_3} >
+                                color={ButtonColor.SCHEME_3} >
                                 <Svg size = { SvgSize.CUSTOM } svg={BorderColorIcon} />
                                 Edit Profile
                             </Button>

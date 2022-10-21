@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Button, { ButtonPadding, ButtonType } from '../../../../core/presentation/components/Button';
 import PageFooter from '../../../../features/footer/presentation/components/PageFooter';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
@@ -67,8 +67,8 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
                         <Actions height = { ActionsHeight.HEIGHT_48 }>
                             <Button
                                 onClick={onClickExploreNftAndBuy}
-                                padding={BUTTON_PADDING.PADDING_24}
-                                type={BUTTON_TYPE.ROUNDED}>
+                                padding={ButtonPadding.PADDING_24}
+                                type={ButtonType.ROUNDED}>
                                 Explore NFTs & Buy
                             </Button>
                         </Actions>

@@ -12,7 +12,7 @@ import { ALIGN_CENTER, ALIGN_LEFT } from '../../../../core/presentation/componen
 import Checkbox from '../../../../core/presentation/components/Checkbox';
 import TableRow from '../../../../core/entities/TableRow';
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
+import Button, { ButtonRadius } from '../../../../core/presentation/components/Button';
 import PageSuperAdminHeader from '../../../header/presentation/components/PageSuperAdminHeader';
 
 import '../styles/page-super-admin-approve.css';
@@ -87,7 +87,7 @@ function SuperAdminApprovePage({ superAdminApprovePageStore, appStore }: Props) 
             <div className={'FlexRow TableHeader'}>
                 <div className={'H2 Bold'}>Mining Farms of Approval</div>
                 <Actions layout={ActionsLayout.LAYOUT_ROW_CENTER} height={ActionsHeight.HEIGHT_48}>
-                    <Button radius={BUTTON_RADIUS.RADIUS_16} onClick={superAdminApprovePageStore.approveMiningFarms}>Approve Selected Farms</Button>
+                    <Button radius={ButtonRadius.RADIUS_16} onClick={superAdminApprovePageStore.approveMiningFarms}>Approve Selected Farms</Button>
                 </Actions>
             </div>
             <Table
@@ -101,7 +101,7 @@ function SuperAdminApprovePage({ superAdminApprovePageStore, appStore }: Props) 
             <div className={'FlexRow TableHeader'}>
                 <div className={'H1 Bold'}>Collections of Approval</div>
                 <Actions layout={ActionsLayout.LAYOUT_ROW_CENTER} height={ActionsHeight.HEIGHT_48}>
-                    <Button radius={BUTTON_RADIUS.RADIUS_16} onClick={superAdminApprovePageStore.approveCollections}>Approve Selected Collections</Button>
+                    <Button radius={ButtonRadius.RADIUS_16} onClick={superAdminApprovePageStore.approveCollections}>Approve Selected Collections</Button>
                 </Actions>
             </div>
             <Table

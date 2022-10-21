@@ -17,7 +17,7 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Select from '../../../../core/presentation/components/Select';
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Button, { ButtonPadding, ButtonType } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
@@ -103,8 +103,8 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
                                         height={ActionsHeight.HEIGHT_48} >
                                         {/* TODO: show all filters */}
                                         <Button
-                                            padding={BUTTON_PADDING.PADDING_24}
-                                            type={BUTTON_TYPE.ROUNDED} >
+                                            padding={ButtonPadding.PADDING_24}
+                                            type={ButtonType.ROUNDED} >
                                     All Filters
                                         </Button>
                                     </Actions>

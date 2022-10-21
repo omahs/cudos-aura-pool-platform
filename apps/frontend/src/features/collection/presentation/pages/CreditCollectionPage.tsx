@@ -20,7 +20,7 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Select from '../../../../core/presentation/components/Select';
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Button, { ButtonPadding, ButtonRadius, ButtonType } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
@@ -133,7 +133,7 @@ function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }
                         <div className={'H2 Bold'}>NFTs in Collection</div>
                         {isCollectionEditable() && (<Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_CENTER}>
                             <Button
-                                radius={BUTTON_RADIUS.RADIUS_16}
+                                radius={ButtonRadius.RADIUS_16}
                                 onClick={onClickAddMoreNfts}
                             >
                                 <Svg svg={AddIcon}/>
@@ -155,8 +155,8 @@ function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }
                                     height={ActionsHeight.HEIGHT_48} >
                                     {/* TODO: show all filters */}
                                     <Button
-                                        padding={BUTTON_PADDING.PADDING_24}
-                                        type={BUTTON_TYPE.ROUNDED}>
+                                        padding={ButtonPadding.PADDING_24}
+                                        type={ButtonType.ROUNDED}>
                                     All Filters
                                     </Button>
                                 </Actions>

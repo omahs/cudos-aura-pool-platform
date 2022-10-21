@@ -6,7 +6,7 @@ import CreditCollectionStore from '../../stores/CreditCollectionStore';
 import '../../styles/collection-details-form.css';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
+import Button, { ButtonRadius } from '../../../../../core/presentation/components/Button';
 import UploaderComponent from '../../../../../core/presentation/components/UploaderComponent';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Input, { InputType } from '../../../../../core/presentation/components/Input';
@@ -53,7 +53,7 @@ function CollectionDetailsForm({ creditCollectionStore }: Props) {
             <div className={'B1 SemiBold'}>600 x 400 recommended</div>
             <Actions layout={ActionsLayout.LAYOUT_ROW_LEFT} height={ActionsHeight.HEIGHT_48}>
                 <Button
-                    radius={BUTTON_RADIUS.RADIUS_16}
+                    radius={ButtonRadius.RADIUS_16}
                 >
                     <Svg svg={FileUploadIcon}/>
                         Upload file
@@ -91,7 +91,7 @@ function CollectionDetailsForm({ creditCollectionStore }: Props) {
             <div className={'B1 SemiBold'}>1400 x 350 recommended</div>
             <Actions layout={ActionsLayout.LAYOUT_ROW_LEFT} height={ActionsHeight.HEIGHT_48}>
                 <Button
-                    radius={BUTTON_RADIUS.RADIUS_16}
+                    radius={ButtonRadius.RADIUS_16}
                 >
                     <Svg svg={FileUploadIcon}/>
                         Upload file

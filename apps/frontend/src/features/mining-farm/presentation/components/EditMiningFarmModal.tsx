@@ -5,7 +5,7 @@ import ModalWindow from '../../../../core/presentation/components/ModalWindow';
 import EditMiningFarmModalStore from '../stores/EditMiningFarmModalStore';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
+import Button, { ButtonRadius } from '../../../../core/presentation/components/Button';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import ClearIcon from '@mui/icons-material/Clear';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
@@ -104,7 +104,7 @@ function EditMiningFarmModal({ alertStore, editMiningFarmModalStore }: Props) {
                 />
                 <Actions layout={ActionsLayout.LAYOUT_COLUMN_FULL} height={ActionsHeight.HEIGHT_48}>
                     <Button
-                        radius={BUTTON_RADIUS.DEFAULT}
+                        radius={ButtonRadius.DEFAULT}
                         onClick={onClickSaveChanges}
                     >Save Changes</Button>
                 </Actions>
