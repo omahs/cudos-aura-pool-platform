@@ -56,7 +56,16 @@ export default class CreditCollectionNftsPageStore {
         const { nftEntities } = await this.nftRepo.fetchNftsByFilter(nftFilter);
         this.nftEntities = nftEntities;
 
-        this.selectedNftEntity = new NftEntity();
+        this.selectedNftEntity = this.initNewNftEntity();
+    }
+
+    initNewNftEntity(): NftEntity {
+        const nftEntity = new NftEntity();
+
+        nftEntity.farmRoyalties = this.collectionEntity.royalties;
+        nftEntity.maintenanceFee = this.collectionEntity.maintenanceFees;
+
+        return nftEntity;
     }
 
     isSelectedNftImageEmpty(): boolean {
@@ -104,6 +113,32 @@ export default class CreditCollectionNftsPageStore {
         this.pricePerNft = Number(pricePerNft);
     }
 
+    onChangeSelectedNftName = (nftName: string) => {
+        this.selectedNftEntity.name = nftName;
+    }
+
+    onChangeSelectedNftRoyalties = (royalties: string) => {
+        this.selectedNftEntity.farmRoyalties = Number(royalties);
+    }
+
+    onChangeSelectedNftMaintenanceFee() {
+        if (this.selectedNftEntity.maintenanceFee.eq(new BigNumber(S.NOT_EXISTS))) {
+            return ''
+        }
+
+        return this.selectedNftEntity.maintenanceFee.toString();
+    }
+
+    onChangeSelectedNftExpirationDate = (expirationDate: string) => {
+        // TODO: parse date
+        this.selectedNftEntity.expiryDate = Date.now();
+    }
+
+    onClickAddToCollection = () => {
+        this.nftEntities.push(this.selectedNftEntity);
+        this.selectedNftEntity = this.initNewNftEntity();
+    }
+
     getHashPowerPerNft() {
         if (this.hashPowerPerNft === S.NOT_EXISTS) {
             return ''
@@ -120,6 +155,14 @@ export default class CreditCollectionNftsPageStore {
         return this.pricePerNft.toString();
     }
 
+    getSelectedNftMaintenanceFeeInputValue() {
+        if (this.selectedNftEntity.maintenanceFee.eq(new BigNumber(S.NOT_EXISTS))) {
+            return ''
+        }
+
+        return this.selectedNftEntity.maintenanceFee.toString();
+    }
+
     getCollectionRoyaltiesInputValue() {
         if (this.collectionEntity.royalties === S.NOT_EXISTS) {
             return ''
@@ -134,5 +177,17 @@ export default class CreditCollectionNftsPageStore {
         }
 
         return this.collectionEntity.maintenanceFees.toString();
+    }
+
+    getSelectedNftRoyaltiesInputValue() {
+        if (this.selectedNftEntity.farmRoyalties === S.NOT_EXISTS) {
+            return ''
+        }
+
+        return this.selectedNftEntity.farmRoyalties.toString();
+    }
+
+    getSelectedNftExpirationDateDisplay() {
+        return new Date(this.selectedNftEntity.expiryDate);
     }
 }

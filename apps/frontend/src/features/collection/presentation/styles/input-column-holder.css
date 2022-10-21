@@ -1,0 +1,17 @@
+.InputColumnHolder {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.InputColumnHolder .InputInfoLabel {
+    color: var(--color-gray-030);
+}
+
+.InputColumnHolder .FormulaBox {
+    padding: 15px;
+    color: var(--color-gray-030);
+    background-color: var(--color-gray-090);
+    border-radius: 10px;
+}

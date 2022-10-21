@@ -1,20 +1,33 @@
-import { observer } from 'mobx-react';
-import React from 'react';
+import { inject, observer } from 'mobx-react';
+import React, { useState } from 'react';
 import '../../styles/add-nfts-form.css';
+import '../../styles/input-column-holder.css';
 import CreditCollectionStore from '../../stores/CreditCollectionStore';
 import Svg, { SvgSize } from '../../../../../core/presentation/components/Svg';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../../core/presentation/components/Actions';
-import Button, { ButtonRadius } from '../../../../../core/presentation/components/Button';
+import Button, { ButtonRadius, ButtonType } from '../../../../../core/presentation/components/Button';
 import UploaderComponent from '../../../../../core/presentation/components/UploaderComponent';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import Input, { InputType } from '../../../../../core/presentation/components/Input';
+import TextWithTooltip from '../../../../../core/presentation/components/TextWithTooltip';
+import InfoGrayBox from '../../../../../core/presentation/components/InfoGrayBox';
+import BitcoinStore from '../../../../bitcoin-data/presentation/stores/BitcoinStore';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import S from '../../../../../core/utilities/Main';
 
 type Props = {
+    onClickBack: () => void
     onClickNextStep: () => void
     creditCollectionStore?: CreditCollectionStore;
+    bitcoinStore?: BitcoinStore;
 }
 
-function AddNftsForm({ onClickNextStep, creditCollectionStore }: Props) {
+function AddNftsForm({ onClickBack, onClickNextStep, creditCollectionStore, bitcoinStore }: Props) {
+    const [editRoyaltiesDisabled, setEditRoyaltiesDisabled] = useState(true);
+    const [editMaintenanceFeeDisabled, setEditMaintenanceFeeDisabled] = useState(true);
+
     const nftEntities = creditCollectionStore.nftEntities;
     const selectedNftEntity = creditCollectionStore.selectedNftEntity;
 
@@ -60,9 +73,89 @@ function AddNftsForm({ onClickNextStep, creditCollectionStore }: Props) {
                         } } />
                 </Button>
             </Actions>
+            <Input
+                label={'NFT Name'}
+                placeholder={'Enter name...'}
+                value={selectedNftEntity.name}
+                onChange={creditCollectionStore.onChangeSelectedNftName}
+            />
+            <div className={'InputColumnHolder'}>
+                <Input
+                    label={<TextWithTooltip text={'Hashing Power per NFT'} tooltipText={'Hashing Power per NFT'} />}
+                    placeholder={'Enter hashing power...'}
+                    value={creditCollectionStore.getHashPowerPerNft()}
+                    inputType={InputType.INTEGER}
+                    onChange={creditCollectionStore.onChangeHashPowerPerNft}
+                />
+                <div className={'InputInfoLabel'}>Available TH/s: 80.000</div>
+                <InfoGrayBox text={'You receive <b>XX</b> upon the sale and <b>YY</b> on <b>ZZ</b> date'} />
+            </div>
+            <div className={'InputColumnHolder'}>
+                <Input
+                    label={'Price per NFT'}
+                    placeholder={'Enter price...'}
+                    value={creditCollectionStore.getPricePerNft()}
+                    onChange={creditCollectionStore.onChangePricePerNft}
+                />
+                <div className={'InputInfoLabel'}>{bitcoinStore.getBitcoinPrice()} based on Today’s BTC Price </div>
+            </div>
+            <div className={'InputColumnHolder'}>
+                <Input
+                    label={
+                        <div className={'HeaderWithButton FlexRow'}>
+                            <TextWithTooltip text={'Farm Royalties'} tooltipText={'Farm Royalties'} />
+                            <div className={'InputHeaderButton FlexRow'} onClick={() => setEditRoyaltiesDisabled(editRoyaltiesDisabled)}>
+                                <Svg svg={BorderColorIcon} />
+                                Edit
+                            </div>
+                        </div>
+                    }
+                    disabled={editRoyaltiesDisabled}
+                    placeholder={'Enter royalties...'}
+                    value={creditCollectionStore.getSelectedNftRoyaltiesInputValue()}
+                    inputType={InputType.INTEGER}
+                    onChange={creditCollectionStore.onChangeSelectedNftRoyalties}
+                />
+                <div className={'InputInfoLabel'}>Suggested: 0%, 1%, 2%, 6%. Maxium: 10%.</div>
+            </div>
+            <div className={'InputColumnHolder'}>
+                <Input
+                    label={
+                        <div className={'HeaderWithButton FlexRow'}>
+                            <TextWithTooltip text={'Maintenance Fee'} tooltipText={'Maintenance Fee'} />
+                            <div className={'InputHeaderButton FlexRow'} onClick={() => setEditMaintenanceFeeDisabled(editMaintenanceFeeDisabled)}>
+                                <Svg svg={BorderColorIcon} />
+                                Edit
+                            </div>
+                        </div>
+                    }
+                    // disabled={editMaintenanceFeeDisabled}
+                    placeholder={'Enter Maintenance Fee...'}
+                    value={creditCollectionStore.getSelectedNftMaintenanceFeeInputValue()}
+                    inputType={InputType.INTEGER}
+                    onChange={creditCollectionStore.onChangeSelectedNftMaintenanceFee}
+                />
+                <div className={'InputInfoLabel'}>Maintenance fee calculation formula:</div>
+                <div className={'FormulaBox B2 Bold'}>{'[This NFT EH/s] / [Total EH/s] * [Maintenance fee]'}</div>
+            </div>
+            <Input
+                label={<TextWithTooltip text={'Valid Until'} tooltipText={'BTC rewards will be paid to the NFT holder until this date.'} />}
+                placeholder={'Enter valid date...'}
+                value={creditCollectionStore.getSelectedNftExpirationDateDisplay()}
+                onChange={creditCollectionStore.onChangeSelectedNftExpirationDate}
+            />
+            <Actions layout={ActionsLayout.LAYOUT_ROW_ENDS} className={'ButtonsRow'}>
+                <Button type={ButtonType.TEXT_INLINE} onClick={onClickBack}>
+                    <Svg svg={ArrowBackIcon} />
+                    Back
+                </Button>
+                <Button onClick={creditCollectionStore.onClickAddToCollection}>
+                    Add to Collection
+                </Button>
+            </Actions>
         </div>
     )
 
 }
 
-export default (observer(AddNftsForm));
+export default inject((stores) => stores)(observer(AddNftsForm));

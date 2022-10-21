@@ -19,6 +19,7 @@ import CollectionAddNftsTable from '../components/credit-collection/CollectionAd
 import CreditCollectionStore from '../stores/CreditCollectionStore';
 import CreditCollectionSuccessModal from '../components/credit-collection/CreditCollectionSuccessModal';
 import AppStore from '../../../../core/presentation/stores/AppStore';
+import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
 
 enum CreditCollectionDetailsSteps {
     COLLECTION_DETAILS = 1,
@@ -29,15 +30,17 @@ enum CreditCollectionDetailsSteps {
 type Props = {
     creditCollectionStore?: CreditCollectionStore;
     appStore?: AppStore;
+    bitcoinStore?: BitcoinStore;
 }
 
-function CreditCollectionDetailsPage({ creditCollectionStore, appStore }: Props) {
+function CreditCollectionDetailsPage({ creditCollectionStore, appStore, bitcoinStore }: Props) {
     const { collectionId } = useParams();
-    const [step, setStep] = useState(CreditCollectionDetailsSteps.COLLECTION_DETAILS);
+    const [step, setStep] = useState(CreditCollectionDetailsSteps.ADD_NFTS);
 
     useEffect(() => {
         appStore.useLoading(async () => {
             await creditCollectionStore.init(collectionId);
+            await bitcoinStore.init();
         })
     }, []);
 
@@ -90,7 +93,9 @@ function CreditCollectionDetailsPage({ creditCollectionStore, appStore }: Props)
                                         <CollectionDetailsForm onClickNextStep={() => setStep(CreditCollectionDetailsSteps.ADD_NFTS)} />
                                     )}
                                     {step === CreditCollectionDetailsSteps.ADD_NFTS && (
-                                        <AddNftsForm />
+                                        <AddNftsForm
+                                            onClickBack={() => setStep(CreditCollectionDetailsSteps.COLLECTION_DETAILS)}
+                                            onClickNextStep={() => setStep(CreditCollectionDetailsSteps.FINISH)}/>
                                     )}
                                     {step === CreditCollectionDetailsSteps.FINISH && (
                                         <FinishCreditForm />
@@ -100,7 +105,7 @@ function CreditCollectionDetailsPage({ creditCollectionStore, appStore }: Props)
                                     <CollectionCreditSidePreview size={CollectionCreditSidePreviewSize.SMALL}/>
                                 )}
                                 {step === CreditCollectionDetailsSteps.ADD_NFTS && (
-                                    <AddNftsForm />
+                                    <CollectionCreditSidePreview />
                                 )}
                                 {step === CreditCollectionDetailsSteps.FINISH && (
                                     <CollectionCreditSidePreview />

@@ -3,10 +3,11 @@ import S from '../../../../../core/utilities/Main';
 import { inject, observer } from 'mobx-react';
 import React from 'react';
 import CreditCollectionStore from '../../stores/CreditCollectionStore';
+import '../../styles/input-column-holder.css';
 import '../../styles/collection-details-form.css';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../../core/presentation/components/Actions';
-import Button, { ButtonRadius } from '../../../../../core/presentation/components/Button';
+import Button, { ButtonPadding, ButtonRadius } from '../../../../../core/presentation/components/Button';
 import UploaderComponent from '../../../../../core/presentation/components/UploaderComponent';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Input, { InputType } from '../../../../../core/presentation/components/Input';
@@ -169,8 +170,8 @@ function CollectionDetailsForm({ onClickNextStep, creditCollectionStore }: Props
                 onChange={creditCollectionStore.onChangePricePerNft}
             />
 
-            <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}>
-                <Button padding={BUTTON_PADDING.PADDING_48} onClick={onClickNextStep}>NextStep</Button>
+            <Actions layout={ActionsLayout.LAYOUT_COLUMN_RIGHT}>
+                <Button padding={ButtonPadding.PADDING_48} onClick={onClickNextStep}>NextStep</Button>
             </Actions>
         </div>
     )
