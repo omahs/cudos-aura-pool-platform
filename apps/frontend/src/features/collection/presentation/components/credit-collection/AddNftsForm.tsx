@@ -4,8 +4,8 @@ import '../../styles/add-nfts-form.css';
 import CreditCollectionStore from '../../stores/CreditCollectionStore';
 import Svg, { SvgSize } from '../../../../../core/presentation/components/Svg';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../../core/presentation/components/Actions';
+import Button, { ButtonRadius } from '../../../../../core/presentation/components/Button';
 import UploaderComponent from '../../../../../core/presentation/components/UploaderComponent';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
@@ -40,9 +40,9 @@ function AddNftsForm({ onClickNextStep, creditCollectionStore }: Props) {
                 <div className={'B3 SemiBold'}>File Format: <span className={'Gray'}>.svg, .png, .jpeg, .gif</span></div>
             </div>
             <div className={'B1 SemiBold'}>600 x 400 recommended</div>
-            <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_LEFT} height={ACTIONS_HEIGHT.HEIGHT_48}>
+            <Actions layout={ActionsLayout.LAYOUT_ROW_LEFT} height={ActionsHeight.HEIGHT_48}>
                 <Button
-                    radius={BUTTON_RADIUS.RADIUS_16}
+                    radius={ButtonRadius.RADIUS_16}
                 >
                     <Svg svg={FileUploadIcon}/>
                         Upload file
