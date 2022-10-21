@@ -4,7 +4,7 @@ import AccountSessionStore from '../../../accounts/presentation/stores/AccountSe
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import CollectionEntity from '../../entities/CollectionEntity';
 
-export default class AddNftsToCollectionPageState {
+export default class CreditCollectionNftsPageState {
     repoStore: RepoStore;
     accountSessionStore: AccountSessionStore;
 

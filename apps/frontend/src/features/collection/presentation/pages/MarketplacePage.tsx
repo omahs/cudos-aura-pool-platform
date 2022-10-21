@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import S from '../../../../core/utilities/Main';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import MarketplaceStore from '../stores/MarketplaceStore';
+import NftEntity from '../../../nft/entities/NftEntity';
+import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 
 import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment } from '@mui/material';
@@ -15,15 +17,13 @@ import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presen
 import TopCollections from '../components/TopCollections';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
-
-import Svg from '../../../../core/presentation/components/Svg';
-import '../styles/marketplace-page.css';
 import Slider from '../../../../core/presentation/components/Slider';
-import NftEntity from '../../../nft/entities/NftEntity';
 import NftPreviewInPicture from '../../../nft/presentation/components/NftPreviewInPicture';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
-import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import MiningFarmPreview from '../../../mining-farm/presentation/components/MiningFarmPreview';
+
+import Svg from '../../../../core/presentation/components/Svg';
+import '../styles/page-marketplace.css';
 
 type Props = {
     marketplaceStore?: MarketplaceStore

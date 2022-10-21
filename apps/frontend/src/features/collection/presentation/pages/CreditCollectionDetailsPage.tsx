@@ -5,17 +5,17 @@ import PageLayoutComponent from '../../../../core/presentation/components/PageLa
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import PageAdminHeader from '../../../header/presentation/components/PageAdminHeader';
 
-import '../styles/page-mining-farm-analytics.css';
+import '../styles/page-credit-collection-details-page.css';
 
-function MiningFarmAnalyticsPage() {
+function CreditCollectionDetailsPage() {
 
     return (
-        <PageLayoutComponent className = { 'PageMiningFarmAnalytics' }>
+        <PageLayoutComponent className = { 'PageCreditCollectionDetailsPage' }>
 
             <PageAdminHeader />
 
             <div className = { 'PageContent AppContent' } >
-                <div>Mining farm analytics page</div>
+                <div>Credit Collection Details Page</div>
             </div>
 
             <PageFooter />
@@ -25,4 +25,4 @@ function MiningFarmAnalyticsPage() {
 
 }
 
-export default inject((stores) => stores)(observer(MiningFarmAnalyticsPage));
+export default inject((stores) => stores)(observer(CreditCollectionDetailsPage));

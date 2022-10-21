@@ -1,34 +1,34 @@
 
-.PageMiningFarmView .PageContent {
+.PageMiningFarmCredit .PageContent {
     padding: 24px var(--page-spacing-h);
 }
 
-.PageMiningFarmView .CollectionsOwnedHeader {
+.PageMiningFarmCredit .CollectionsOwnedHeader {
     justify-content: space-between;
 }
 
-.PageMiningFarmView .NoContentFound {
+.PageMiningFarmCredit .NoContentFound {
     margin: 100px 0;
     justify-content: center;
     align-items: center;
     gap: 20px;
 }
 
-.PageMiningFarmView .Grid {
+.PageMiningFarmCredit .Grid {
     gap: 50px;
 }
 
-.PageMiningFarmView .BorderContainer .FarmInfoRow {
+.PageMiningFarmCredit .BorderContainer .FarmInfoRow {
     justify-content: space-between;
 }
 
 
-.PageMiningFarmView .PageContent .GridFilterHeader {
+.PageMiningFarmCredit .PageContent .GridFilterHeader {
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr) minmax(0, 1fr);
 }
 
-.PageMiningFarmView .PageContent .GridFilterHeader .LeftHeaderPart {
+.PageMiningFarmCredit .PageContent .GridFilterHeader .LeftHeaderPart {
     justify-content: flex-start;
     align-items: flex-end;
     gap: 20px;
