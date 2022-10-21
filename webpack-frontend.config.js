@@ -141,7 +141,7 @@ module.exports = function (options, webpack) {
                 },
             }, {
                 test: /\.svg$/,
-                exclude: /node_modules/,
+                exclude: [/node_modules/],
                 use: {
                     loader: 'raw-loader',
                 },
