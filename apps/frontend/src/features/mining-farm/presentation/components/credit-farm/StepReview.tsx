@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import '../../styles/step-review.css';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../../core/presentation/components/Actions';
 import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../../core/presentation/components/Button';
 import ManufacturerEntity from '../../../../mining-farm/entities/ManufacturerEntity';
 import MinerEntity from '../../../../mining-farm/entities/MinerEntity';
@@ -77,7 +77,7 @@ function StepReview({ accountSessionStore, creditMiningFarmDetailsPageStore }: P
                     onChange={setAcceptedTerms}
                 />
             </div>
-            <Actions className={'ButtonRow'} layout={ACTIONS_LAYOUT.LAYOUT_ROW_ENDS} height={ACTIONS_HEIGHT.HEIGHT_48}>
+            <Actions className={'ButtonRow'} layout={ActionsLayout.LAYOUT_ROW_ENDS} height={ActionsHeight.HEIGHT_48}>
                 <Button
                     onClick={creditMiningFarmDetailsPageStore.setStepFarmDetails}
                     type={BUTTON_TYPE.TEXT_INLINE}

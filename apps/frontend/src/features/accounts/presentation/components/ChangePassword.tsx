@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 import Input from '../../../../core/presentation/components/Input';
 import { InputAdornment } from '@mui/material';
 import Svg from '../../../../core/presentation/components/Svg';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -90,7 +90,7 @@ function ChangePassword({ appStore, accountSessionStore, repoStore }: Props) {
                 onChange={setPasswordRepeat}
                 type={showPasswordRepeat === false ? 'password' : ''}
             />
-            <Actions layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL} height={ACTIONS_HEIGHT.HEIGHT_48}>
+            <Actions layout={ActionsLayout.LAYOUT_COLUMN_FULL} height={ActionsHeight.HEIGHT_48}>
                 <Button
                     onClick={onClickLogin}
                     radius={BUTTON_RADIUS.RADIUS_16}

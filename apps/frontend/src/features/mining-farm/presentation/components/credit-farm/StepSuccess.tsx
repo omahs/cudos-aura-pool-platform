@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 
 import AccountSessionStore from '../../../../accounts/presentation/stores/AccountSessionStore';
 
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../../core/presentation/components/Actions';
 import Button from '../../../../../core/presentation/components/Button';
 import Svg from '../../../../../core/presentation/components/Svg';
 
@@ -32,7 +32,7 @@ function StepReview({ accountSessionStore }: Props) {
                 {accountSessionStore.accountEntity.email}
                 <Svg svg={AlternateEmailIcon} />
             </div> */}
-            <Actions className={'ButtonRow'} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL} height={ACTIONS_HEIGHT.HEIGHT_48}>
+            <Actions className={'ButtonRow'} layout={ActionsLayout.LAYOUT_COLUMN_FULL} height={ActionsHeight.HEIGHT_48}>
                 <Button onClick={onClickGoHome}>Go to Home</Button>
             </Actions>
         </div>

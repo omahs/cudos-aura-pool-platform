@@ -10,7 +10,7 @@ import TableState from '../../../../core/presentation/stores/TableState';
 
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
 import Button, { BUTTON_COLOR, BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import Input from '../../../../core/presentation/components/Input';
@@ -330,7 +330,7 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                             Button rounded color 3 48 padding
                         </Button>
                     </Actions>
-                    <Actions height = { ACTIONS_HEIGHT.HEIGHT_42 } layout = { ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL } >
+                    <Actions height = { ActionsHeight.HEIGHT_42 } layout = { ActionsLayout.LAYOUT_COLUMN_FULL } >
                         <Button
                             type = { BUTTON_TYPE.TEXT_INLINE }>
                             Button inline color 1 default padding default radius

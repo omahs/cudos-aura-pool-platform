@@ -11,7 +11,7 @@ import Table from '../../../../core/presentation/components/Table';
 import { ALIGN_CENTER, ALIGN_LEFT } from '../../../../core/presentation/components/TableDesktop';
 import Checkbox from '../../../../core/presentation/components/Checkbox';
 import TableRow from '../../../../core/entities/TableRow';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_RADIUS } from '../../../../core/presentation/components/Button';
 import PageSuperAdminHeader from '../../../header/presentation/components/PageSuperAdminHeader';
 
@@ -86,7 +86,7 @@ function SuperAdminApprovePage({ superAdminApprovePageStore, appStore }: Props) 
             <PageSuperAdminHeader />
             <div className={'FlexRow TableHeader'}>
                 <div className={'H2 Bold'}>Mining Farms of Approval</div>
-                <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                <Actions layout={ActionsLayout.LAYOUT_ROW_CENTER} height={ActionsHeight.HEIGHT_48}>
                     <Button radius={BUTTON_RADIUS.RADIUS_16} onClick={superAdminApprovePageStore.approveMiningFarms}>Approve Selected Farms</Button>
                 </Actions>
             </div>
@@ -100,7 +100,7 @@ function SuperAdminApprovePage({ superAdminApprovePageStore, appStore }: Props) 
             />
             <div className={'FlexRow TableHeader'}>
                 <div className={'H1 Bold'}>Collections of Approval</div>
-                <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                <Actions layout={ActionsLayout.LAYOUT_ROW_CENTER} height={ActionsHeight.HEIGHT_48}>
                     <Button radius={BUTTON_RADIUS.RADIUS_16} onClick={superAdminApprovePageStore.approveCollections}>Approve Selected Collections</Button>
                 </Actions>
             </div>

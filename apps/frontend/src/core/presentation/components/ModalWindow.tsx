@@ -5,10 +5,11 @@ import { observer } from 'mobx-react';
 import S from '../../utilities/Main';
 import ModalStore from '../stores/ModalStore';
 
-import SvgClose from '../vectors/modal-close.svg';
-import '../styles/modal-window.css';
 import Svg from './Svg';
 import AnimationContainer from './AnimationContainer';
+
+import SvgClose from '../vectors/modal-close.svg';
+import '../styles/modal-window.css';
 
 const outerClose = false;
 let modalCounter = 0;

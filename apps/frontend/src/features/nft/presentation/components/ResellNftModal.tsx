@@ -8,7 +8,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import ModalWindow from '../../../../core/presentation/components/ModalWindow';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
 import Checkbox from '../../../../core/presentation/components/Checkbox';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import Button from '../../../../core/presentation/components/Button';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
 import AnimationContainer from '../../../../core/presentation/components/AnimationContainer';
@@ -67,7 +67,7 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                         value={resellNftModalStore.originalPaymentSchedule}
                         onChange={resellNftModalStore.toggleOriginalPaymentSchedule} />
                 </div>
-                <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
+                <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_COLUMN_FULL}>
                     <Button onClick={resellNftModalStore.onClickSubmitForSell}>Submit for sell</Button>
                 </Actions>
             </>
@@ -95,7 +95,7 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                         <Svg svg={LaunchIcon} />
                     </a>
                 </div>
-                <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                <Actions layout={ActionsLayout.LAYOUT_ROW_CENTER} height={ActionsHeight.HEIGHT_48}>
                     <Button
                         onClick={resellNftModalStore.hide}>
                         Close Now
@@ -117,7 +117,7 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                         <Svg svg={LaunchIcon} />
                     </a>
                 </div>
-                <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                <Actions layout={ActionsLayout.LAYOUT_ROW_CENTER} height={ActionsHeight.HEIGHT_48}>
                     <Button
                         onClick={resellNftModalStore.hide}>
                         Close

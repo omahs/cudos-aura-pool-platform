@@ -19,7 +19,7 @@ import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import Select from '../../../../core/presentation/components/Select';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import Button, { BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
@@ -131,7 +131,7 @@ function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }
                     </div>
                     <div className={'GridHeader FlexRow'}>
                         <div className={'H2 Bold'}>NFTs in Collection</div>
-                        {isCollectionEditable() && (<Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}>
+                        {isCollectionEditable() && (<Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_CENTER}>
                             <Button
                                 radius={BUTTON_RADIUS.RADIUS_16}
                                 onClick={onClickAddMoreNfts}
@@ -151,8 +151,8 @@ function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }
                                     <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
                                 </Select>
                                 <Actions
-                                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                                    height={ACTIONS_HEIGHT.HEIGHT_48} >
+                                    layout={ActionsLayout.LAYOUT_ROW_RIGHT}
+                                    height={ActionsHeight.HEIGHT_48} >
                                     {/* TODO: show all filters */}
                                     <Button
                                         padding={BUTTON_PADDING.PADDING_24}

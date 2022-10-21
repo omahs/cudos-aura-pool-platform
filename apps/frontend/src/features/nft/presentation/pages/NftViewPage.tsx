@@ -14,7 +14,7 @@ import NftEntity from '../../entities/NftEntity';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import NftViewHistory from '../components/NftViewHistory';
 import Button from '../../../../core/presentation/components/Button';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import Svg from '../../../../core/presentation/components/Svg';
 import PageHeader from '../../../header/presentation/components/PageHeader';
@@ -168,7 +168,7 @@ function NftViewPage({ walletStore, viewNftPageStore, buyNftModalStore, resellNf
                             </div>
                             <div className={'FlexRow CalculateRewardsNav'}>
                                 <div className={'B3'}>You can calculate your rewards in our dynamic Calculator</div>
-                                <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}>
+                                <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_RIGHT}>
                                     <Button onClick={onClickCalculateRewards}>Calculate Rewards</Button>
                                 </Actions>
                             </div>
@@ -186,7 +186,7 @@ function NftViewPage({ walletStore, viewNftPageStore, buyNftModalStore, resellNf
                                     </div>
                                 </div>
                                 { walletStore.isConnected() && (
-                                    <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
+                                    <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_COLUMN_FULL}>
                                         { viewNftPageStore.isNftListed() === true && (
                                             <Button onClick={onClickBuyNft}>Buy now for {nftEntity.price.toFixed(0)} CUDOS </Button>
                                         ) }
