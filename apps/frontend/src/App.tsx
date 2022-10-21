@@ -56,23 +56,19 @@ const bitcoinStore = new BitcoinStore(bitcoinRepo);
 const cudosStore = new CudosStore(cudosRepo);
 const accountSessionStore = new AccountSessionStore(walletStore, accountRepo, miningFarmRepo);
 const categoriesStore = new CategoriesStore(collectionRepo);
-
 const rewardsCalculatorStore = new RewardsCalculatorStore(bitcoinStore, miningFarmRepo);
 const marketplaceStore = new MarketplaceStore(cudosStore, collectionRepo, nftRepo, miningFarmRepo);
-
+const superAdminApprovePageStore = new SuperAdminApprovePageStore(miningFarmRepo, collectionRepo);
 const exploreCollectionsPageStore = new ExploreCollectionsPageStore(collectionRepo, miningFarmRepo);
 const exploreMiningFarmsPageStore = new ExploreMiningFarmsPageStore(miningFarmRepo);
 const exploreNftsPageStore = new ExploreNftsPageStore(nftRepo, collectionRepo);
+const viewNftPageStore = new ViewNftPageStore(bitcoinStore, cudosStore, nftRepo, collectionRepo, miningFarmRepo);
 const creditCollectionPageStore = new CreditCollectionPageStore(nftRepo, collectionRepo, miningFarmRepo);
 const creditMiningFarmPageStore = new CreditMiningFarmPageStore(miningFarmRepo, collectionRepo);
-
 const userProfilePageStore = new UserProfilePageStore(walletStore, nftRepo, collectionRepo);
 
-const viewNftPageStore = new ViewNftPageStore(bitcoinStore, cudosStore, nftRepo, collectionRepo, miningFarmRepo);
 const creditMiningFarmDetailsPageStore = new CreditMiningFarmDetailsPageStore(accountSessionStore, miningFarmRepo);
 const creditCollectionNftsPageStore = new CreditCollectionNftsPageStore(accountSessionStore, miningFarmRepo, collectionRepo);
-
-const superAdminApprovePageStore = new SuperAdminApprovePageStore(miningFarmRepo, collectionRepo);
 
 const editMiningFarmModalStore = new EditMiningFarmModalStore(miningFarmRepo);
 const buyNftModalStore = new BuyNftModalStore();
