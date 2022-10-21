@@ -75,6 +75,6 @@ export default class EditMiningFarmModalStore extends ModalStore {
         this.miningFarmEntity.coverImgUrl = this.coverImage.base64;
         this.miningFarmEntity.profileImgUrl = this.profileImage.base64;
 
-        this.repoStore.miningFarmRepo.editMiningFarm(this.miningFarmEntity);
+        this.repoStore.miningFarmRepo.creditMiningFarm(this.miningFarmEntity);
     }
 }

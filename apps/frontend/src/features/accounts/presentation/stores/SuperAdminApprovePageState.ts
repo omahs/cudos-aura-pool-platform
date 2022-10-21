@@ -102,7 +102,14 @@ export default class SuperAdminApprovePageState {
     }
 
     approveMiningFarms = async () => {
-        await this.repoStore.miningFarmRepo.approveFarms(Array.from(this.selectedMiningFarmEntities.keys()));
+        const miningFarmEntities = [];
+
+        this.selectedMiningFarmEntities.forEach((miningFarmEntity) => {
+            miningFarmEntity.markApproved();
+            miningFarmEntities.push(miningFarmEntity)
+        });
+
+        await this.repoStore.miningFarmRepo.creditMiningFarms(miningFarmEntities);
         this.fetch();
     }
 

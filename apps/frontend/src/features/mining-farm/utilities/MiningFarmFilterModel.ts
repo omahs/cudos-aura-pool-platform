@@ -22,33 +22,36 @@ export default class MiningFarmFilterModel {
     hashPowerFilter: MiningFarmHashPowerFilter;
     sortPriceDirection: MiningFarmPriceSortDirection;
     searchString: string;
+    status: MiningFarmStatus;
+    sessionAccount: number;
     from: number;
     count: number;
-    status: MiningFarmStatus;
 
     constructor() {
         this.sortKey = MiningFarmFilterModel.SORT_KEY_NAME;
         this.hashPowerFilter = MiningFarmHashPowerFilter.NONE;
         this.sortPriceDirection = MiningFarmPriceSortDirection.NONE;
         this.searchString = '';
+        this.status = MiningFarmStatus.APPROVED;
+        this.sessionAccount = '';
         this.from = 0;
         this.count = Number.MAX_SAFE_INTEGER;
-        this.status = MiningFarmStatus.APPROVED;
     }
 
-    static toJson(model) {
-        if (model === null) {
+    static toJson(entity: MiningFarmFilterModel) {
+        if (entity === null) {
             return null;
         }
 
         return {
-            sortKey: model.sortKey,
-            hashPowerFilter: model.hashPowerFilter,
-            sortPriceDirection: model.sortPriceDirection,
-            searchString: model.searchString,
-            from: model.from,
-            count: model.count,
-            status: model.status,
+            sortKey: entity.sortKey,
+            hashPowerFilter: entity.hashPowerFilter,
+            sortPriceDirection: entity.sortPriceDirection,
+            searchString: entity.searchString,
+            status: entity.status,
+            sessionAccount: entity.sessionAccount,
+            from: entity.from,
+            count: entity.count,
         }
     }
 
@@ -63,9 +66,10 @@ export default class MiningFarmFilterModel {
         model.hashPowerFilter = parseInt(json.hashPowerFilter ?? model.hashPowerFilter);
         model.sortPriceDirection = parseInt(json.sortPriceDirection ?? model.sortPriceDirection);
         model.searchString = json.searchString ?? model.searchString;
+        model.status = json.status ?? model.status;
+        model.sessionAccount = parseInt(json.sessionAccount ?? model.sessionAccount);
         model.from = parseInt(json.from ?? model.from);
         model.count = parseInt(json.count ?? model.count);
-        model.status = json.status ?? model.status;
 
         return model;
     }

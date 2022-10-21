@@ -13,7 +13,12 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
     }
 
     async fetchAllMiningFarms(): Promise < MiningFarmEntity[] > {
-        return this.storageHelper.miningFarmsJson.map((json: any) => MiningFarmEntity.fromJson(json));
+        const miningFarmFilterModel = new MiningFarmFilterModel();
+        miningFarmFilterModel.from = 0;
+        miningFarmFilterModel.count = Number.MAX_SAFE_INTEGER;
+
+        const { miningFarmEntities, total } = await this.fetchMiningFarmsByFilter(miningFarmFilterModel);
+        return miningFarmEntities
     }
 
     async fetchPopularMiningFarms(): Promise < MiningFarmEntity[] > {
@@ -30,14 +35,12 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
         return miningFarmEntities.length === 1 ? miningFarmEntities[0] : null;
     }
 
-    async fetchMiningFarmByAccountId(accountId: string): Promise < MiningFarmEntity > {
-        const farmJson = this.storageHelper.miningFarmsJson.find((json: any) => json.accountId === accountId);
+    async fetchMiningFarmBySessionAccountId(): Promise < MiningFarmEntity > {
+        const miningFarmFilterModel = new MiningFarmFilterModel();
+        miningFarmFilterModel.sessionAccount = S.INT_TRUE;
 
-        if (farmJson === undefined) {
-            return null;
-        }
-
-        return MiningFarmEntity.fromJson(farmJson);
+        const { miningFarmEntities, total } = await this.fetchMiningFarmsByFilter(miningFarmFilterModel);
+        return miningFarmEntities.length === 1 ? miningFarmEntities[0] : null;
     }
 
     async fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} > {
@@ -74,6 +77,12 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
             return json.status === miningFarmFilterModel.status;
         });
 
+        if (miningFarmFilterModel.sessionAccount === S.INT_TRUE) {
+            miningFarmsSlice = miningFarmsSlice.filter((json) => {
+                return (json.accountId === this.storageHelper.sessionAccount?.accountId) || false
+            });
+        }
+
         miningFarmsSlice.sort((a: MiningFarmEntity, b: MiningFarmEntity) => {
             switch (miningFarmFilterModel.sortKey) {
                 case MiningFarmFilterModel.SORT_KEY_POPULAR:
@@ -91,25 +100,34 @@ export default class MiningFarmStorageRepo implements MiningFarmRepo {
         }
     }
 
-    async editMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
-        const farmsJson = this.storageHelper.miningFarmsJson.filter((json) => json.id !== miningFarmEntity.id);
+    async creditMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
+        let miningFarmJson = this.storageHelper.miningFarmsJson.find((json) => {
+            return json.id === miningFarmEntity.id;
+        });
 
-        farmsJson.push(MiningFarmEntity.toJson(miningFarmEntity));
+        if (miningFarmJson !== undefined) {
+            Object.assign(miningFarmJson, MiningFarmEntity.toJson(miningFarmEntity));
+        } else {
+            const lastMiningFarmEntity = this.storageHelper.miningFarmsJson.last();
+            const nextMiningFarmId = 1 + (lastMiningFarmEntity !== null ? parseInt(lastMiningFarmEntity.id) : 0);
 
-        this.storageHelper.miningFarmsJson = farmsJson;
+            miningFarmJson = MiningFarmEntity.toJson(miningFarmEntity);
+            miningFarmJson.id = nextMiningFarmId.toString();
+            miningFarmEntity.accountId = this.storageHelper.sessionAccount.accountId;
+
+            this.storageHelper.miningFarmsJson.push(MiningFarmEntity.toJson(miningFarmEntity));
+        }
+
+        miningFarmEntity.id = miningFarmJson.id;
+        miningFarmEntity.accountId = miningFarmJson.accountId;
 
         this.storageHelper.save();
     }
 
-    async approveFarms(miningFarmIds: string[]): Promise < void > {
-        const miningFarmJsons = this.storageHelper.miningFarmsJson;
-
-        miningFarmIds.forEach((id) => {
-            miningFarmJsons.find((json) => json.id === id).status = MiningFarmStatus.APPROVED;
-        })
-
-        this.storageHelper.miningFarmsJson = miningFarmJsons;
-        this.storageHelper.save();
+    async creditMiningFarms(miningFarmEntities: MiningFarmEntity[]): Promise < void > {
+        for (let i = miningFarmEntities.length; i-- > 0;) {
+            await this.creditMiningFarm(miningFarmEntities[i]);
+        }
     }
 
 }

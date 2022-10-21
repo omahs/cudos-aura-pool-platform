@@ -56,6 +56,10 @@ export default class MiningFarmEntity {
         return this.status === MiningFarmStatus.APPROVED;
     }
 
+    markApproved() {
+        this.status = MiningFarmStatus.APPROVED;
+    }
+
     static toJson(entity: MiningFarmEntity): any {
         if (entity === null) {
             return null;

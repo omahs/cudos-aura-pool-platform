@@ -15,11 +15,7 @@ export default class MiningFarmApi {
         return null;
     }
 
-    async editMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
-        return null;
-    }
-
-    async approveFarms(miningFarmIds: string[]): Promise < void > {
+    async creditMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < MiningFarmEntity > {
         return null;
     }
 }

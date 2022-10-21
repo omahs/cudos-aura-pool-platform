@@ -121,7 +121,7 @@ export default class AccountSessionStore {
                 await this.walletStore.disconnect();
             }
 
-            const miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmByAccountId(this.accountEntity.accountId);
+            const miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmBySessionAccountId();
             this.approvedMiningFarm = miningFarmEntity?.isApproved() ?? false;
 
             console.log('Logged as admin => wallet:', this.walletStore.isConnected())
