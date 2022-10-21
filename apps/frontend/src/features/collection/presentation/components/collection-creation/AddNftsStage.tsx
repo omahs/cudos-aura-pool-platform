@@ -9,7 +9,6 @@ import '../styles/add-nfts-stage.css';
 type Props = {
     navSteps: {stepNumber: number, stepName: string}[];
     collectionEntity: CollectionEntity;
-    repoStore: RepoStore;
     accountSessionStore: AccountSessionStore;
 }
 function AddNftsStage({ navSteps, collectionEntity }: Props) {

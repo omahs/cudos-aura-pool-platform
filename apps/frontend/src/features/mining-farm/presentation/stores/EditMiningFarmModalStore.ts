@@ -3,19 +3,19 @@ import { action, makeObservable, observable } from 'mobx';
 import ModalStore from '../../../../core/presentation/stores/ModalStore';
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import ImageEntity, { PictureType } from '../../../upload-file/entities/ImageEntity';
-import RepoStore from 'apps/frontend/src/core/presentation/stores/RepoStore';
+import MiningFarmRepo from '../repos/MiningFarmRepo';
 
 export default class EditMiningFarmModalStore extends ModalStore {
-    repoStore: RepoStore;
+    miningFarmRepo: MiningFarmRepo;
 
     @observable miningFarmEntity: MiningFarmEntity;
     @observable coverImage: ImageEntity;
     @observable profileImage: ImageEntity;
 
-    constructor(repoStore: RepoStore) {
+    constructor(miningFarmRepo: MiningFarmRepo) {
         super();
 
-        this.repoStore = repoStore;
+        this.miningFarmRepo = miningFarmRepo;
 
         this.miningFarmEntity = null;
         this.coverImage = null;
@@ -75,6 +75,6 @@ export default class EditMiningFarmModalStore extends ModalStore {
         this.miningFarmEntity.coverImgUrl = this.coverImage.base64;
         this.miningFarmEntity.profileImgUrl = this.profileImage.base64;
 
-        this.repoStore.miningFarmRepo.creditMiningFarm(this.miningFarmEntity);
+        this.miningFarmRepo.creditMiningFarm(this.miningFarmEntity);
     }
 }

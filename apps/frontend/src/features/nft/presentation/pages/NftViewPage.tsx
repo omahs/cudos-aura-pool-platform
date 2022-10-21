@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import S from '../../../../core/utilities/Main';
 import ProjectUtils from '../../../../core/utilities/ProjectUtils';
-import NftViewPageStore from '../stores/NftViewPageStore';
+import ViewNftPageStore from '../stores/ViewNftPageStore';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import BuyNftModalStore from '../stores/BuyNftModalStore';
 import ResellNftModalStore from '../stores/ResellNftModalStore';
@@ -31,7 +31,7 @@ import '../styles/page-nft-view-component.css';
 
 type Props = {
     walletStore?: WalletStore;
-    nftViewPageStore?: NftViewPageStore;
+    nftViewPageStore?: ViewNftPageStore;
     buyNftModalStore?: BuyNftModalStore;
     resellNftModalStore?: ResellNftModalStore;
 }

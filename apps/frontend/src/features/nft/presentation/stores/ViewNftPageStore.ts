@@ -11,7 +11,7 @@ import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRe
 import NftFilterModel from '../../utilities/NftFilterModel';
 import GridViewState from '../../../../core/presentation/stores/GridViewState';
 
-export default class NftViewPageStore {
+export default class ViewNftPageStore {
 
     bitcoinStore: BitcoinStore;
     cudosStore: CudosStore;

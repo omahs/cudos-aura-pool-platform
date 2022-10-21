@@ -1,4 +1,3 @@
-import RepoStore from '../../../../core/presentation/stores/RepoStore';
 import TableState from '../../../../core/presentation/stores/TableState';
 import { makeAutoObservable } from 'mobx';
 import CollectionEntity, { CollectionStatus } from '../../../collection/entities/CollectionEntity';
@@ -6,9 +5,12 @@ import CollectionFilterModel from '../../../collection/utilities/CollectionFilte
 import MiningFarmEntity, { MiningFarmStatus } from '../../../mining-farm/entities/MiningFarmEntity';
 import MiningFarmFilterModel from '../../../mining-farm/utilities/MiningFarmFilterModel';
 import S from '../../../../core/utilities/Main';
+import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRepo';
+import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 
 export default class SuperAdminApprovePageStore {
-    repoStore: RepoStore;
+    miningFarmRepo: MiningFarmRepo;
+    collectionRepo: CollectionRepo;
 
     miningFarmsTableState: TableState;
     collectionsTableState: TableState;
@@ -19,8 +21,9 @@ export default class SuperAdminApprovePageStore {
     selectedMiningFarmEntities: Map < string, MiningFarmEntity >;
     selectedCollectionEntities: Map < string, CollectionEntity >;
 
-    constructor(repoStore: RepoStore) {
-        this.repoStore = repoStore;
+    constructor(miningFarmRepo: MiningFarmRepo, collectionRepo: CollectionRepo) {
+        this.miningFarmRepo = miningFarmRepo;
+        this.collectionRepo = collectionRepo;
 
         this.miningFarmsTableState = new TableState(0, [], this.fetchMiningFarmEntities, 5);
         this.collectionsTableState = new TableState(0, [], this.fetchCollectionEntities, 5);
@@ -55,7 +58,7 @@ export default class SuperAdminApprovePageStore {
         miningFarmFilter.count = this.miningFarmsTableState.tableFilterState.itemsPerPage;
         miningFarmFilter.status = MiningFarmStatus.NOT_APPROVED;
 
-        this.repoStore.miningFarmRepo.fetchMiningFarmsByFilter(miningFarmFilter).then(({ miningFarmEntities, total }) => {
+        this.miningFarmRepo.fetchMiningFarmsByFilter(miningFarmFilter).then(({ miningFarmEntities, total }) => {
             this.miningFarmEntities = miningFarmEntities;
             this.miningFarmsTableState.tableFilterState.total = total;
         });
@@ -68,7 +71,7 @@ export default class SuperAdminApprovePageStore {
         collectionFilter.count = this.collectionsTableState.tableFilterState.itemsPerPage;
         collectionFilter.status = CollectionStatus.QUEUED;
 
-        this.repoStore.collectionRepo.fetchCollectionsByFilter(collectionFilter).then(({ collectionEntities, total }) => {
+        this.collectionRepo.fetchCollectionsByFilter(collectionFilter).then(({ collectionEntities, total }) => {
             this.collectionEntities = collectionEntities;
             this.collectionsTableState.tableFilterState.total = total;
         });
@@ -109,7 +112,7 @@ export default class SuperAdminApprovePageStore {
             miningFarmEntities.push(miningFarmEntity)
         });
 
-        await this.repoStore.miningFarmRepo.creditMiningFarms(miningFarmEntities);
+        await this.miningFarmRepo.creditMiningFarms(miningFarmEntities);
         this.fetch();
     }
 
@@ -122,7 +125,7 @@ export default class SuperAdminApprovePageStore {
         });
 
         for (let i = collectionEntities.length; i-- > 0;) {
-            await this.repoStore.collectionRepo.creditCollection(collectionEntities[i], null);
+            await this.collectionRepo.creditCollection(collectionEntities[i], null);
         }
 
         this.fetch();
