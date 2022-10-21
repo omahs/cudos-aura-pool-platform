@@ -114,7 +114,17 @@ export default class SuperAdminApprovePageState {
     }
 
     approveCollections = async () => {
-        await this.repoStore.collectionRepo.approveCollections(Array.from(this.selectedCollectionEntities.keys()));
+        const collectionEntities = [];
+
+        this.selectedCollectionEntities.forEach((collectionEntity) => {
+            collectionEntity.markApproved();
+            collectionEntities.push(collectionEntity);
+        });
+
+        for (let i = collectionEntities.length; i-- > 0;) {
+            await this.repoStore.collectionRepo.creditCollection(collectionEntities[i], null);
+        }
+
         this.fetch();
     }
 

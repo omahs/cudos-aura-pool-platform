@@ -48,9 +48,7 @@ export default class MiningFarmApiRepo implements MiningFarmRepo {
 
     async creditMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
         const resultMiningFarmEntity = await this.miningFarmApi.creditMiningFarm(miningFarmEntity);
-
-        miningFarmEntity.id = resultMiningFarmEntity.id;
-        miningFarmEntity.accountId = resultMiningFarmEntity.accountId;
+        Object.assign(miningFarmEntity, resultMiningFarmEntity);
     }
 
     async creditMiningFarms(miningFarmEntities: MiningFarmEntity[]): Promise < void > {

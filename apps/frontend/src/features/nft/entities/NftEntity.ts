@@ -32,19 +32,23 @@ export default class NftEntity {
         this.currentOwnerAddress = S.Strings.EMPTY
     }
 
-    toJson(): any {
+    static toJson(entity: NftEntity): any {
+        if (entity === null) {
+            return null;
+        }
+
         return {
-            'id': this.id,
-            'name': this.name,
-            'category': this.category,
-            'collectionId': this.collectionId,
-            'hashPower': this.hashPower,
-            'price': this.price,
-            'imageUrl': this.imageUrl,
-            'listingStatus': this.listingStatus,
-            'expiryDate': this.expiryDate,
-            'creatorAddress': this.creatorAddress,
-            'currentOwnerAddress': this.currentOwnerAddress,
+            'id': entity.id,
+            'name': entity.name,
+            'category': entity.category,
+            'collectionId': entity.collectionId,
+            'hashPower': entity.hashPower,
+            'price': entity.price,
+            'imageUrl': entity.imageUrl,
+            'listingStatus': entity.listingStatus,
+            'expiryDate': entity.expiryDate,
+            'creatorAddress': entity.creatorAddress,
+            'currentOwnerAddress': entity.currentOwnerAddress,
         }
     }
 

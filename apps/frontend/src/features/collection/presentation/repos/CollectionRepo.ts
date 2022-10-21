@@ -1,3 +1,4 @@
+import NftEntity from '../../../nft/entities/NftEntity';
 import CategoryEntity from '../../entities/CategoryEntity';
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionFilterModel from '../../utilities/CollectionFilterModel';
@@ -14,5 +15,5 @@ export default interface CollectionRepo {
 
     fetchCollectionsByFilter(collectionFilterModel: CollectionFilterModel): Promise < { collectionEntities: CollectionEntity[], total: number } >;
 
-    approveCollections(collectionIds: string[]): Promise < void >;
+    creditCollection(collectionEntity: CollectionEntity, nftEntities: NftEntity[]): Promise < void >;
 }
