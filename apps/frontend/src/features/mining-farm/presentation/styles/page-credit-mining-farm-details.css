@@ -1,16 +1,16 @@
+.PageCreditMiningFarmDetails .PageContent {
+    display: flex;
+    justify-content: center;
+}
 
-.PageCreditMiningFarmDetails .PageContent .RequestAdminAccountForm {
+.PageCreditMiningFarmDetails .PageContent .FormContainer{
     justify-self: center;
     align-self: center;
     width: 640px;
     gap: 40px;
-    padding: 40px;
     align-items: center;
-    border: 1px solid var(--color-gray-060);
-    box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.05);
-    border-radius: 20px;
 }
 
-.PageCreditMiningFarmDetails .PageContent .RequestAdminAccountForm .FullLine{
+.PageCreditMiningFarmDetails .PageContent .FullLine{
     width: 100%;
 }

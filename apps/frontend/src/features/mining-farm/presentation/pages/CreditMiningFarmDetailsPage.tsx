@@ -13,6 +13,7 @@ import AccountSessionStore from '../../../accounts/presentation/stores/AccountSe
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import StepReview from '../components/credit-farm/StepReview';
 import StepSuccess from '../components/credit-farm/StepSuccess';
+import BorderShadowPaddingContainer from '../../../../core/presentation/components/BorderShadowPaddingContainer';
 
 type Props = {
     creditMiningFarmDetailsPageStore?: CreditMiningFarmDetailsPageState;
@@ -59,7 +60,7 @@ function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, account
 
             <PageAdminHeader />
             <div className = { 'PageContent AppContent' } >
-                <div className={'RequestAdminAccountForm FlexColumn'}>
+                <BorderShadowPaddingContainer className={'FormContainer FlexColumn'}>
                     {creditMiningFarmDetailsPageStore.isStepSuccess() === false && (<NavRow navSteps={navSteps}/>)}
 
                     {creditMiningFarmDetailsPageStore.miningFarmEntity !== null && creditMiningFarmDetailsPageStore.isStepFarmDetails() === true
@@ -83,7 +84,7 @@ function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, account
                     {creditMiningFarmDetailsPageStore.isStepSuccess() === true && (
                         <StepSuccess adminEntity={accountSessionStore.adminEntity}/>
                     )}
-                </div>
+                </BorderShadowPaddingContainer>
             </div>
             <PageFooter />
 
