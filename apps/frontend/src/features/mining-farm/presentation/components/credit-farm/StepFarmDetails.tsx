@@ -6,8 +6,6 @@ import { InputAdornment } from '@mui/material';
 import Svg from '../../../../../core/presentation/components/Svg';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
 import Button, { BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
-import AdminEntity from '../../../../accounts/entities/AdminEntity';
-import MiningFarmEntity from '../../../entities/MiningFarmEntity';
 import Autocomplete from '../../../../../core/presentation/components/Autcomplete';
 import AutocompleteOption from '../../../../../core/entities/AutocompleteOption';
 import ManufacturerEntity from '../../../entities/ManufacturerEntity';
@@ -21,19 +19,21 @@ import AlertStore from '../../../../../core/presentation/stores/AlertStore';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ImageEntity, { PictureType } from '../../../../upload-file/entities/ImageEntity';
 import CloseIcon from '@mui/icons-material/Close';
+import CreditMiningFarmDetailsPageStore from '../../stores/CreditMiningFarmDetailsPageStore';
 
 type Props = {
-    alertStore?: AlertStore
-    miningFarmEntity: MiningFarmEntity
-    imageEntities: ImageEntity[]
-    onClickContinue: () => void
+    alertStore?: AlertStore;
+    creditMiningFarmDetailsPageStore?: CreditMiningFarmDetailsPageStore;
 }
 
-function StepFarmDetails({ alertStore, miningFarmEntity, imageEntities, onClickContinue }: Props) {
+function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props) {
     const [selectedManufacturersOptions, setSelectedManufacturersOptions] = useState([]);
     const [selectedMindersOptions, setSelectedMinersOptions] = useState([]);
     const [selectedEnergySourceOptions, setSelectedEnergySourceOptions] = useState([]);
     const [hashRateDisplay, setHashRateDisplay] = useState('');
+
+    const miningFarmEntity = creditMiningFarmDetailsPageStore.miningFarmEntity;
+    const imageEntities = creditMiningFarmDetailsPageStore.imageEntities;
 
     function onClickRemoveImage(imageEntityToRemove: ImageEntity) {
         const imageEntityIndex = imageEntities.findIndex((imageEntity: ImageEntity) => imageEntity.id === imageEntityToRemove.id);
@@ -48,7 +48,7 @@ function StepFarmDetails({ alertStore, miningFarmEntity, imageEntities, onClickC
     }
 
     return (
-        <>
+        <div className = { 'StepMiningFarmDetails FlexColumn' }>
             <div className={'B2 Bold FullLine'}>1. Fill in the general farm details</div>
             <Input
                 label={'Farm Name'}
@@ -196,11 +196,11 @@ function StepFarmDetails({ alertStore, miningFarmEntity, imageEntities, onClickC
             <Actions layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_RIGHT} height={ACTIONS_HEIGHT.HEIGHT_48}>
                 <Button
                     disabled={shouldButtonBeDisabled()}
-                    onClick={onClickContinue}
+                    onClick={creditMiningFarmDetailsPageStore.setStepReview}
                     radius={BUTTON_RADIUS.RADIUS_16}
                 >Next Step</Button>
             </Actions>
-        </>
+        </div>
     )
 }
 

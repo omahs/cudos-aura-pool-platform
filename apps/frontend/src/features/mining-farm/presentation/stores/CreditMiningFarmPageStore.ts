@@ -53,6 +53,7 @@ export default class CreditMiningFarmPageStore {
 
         this.collectionFilterModel.from = this.gridViewState.getFrom();
         this.collectionFilterModel.count = this.gridViewState.getItemsPerPage();
+        console.log(this.collectionFilterModel.farmId);
 
         const { collectionEntities, total } = await this.collectionRepo.fetchCollectionsByFilter(this.collectionFilterModel);
         const miningFarmEntities = await this.miningFarmRepo.fetchMiningFarmsByIds(collectionEntities.map((collectionEntity) => {

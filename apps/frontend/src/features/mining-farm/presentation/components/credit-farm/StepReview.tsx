@@ -2,36 +2,36 @@ import React, { useState } from 'react';
 
 import '../../styles/step-review.css';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_RADIUS, BUTTON_TYPE } from '../../../../../core/presentation/components/Button';
-import MiningFarmEntity from '../../../../mining-farm/entities/MiningFarmEntity';
+import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../../core/presentation/components/Button';
 import ManufacturerEntity from '../../../../mining-farm/entities/ManufacturerEntity';
 import MinerEntity from '../../../../mining-farm/entities/MinerEntity';
 import EnergySourceEntity from '../../../../mining-farm/entities/EnergySourceEntity';
 import { inject, observer } from 'mobx-react';
-import ImageEntity from '../../../../upload-file/entities/ImageEntity';
 import Checkbox from '../../../../../core/presentation/components/Checkbox';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Svg from '../../../../../core/presentation/components/Svg';
-import AdminEntity from '../../../../../features/accounts/entities/AdminEntity';
+import AccountSessionStore from '../../../../../features/accounts/presentation/stores/AccountSessionStore';
+import CreditMiningFarmDetailsPageStore from '../../stores/CreditMiningFarmDetailsPageStore';
 
 type Props = {
-    adminEntity: AdminEntity
-    miningFarmEntity: MiningFarmEntity
-    imageEntities: ImageEntity[]
-    onClickContinue: () => void
-    onClickBack: () => void
+    accountSessionStore?: AccountSessionStore;
+    creditMiningFarmDetailsPageStore?: CreditMiningFarmDetailsPageStore;
 }
 
-function StepReview({ adminEntity, miningFarmEntity, imageEntities, onClickContinue, onClickBack }: Props) {
+function StepReview({ accountSessionStore, creditMiningFarmDetailsPageStore }: Props) {
     const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+    const miningFarmEntity = creditMiningFarmDetailsPageStore.miningFarmEntity;
+    const imageEntities = creditMiningFarmDetailsPageStore.imageEntities;
+
     return (
-        <>
+        <div className = { 'StepMiningFarmPreview FlexColumn' }>
             <div className={'H3 Bold FullLine'}>{miningFarmEntity.name}</div>
             <div className={'B3 FullLine Descripton'}>{miningFarmEntity.description}</div>
             <div className={'ReviewDataContainer FlexColumn B2 SemiBold'}>
                 <div className={'FlexRow DataRow'}>
                     <div className={'DataLabel'}>Account Email</div>
-                    <div className={'DataValue'}>{adminEntity.email}</div>
+                    <div className={'DataValue'}>{accountSessionStore.accountEntity.email}</div>
                 </div>
                 <div className={'FlexRow DataRow'}>
                     <div className={'DataLabel'}>Legal Entity Name</div>
@@ -79,7 +79,7 @@ function StepReview({ adminEntity, miningFarmEntity, imageEntities, onClickConti
             </div>
             <Actions className={'ButtonRow'} layout={ACTIONS_LAYOUT.LAYOUT_ROW_ENDS} height={ACTIONS_HEIGHT.HEIGHT_48}>
                 <Button
-                    onClick={onClickBack}
+                    onClick={creditMiningFarmDetailsPageStore.setStepFarmDetails}
                     type={BUTTON_TYPE.TEXT_INLINE}
                 >
                     <Svg svg={ArrowBackIcon} />
@@ -87,13 +87,12 @@ function StepReview({ adminEntity, miningFarmEntity, imageEntities, onClickConti
                 </Button>
                 <Button
                     disabled={!acceptedTerms}
-                    onClick={onClickContinue}
-                    radius={BUTTON_RADIUS.RADIUS_16}
+                    onClick={creditMiningFarmDetailsPageStore.finishCreation}
                     padding={BUTTON_PADDING.PADDING_48}
                 >Finish</Button>
             </Actions>
-        </>
+        </div>
     )
 }
 
-export default inject((props) => props)(observer(StepReview));
+export default inject((stores) => stores)(observer(StepReview));

@@ -11,6 +11,7 @@ import PageAdminHeader from '../../../header/presentation/components/PageAdminHe
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
 import Button from '../../../../core/presentation/components/Button';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
+import BorderShadowPaddingContainer, { ContainerWidth } from '../../../../core/presentation/components/BorderShadowPaddingContainer';
 
 import '../styles/page-bitcoin-confirm.css';
 
@@ -37,7 +38,7 @@ function BitcoinConfirmPage({ accountSessionStore }: Props) {
 
             <div className = { 'PageContent AppContent' } >
 
-                <Box boxWidth = { BoxWidth.SMALL } >
+                <BorderShadowPaddingContainer containerWidth = { ContainerWidth.SMALL } >
 
                     <div className={'Title H2 Bold'}>Confirm bitcoin address</div>
                     <div className={'Subtitle'}>Fill your bitcoin address</div>
@@ -56,7 +57,7 @@ function BitcoinConfirmPage({ accountSessionStore }: Props) {
                         </Button>
                     </Actions>
 
-                </Box>
+                </BorderShadowPaddingContainer>
 
             </div>
 

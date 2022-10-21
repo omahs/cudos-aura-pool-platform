@@ -1,47 +1,42 @@
 import React from 'react';
-
-import '../../styles/step-success.css';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
-import Button, { BUTTON_RADIUS } from '../../../../../core/presentation/components/Button';
-import AdminEntity from '../../../../accounts/entities/AdminEntity';
 import { inject, observer } from 'mobx-react';
+
+import AccountSessionStore from '../../../../accounts/presentation/stores/AccountSessionStore';
+
+import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../../core/presentation/components/Actions';
+import Button from '../../../../../core/presentation/components/Button';
 import Svg from '../../../../../core/presentation/components/Svg';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import { useNavigate } from 'react-router-dom';
-import AppRoutes from '../../../../app-routes/entities/AppRoutes';
+import '../../styles/step-success.css';
 
 type Props = {
-    adminEntity: AdminEntity
+    accountSessionStore?: AccountSessionStore
 }
 
-function StepReview({ adminEntity }: Props) {
-    const navigete = useNavigate();
+function StepReview({ accountSessionStore }: Props) {
 
-    function onClickGoHome() {
-        navigete(AppRoutes.HOME);
+    async function onClickGoHome() {
+        await accountSessionStore.loadAdminMiningFarmApproval();
     }
 
     return (
-        <>
+        <div className = { 'StepMiningFarmSuccess FlexColumn' }>
             <div className={'HeadingRow FullLine FlexRow'}>
                 <Svg svg={CheckCircleIcon}/>
                 <div className={'H3 Bold'}>Thanks for your request!</div>
             </div>
             <div className={'B1 FullLine'}>Your request will be reviewed by Aura Pool and you will receive an email with your unique credentials to access the Admin portal.</div>
 
-            <div className={'EmailBox FlexRow'}>
-                {adminEntity.email}
+            {/* <div className={'EmailBox FlexRow'}>
+                {accountSessionStore.accountEntity.email}
                 <Svg svg={AlternateEmailIcon} />
-            </div>
+            </div> */}
             <Actions className={'ButtonRow'} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL} height={ACTIONS_HEIGHT.HEIGHT_48}>
-                <Button
-                    onClick={onClickGoHome}
-                    radius={BUTTON_RADIUS.RADIUS_16}
-                >Go to Home</Button>
+                <Button onClick={onClickGoHome}>Go to Home</Button>
             </Actions>
-        </>
+        </div>
     )
 }
 
-export default inject((props) => props)(observer(StepReview));
+export default inject((stores) => stores)(observer(StepReview));

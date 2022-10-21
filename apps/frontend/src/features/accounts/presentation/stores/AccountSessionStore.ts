@@ -141,8 +141,7 @@ export default class AccountSessionStore {
                 }
             }
 
-            const miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmBySessionAccountId();
-            this.approvedMiningFarm = miningFarmEntity?.isApproved() ?? false;
+            await this.loadAdminMiningFarmApproval();
 
             console.log('Logged as admin => wallet:', this.walletStore.isConnected())
         } else if (this.isSuperAdmin() === true) {
@@ -150,6 +149,11 @@ export default class AccountSessionStore {
         }
 
         this.inited = true;
+    }
+
+    async loadAdminMiningFarmApproval(): Promise < void > {
+        const miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmBySessionAccountId();
+        this.approvedMiningFarm = miningFarmEntity?.isApproved() ?? false;
     }
 
     isInited(): boolean {
