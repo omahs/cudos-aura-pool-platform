@@ -88,7 +88,6 @@ export default class AccountStorageRepo implements AccountRepo {
     async register(email: string, password: string, name: string, cudosWalletAddress: string, signedTx: any): Promise < void > {
         const currentAccounts = this.storageHelper.accountsJson;
         const currentAdmins = this.storageHelper.adminsJson;
-        const currentMiningFarms = this.storageHelper.miningFarmsJson;
 
         const accountJson = currentAccounts.find((json) => {
             return json.email === email;
@@ -123,16 +122,6 @@ export default class AccountStorageRepo implements AccountRepo {
         adminEntity.cudosWalletAddress = cudosWalletAddress;
 
         currentAdmins.push(AdminEntity.toJson(adminEntity));
-
-        // mining farm
-        const lastMiningFarmEntity = currentMiningFarms.last();
-        const nextMiningFarmId = 1 + (lastMiningFarmEntity !== null ? parseInt(lastMiningFarmEntity.id) : 0);
-
-        const miningFarmEntity = new MiningFarmEntity();
-        miningFarmEntity.id = nextMiningFarmId.toString();
-        miningFarmEntity.accountId = accountEntity.accountId;
-
-        currentMiningFarms.push(MiningFarmEntity.toJson(miningFarmEntity));
 
         this.storageHelper.save();
     }
