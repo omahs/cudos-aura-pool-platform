@@ -9,7 +9,6 @@ import ProjectUtils from '../../../../core/utilities/ProjectUtils';
 import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
-import RepoStore from '../../../../core/presentation/stores/RepoStore';
 
 import Svg from '../../../../core/presentation/components/Svg';
 import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';

@@ -2,7 +2,6 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import ImageEntity from '../../../upload-file/entities/ImageEntity';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
-import RepoStore from '../../../../core/presentation/stores/RepoStore';
 import MiningFarmRepo from '../repos/MiningFarmRepo';
 
 export default class CreditMiningFarmDetailsPageState {

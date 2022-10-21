@@ -32,8 +32,12 @@ export default class CreditMiningFarmPageStore {
         makeAutoObservable(this);
     }
 
-    async init(farmId: string) {
-        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(farmId);
+    async init(farmId = '') {
+        if (farmId === '') {
+            this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmBySessionAccountId();
+        } else {
+            this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(farmId);
+        }
         this.collectionFilterModel.farmId = this.miningFarmEntity.id;
         await this.fetch();
     }

@@ -28,14 +28,13 @@ import '../styles/page-credit-collection-nfts.css';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import { CollectionStatus } from '../../entities/CollectionEntity';
 import AppStore from '../../../../core/presentation/stores/AppStore';
-import RepoStore from 'apps/frontend/src/core/presentation/stores/RepoStore';
 import AddNftsStage from '../components/collection-creation/AddNftsStage';
 import CreditCollectionNftsPageStore from '../stores/CreditCollectionNftsPageStore';
 
 type Props = {
     accountSessionStore?: AccountSessionStore
     appStore?: AppStore
-    creditCollectionNftsPageStore: CreditCollectionNftsPageStore,
+    creditCollectionNftsPageStore?: CreditCollectionNftsPageStore,
 }
 
 function CreditCollectionNftsPage({ appStore, accountSessionStore, creditCollectionNftsPageStore }: Props) {
