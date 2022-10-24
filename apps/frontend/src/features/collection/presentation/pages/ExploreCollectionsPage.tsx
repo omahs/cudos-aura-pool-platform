@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import CollectionEntity from '../../entities/CollectionEntity';
-import CollectionFilterModel from '../../utilities/CollectionFilterModel';
+import CollectionFilterModel, { CollectionHashPowerFilter } from '../../utilities/CollectionFilterModel';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import ExploreCollectionsPageStore from '../stores/ExploreCollectionsPageStore';
 
@@ -17,13 +17,13 @@ import Select from '../../../../core/presentation/components/Select';
 import GridView from '../../../../core/presentation/components/GridView';
 import CollectionPreview from '../components/CollectionPreview';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import CategoriesSelector from '../components/CategoriesSelector';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import ExplorePageLayout from '../../../../core/presentation/components/ExplorePageLayout';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
 
 import '../styles/page-explore-collections-component.css';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import NavRowTabs from '../../../../core/presentation/components/NavRowTabs';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     appStore?: AppStore;
@@ -31,6 +31,7 @@ type Props = {
 }
 
 function ExploreCollectionsPage({ appStore, exploreCollectionsPageStore }: Props) {
+    const navigate = useNavigate();
 
     useEffect(() => {
         appStore.useLoading(async () => {
@@ -40,6 +41,22 @@ function ExploreCollectionsPage({ appStore, exploreCollectionsPageStore }: Props
 
     const collectionFilterModel = exploreCollectionsPageStore.collectionFilterModel;
 
+    const navTabs = [
+        {
+            navName: 'NFTs',
+            isActive: false,
+            onClick: () => navigate(AppRoutes.EXPLORE_NFTS),
+        },
+        {
+            navName: 'Collections',
+            isActive: true,
+        },
+        {
+            navName: 'Farms',
+            isActive: false,
+            onClick: () => navigate(AppRoutes.EXPLORE_MINING_FARMS),
+        },
+    ]
     return (
         <PageLayoutComponent className = { 'PageExploreCollections' } >
 
@@ -50,44 +67,43 @@ function ExploreCollectionsPage({ appStore, exploreCollectionsPageStore }: Props
                 <ExplorePageLayout
                     header = { (
                         <>
-                            <div className={'H1 Bold'}>Explore Collections</div>
-                            <Input
-                                inputType={InputType.TEXT}
-                                className={'SearchBar'}
-                                value = {collectionFilterModel.searchString}
-                                onChange = { exploreCollectionsPageStore.onChangeSearchWord }
-                                placeholder = {'Search Collections name'}
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start" >
-                                        <Svg svg={SearchIcon} />
-                                    </InputAdornment>,
-                                }} />
-                            <CategoriesSelector
-                                selectedCategoryIds = { collectionFilterModel.categoryIds }
-                                onChangeCategories = { exploreCollectionsPageStore.onChangeCategoryIds } />
+                            <div className={'H1 Bold'}>Explore AuraPool</div>
+                            <NavRowTabs navTabs={navTabs} />
                         </>
                     ) }>
 
                     <DataGridLayout
-                        header = { (
+                        headerLeft = { (
                             <>
+                                <Input
+                                    inputType={InputType.TEXT}
+                                    className={'SearchBar'}
+                                    value = {collectionFilterModel.searchString}
+                                    onChange = { exploreCollectionsPageStore.onChangeSearchWord }
+                                    placeholder = {'Search Collections name'}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start" >
+                                            <Svg svg={SearchIcon} />
+                                        </InputAdornment>,
+                                    }} />
                                 <Select
-                                    onChange={exploreCollectionsPageStore.onChangeSortKey}
-                                    value={collectionFilterModel.sortKey} >
-                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                                    label={'Hashing Power'}
+                                    onChange={exploreCollectionsPageStore.onChangeHashPowerFilter}
+                                    value={collectionFilterModel.hashPowerFilter} >
+                                    <MenuItem value = { CollectionHashPowerFilter.NONE } > </MenuItem>
+                                    <MenuItem value = { CollectionHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
+                                    <MenuItem value = { CollectionHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
+                                    <MenuItem value = { CollectionHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
                                 </Select>
-                                <Actions
-                                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                                    height={ACTIONS_HEIGHT.HEIGHT_48} >
-                                    {/* TODO: show all filters */}
-                                    <Button
-                                        padding={BUTTON_PADDING.PADDING_24}
-                                        type={BUTTON_TYPE.ROUNDED} >
-                                        All Filters
-                                    </Button>
-                                </Actions>
                             </>
+                        ) }
+                        headerRight = { (
+                            <Select
+                                onChange={exploreCollectionsPageStore.onChangeSortKey}
+                                value={collectionFilterModel.sortKey} >
+                                <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                            </Select>
                         ) } >
 
                         { exploreCollectionsPageStore.collectionEntities === null && (

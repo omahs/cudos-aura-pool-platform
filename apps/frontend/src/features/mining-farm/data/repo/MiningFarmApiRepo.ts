@@ -1,3 +1,4 @@
+import S from '../../../../core/utilities/Main';
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
 import MiningFarmRepo from '../../presentation/repos/MiningFarmRepo';
 import MiningFarmFilterModel from '../../utilities/MiningFarmFilterModel';
@@ -33,11 +34,26 @@ export default class MiningFarmApiRepo implements MiningFarmRepo {
         return miningFarmEntities.length === 1 ? miningFarmEntities[0] : null;
     }
 
+    async fetchMiningFarmBySessionAccountId(): Promise < MiningFarmEntity > {
+        const miningFarmFilterModel = new MiningFarmFilterModel();
+        miningFarmFilterModel.sessionAccount = S.INT_TRUE;
+
+        const { miningFarmEntities, total } = await this.fetchMiningFarmsByFilter(miningFarmFilterModel);
+        return miningFarmEntities.length === 1 ? miningFarmEntities[0] : null;
+    }
+
     async fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} > {
         return this.miningFarmApi.fetchMiningFarmsByFilter(miningFarmFilterModel);
     }
 
-    async editMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
-        return this.miningFarmApi.editMiningFarm(miningFarmEntity);
+    async creditMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void > {
+        const resultMiningFarmEntity = await this.miningFarmApi.creditMiningFarm(miningFarmEntity);
+        Object.assign(miningFarmEntity, resultMiningFarmEntity);
+    }
+
+    async creditMiningFarms(miningFarmEntities: MiningFarmEntity[]): Promise < void > {
+        for (let i = miningFarmEntities.length; i-- > 0;) {
+            await this.creditMiningFarm(miningFarmEntities[i]);
+        }
     }
 }

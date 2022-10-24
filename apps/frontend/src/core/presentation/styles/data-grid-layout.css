@@ -1,6 +1,28 @@
 .DataGridLayout .DataGridHeader {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    display: flex;
     margin-bottom: 20px;
-    align-items: end;
+}
+
+.DataGridLayout .DataGridHeader .DataGridHeaderLeft {
+    width: 0;
+    display: flex; align-items: flex-end;
+    flex: 1 1 auto;
+    gap: 24px;
+    margin-right: 128px;
+}
+
+.DataGridLayout .DataGridHeader .DataGridHeaderLeft > * {
+    width: 300px;
+    flex: 0 1 auto;
+}
+
+.DataGridLayout .DataGridHeader .DataGridHeaderRight {
+    display: flex; align-items: flex-end;
+    flex: 0 1 auto;
+    align-self: flex-end;
+}
+
+.DataGridLayout .DataGridHeader .DataGridHeaderRight > * {
+    width: 300px;
+    flex: 0 1 auto;
 }

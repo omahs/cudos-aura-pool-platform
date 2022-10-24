@@ -6,6 +6,8 @@ import { inject, observer } from 'mobx-react';
 import S from '../../utilities/Main';
 import AppStore from '../stores/AppStore';
 
+import AnimationContainer from './AnimationContainer';
+
 import '../styles/disable-actions.css';
 
 type Props = {
@@ -15,11 +17,12 @@ type Props = {
 function DisableActions({ appStore }: Props) {
 
     return (
-        <div
-            className = { `DisableActions Transition ActiveVisibilityHidden${S.CSS.getActiveClassName(appStore.hasDisabledActions())}` }
+        <AnimationContainer
+            className = { 'DisableActions' }
+            active = { appStore.hasDisabledActions() }
             onClick = { S.stopPropagation } >
             <label className = { 'Transition' } ></label>
-        </div>
+        </AnimationContainer>
     );
 
 }

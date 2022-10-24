@@ -1,0 +1,7 @@
+.PageCreditMiningFarmDetails .PageContent {
+    padding: 48px var(--page-spacing-h);
+}
+
+.PageCreditMiningFarmDetails .PageContent .NavRow {
+    margin-bottom: 40px;
+}

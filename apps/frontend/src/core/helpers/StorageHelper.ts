@@ -1,22 +1,35 @@
 const LOCAL_STORAGE_KEY = 'cudos_aura_service_storage';
-const VERSION = 6;
+const VERSION = 13;
 
 const collectionDescription = 'DigiDaigaku is a collection of 2022 unique characters developed by Limit Break, a company founded by world famous game designers Gabriel Leydon and Halbert Nakagawa.  Currently, DigiDaigaku characters live in a mysterious world unknown to outsiders, but in time, exciting details about their world will be revealed. /n Learn more about the project at: https://digidaigaku.com and https://twitter.com/DigiDaigaku'
 const collectionProfileImgUrl = 'https://www.cnet.com/a/img/resize/c5b48e90abe8b7fe339fc0139f3834dbe434fee5/hub/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200';
 const collectionCoverPictureUrl = 'https://static.dw.com/image/62450424_303.jpeg';
-const collectionOwnerAddress = 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lktde3g6';
+const collectionOwnerAddress = 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0';
 
 const miningFarmsJson = [
-    jsonMiningFarm('1', '1', 'Cool Farm', 'Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 10, 'Uzundjovo, Bulgaria', 2, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('2', '2', 'Not so Cool Farm', 'Not so Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 15, 'Las Brisas, United States', 1, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('3', '3', 'Razorlabs Farm', 'Razorlabs Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 30, 'Las Brisas, United States', 3, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('4', '4', 'Limechain Farm', 'Limechain Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '1', '1', '1', collectionOwnerAddress, 8, 'Las Brisas, United States', 10, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonMiningFarm('5', '5', 'Cudos Farm', 'Cudos Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, '0', '1', '1', collectionOwnerAddress, 100, 'Las Brisas, United States', 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl),
+    jsonMiningFarm('1', '1', 'Cool Farm', 'Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, ['0'], ['1'], ['1'], 1234, collectionOwnerAddress, 10, 'Uzundjovo, Bulgaria', 2, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
+    jsonMiningFarm('2', '2', 'Not so Cool Farm', 'Not so Cool Farm Inc.', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, ['0'], ['1'], ['1'], 3000, collectionOwnerAddress, 15, 'Las Brisas, United States', 1, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
+    jsonMiningFarm('3', '3', 'Razorlabs Farm', 'Razorlabs Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, ['0'], ['1'], ['1'], 344, collectionOwnerAddress, 30, 'Las Brisas, United States', 3, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 1),
+    jsonMiningFarm('4', '4', 'Limechain Farm', 'Limechain Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, ['0'], ['1'], ['1'], 5674, collectionOwnerAddress, 8, 'Las Brisas, United States', 10, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 2),
+    jsonMiningFarm('5', '5', 'Cudos Farm', 'Cudos Farm Inc', 'Doycho Traykov', 'doycho@somemail.com', collectionDescription, ['0'], ['1'], ['1'], 2000, collectionOwnerAddress, 100, 'Las Brisas, United States', 6, 10, collectionProfileImgUrl, collectionCoverPictureUrl, 2),
+];
+
+const accountsJson = [
+    // jsonAccount('1', 1, 1, 1, 'Account 1', 'user@email.com', 123123123123, 123123123123),
+    // jsonAccount('2', 2, 1, 1, 'Account 2', 'admin@email.com', 123123123123, 123123123123),
+    jsonAccount('3', 3, 1, 1, 'Account 3', 'superadmin@email.com', 123123123123, 123123123123),
+];
+
+const adminsJson = [
+    // jsonAdmin('1', '2'),
+];
+
+const superAdminsJson = [
+    jsonSuperAdmin('1', '3'),
 ];
 
 const usersJson = [
-    jsonUser('1', 'NFT BOG', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
-    jsonUser('2', 'NFT BOG', 'cudos14h7pdf8g2kkjgum5dntz80s5lhtrw3lk2uswk0', '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
+    // jsonUser('1', '1', collectionOwnerAddress, '0.232', 100.563, 123123123123123, collectionProfileImgUrl, collectionCoverPictureUrl),
 ];
 
 const bitcoinDataJson = jsonBitcoinData(23336, 53.3, 6.25, '29794407589312');
@@ -71,28 +84,28 @@ const nftsJson = [
 ]
 
 const collectionsJson = [
-    jsonCollection('1', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('2', '1', 'OTHER COLLECTION', collectionDescription, collectionOwnerAddress, 4030, 15000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('3', '1', 'CUDOS COLLECTION', collectionDescription, collectionOwnerAddress, 4200, 2000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('4', '1', 'LIMECHAIN COLLECTION', collectionDescription, collectionOwnerAddress, 4600, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('5', '1', 'RAZORLABS COLLECTION', collectionDescription, collectionOwnerAddress, 7000, 20020, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('6', '1', 'VALIO COLLECTION', collectionDescription, collectionOwnerAddress, 1040, 13000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('7', '1', 'KAMEN COLLECTION', collectionDescription, collectionOwnerAddress, 34000, 15000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('8', '1', 'TOSHO COLLECTION', collectionDescription, collectionOwnerAddress, 43000, 14050, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '2'),
-    jsonCollection('9', '1', 'GINKA COLLECTION', collectionDescription, collectionOwnerAddress, 24000, 17000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '3'),
-    jsonCollection('10', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 41000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '3'),
-    jsonCollection('11', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 40200, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '3'),
-    jsonCollection('12', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '3'),
-    jsonCollection('13', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('14', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12020, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('15', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 3200, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('16', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 2020, 120000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('17', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 8020, 10000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('18', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 5050, 47000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('19', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 7000, 112000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('20', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4530, 23000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('21', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 5000, 17000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
-    jsonCollection('22', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 600, 13000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, '1'),
+    jsonCollection('1', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('2', '1', 'OTHER COLLECTION', collectionDescription, collectionOwnerAddress, 4030, 15000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('3', '1', 'CUDOS COLLECTION', collectionDescription, collectionOwnerAddress, 4200, 2000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('4', '1', 'LIMECHAIN COLLECTION', collectionDescription, collectionOwnerAddress, 4600, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('5', '1', 'RAZORLABS COLLECTION', collectionDescription, collectionOwnerAddress, 7000, 20020, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('6', '1', 'VALIO COLLECTION', collectionDescription, collectionOwnerAddress, 1040, 13000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('7', '1', 'KAMEN COLLECTION', collectionDescription, collectionOwnerAddress, 34000, 15000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('8', '1', 'TOSHO COLLECTION', collectionDescription, collectionOwnerAddress, 43000, 14050, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'queued'),
+    jsonCollection('9', '1', 'GINKA COLLECTION', collectionDescription, collectionOwnerAddress, 24000, 17000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'issued'),
+    jsonCollection('10', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 41000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'issued'),
+    jsonCollection('11', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 40200, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'issued'),
+    jsonCollection('12', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'issued'),
+    jsonCollection('13', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('14', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4000, 12020, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('15', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 3200, 12000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('16', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 2020, 120000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('17', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 8020, 10000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('18', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 5050, 47000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('19', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 7000, 112000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('20', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 4530, 23000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('21', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 5000, 17000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
+    jsonCollection('22', '1', 'ANIME COLLECTION', collectionDescription, collectionOwnerAddress, 600, 13000, 2000, 700, 234, collectionProfileImgUrl, collectionCoverPictureUrl, 'approved'),
 ]
 
 const categoriesJson = [
@@ -119,6 +132,9 @@ export default class StorageHelper {
     collectionsJson: any[];
     categoriesJson: any[];
     usersJson: any[];
+    accountsJson: any[];
+    adminsJson: any[];
+    superAdminsJson: any[];
 
     sessionAccount: any;
     sessionUser: any;
@@ -134,6 +150,9 @@ export default class StorageHelper {
         this.collectionsJson = collectionsJson;
         this.categoriesJson = categoriesJson;
         this.usersJson = usersJson;
+        this.accountsJson = accountsJson;
+        this.adminsJson = adminsJson;
+        this.superAdminsJson = superAdminsJson;
 
         this.sessionAccount = null;
         this.sessionUser = null;
@@ -149,7 +168,7 @@ export default class StorageHelper {
 
         return StorageHelper.singleton;
     }
-
+    jsonSuperAdmin
     cloneWeak() {
         return Object.assign(new StorageHelper(), this);
     }
@@ -173,7 +192,7 @@ export default class StorageHelper {
     }
 }
 
-function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName, primaryAccountOwnerEmail, description, manufacturerId, minerId, energySourceId, ownerAddress, powerCost, machinesLocation, poolFee, powerConsumptionPerTh, profileImgUrl, coverImgUrl) {
+function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName, primaryAccountOwnerEmail, description, manufacturerIds, minerIds, energySourceIds, hashRateTh, ownerAddress, powerCost, machinesLocation, poolFee, powerConsumptionPerTh, profileImgUrl, coverImgUrl, status) {
     return {
         id,
         accountId,
@@ -182,9 +201,10 @@ function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName,
         primaryAccountOwnerName,
         primaryAccountOwnerEmail,
         description,
-        manufacturerId,
-        minerId,
-        energySourceId,
+        manufacturerIds,
+        minerIds,
+        energySourceIds,
+        hashRateTh,
         ownerAddress,
         powerCost,
         machinesLocation,
@@ -192,20 +212,49 @@ function jsonMiningFarm(id, accountId, name, legalName, primaryAccountOwnerName,
         powerConsumptionPerTh,
         profileImgUrl,
         coverImgUrl,
+        status,
     };
 }
 
-function jsonUser(id, name, address, totalBtcEarned, totalHashPower, timestampJoined, profileImgUrl, coverImgUrl) {
+function jsonAccount(accountId, type, active, emailVerified, name, email, timestampLastLogin, timestampRegister) {
     return {
-        id,
+        accountId,
+        type,
+        active,
+        emailVerified,
         name,
-        address,
+        email,
+        timestampLastLogin,
+        timestampRegister,
+    }
+}
+
+function jsonUser(userId, accountId, cudosWalletAddress, totalBtcEarned, totalHashPower, profileImgUrl, coverImgUrl) {
+    return {
+        userId,
+        accountId,
+        cudosWalletAddress,
         totalBtcEarned,
         totalHashPower,
-        timestampJoined,
         profileImgUrl,
         coverImgUrl,
     };
+}
+
+function jsonAdmin(adminId, accountId, cudosWalletAddress, bitcoindWalletAddress) {
+    return {
+        adminId,
+        accountId,
+        cudosWalletAddress,
+        bitcoindWalletAddress,
+    }
+}
+
+function jsonSuperAdmin(superAdminId, accountId) {
+    return {
+        superAdminId,
+        accountId,
+    }
 }
 
 function jsonBitcoinData(price, priceChange, blockReward, networkDifficulty) {

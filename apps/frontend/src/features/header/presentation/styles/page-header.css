@@ -3,6 +3,7 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--color-gray-090);
+    background-color: #fff;
 }
 
 .PageHeader .LogoHeader {
@@ -26,29 +27,4 @@
 
 .PageHeader .StartRightBlock .Active {
     color: #000;
-}
-
-.PageHeader .StartRightBlock .BalanceRow {
-    gap: 10px;
-}
-
-.PageHeader .StartRightBlock .BalanceRow .Gray {
-    color: var(--color-gray-030);
-}
-
-.PageHeader .StartRightBlock .AddressRow {
-    padding: 14px 24px;
-    gap: 24px;
-    background-color: var(--color-gray-060);
-    border-radius: 16px;
-}
-
-.PageHeaderAddressPopover {
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-}
-
-.PageHeaderAddressPopover .ButtonRow {
-    gap: 10px;
 }

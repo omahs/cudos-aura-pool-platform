@@ -1,0 +1,46 @@
+.AddNftsForm {
+    align-items: flex-start;
+    gap: 24px;
+}
+
+
+.AddNftsForm .ImagePreview {
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.AddNftsForm .ImagePreview.Empty {
+    background-color: var(--color-gray-060);
+}
+
+.AddNftsForm .MainImagePreview {
+    width: 150px; height: 150px;
+}
+
+.AddNftsForm .MainImagePreview.Empty .EmptyPictureSvg {
+    width: 40px; height: 40px;
+}
+
+.AddNftsForm .ImageLabel .Gray {
+    color: var(--color-gray-030);
+}
+
+.AddNftsForm .HeaderWithButton {
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.AddNftsForm .HeaderWithButton .InputHeaderButton {
+    justify-content: flex-start;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.AddNftsForm .ButtonsRow {
+    width: 100%;
+}

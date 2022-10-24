@@ -1,0 +1,53 @@
+.CollectionDetailsForm {
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.CollectionDetailsForm .ImagePreview {
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.CollectionDetailsForm .ImagePreview.Empty {
+    background-color: var(--color-gray-060);
+}
+
+.CollectionDetailsForm .MainImagePreview {
+    width: 150px; height: 150px;
+}
+
+.CollectionDetailsForm .MainImagePreview.Empty .EmptyPictureSvg {
+    width: 40px; height: 40px;
+}
+
+.CollectionDetailsForm .ImageLabel .Gray {
+    color: var(--color-gray-030);
+}
+
+.CollectionDetailsForm .BannerImagePreview {
+    height: 200px; width: 100%;
+}
+
+.CollectionDetailsForm .BannerImagePreview.Empty .EmptyPictureSvg {
+    width: 70px; height: 70px;
+}
+
+.CollectionDetailsForm .InputColumnHolder {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.CollectionDetailsForm .InputColumnHolder .InputInfoLabel {
+    color: var(--color-gray-030);
+}
+
+.CollectionDetailsForm .InputColumnHolder .FormulaBox {
+    padding: 15px;
+    color: var(--color-gray-030);
+    background-color: var(--color-gray-090);
+    border-radius: 10px;
+}

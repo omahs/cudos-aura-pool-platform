@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import TableRow from '../../entities/TableRow';
 import S from '../../utilities/Main';
-import TableStore from '../stores/TableStore';
+import TableState from '../stores/TableState';
 
 import TablePaging from './TablePaging';
 import Popover from './Popover';
@@ -15,7 +15,7 @@ import '../styles/table-mobile.css';
 export type TableMobileProps = {
     className?: string;
     legend: any[];
-    tableStore: TableStore;
+    tableState: TableState;
     rows: TableRow[];
     onClickRow?: (i: number) => void,
     onClickLegend?: (sortKey: number, i: number) => void;
@@ -25,7 +25,7 @@ export type TableMobileProps = {
     showPaging?: boolean,
 }
 
-function TableMobile({ className, legend, tableStore, rows, onClickRow, onClickLegend, firstRowActionIndex, lastRowActionIndex, itemsSize, showPaging }: TableMobileProps) {
+function TableMobile({ className, legend, tableState, rows, onClickRow, onClickLegend, firstRowActionIndex, lastRowActionIndex, itemsSize, showPaging }: TableMobileProps) {
 
     const [sortDropDownOpened, setSortDropDownOpened] = useState(false);
     const [sortDropDownAnchor, setSortDropDownAnchor] = useState(null);
@@ -46,19 +46,19 @@ function TableMobile({ className, legend, tableStore, rows, onClickRow, onClickL
     }
 
     function onClickLegendCell(index: number) {
-        if (tableStore.isTableSortIndexClickable(index) === false) {
+        if (tableState.isTableSortIndexClickable(index) === false) {
             return;
         }
 
-        const sortKey = tableStore.getTableSortKey(index);
-        if (Math.abs(tableStore.tableState.sortKey) === sortKey) {
-            tableStore.updateTableSortDirection();
+        const sortKey = tableState.getTableSortKey(index);
+        if (Math.abs(tableState.tableFilterState.sortKey) === sortKey) {
+            tableState.updateTableSortDirection();
         } else {
-            tableStore.updateTableSort(sortKey);
+            tableState.updateTableSort(sortKey);
         }
 
         if (onClickLegend !== null) {
-            onClickLegend(tableStore.tableState.sortKey, index);
+            onClickLegend(tableState.tableFilterState.sortKey, index);
         }
     }
 
@@ -69,11 +69,11 @@ function TableMobile({ className, legend, tableStore, rows, onClickRow, onClickL
     }
 
     function renderLegend() {
-        const tableSortIndex = tableStore.getTableSortIndex();
+        const tableSortIndex = tableState.getTableSortIndex();
         const sortOptions = [];
 
         for (let i = 0; i < legend.length; ++i) {
-            if (tableStore.isTableSortIndexClickable(i) === false) {
+            if (tableState.isTableSortIndexClickable(i) === false) {
                 continue;
             }
 
@@ -126,12 +126,12 @@ function TableMobile({ className, legend, tableStore, rows, onClickRow, onClickL
     }
 
     function renderSortArrow(index: number) {
-        const sortIndex = tableStore.getTableSortIndex();
+        const sortIndex = tableState.getTableSortIndex();
         if (sortIndex !== index) {
             return null;
         }
 
-        return tableStore.tableState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
+        return tableState.tableFilterState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
     }
 
     function renderRows() {
@@ -188,7 +188,7 @@ function TableMobile({ className, legend, tableStore, rows, onClickRow, onClickL
             { renderLegend() }
             { renderRows() }
             { showPaging === true && (
-                <TablePaging tableStore = { tableStore } />
+                <TablePaging tableState = { tableState } />
             ) }
         </div>
     )

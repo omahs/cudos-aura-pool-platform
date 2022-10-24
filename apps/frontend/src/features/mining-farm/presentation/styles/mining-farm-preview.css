@@ -25,8 +25,8 @@
 
 .MiningFarmPreview .BorderContainer {
     gap: 10px;
+    margin-top: auto;
 }
-
 
 .MiningFarmPreview .BorderContainer .DataRow {
     justify-content: space-between;

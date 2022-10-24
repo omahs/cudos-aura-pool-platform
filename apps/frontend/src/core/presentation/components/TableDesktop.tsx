@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import S from '../../utilities/Main';
 
-import TableStore from '../stores/TableStore';
+import TableState from '../stores/TableState';
 import TablePaging from './TablePaging';
 import Scrollable from './Scrollable';
 import TableRow from '../../entities/TableRow';
@@ -17,7 +17,7 @@ export type TableDesktopProps = {
     widths: string[];
     legend: string[];
     aligns?: number[];
-    tableStore: TableStore;
+    tableState: TableState;
     rows: TableRow[];
     columnsOrderMap?: Map < number, number >;
     onChangeColumnsOrderIndex?: (oldIndex: number, newIndex: number) => void;
@@ -31,7 +31,7 @@ export const ALIGN_LEFT = 1;
 export const ALIGN_CENTER = 2;
 export const ALIGN_RIGHT = 3;
 
-const TableDesktop = ({ className, widths, legend, aligns, tableStore, rows, columnsOrderMap, onChangeColumnsOrderIndex, onClickRow, onClickLegend, showPaging, contentScrollable }: TableDesktopProps) => {
+const TableDesktop = ({ className, widths, legend, aligns, tableState, rows, columnsOrderMap, onChangeColumnsOrderIndex, onClickRow, onClickLegend, showPaging, contentScrollable }: TableDesktopProps) => {
 
     function getCellStyle(index: number) {
         return {
@@ -56,19 +56,19 @@ const TableDesktop = ({ className, widths, legend, aligns, tableStore, rows, col
     }
 
     function onClickLegendCell(index: number) {
-        if (tableStore.isTableSortIndexClickable(index) === false) {
+        if (tableState.isTableSortIndexClickable(index) === false) {
             return;
         }
 
-        const sortKey = tableStore.getTableSortKey(index);
-        if (Math.abs(tableStore.tableState.sortKey) === sortKey) {
-            tableStore.updateTableSortDirection();
+        const sortKey = tableState.getTableSortKey(index);
+        if (Math.abs(tableState.tableFilterState.sortKey) === sortKey) {
+            tableState.updateTableSortDirection();
         } else {
-            tableStore.updateTableSort(sortKey);
+            tableState.updateTableSort(sortKey);
         }
 
         if (onClickLegend !== null) {
-            onClickLegend(tableStore.tableState.sortKey, index);
+            onClickLegend(tableState.tableFilterState.sortKey, index);
         }
     }
 
@@ -125,7 +125,7 @@ const TableDesktop = ({ className, widths, legend, aligns, tableStore, rows, col
             legendRow.push((
                 <div
                     key = { i }
-                    className = { `TableCell FlexRow ${getCellAlign(i)} ${S.CSS.getClassName(tableStore.isTableSortIndexClickable(i), 'Clickable')} ${S.CSS.getClassName(tableStore.getTableSortIndex() === i, 'Sorted')}` }
+                    className = { `TableCell FlexRow ${getCellAlign(i)} ${S.CSS.getClassName(tableState.isTableSortIndexClickable(i), 'Clickable')} ${S.CSS.getClassName(tableState.getTableSortIndex() === i, 'Sorted')}` }
                     style = { getCellStyle(i) }
                     onClick = { onClickLegendCell.bind(null, i) }
                     draggable = { draggable }
@@ -148,12 +148,12 @@ const TableDesktop = ({ className, widths, legend, aligns, tableStore, rows, col
     }
 
     function renderSortArrow(index: number) {
-        const sortIndex = tableStore.getTableSortIndex();
+        const sortIndex = tableState.getTableSortIndex();
         if (sortIndex !== index) {
             return null;
         }
 
-        return tableStore.tableState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
+        return tableState.tableFilterState.sortKey > 0 ? <ArrowUpIcon/> : <ArrowDownIcon/>;
     }
 
     function renderRows() {
@@ -163,7 +163,7 @@ const TableDesktop = ({ className, widths, legend, aligns, tableStore, rows, col
             );
         }
 
-        const tableSortIndex = tableStore.getTableSortIndex();
+        const tableSortIndex = tableState.getTableSortIndex();
         const resultRows = [];
 
         for (let i = 0; i < rows.length; ++i) {
@@ -197,7 +197,7 @@ const TableDesktop = ({ className, widths, legend, aligns, tableStore, rows, col
             { renderLegend() }
             { renderRows() }
             { showPaging === true && (
-                <TablePaging tableStore = { tableStore } />
+                <TablePaging tableState = { tableState } />
             ) }
         </div>
     )

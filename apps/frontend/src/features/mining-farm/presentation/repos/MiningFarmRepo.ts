@@ -7,8 +7,9 @@ export default interface MiningFarmRepo {
     fetchPopularMiningFarms(): Promise < MiningFarmEntity[] >;
     fetchMiningFarmsByIds(miningFarmIds: string[]): Promise < MiningFarmEntity[] >;
     fetchMiningFarmById(miningFarmId: string): Promise < MiningFarmEntity >;
-    fetchMiningFarmByAccountId(accountId: string): Promise < MiningFarmEntity >;
+    fetchMiningFarmBySessionAccountId(): Promise < MiningFarmEntity >;
     fetchMiningFarmsByFilter(miningFarmFilterModel: MiningFarmFilterModel): Promise < {miningFarmEntities: MiningFarmEntity[], total: number} >;
+    creditMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void >;
+    creditMiningFarms(miningFarmEntities: MiningFarmEntity[]): Promise < void >;
 
-    editMiningFarm(miningFarmEntity: MiningFarmEntity): Promise < void >;
 }

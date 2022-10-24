@@ -1,3 +1,4 @@
+import NftEntity from '../../../nft/entities/NftEntity';
 import CategoryEntity from '../../entities/CategoryEntity';
 import CollectionEntity from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
@@ -32,4 +33,13 @@ export default class CollectionStorageRepo implements CollectionRepo {
     async fetchCollectionsByFilter(collectionFilterModel: CollectionFilterModel): Promise < { collectionEntities: CollectionEntity[], total: number } > {
         return this.collectionApi.fetchCollectionsByFilter(collectionFilterModel);
     }
+
+    async creditCollection(collectionEntity: CollectionEntity, nftEntities: NftEntity[]) {
+        const result = await this.collectionApi.creditCollection(collectionEntity, nftEntities);
+        Object.assign(collectionEntity, result.collectionEntity);
+        result.nftEntities.forEach((nftEntity, i) => {
+            Object.assign(nftEntities[i], nftEntity);
+        });
+    }
+
 }

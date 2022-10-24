@@ -1,0 +1,17 @@
+
+.NavRowTabs {
+    padding: 4px;
+    gap: 5px;
+    border-radius: 10px;
+    background: var(--color-gray-095);
+}
+
+.NavRowTabs .NavButton {
+    padding: 10px;
+    color: var(--color-gray-dark);
+}
+
+.NavRowTabs .NavButton.Active{
+    color: #000;
+    background: #fff;
+}

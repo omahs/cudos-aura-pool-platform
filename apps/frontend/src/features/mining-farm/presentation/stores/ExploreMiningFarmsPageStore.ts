@@ -1,7 +1,7 @@
 import GridViewState from '../../../../core/presentation/stores/GridViewState';
 import { makeAutoObservable, runInAction } from 'mobx';
 import MiningFarmEntity from '../../entities/MiningFarmEntity';
-import MiningFarmFilterModel from '../../utilities/MiningFarmFilterModel';
+import MiningFarmFilterModel, { MiningFarmHashPowerFilter, MiningFarmPriceSortDirection } from '../../utilities/MiningFarmFilterModel';
 import MiningFarmRepo from '../repos/MiningFarmRepo';
 
 export default class ExploreMiningFarmsPageStore {
@@ -53,4 +53,13 @@ export default class ExploreMiningFarmsPageStore {
         this.fetch();
     }
 
+    onChangeHashPowerFilter = (hashPowerFilter: MiningFarmHashPowerFilter) => {
+        this.miningFarmFilterModel.hashPowerFilter = hashPowerFilter;
+        this.fetch();
+    }
+
+    onChangeSortPriceDirection = (priceSortDirection: MiningFarmPriceSortDirection) => {
+        this.miningFarmFilterModel.sortPriceDirection = priceSortDirection;
+        this.fetch();
+    }
 }

@@ -5,25 +5,25 @@ import { useNavigate } from 'react-router-dom';
 import S from '../../../../core/utilities/Main';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import MarketplaceStore from '../stores/MarketplaceStore';
+import NftEntity from '../../../nft/entities/NftEntity';
+import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 
 import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment } from '@mui/material';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Button, { ButtonPadding, ButtonType } from '../../../../core/presentation/components/Button';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import TopCollections from '../components/TopCollections';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
-
-import Svg from '../../../../core/presentation/components/Svg';
-import '../styles/marketplace-page.css';
 import Slider from '../../../../core/presentation/components/Slider';
-import NftEntity from '../../../nft/entities/NftEntity';
 import NftPreviewInPicture from '../../../nft/presentation/components/NftPreviewInPicture';
 import NftPreview from '../../../nft/presentation/components/NftPreview';
-import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import MiningFarmPreview from '../../../mining-farm/presentation/components/MiningFarmPreview';
+
+import Svg from '../../../../core/presentation/components/Svg';
+import '../styles/page-marketplace.css';
 
 type Props = {
     marketplaceStore?: MarketplaceStore
@@ -91,7 +91,7 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                     {marketplaceStore.newNftDropsEntities.slice(0, 4).map((nftEntity: NftEntity, index: number) => <NftPreviewInPicture
                         key={index}
                         nftEntity={nftEntity}
-                        onClick={() => navigate(`${AppRoutes.NFT_VIEW}/${nftEntity.id}`)}
+                        onClick={() => navigate(`${AppRoutes.VIEW_NFT}/${nftEntity.id}`)}
                         collectionEntity={marketplaceStore.getCollectionById(nftEntity.collectionId)}
                     />)}
                 </Slider>
@@ -100,17 +100,17 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                     {marketplaceStore.trendingNftEntities.slice(0, 4).map((nftEntity: NftEntity, index: number) => <NftPreview
                         key={index}
                         nftEntity={nftEntity}
-                        onClick={() => navigate(`${AppRoutes.NFT_VIEW}/${nftEntity.id}`)}
+                        onClick={() => navigate(`${AppRoutes.VIEW_NFT}/${nftEntity.id}`)}
                         collectionEntity={marketplaceStore.getCollectionById(nftEntity.collectionId)}
                     />)}
                 </Slider>
                 <Actions
-                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
-                    height={ACTIONS_HEIGHT.HEIGHT_48} >
+                    layout={ActionsLayout.LAYOUT_ROW_CENTER}
+                    height={ActionsHeight.HEIGHT_48} >
                     {/* TODO: redirect */}
                     <Button
-                        padding={BUTTON_PADDING.PADDING_24}
-                        type={BUTTON_TYPE.ROUNDED}
+                        padding={ButtonPadding.PADDING_24}
+                        type={ButtonType.ROUNDED}
                         onClick={onClickSeeAllNfts} >
                         See All NFTs
                     </Button>
@@ -122,12 +122,12 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                     topCollectionEntities={marketplaceStore.topCollectionEntities}
                     changeTopCollectionPeriod={marketplaceStore.changeTopCollectionPeriod} />
                 <Actions
-                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
-                    height={ACTIONS_HEIGHT.HEIGHT_48}>
+                    layout={ActionsLayout.LAYOUT_ROW_CENTER}
+                    height={ActionsHeight.HEIGHT_48}>
                     <Button
                         onClick={onClickSeeAllCollections}
-                        padding={BUTTON_PADDING.PADDING_24}
-                        type={BUTTON_TYPE.ROUNDED}>
+                        padding={ButtonPadding.PADDING_24}
+                        type={ButtonType.ROUNDED}>
                         See All Collections
                     </Button>
                 </Actions>
@@ -141,12 +141,12 @@ function MarkedplacePage({ marketplaceStore }: Props) {
                         />)}
                     </div>
                     <Actions
-                        layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER}
-                        height={ACTIONS_HEIGHT.HEIGHT_48}>
+                        layout={ActionsLayout.LAYOUT_ROW_CENTER}
+                        height={ActionsHeight.HEIGHT_48}>
                         <Button
                             onClick={onClickSeeAllFarms}
-                            padding={BUTTON_PADDING.PADDING_24}
-                            type={BUTTON_TYPE.ROUNDED}>
+                            padding={ButtonPadding.PADDING_24}
+                            type={ButtonType.ROUNDED}>
                         See All Farms
                         </Button>
                     </Actions>

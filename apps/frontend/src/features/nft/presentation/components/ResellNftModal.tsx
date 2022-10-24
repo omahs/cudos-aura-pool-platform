@@ -8,9 +8,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import ModalWindow from '../../../../core/presentation/components/ModalWindow';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
 import Checkbox from '../../../../core/presentation/components/Checkbox';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import Button from '../../../../core/presentation/components/Button';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
+import AnimationContainer from '../../../../core/presentation/components/AnimationContainer';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -66,7 +67,7 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                         value={resellNftModalStore.originalPaymentSchedule}
                         onChange={resellNftModalStore.toggleOriginalPaymentSchedule} />
                 </div>
-                <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
+                <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_COLUMN_FULL}>
                     <Button onClick={resellNftModalStore.onClickSubmitForSell}>Submit for sell</Button>
                 </Actions>
             </>
@@ -94,7 +95,7 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                         <Svg svg={LaunchIcon} />
                     </a>
                 </div>
-                <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                <Actions layout={ActionsLayout.LAYOUT_ROW_CENTER} height={ActionsHeight.HEIGHT_48}>
                     <Button
                         onClick={resellNftModalStore.hide}>
                         Close Now
@@ -116,7 +117,7 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                         <Svg svg={LaunchIcon} />
                     </a>
                 </div>
-                <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                <Actions layout={ActionsLayout.LAYOUT_ROW_CENTER} height={ActionsHeight.HEIGHT_48}>
                     <Button
                         onClick={resellNftModalStore.hide}>
                         Close
@@ -135,21 +136,21 @@ function ResellNftModal({ resellNftModalStore }: Props) {
             className = { 'ResellNftPopup' }
             modalStore = { resellNftModalStore } >
 
-            <div className = { `Stage Preview FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(resellNftModalStore.isStagePreview())}` } >
+            <AnimationContainer className = { 'Stage Preview FlexColumn' } active = { resellNftModalStore.isStagePreview() } >
                 { resellNftModalStore.isStagePreview() === true && <PreviewContent /> }
-            </div>
+            </AnimationContainer>
 
-            <div className = { `Stage Processing FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(resellNftModalStore.isStageProcessing())}` } >
+            <AnimationContainer className = { 'Stage Processing FlexColumn' } active = { resellNftModalStore.isStageProcessing() } >
                 {resellNftModalStore.isStageProcessing() === true && <ProcessingContent /> }
-            </div>
+            </AnimationContainer>
 
-            <div className = { `Stage Success FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(resellNftModalStore.isStageSuccess())}` } >
+            <AnimationContainer className = { 'Stage Success FlexColumn' } active = { resellNftModalStore.isStageSuccess() } >
                 {resellNftModalStore.isStageSuccess() === true && <SuccessContent /> }
-            </div>
+            </AnimationContainer>
 
-            <div className = { `Stage Fail FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(resellNftModalStore.isStageFail())}` } >
+            <AnimationContainer className = { 'Stage Fail FlexColumn' } active = { resellNftModalStore.isStageFail() } >
                 {resellNftModalStore.isStageFail() === true && <FailContent /> }
-            </div>
+            </AnimationContainer>
 
         </ModalWindow>
     )

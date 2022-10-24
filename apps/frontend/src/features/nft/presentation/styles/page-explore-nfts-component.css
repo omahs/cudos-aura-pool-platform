@@ -2,7 +2,3 @@
 .PageExploreNfts .PageContent {
     padding: 48px  var(--page-spacing-h);
 }
-
-.PageExploreNfts .SearchBar {
-    width: 420px;
-}

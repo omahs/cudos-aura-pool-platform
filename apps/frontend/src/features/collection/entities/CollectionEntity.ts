@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { makeAutoObservable } from 'mobx';
 import S from '../../../core/utilities/Main';
 
 export enum CollectionStatus {
@@ -24,6 +25,9 @@ export default class CollectionEntity {
     profileImgUrl: string;
     coverImgUrl: string;
     status: CollectionStatus;
+    royalties: number;
+    maintenanceFees: BigNumber;
+    payoutAddress: string;
 
     constructor() {
         this.id = S.Strings.EMPTY;
@@ -39,23 +43,39 @@ export default class CollectionEntity {
         this.profileImgUrl = S.Strings.EMPTY;
         this.coverImgUrl = S.Strings.EMPTY;
         this.status = CollectionStatus.NOT_SUBMITTED;
+        this.royalties = S.NOT_EXISTS;
+        this.maintenanceFees = new BigNumber(S.NOT_EXISTS);
+        this.payoutAddress = S.Strings.EMPTY;
+
+        makeAutoObservable(this);
     }
 
-    toJson(): any {
+    markApproved() {
+        this.status = CollectionStatus.APPROVED;
+    }
+
+    static toJson(entity: CollectionEntity): any {
+        if (entity === null) {
+            return null;
+        }
+
         return {
-            'id': this.id,
-            'farmId': this.farmId,
-            'name': this.name,
-            'description': this.description,
-            'ownerAddress': this.description,
-            'hashPower': this.hashPower,
-            'price': this.price,
-            'volume': this.volume,
-            'items': this.volume,
-            'owners': this.volume,
-            'profileImgUrl': this.profileImgUrl,
-            'coverImgUrl': this.coverImgUrl,
-            'status': this.status,
+            'id': entity.id,
+            'farmId': entity.farmId,
+            'name': entity.name,
+            'description': entity.description,
+            'ownerAddress': entity.ownerAddress,
+            'hashPower': entity.hashPower,
+            'price': entity.price.toString(),
+            'volume': entity.volume.toString(),
+            'items': entity.items,
+            'owners': entity.owners,
+            'profileImgUrl': entity.profileImgUrl,
+            'coverImgUrl': entity.coverImgUrl,
+            'status': entity.status,
+            'royalties': entity.royalties,
+            'maintenanceFees': entity.maintenanceFees.toString(),
+            'payoutAddress': entity.payoutAddress,
         }
     }
 
@@ -71,15 +91,18 @@ export default class CollectionEntity {
         model.name = json.name ?? model.name;
         model.description = json.description ?? model.description;
         model.ownerAddress = json.ownerAddress ?? model.ownerAddress;
-        model.hashPower = Number(json.hashPower) ?? model.hashPower;
-        model.price = new BigNumber(json.price) ?? model.price;
-        model.volume = new BigNumber(json.volume) ?? model.volume;
-        model.items = Number(json.items) ?? model.items;
-        model.owners = Number(json.owners) ?? model.owners;
+        model.hashPower = Number(json.hashPower ?? model.hashPower);
+        model.price = new BigNumber(json.price ?? model.price);
+        model.volume = new BigNumber(json.volume ?? model.volume);
+        model.items = Number(json.items ?? model.items);
+        model.owners = Number(json.owners ?? model.owners);
 
         model.profileImgUrl = json.profileImgUrl ?? model.profileImgUrl;
         model.coverImgUrl = json.coverImgUrl ?? model.coverImgUrl;
         model.status = json.status ?? model.status;
+        model.royalties = Number(json.royalties ?? model.royalties);
+        model.maintenanceFees = new BigNumber(json.maintenanceFees ?? model.maintenanceFees);
+        model.payoutAddress = json.payoutAddress ?? model.payoutAddress;
 
         return model;
     }

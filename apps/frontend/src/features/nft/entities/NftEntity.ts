@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { makeAutoObservable } from 'mobx';
 import S from '../../../core/utilities/Main';
 
 export enum NftListinStatus {
@@ -18,6 +19,8 @@ export default class NftEntity {
     expiryDate: number;
     creatorAddress: string;
     currentOwnerAddress: string;
+    farmRoyalties: number;
+    maintenanceFee: BigNumber;
 
     constructor() {
         this.id = S.Strings.EMPTY;
@@ -30,21 +33,31 @@ export default class NftEntity {
         this.expiryDate = S.NOT_EXISTS;
         this.creatorAddress = S.Strings.EMPTY
         this.currentOwnerAddress = S.Strings.EMPTY
+        this.farmRoyalties = S.NOT_EXISTS;
+        this.maintenanceFee = new BigNumber(S.NOT_EXISTS);
+
+        makeAutoObservable(this);
     }
 
-    toJson(): any {
+    static toJson(entity: NftEntity): any {
+        if (entity === null) {
+            return null;
+        }
+
         return {
-            'id': this.id,
-            'name': this.name,
-            'category': this.category,
-            'collectionId': this.collectionId,
-            'hashPower': this.hashPower,
-            'price': this.price,
-            'imageUrl': this.imageUrl,
-            'listingStatus': this.listingStatus,
-            'expiryDate': this.expiryDate,
-            'creatorAddress': this.creatorAddress,
-            'currentOwnerAddress': this.currentOwnerAddress,
+            'id': entity.id,
+            'name': entity.name,
+            'category': entity.category,
+            'collectionId': entity.collectionId,
+            'hashPower': entity.hashPower,
+            'price': entity.price.toString(),
+            'imageUrl': entity.imageUrl,
+            'listingStatus': entity.listingStatus,
+            'expiryDate': entity.expiryDate,
+            'creatorAddress': entity.creatorAddress,
+            'currentOwnerAddress': entity.currentOwnerAddress,
+            'farmRoyalties': entity.currentOwnerAddress,
+            'maintenanceFee': entity.currentOwnerAddress.toString(),
         }
     }
 
@@ -59,13 +72,15 @@ export default class NftEntity {
         model.name = json.name ?? model.name;
         model.category = json.category ?? model.category;
         model.collectionId = json.collectionId ?? model.collectionId;
-        model.hashPower = Number(json.hashPower) ?? model.hashPower;
-        model.price = new BigNumber(json.price) ?? model.price;
+        model.hashPower = Number(json.hashPower ?? model.hashPower);
+        model.price = new BigNumber(json.price ?? model.price);
         model.imageUrl = json.imageUrl ?? model.imageUrl;
-        model.listingStatus = Number(json.listingStatus) ?? model.listingStatus;
-        model.expiryDate = Number(json.expiryDate) ?? model.expiryDate;
+        model.listingStatus = Number(json.listingStatus ?? model.listingStatus);
+        model.expiryDate = Number(json.expiryDate ?? model.expiryDate);
         model.creatorAddress = json.creatorAddress ?? model.creatorAddress;
         model.currentOwnerAddress = json.currentOwnerAddress ?? model.currentOwnerAddress;
+        model.farmRoyalties = Number(json.farmRoyalties ?? model.farmRoyalties);
+        model.maintenanceFee = new BigNumber(json.maintenanceFee ?? model.maintenanceFee);
 
         return model;
     }

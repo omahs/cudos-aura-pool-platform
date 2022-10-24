@@ -1,0 +1,18 @@
+.PageSuperAdminHeader {
+    padding: 20px var(--page-spacing-h);
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-gray-090);
+    background-color: #fff;
+}
+
+.PageSuperAdminHeader .LogoHeader {
+    gap: 30px;
+}
+
+.PageSuperAdminHeader .LogoHeader .AdminPortalNav {
+    border-radius: 6px;
+    padding: 10px;
+    background-color: var(--color-gray-090);
+}
+

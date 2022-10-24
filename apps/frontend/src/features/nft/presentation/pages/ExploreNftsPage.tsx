@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import NftEntity from '../../entities/NftEntity';
-import NftFilterModel from '../../utilities/NftFilterModel';
+import NftFilterModel, { NftHashPowerFilter, NftPriceSortDirection } from '../../utilities/NftFilterModel';
 import ExploreNftsPageStore from '../stores/ExploreNftsPageStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 
@@ -14,16 +14,16 @@ import Svg from '../../../../core/presentation/components/Svg';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import Select from '../../../../core/presentation/components/Select';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
 import GridView from '../../../../core/presentation/components/GridView';
 import NftPreview from '../components/NftPreview';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import CategoriesSelector from '../../../collection/presentation/components/CategoriesSelector';
 import ExplorePageLayout from '../../../../core/presentation/components/ExplorePageLayout';
 import DataGridLayout from '../../../../core/presentation/components/DataGridLayout';
 
 import '../styles/page-explore-nfts-component.css';
+import NavRowTabs from '../../../../core/presentation/components/NavRowTabs';
+import AppRoutes from '../../../app-routes/entities/AppRoutes';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     appStore?: AppStore;
@@ -31,6 +31,7 @@ type Props = {
 }
 
 function ExploreNftsPage({ appStore, exploreNftsPageStore }: Props) {
+    const navigate = useNavigate();
 
     useEffect(() => {
         appStore.useLoading(async () => {
@@ -39,6 +40,23 @@ function ExploreNftsPage({ appStore, exploreNftsPageStore }: Props) {
     }, [])
 
     const nftFilterModel = exploreNftsPageStore.nftFilterModel;
+
+    const navTabs = [
+        {
+            navName: 'NFTs',
+            isActive: true,
+        },
+        {
+            navName: 'Collections',
+            isActive: false,
+            onClick: () => navigate(AppRoutes.EXPLORE_COLLECTIONS),
+        },
+        {
+            navName: 'Farms',
+            isActive: false,
+            onClick: () => navigate(AppRoutes.EXPLORE_MINING_FARMS),
+        },
+    ]
 
     return (
         <PageLayoutComponent className = { 'PageExploreNfts' } >
@@ -50,44 +68,52 @@ function ExploreNftsPage({ appStore, exploreNftsPageStore }: Props) {
                 <ExplorePageLayout
                     header = { (
                         <>
-                            <div className={'H2 Bold'}>Explore NFTs</div>
-                            <Input
-                                inputType={InputType.TEXT}
-                                className={'SearchBar'}
-                                value = {nftFilterModel.searchString}
-                                onChange = { exploreNftsPageStore.onChangeSearchWord }
-                                placeholder = {'Search Collections, Farms and accounts'}
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start" >
-                                        <Svg svg={SearchIcon} />
-                                    </InputAdornment>,
-                                }} />
-                            <CategoriesSelector
-                                selectedCategoryIds = { nftFilterModel.categoryIds }
-                                onChangeCategories = { exploreNftsPageStore.onChangeCategoryIds } />
+                            <div className={'H2 Bold'}>Explore AuraPool</div>
+                            <NavRowTabs navTabs={navTabs} />
                         </>
                     ) }>
 
                     <DataGridLayout
-                        header = { (
+                        headerLeft = { (
                             <>
+                                <Input
+                                    inputType={InputType.TEXT}
+                                    className={'SearchBar'}
+                                    value = {nftFilterModel.searchString}
+                                    onChange = { exploreNftsPageStore.onChangeSearchWord }
+                                    placeholder = {'Search Collections, Farms and accounts'}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start" >
+                                            <Svg svg={SearchIcon} />
+                                        </InputAdornment>,
+                                    }} />
                                 <Select
-                                    onChange={exploreNftsPageStore.onChangeSortKey}
-                                    value={nftFilterModel.sortKey} >
-                                    <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                                    <MenuItem value = { NftFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
+                                    label={'Hashing Power'}
+                                    onChange={exploreNftsPageStore.onChangeHashPowerFilter}
+                                    value={nftFilterModel.hashPowerFilter} >
+                                    <MenuItem value = { NftHashPowerFilter.NONE } > None</MenuItem>
+                                    <MenuItem value = { NftHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
+                                    <MenuItem value = { NftHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
+                                    <MenuItem value = { NftHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
                                 </Select>
-                                <Actions
-                                    layout={ACTIONS_LAYOUT.LAYOUT_ROW_RIGHT}
-                                    height={ACTIONS_HEIGHT.HEIGHT_48} >
-                                    {/* TODO: show all filters */}
-                                    <Button
-                                        padding={BUTTON_PADDING.PADDING_24}
-                                        type={BUTTON_TYPE.ROUNDED} >
-                            All Filters
-                                    </Button>
-                                </Actions>
+                                <Select
+                                    label={'Price'}
+                                    onChange={exploreNftsPageStore.onChangeSortPriceDirection}
+                                    value={nftFilterModel.sortPriceDirection} >
+                                    <MenuItem value = { NftPriceSortDirection.NONE } >None</MenuItem>
+                                    <MenuItem value = { NftPriceSortDirection.HIGH_TO_LOW } > Low to High </MenuItem>
+                                    <MenuItem value = { NftPriceSortDirection.LOW_TO_HIGH } > High to Low </MenuItem>
+                                </Select>
                             </>
+                        ) }
+                        headerRight = { (
+                            <Select
+                                label={'Sort by'}
+                                onChange={exploreNftsPageStore.onChangeSortKey}
+                                value={nftFilterModel.sortKey} >
+                                <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                <MenuItem value = { NftFilterModel.SORT_KEY_POPULAR } > Popular </MenuItem>
+                            </Select>
                         ) } >
 
                         { exploreNftsPageStore.nftEntities === null && (

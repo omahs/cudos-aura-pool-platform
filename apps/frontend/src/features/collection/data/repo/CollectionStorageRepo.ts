@@ -1,9 +1,10 @@
 import S from '../../../../core/utilities/Main';
 import StorageHelper from '../../../../core/helpers/StorageHelper';
-import CollectionEntity from '../../entities/CollectionEntity';
+import CollectionEntity, { CollectionStatus } from '../../entities/CollectionEntity';
 import CollectionRepo from '../../presentation/repos/CollectionRepo';
-import CollectionFilterModel from '../../utilities/CollectionFilterModel';
+import CollectionFilterModel, { CollectionHashPowerFilter } from '../../utilities/CollectionFilterModel';
 import CategoryEntity from '../../entities/CategoryEntity';
+import NftEntity from '../../../nft/entities/NftEntity';
 
 export default class CollectionStorageRepo implements CollectionRepo {
 
@@ -59,12 +60,30 @@ export default class CollectionStorageRepo implements CollectionRepo {
             });
         }
 
-        // TODO:  category how do we get it?
-        // if (collectionFilterModel.categoryIds.length > 0) {
-        //     collectionSlice = collectionSlice.filter((json) => {
-        //         // return json.
-        //     });
-        // }
+        collectionSlice = collectionSlice.filter((json) => {
+            return json.status === collectionFilterModel.status;
+        });
+
+        if (collectionFilterModel.hashPowerFilter !== CollectionHashPowerFilter.NONE) {
+            let hashPowerLimit = S.NOT_EXISTS;
+            switch (collectionFilterModel.hashPowerFilter) {
+                case CollectionHashPowerFilter.BELOW_1000_EH:
+                    hashPowerLimit = 1000;
+                    break;
+                case CollectionHashPowerFilter.BELOW_2000_EH:
+                    hashPowerLimit = 2000;
+                    break;
+                case CollectionHashPowerFilter.ABOVE_2000_EH:
+                default:
+                    hashPowerLimit = Number.MAX_SAFE_INTEGER;
+                    break;
+
+            }
+
+            collectionSlice = collectionSlice.filter((json) => {
+                return json.hashPower <= hashPowerLimit;
+            });
+        }
 
         collectionSlice.sort((a: CollectionEntity, b: CollectionEntity) => {
             switch (collectionFilterModel.sortKey) {
@@ -80,6 +99,55 @@ export default class CollectionStorageRepo implements CollectionRepo {
             collectionEntities: collectionSlice.slice(collectionFilterModel.from, collectionFilterModel.from + collectionFilterModel.count),
             total: collectionSlice.length,
         }
+    }
+
+    async creditCollection(collectionEntity: CollectionEntity, nftEntities: NftEntity[]) {
+        const collectionsJson = this.storageHelper.collectionsJson;
+
+        let collectionJson = collectionsJson.find((json) => {
+            return json.id === collectionEntity.id;
+        });
+
+        if (collectionJson !== undefined) {
+            Object.assign(collectionJson, CollectionEntity.toJson(collectionEntity));
+        } else {
+            const lastCollectionEntity = collectionsJson.last();
+            const nextCollectionId = 1 + (lastCollectionEntity !== null ? parseInt(lastCollectionEntity.id) : 0);
+
+            collectionJson = CollectionEntity.toJson(collectionEntity);
+            collectionJson.id = nextCollectionId.toString();
+
+            collectionsJson.push(collectionJson);
+        }
+
+        Object.assign(collectionEntity, CollectionEntity.fromJson(collectionJson));
+
+        if (nftEntities !== null) {
+            const nftsJson = this.storageHelper.nftsJson;
+
+            nftEntities.forEach((nftEntity) => {
+                let nftJson = nftsJson.find((json) => {
+                    return json.id === nftEntity.id;
+                });
+
+                if (nftJson !== undefined) {
+                    Object.assign(nftJson, NftEntity.toJson(nftEntity));
+                } else {
+                    const lastNftEntity = nftsJson.last();
+                    const nextNftId = 1 + (lastNftEntity !== null ? parseInt(lastNftEntity.id) : 0);
+
+                    nftJson = NftEntity.toJson(nftEntity);
+                    nftJson.id = nextNftId.toString();
+                    nftJson.collectionId = collectionJson.id;
+
+                    nftsJson.push(nftJson);
+                }
+
+                Object.assign(nftEntity, NftEntity.fromJson(nftJson));
+            });
+        }
+
+        this.storageHelper.save();
     }
 
 }

@@ -128,15 +128,6 @@ label {
     opacity:0;
 }
 
-.ActiveVisibilityHidden:not(.Active) {
-    opacity:0;
-    pointer-events:none;
-}
-
-/* .ActiveVisibilityHidden.Transition:not(.Active) {
-    transition-property:opacity;
-} */
-
 @media (hover: hover) {
 
     .HoverHidden {
@@ -151,7 +142,7 @@ label {
 
 }
 
-.ActiveDisplayHidden.Transition, .ActiveVisibilityHidden.Transition, .HoverHidden {
+.ActiveDisplayHidden.Transition, .HoverHidden {
     transition-property:opacity;
 }
 
@@ -209,6 +200,11 @@ label {
 
 .FlexGrow {
     flex: 1 1 auto;
+}
+
+.HorizontalSeparator {
+    width: 100%;
+    border: 1px solid var(--color-gray-060);
 }
 
 *, *:after, *:before {

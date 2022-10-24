@@ -1,0 +1,33 @@
+.StepMiningFarmPreview {
+    gap: 40px;
+}
+
+.StepMiningFarmPreview .ReviewDataContainer {
+    border: 1px solid var(--color-gray-060);
+    border-radius: 20px;
+    padding: 24px;
+    gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.StepMiningFarmPreview .ReviewDataContainer .DataRow {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.StepMiningFarmPreview .ReviewDataContainer .DataRow .DataLabel {
+    color: var(--color-gray-030);
+}
+
+.StepMiningFarmPreview .TermsAgreeRow {
+    width: 100%;
+}
+
+.StepMiningFarmPreview .ButtonRow {
+    width: 100%;
+}
+
+.StepMiningFarmPreview .Description {
+    overflow-wrap: anywhere;
+}

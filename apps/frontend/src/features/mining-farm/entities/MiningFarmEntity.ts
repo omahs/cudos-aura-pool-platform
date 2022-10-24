@@ -1,6 +1,12 @@
 import { makeAutoObservable } from 'mobx';
 import S from '../../../core/utilities/Main';
 
+export enum MiningFarmStatus {
+    APPROVED = 1,
+    NOT_APPROVED = 2,
+    DELETED = 3,
+}
+
 export default class MiningFarmEntity {
     id: string;
     accountId: string;
@@ -20,6 +26,7 @@ export default class MiningFarmEntity {
     profileImgUrl: string;
     coverImgUrl: string;
     farmPhotoUrls: string[];
+    status: MiningFarmStatus;
 
     constructor() {
         this.id = S.Strings.EMPTY;
@@ -37,33 +44,51 @@ export default class MiningFarmEntity {
         this.machinesLocation = S.Strings.EMPTY;
         this.poolFee = S.NOT_EXISTS;
         this.powerConsumptionPerTh = S.NOT_EXISTS;
-        this.profileImgUrl = S.Strings.EMPTY;
-        this.coverImgUrl = S.Strings.EMPTY;
+        this.profileImgUrl = '/assets/temp/profile-preview.png';
+        this.coverImgUrl = '/assets/temp/profile-cover.png';
         this.farmPhotoUrls = [];
+        this.status = MiningFarmStatus.NOT_APPROVED;
 
         makeAutoObservable(this);
     }
 
-    toJson(): any {
+    isNew(): boolean {
+        return this.id === S.Strings.EMPTY;
+    }
+
+    isApproved(): boolean {
+        return this.status === MiningFarmStatus.APPROVED;
+    }
+
+    markApproved() {
+        this.status = MiningFarmStatus.APPROVED;
+    }
+
+    static toJson(entity: MiningFarmEntity): any {
+        if (entity === null) {
+            return null;
+        }
+
         return {
-            'id': this.id,
-            'accountId': this.accountId,
-            'name': this.name,
-            'legalName': this.legalName,
-            'primaryAccountOwnerName': this.primaryAccountOwnerName,
-            'primaryAccountOwnerEmail': this.primaryAccountOwnerName,
-            'description': this.description,
-            'manufacturerIds': this.manufacturerIds,
-            'minerIds': this.minerIds,
-            'energySourceIds': this.energySourceIds,
-            'hashRateTh': this.hashRateTh,
-            'powerCost': this.powerCost,
-            'machinesLocation': this.machinesLocation,
-            'poolFee': this.poolFee,
-            'powerConsumptionPerTh': this.powerConsumptionPerTh,
-            'profileImgUrl': this.profileImgUrl,
-            'coverImgUrl': this.coverImgUrl,
-            'farmPhotoUrls': JSON.stringify(this.farmPhotoUrls),
+            'id': entity.id,
+            'accountId': entity.accountId,
+            'name': entity.name,
+            'legalName': entity.legalName,
+            'primaryAccountOwnerName': entity.primaryAccountOwnerName,
+            'primaryAccountOwnerEmail': entity.primaryAccountOwnerName,
+            'description': entity.description,
+            'manufacturerIds': entity.manufacturerIds,
+            'minerIds': entity.minerIds,
+            'energySourceIds': entity.energySourceIds,
+            'hashRateTh': entity.hashRateTh,
+            'powerCost': entity.powerCost,
+            'machinesLocation': entity.machinesLocation,
+            'poolFee': entity.poolFee,
+            'powerConsumptionPerTh': entity.powerConsumptionPerTh,
+            'profileImgUrl': entity.profileImgUrl,
+            'coverImgUrl': entity.coverImgUrl,
+            'farmPhotoUrls': JSON.stringify(entity.farmPhotoUrls),
+            'status': entity.status,
         }
     }
 
@@ -91,6 +116,7 @@ export default class MiningFarmEntity {
         model.profileImgUrl = json.profileImgUrl ?? model.profileImgUrl;
         model.coverImgUrl = json.coverImgUrl ?? model.coverImgUrl;
         model.farmPhotoUrls = json.farmPhotoUrls ?? model.farmPhotoUrls;
+        model.status = parseInt(json.status ?? model.status);
 
         return model;
     }
@@ -99,20 +125,23 @@ export default class MiningFarmEntity {
     parseHashRateFromString(hashRateString: string) {
         const [hashRate, unit] = hashRateString.split(' ');
         const hashRateParsed = Number(hashRate);
-
-        switch (unit.toLowerCase()) {
-            case 'eh/s':
-                this.hashRateTh = hashRateParsed * 1000000;
-                return;
-            case 'ph/s':
-                this.hashRateTh = hashRateParsed * 1000;
-                return;
-            case 'th/s':
-                this.hashRateTh = hashRateParsed;
-                return;
-            default:
-                this.hashRateTh = S.NOT_EXISTS;
+        if (unit !== undefined) {
+            switch (unit.toLowerCase()) {
+                case 'eh/s':
+                    this.hashRateTh = hashRateParsed * 1000000;
+                    return;
+                case 'ph/s':
+                    this.hashRateTh = hashRateParsed * 1000;
+                    return;
+                case 'th/s':
+                    this.hashRateTh = hashRateParsed;
+                    return;
+                default:
+                    this.hashRateTh = S.NOT_EXISTS;
+            }
         }
+
+        this.hashRateTh = hashRateParsed;
     }
 
     displayHashRate(): string {

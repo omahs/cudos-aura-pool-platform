@@ -3,7 +3,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import MiningFarmEntity from '../../../mining-farm/entities/MiningFarmEntity';
 import MiningFarmRepo from '../../../mining-farm/presentation/repos/MiningFarmRepo';
 import CollectionEntity from '../../entities/CollectionEntity';
-import CollectionFilterModel from '../../utilities/CollectionFilterModel';
+import CollectionFilterModel, { CollectionHashPowerFilter } from '../../utilities/CollectionFilterModel';
 import CollectionRepo from '../repos/CollectionRepo';
 
 export default class ExploreCollectionsPageStore {
@@ -73,6 +73,11 @@ export default class ExploreCollectionsPageStore {
 
     onChangeSortKey = (sortKey: number) => {
         this.collectionFilterModel.sortKey = sortKey;
+        this.fetch();
+    }
+
+    onChangeHashPowerFilter = (hashPowerFilter: CollectionHashPowerFilter) => {
+        this.collectionFilterModel.hashPowerFilter = hashPowerFilter;
         this.fetch();
     }
 

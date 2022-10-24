@@ -1,6 +1,8 @@
 .Select {
     width: 100%;
+    display: relative;
 }
+
 
 .Select .MuiFormControl-root {
     width: 100%;
@@ -76,4 +78,12 @@
 
 .AppSelectRoot .AppSelectPaper .MuiMenuItem-root.Mui-selected {
     background: var(--color-select-highlight);
+}
+
+.MenuItemWithInnerLabel {
+    gap: 10px;
+}
+
+.MenuItemWithInnerLabel .MenuItemLabel{
+    color: var(--color-gray-030);
 }

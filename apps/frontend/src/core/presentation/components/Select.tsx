@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Select as MuiSelect, SelectProps, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
+import { Select as MuiSelect, SelectProps, InputLabel, FormControl, SelectChangeEvent, MenuItem } from '@mui/material';
 import SvgArrowDown from '@mui/icons-material/ArrowDownward';
 import '../styles/select.css';
 
@@ -7,10 +7,11 @@ type Props = SelectProps & {
     className?: string;
     onChange?: (value: any) => (boolean | void);
     label?: string;
+    innerLabel?: string;
     readOnly?: boolean;
 }
 
-export default function Select({ className, margin, onChange, label, readOnly, ...props }: Props) {
+export default function Select({ className, margin, onChange, innerLabel, label, readOnly, ...props }: Props) {
 
     const [open, setOpen] = useState(false);
 
@@ -59,7 +60,6 @@ export default function Select({ className, margin, onChange, label, readOnly, .
     return (
         <div className = { `Select ${className}` }>
             <FormControl variant = 'standard' margin = { 'dense' }>
-
                 <InputLabel
                     error = { props.error }
                     variant = { 'standard' }

@@ -25,26 +25,26 @@ const theme02 = createTheme({
     },
 });
 
-export enum BUTTON_TYPE {
+export enum ButtonType {
     ROUNDED = 'contained',
     TEXT_INLINE = 'text',
 }
 
-export enum BUTTON_COLOR {
+export enum ButtonColor {
     SCHEME_1,
     SCHEME_2,
     SCHEME_3,
 }
 
 /* each member of the enum corresponds to a CSS class */
-export enum BUTTON_PADDING {
+export enum ButtonPadding {
     DEFAULT = '',
     PADDING_24 = 'Padding24',
     PADDING_48 = 'Padding48',
 }
 
 /* each member of the enum corresponds to a CSS class */
-export enum BUTTON_RADIUS {
+export enum ButtonRadius {
     DEFAULT = '',
     RADIUS_16 = 'Radius16',
     MAX = 'RadiusMax'
@@ -52,10 +52,10 @@ export enum BUTTON_RADIUS {
 
 type Props = {
     className?: string;
-    type?: BUTTON_TYPE;
-    color?: BUTTON_COLOR;
-    padding?: BUTTON_PADDING;
-    radius?: BUTTON_RADIUS;
+    type?: ButtonType;
+    color?: ButtonColor;
+    padding?: ButtonPadding;
+    radius?: ButtonRadius;
     disabled?: boolean;
     href?: string,
     target?: string;
@@ -66,10 +66,10 @@ export default function Button({ className, type, color, padding, radius, href, 
 
     function cssMuiClassColor() {
         switch (color) {
-            case BUTTON_COLOR.SCHEME_2:
+            case ButtonColor.SCHEME_2:
                 return 'secondary';
-            case BUTTON_COLOR.SCHEME_1:
-            case BUTTON_COLOR.SCHEME_3:
+            case ButtonColor.SCHEME_1:
+            case ButtonColor.SCHEME_3:
             default:
                 return 'primary';
         }
@@ -77,8 +77,8 @@ export default function Button({ className, type, color, padding, radius, href, 
 
     function muiTheme() {
         switch (color) {
-            case BUTTON_COLOR.SCHEME_1:
-            case BUTTON_COLOR.SCHEME_2:
+            case ButtonColor.SCHEME_1:
+            case ButtonColor.SCHEME_2:
                 return theme01;
             default:
                 return theme02;
@@ -106,10 +106,10 @@ export default function Button({ className, type, color, padding, radius, href, 
 
 Button.defaultProps = {
     className: '',
-    type: BUTTON_TYPE.ROUNDED,
-    color: BUTTON_COLOR.SCHEME_1,
-    padding: BUTTON_PADDING.DEFAULT,
-    radius: BUTTON_RADIUS.RADIUS_16,
+    type: ButtonType.ROUNDED,
+    color: ButtonColor.SCHEME_1,
+    padding: ButtonPadding.DEFAULT,
+    radius: ButtonRadius.RADIUS_16,
     disabled: false,
     href: undefined,
     target: undefined,

@@ -18,6 +18,7 @@
     --transition-duration: 0.4s;
     --item-spacing: 24px;
     --page-spacing-h: 70px;
+    --border-radius: 20px;
 
     /* theme */
     --color-input-text: #000;
@@ -54,6 +55,8 @@
     --color-checkbox-border-active:  var(--color-primary);  
 
     --color-modal-background: #fff;
+
+    --box-shadow: box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.05);
     /* theme */
 }
 

@@ -7,9 +7,10 @@ import ResellNftModalStore from '../stores/ResellNftModalStore';
 
 import ModalWindow from '../../../../core/presentation/components/ModalWindow';
 import Input, { InputType } from '../../../../core/presentation/components/Input';
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
 import Button from '../../../../core/presentation/components/Button';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
+import AnimationContainer from '../../../../core/presentation/components/AnimationContainer';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -33,7 +34,7 @@ function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
             className = { 'BuyNftPopup' }
             modalStore = { buyNftModalStore } >
 
-            <div className = { `Stage Preview FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(buyNftModalStore.isStagePreview())}` } >
+            <AnimationContainer className = { 'Stage Preview FlexColumn' } active = { buyNftModalStore.isStagePreview() } >
 
                 {buyNftModalStore.isStagePreview() && (
                     <>
@@ -59,15 +60,15 @@ function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
                             onChange={buyNftModalStore.setRecipient}
                             label={'Set Rewards Recepient Address'}
                             placeholder={'e.g bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'} />
-                        <Actions height={ACTIONS_HEIGHT.HEIGHT_48} layout={ACTIONS_LAYOUT.LAYOUT_COLUMN_FULL}>
+                        <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_COLUMN_FULL}>
                             <Button onClick={buyNftModalStore.buyNft}>Complete Purchase</Button>
                         </Actions>
                     </>
                 ) }
 
-            </div>
+            </AnimationContainer>
 
-            <div className = { `Stage Processing FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(buyNftModalStore.isStageProcessing())}` } >
+            <AnimationContainer className = { 'Stage Processing FlexColumn' } active = { buyNftModalStore.isStageProcessing() } >
 
                 { buyNftModalStore.isStageProcessing() && (
                     <>
@@ -79,9 +80,9 @@ function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
                     </>
                 ) }
 
-            </div>
+            </AnimationContainer>
 
-            <div className = { `Stage Success FlexColumn Transition ActiveVisibilityHidden ${S.CSS.getActiveClassName(buyNftModalStore.isStageSuccess())}` } >
+            <AnimationContainer className = { 'Stage Success FlexColumn' } active = { buyNftModalStore.isStageSuccess() } >
 
                 { buyNftModalStore.isStageSuccess() && (
                     <>
@@ -103,7 +104,7 @@ function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
                                 <Svg svg={LaunchIcon} />
                             </a>
                         </div>
-                        <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                        <Actions layout={ActionsLayout.LAYOUT_ROW_CENTER} height={ActionsHeight.HEIGHT_48}>
                             <Button onClick={onClickResellNft}>
                                 Resell NFT
                             </Button>
@@ -114,7 +115,7 @@ function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
                     </>
                 ) }
 
-            </div>
+            </AnimationContainer>
 
         </ModalWindow>
     )

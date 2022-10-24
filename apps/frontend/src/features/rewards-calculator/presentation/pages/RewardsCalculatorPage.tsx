@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
-import Actions, { ACTIONS_HEIGHT, ACTIONS_LAYOUT } from '../../../../core/presentation/components/Actions';
-import Button, { BUTTON_PADDING, BUTTON_TYPE } from '../../../../core/presentation/components/Button';
+import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
+import Button, { ButtonPadding, ButtonType } from '../../../../core/presentation/components/Button';
 import PageFooter from '../../../../features/footer/presentation/components/PageFooter';
 import PageHeader from '../../../header/presentation/components/PageHeader';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
@@ -64,11 +64,11 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
                 <div className={'RewardsCalculator'}>
                     <div className={'FlexRow RewardsCalculatorHeading'}>
                         <div className={'H2'}>Calculate Your Potential Rewards</div>
-                        <Actions height = { ACTIONS_HEIGHT.HEIGHT_48 }>
+                        <Actions height = { ActionsHeight.HEIGHT_48 }>
                             <Button
                                 onClick={onClickExploreNftAndBuy}
-                                padding={BUTTON_PADDING.PADDING_24}
-                                type={BUTTON_TYPE.ROUNDED}>
+                                padding={ButtonPadding.PADDING_24}
+                                type={ButtonType.ROUNDED}>
                                 Explore NFTs & Buy
                             </Button>
                         </Actions>
@@ -134,11 +134,11 @@ function RewardsCalculatorPage({ rewardsCalculatorStore }: Props) {
                                             </InputAdornment>,
                                         }} />
                                 </div>
-                                <Actions layout={ACTIONS_LAYOUT.LAYOUT_ROW_CENTER} height={ACTIONS_HEIGHT.HEIGHT_48}>
+                                <Actions layout={ActionsLayout.LAYOUT_ROW_CENTER} height={ActionsHeight.HEIGHT_48}>
                                     <Button
                                         disabled = { rewardsCalculatorStore.isDefault() }
                                         onClick={onClickResetValues}>
-                                        <Svg className = { 'ButtonSvg' } size = { SvgSize.CUSTOM } svg={SvgReplayIcon} />
+                                        <Svg size = { SvgSize.CUSTOM } svg={SvgReplayIcon} />
                                         Reset values
                                     </Button>
                                 </Actions>

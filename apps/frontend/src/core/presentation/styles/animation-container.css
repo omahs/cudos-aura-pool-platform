@@ -1,0 +1,8 @@
+.ActiveVisibilityHidden:not(.Active) {
+    opacity:0;
+    pointer-events:none;
+}
+
+.ActiveVisibilityHidden.Transition {
+    transition-property:opacity;
+}

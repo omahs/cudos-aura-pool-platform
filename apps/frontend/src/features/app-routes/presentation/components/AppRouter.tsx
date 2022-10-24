@@ -14,14 +14,20 @@ import ExploreCollectionsPage from '../../../collection/presentation/pages/Explo
 import ExploreMiningFarmsPage from '../../../mining-farm/presentation/pages/ExploreMiningFarmsPage';
 import UserProfilePage from '../../../accounts/presentation/pages/UserProfilePage';
 import NftViewPage from '../../../nft/presentation/pages/NftViewPage';
-import CollectionViewPage from '../../../collection/presentation/pages/CollectionViewPage';
-import MiningFarmViewPage from '../../../mining-farm/presentation/pages/MiningFarmViewPage';
+import CreditCollectionPage from '../../../collection/presentation/pages/CreditCollectionPage';
+import CreditMiningFarmPage from '../../../mining-farm/presentation/pages/CreditMiningFarmPage';
 
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import AdminPortalPage from '../../../accounts/presentation/pages/AdminPortalPage';
 
 import '../styles/app-router.css';
-import AddNftsToCollectionPage from '../../../collection/presentation/pages/AddNftsToCollectionPage';
+import LoginPage from '../../../accounts/presentation/pages/LoginPage';
+import RegisterPage from '../../../accounts/presentation/pages/RegisterPage';
+import SuperAdminApprovePage from '../../../accounts/presentation/pages/SuperAdminApprovePage';
+import BitcoinConfirmPage from '../../../accounts/presentation/pages/BitcoinConfirmPage';
+import CreditMiningFarmDetailsPage from '../../../mining-farm/presentation/pages/CreditMiningFarmDetailsPage';
+import MiningFarmAnalyticsPage from '../../../mining-farm/presentation/pages/MiningFarmAnalyticsPage';
+import CreditCollectionDetailsPage from '../../../collection/presentation/pages/CreditCollectionDetailsPage';
+import CreditCollectionNftsPage from '../../../collection/presentation/pages/CreditCollectionNftsPage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -46,6 +52,27 @@ function AppRouter({ accountSessionStore }: Props) {
         }
     }
 
+    function getIndexPage() {
+        if (accountSessionStore.isAdmin() === true) {
+            const adminEntity = accountSessionStore.adminEntity;
+            if (adminEntity.isBitcointAddressConfirmed() === false) {
+                return <BitcoinConfirmPage />
+            }
+
+            if (accountSessionStore.hasApprovedMiningFarm() === false) {
+                return <CreditMiningFarmDetailsPage />
+            }
+
+            return <CreditMiningFarmPage />;
+        }
+
+        if (accountSessionStore.isSuperAdmin() === true) {
+            return <SuperAdminApprovePage />;
+        }
+
+        return <MarketplacePage />;
+    }
+
     return (
         <div
             className={`AppRouter ${transitionStage}`}
@@ -57,24 +84,36 @@ function AppRouter({ accountSessionStore }: Props) {
 
             { accountSessionStore.isInited() === true && (
                 <Routes location = { displayLocation } >
-                    <Route index = { true } element = { <MarketplacePage /> } />
+                    <Route index = { true } element = { getIndexPage() } />
                     <Route path = { '*' } element = { <NotFoundPage /> } />
-                    <Route path = { AppRoutes.UiKIt } element = { <UiKitPage /> } />
+                    <Route path = { AppRoutes.UI_KIT } element = { <UiKitPage /> } />
                     <Route path = { AppRoutes.REWARDS_CALCULATOR } element = { <RewardsCalculatorPage /> } />
                     <Route path = { AppRoutes.MARKETPLACE } element = { <MarketplacePage /> } />
                     <Route path = { AppRoutes.EXPLORE_NFTS } element = { <ExploreNftsPage /> } />
                     <Route path = { AppRoutes.EXPLORE_COLLECTIONS } element = { <ExploreCollectionsPage /> } />
                     <Route path = { AppRoutes.EXPLORE_MINING_FARMS } element = { <ExploreMiningFarmsPage /> } />
+                    <Route path = { `${AppRoutes.VIEW_NFT}/:nftId` } element = { <NftViewPage /> } />
+                    <Route path = { `${AppRoutes.CREDIT_COLLECTION}/:collectionId` } element = { <CreditCollectionPage /> } />
+                    <Route path = { `${AppRoutes.CREDIT_MINING_FARM}/:farmId` } element = { <CreditMiningFarmPage /> } />
+
+                    {/* Auth */}
+                    <Route path = { AppRoutes.LOGIN } element = { <LoginPage /> } />
+                    <Route path = { AppRoutes.REGISTER } element = { <RegisterPage /> } />
+
+                    {/* profile */}
                     { accountSessionStore.isUser() === true && (
                         <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePage /> } />
                     ) }
-                    <Route path = { `${AppRoutes.NFT_VIEW}/:nftId` } element = { <NftViewPage /> } />
-                    <Route path = { `${AppRoutes.COLLECTION_VIEW}/:collectionId` } element = { <CollectionViewPage /> } />
-                    <Route path = { `${AppRoutes.MINING_FARM_VIEW}/:farmId` } element = { <MiningFarmViewPage /> } />
-                    { accountSessionStore.isAdmin() === true && (
-                        <Route path = { `${AppRoutes.ADD_NFTS_TO_COLLECTION}/:collectionId` } element = { <AddNftsToCollectionPage /> } />
+                    
+                    {/* admin */}
+                    { accountSessionStore.isAdmin() === true && accountSessionStore.hasApprovedMiningFarm() === true && (
+                        <>
+                            <Route path = { AppRoutes.CREDIT_MINING_FARM_DETAILS } element = { <CreditMiningFarmDetailsPage /> } />
+                            <Route path = { AppRoutes.MINING_FARM_ANALYTICS } element = { <MiningFarmAnalyticsPage /> } />
+                            <Route path = { `${AppRoutes.CREDIT_COLLECTION_NFTS}/:collectionId` } element = { <CreditCollectionNftsPage /> } />
+                            <Route path = { `${AppRoutes.CREDIT_COLLECTION_DETAILS}/:collectionId` } element = { <CreditCollectionDetailsPage /> } />
+                        </>
                     ) }
-                    <Route path = { AppRoutes.ADMIN_PORTAL } element = { <AdminPortalPage /> } />
                 </Routes>
             ) }
         </div>

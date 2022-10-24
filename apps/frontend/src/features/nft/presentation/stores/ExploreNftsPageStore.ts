@@ -1,7 +1,7 @@
 import GridViewState from '../../../../core/presentation/stores/GridViewState';
 import { makeAutoObservable, runInAction } from 'mobx';
 import NftEntity from '../../entities/NftEntity';
-import NftFilterModel from '../../utilities/NftFilterModel';
+import NftFilterModel, { NftHashPowerFilter, NftPriceSortDirection } from '../../utilities/NftFilterModel';
 import NftRepo from '../repos/NftRepo';
 import CollectionRepo from '../../../collection/presentation/repos/CollectionRepo';
 import CollectionEntity from '../../../collection/entities/CollectionEntity';
@@ -74,6 +74,16 @@ export default class ExploreNftsPageStore {
 
     onChangeSortKey = (sortKey: number) => {
         this.nftFilterModel.sortKey = sortKey;
+        this.fetch();
+    }
+
+    onChangeHashPowerFilter = (hashPowerFilter: NftHashPowerFilter) => {
+        this.nftFilterModel.hashPowerFilter = hashPowerFilter;
+        this.fetch();
+    }
+
+    onChangeSortPriceDirection = (sortPriceDirection: NftPriceSortDirection) => {
+        this.nftFilterModel.sortPriceDirection = sortPriceDirection;
         this.fetch();
     }
 

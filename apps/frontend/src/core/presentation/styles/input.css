@@ -21,6 +21,10 @@
     margin: 0 !important;
 }
 
+.Input .MuiFormLabel-root {
+    width: 100%;
+}
+
 .Input .MuiFormControl-root label + .MuiInputBase-formControl {
     margin-top: 24px;
 }

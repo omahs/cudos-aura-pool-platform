@@ -41,7 +41,7 @@ export default function TopCollections({ selectedTopCollectionPeriod, cudosPrice
                     return <div
                         key={index}
                         className={'CollectionPreview Clickable'}
-                        onClick={() => navigate(`${AppRoutes.COLLECTION_VIEW}/${collectionEntity.id}`)}
+                        onClick={() => navigate(`${AppRoutes.CREDIT_COLLECTION}/${collectionEntity.id}`)}
                     >
                         <div className={'PreviewIndex B2 Bold'}>{index + 1}</div>
                         <div
