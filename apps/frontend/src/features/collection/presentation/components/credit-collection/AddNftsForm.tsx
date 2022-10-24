@@ -16,6 +16,7 @@ import BitcoinStore from '../../../../bitcoin-data/presentation/stores/BitcoinSt
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import S from '../../../../../core/utilities/Main';
+import SingleDatepicker from '../../../../../core/presentation/components/SingleDatepicker';
 
 type Props = {
     onClickBack: () => void
@@ -136,12 +137,10 @@ function AddNftsForm({ onClickBack, creditCollectionStore, bitcoinStore }: Props
                 <div className={'InputInfoLabel'}>Maintenance fee calculation formula:</div>
                 <div className={'FormulaBox B2 Bold'}>{'[This NFT EH/s] / [Total EH/s] * [Maintenance fee]'}</div>
             </div>
-            <Input
+            <SingleDatepicker
                 label={<TextWithTooltip text={'Valid Until'} tooltipText={'BTC rewards will be paid to the NFT holder until this date.'} />}
-                placeholder={'Enter valid date...'}
-                value={creditCollectionStore.getSelectedNftExpirationDateDisplay()}
-                onChange={creditCollectionStore.onChangeSelectedNftExpirationDate}
-            />
+                selected = { creditCollectionStore.getSelectedNftExpirationDateDisplay() }
+                onChange = { creditCollectionStore.onChangeSelectedNftExpirationDate } />
             <Actions layout={ActionsLayout.LAYOUT_ROW_ENDS} className={'ButtonsRow'}>
                 <Button type={ButtonType.TEXT_INLINE} onClick={onClickBack}>
                     <Svg svg={ArrowBackIcon} />

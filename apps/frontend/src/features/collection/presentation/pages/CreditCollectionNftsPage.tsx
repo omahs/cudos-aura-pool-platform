@@ -27,7 +27,6 @@ function CreditCollectionNftsPage({ appStore, creditCollectionNftsPageStore }: P
         })
     }, []);
 
-    // TODO: get crumbs from router
     const crumbs = [
         { name: 'My Collections', onClick: () => { navigate(AppRoutes.USER_PROFILE) } },
         { name: 'Create Collection' },

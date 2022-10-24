@@ -154,18 +154,16 @@ export default class CreditCollectionNftsPageStore {
         return this.selectedNftEntity.maintenanceFee.toString();
     }
 
-    onChangeSelectedNftExpirationDate = (expirationDate: string) => {
-        // TODO: parse date
-        this.selectedNftEntity.expiryDate = Date.now();
+    onChangeSelectedNftExpirationDate = (expirationDate: number) => {
+        this.selectedNftEntity.expiryDate = expirationDate;
     }
 
     onClickEditNft = (nftEntityId: string) => {
         this.selectedNftEntity = this.nftEntities.find((nftEntity: NftEntity) => nftEntity.id === nftEntityId).cloneDeep();
     }
 
-    // TODO: implement
     onClickSendForApproval = async () => {
-        return null;
+        await this.collectionRepo.creditCollection(this.collectionEntity, this.addedOrEdittedNftEntities);
     }
 
     onClickDeleteNft = (nftEntityId: string) => {

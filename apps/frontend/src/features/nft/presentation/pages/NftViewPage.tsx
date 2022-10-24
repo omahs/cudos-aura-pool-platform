@@ -26,8 +26,11 @@ import DataGridLayout from '../../../../core/presentation/components/DataGridLay
 import NftPreview from '../components/NftPreview';
 import GridView from '../../../../core/presentation/components/GridView';
 
-import SvgCudos from '../../../../public/assets/vectors/cudos-logo.svg';
+import SvgCudos from '../../../../core/presentation/vectors/cudos-logo.svg';
 import '../styles/page-nft-view-component.css';
+import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
+import DataPreviewLayout, { createDataPreview, DataRowsGap } from '../../../../core/presentation/components/DataPreviewLayout';
+import { ContainerBackground } from '../../../../core/presentation/components/BorderShadowPaddingContainer';
 
 type Props = {
     walletStore?: WalletStore;
@@ -43,7 +46,6 @@ function NftViewPage({ walletStore, viewNftPageStore, buyNftModalStore, resellNf
 
     const nftEntity = viewNftPageStore.nftEntity;
     const collectionEntity = viewNftPageStore.collectionEntity;
-    const miningFarmEntity = viewNftPageStore.miningFarm;
 
     // TODO: get crumbs from router
     const crumbs = [
@@ -71,6 +73,57 @@ function NftViewPage({ walletStore, viewNftPageStore, buyNftModalStore, resellNf
         resellNftModalStore.showSignal(nftEntity, viewNftPageStore.cudosPrice, collectionEntity.name);
     }
 
+    function getGeneralDataPreviews() {
+        const generalDatapreviews = [];
+
+        generalDatapreviews.push(createDataPreview('Listing Status', nftEntity.listingStatus === S.INT_TRUE ? 'Active' : 'Not Listed'));
+        generalDatapreviews.push(createDataPreview('Sining Farm', nftEntity.name));
+        generalDatapreviews.push(createDataPreview('Collection', collectionEntity.name));
+        generalDatapreviews.push(createDataPreview('Expiry', nftEntity.getExpiryDisplay()));
+
+        return generalDatapreviews;
+    }
+
+    function getProfitDataPreviews() {
+        const profitDatapreviews = [];
+
+        profitDatapreviews.push(createDataPreview('Hashing Power', nftEntity.getHashPowerDisplay()));
+        profitDatapreviews.push(createDataPreview(
+            'Estimated Profit per Day',
+            <div className={'DataValue FlexRow'}>
+                0.002 BTC
+                <div className={'SubPrice'}>${(0.002 * viewNftPageStore.bitcoinPrice).toFixed(2)}</div>
+            </div>,
+        ));
+        profitDatapreviews.push(createDataPreview(
+            'Estimated Profit per Week',
+            <div className={'DataValue FlexRow'}>
+                0.014 BTC
+                <div className={'SubPrice'}>${(0.014 * viewNftPageStore.bitcoinPrice).toFixed(2)}</div>
+            </div>,
+        ));
+        profitDatapreviews.push(createDataPreview('Estimated Profit per Month', '2K'));
+        profitDatapreviews.push(createDataPreview('Estimated Profit per Year', '735'));
+
+        return profitDatapreviews;
+    }
+
+    function getPriceDataPreviews() {
+        const priceDatapreviews = [];
+
+        priceDatapreviews.push(createDataPreview('Blockchain', CHAIN_DETAILS.CHAIN_NAME[walletStore.selectedNetwork]));
+        priceDatapreviews.push(createDataPreview(
+            'Price',
+            <div className={'DataValue NftPrice FlexRow'}>
+                <Svg svg={SvgCudos}/>
+                <div className={'H3 Bold'}>{nftEntity.price.toFixed(0)} CUDOS</div>
+                <div className={'SubPrice B2 SemiBold'}>{viewNftPageStore.getNftPriceText()}</div>
+            </div>,
+        ));
+
+        return priceDatapreviews;
+    }
+
     return (
         <PageLayoutComponent
             className = { 'PageNftView' }
@@ -96,24 +149,11 @@ function NftViewPage({ walletStore, viewNftPageStore, buyNftModalStore, resellNf
                                     style={{
                                         backgroundImage: `url("${nftEntity.imageUrl}")`,
                                     }} />
-                                <div className={'BorderContainer DataUnderPicture FlexColumn B1 SemiBolc'}>
-                                    <div className={'DataRow FlexRow'}>
-                                        <div className={'DataLabel'}>Listing Status</div>
-                                        <div className={'DataValue'}>{nftEntity.listingStatus === S.INT_TRUE ? 'Active' : 'Not Listed'}</div>
-                                    </div>
-                                    <div className={'DataRow FlexRow'}>
-                                        <div className={'DataLabel'}>MBuy now for {nftEntity.price.toFixed(0)} CUDOSining Farm</div>
-                                        <div className={'DataValue'}>{miningFarmEntity.name}</div>
-                                    </div>
-                                    <div className={'DataRow FlexRow'}>
-                                        <div className={'DataLabel'}>Collection</div>
-                                        <div className={'DataValue'}>{collectionEntity.name}</div>
-                                    </div>
-                                    <div className={'DataRow FlexRow'}>
-                                        <div className={'DataLabel'}>Expiry</div>
-                                        <div className={'DataValue'}>{nftEntity.getExpiryDisplay()}</div>
-                                    </div>
-                                </div>
+                                <DataPreviewLayout
+                                    dataPreviews={getGeneralDataPreviews()}
+                                    gap={DataRowsGap.GAP_25}
+                                    containerBackground={ContainerBackground.GRAY}
+                                />
                             </div>
                             <div className={'H2 Bold'}>Description</div>
                             <div className={'Description B1'}>{collectionEntity.description}</div>
@@ -138,53 +178,16 @@ function NftViewPage({ walletStore, viewNftPageStore, buyNftModalStore, resellNf
                                     </div>
                                 </div>
                             </div>
-                            <div className={'BorderContainer FlexColumn B1 SemiBold'}>
-                                <div className={'DataRow FlexRow'}>
-                                    <div className={'DataLabel'}>Hashing Power</div>
-                                    {/* TODO: hash power denomination */}
-                                    <div className={'DataValue'}>{nftEntity.hashPower} EH/s</div>
-                                </div>
-                                <div className={'DataRow FlexRow'}>
-                                    {/* TODO: real estimations how? */}
-                                    <div className={'DataLabel'}>Estimated Profit per Day</div>
-                                    <div className={'DataValue FlexRow'}>
-                                    0.002 BTC
-                                        <div className={'SubPrice'}>${(0.002 * viewNftPageStore.bitcoinPrice).toFixed(2)}</div></div>
-                                </div>
-                                <div className={'DataRow FlexRow'}>
-                                    <div className={'DataLabel'}>Estimated Profit per Week</div>
-                                    <div className={'DataValue FlexRow'}>
-                                    0.014 BTC
-                                        <div className={'SubPrice'}>${(0.014 * viewNftPageStore.bitcoinPrice).toFixed(2)}</div></div>
-                                </div>
-                                <div className={'DataRow FlexRow'}>
-                                    <div className={'DataLabel'}>Estimated Profit per Month</div>
-                                    <div className={'DataValue'}>2K</div>
-                                </div>
-                                <div className={'DataRow FlexRow'}>
-                                    <div className={'DataLabel'}>Estimated Profit per Year</div>
-                                    <div className={'DataValue'}>735</div>
-                                </div>
-                            </div>
+                            <DataPreviewLayout dataPreviews={getProfitDataPreviews()}/>
                             <div className={'FlexRow CalculateRewardsNav'}>
                                 <div className={'B3'}>You can calculate your rewards in our dynamic Calculator</div>
                                 <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_RIGHT}>
                                     <Button onClick={onClickCalculateRewards}>Calculate Rewards</Button>
                                 </Actions>
                             </div>
-                            <div className={'BorderContainer FlexColumn B1 SemiBold'}>
-                                <div className={'DataRow FlexRow'}>
-                                    <div className={'DataLabel'}>Blockchain</div>
-                                    <div className={'DataValue'}>CUDOS</div>
-                                </div>
-                                <div className={'DataRow FlexRow'}>
-                                    <div className={'DataLabel'}>Price</div>
-                                    <div className={'DataValue NftPrice FlexRow'}>
-                                        <Svg svg={SvgCudos}/>
-                                        <div className={'H3 Bold'}>{nftEntity.price.toFixed(0)} CUDOS</div>
-                                        <div className={'SubPrice B2 SemiBold'}>{viewNftPageStore.getNftPriceText()}</div>
-                                    </div>
-                                </div>
+                            <DataPreviewLayout
+                                dataPreviews={getPriceDataPreviews()}
+                            >
                                 { walletStore.isConnected() && (
                                     <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_COLUMN_FULL}>
                                         { viewNftPageStore.isNftListed() === true && (
@@ -195,7 +198,7 @@ function NftViewPage({ walletStore, viewNftPageStore, buyNftModalStore, resellNf
                                         ) }
                                     </Actions>
                                 ) }
-                            </div>
+                            </DataPreviewLayout>
                         </div>
                     </div>
                     <div className={'HorizontalSeparator'}/>

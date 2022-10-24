@@ -28,13 +28,16 @@ import AddIcon from '@mui/icons-material/Add';
 
 import '../styles/page-collection-credit-component.css';
 import CreditCollectionPageStore from '../stores/CreditCollectionPageStore';
+import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
+import WalletStore from '../../../ledger/presentation/stores/WalletStore';
 
 type Props = {
+    walletStore?: WalletStore
     creditCollectionPageStore?: CreditCollectionPageStore
     accountSessionStore?: AccountSessionStore
 }
 
-function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }: Props) {
+function CreditCollectionPage({ creditCollectionPageStore, accountSessionStore, walletStore }: Props) {
     const collectionEntity = creditCollectionPageStore.collectionEntity;
     const miningFarmEntity = creditCollectionPageStore.miningFarmEntity;
     const nftFilterModel = creditCollectionPageStore.nftFilterModel;
@@ -49,7 +52,6 @@ function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }
         run();
     }, []);
 
-    // TODO: get crumbs from router
     const crumbs = [
         { name: 'Marketplace', onClick: () => { navigate(AppRoutes.MARKETPLACE) } },
         { name: 'Collection Details', onClick: () => {} },
@@ -69,7 +71,7 @@ function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }
     }
 
     function onClickAddMoreNfts() {
-        navigate(`${AppRoutes.ADD_NFTS_TO_COLLECTION}/${collectionEntity.id}`);
+        navigate(`${AppRoutes.CREDIT_COLLECTION_NFTS}/${collectionEntity.id}`);
     }
 
     return (
@@ -91,7 +93,6 @@ function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }
                             <div className={'Clickable'} onClick={onClickFarmLink}>Farm Owner:  <b>{miningFarmEntity.name}</b></div>
                             <div className={'CollectionDescription'}>{collectionEntity.description}</div>
                         </div>
-                        {/* // TODO: fill correct values */}
                         <div className={'FlexColumn InfoBox'}>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Floor</div>
@@ -116,7 +117,7 @@ function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }
                             <div className={'HorizontalSeparator'}></div>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Blockchain</div>
-                                <div className={'CollectionInfoValue'}>CUDOS</div>
+                                <div className={'CollectionInfoValue'}>{CHAIN_DETAILS.CHAIN_NAME[walletStore.selectedNetwork]}</div>
                             </div>
                             <div className={'FlexRow CollectionInfoRow'}>
                                 <div className={'CollectionInfoLabel'}>Address</div>
@@ -191,4 +192,4 @@ function creditCollectionPage({ creditCollectionPageStore, accountSessionStore }
     )
 }
 
-export default inject((stores) => stores)(observer(creditCollectionPage));
+export default inject((stores) => stores)(observer(CreditCollectionPage));

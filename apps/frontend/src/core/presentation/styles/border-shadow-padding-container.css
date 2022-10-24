@@ -15,7 +15,7 @@
 
 .BorderShadowPaddingContainer.WidthLarge {
     width: 100%;
-    flex: 1 1 auto;
+    /* flex: 1 1 auto; STRETCHES IT VERTICALLY WHEN IN FLEX COLUMN */
 }
 
 .BorderShadowPaddingContainer.BgWhite {

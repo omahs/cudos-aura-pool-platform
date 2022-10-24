@@ -15,12 +15,10 @@ export default class CollectionStorageRepo implements CollectionRepo {
     }
 
     async fetchCategories(): Promise < CategoryEntity[] > {
-        // TODO: get categories from
         return this.storageHelper.categoriesJson.map((json) => CategoryEntity.fromJson(json));
     }
 
     async fetchTopCollections(period: number): Promise < CollectionEntity[] > {
-        // TODO: get collectionEntities
         const collectionEntities = this.storageHelper.collectionsJson.slice(0, 18).map((json) => CollectionEntity.fromJson(json));
 
         return collectionEntities;

@@ -23,20 +23,6 @@
     border-radius: 16px;
 }
 
-.PageNftView .PageContent .LeftLayout .PaddingColumn .DataUnderPicture {
-    gap: 23px;
-    background: var(--color-gray-095);
-}
-
-.PageNftView .PageContent .LeftLayout .PaddingColumn .DataUnderPicture .DataRow {
-    justify-content: space-between;
-}
-
-.PageNftView .PageContent .LeftLayout .PaddingColumn .DataUnderPicture .DataRow .DataValue {
-    text-align: right;
-    font-weight: 600; font-size: 16px;
-}
-
 .PageNftView .PageContent .RightLayout {
     align-items: left;
     gap: 24px;
@@ -85,7 +71,7 @@
     justify-content: space-between;
 }
 
-.PageNftView .PageContent .RightLayout .BorderContainer .DataRow .DataValue{
+.PageNftView .PageContent .RightLayout .DataValue{
     gap: 15px;
     font-weight: 600; font-size: 16px;
 }

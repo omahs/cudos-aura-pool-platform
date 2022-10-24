@@ -176,14 +176,13 @@ function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSu
     }
 
     function Finish() {
-        console.log(isOriginAddNfts);
         return (
             <>
                 <div className={`${isOriginAddNfts === false ? 'Grid' : 'FlexColumn'} FormAndPreviewContainer`}>
                     <div className={'FormContainer FlexColumn'}>
                         <NavRow className={'FormNav'} navSteps={navSteps} />
                         <FinishCreditCollection
-                            hashingPower={collectionEntity.hashPower}
+                            hashingPower={collectionEntity.hashRateDisplay()}
                             addedNftCount={creditCollectionStore.getAddedNftCount()}
                             isOriginAddNfts={isOriginAddNfts}
                             onClickBack={() => setStep(CreditCollectionDetailsSteps.ADD_NFTS)}

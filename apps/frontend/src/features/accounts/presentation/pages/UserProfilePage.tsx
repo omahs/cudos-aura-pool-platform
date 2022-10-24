@@ -101,7 +101,6 @@ function UserProfilePage({ appStore, bitcoinStore, userProfilePageStore, account
                                     <Actions
                                         layout={ActionsLayout.LAYOUT_ROW_RIGHT}
                                         height={ActionsHeight.HEIGHT_48} >
-                                        {/* TODO: show all filters */}
                                         <Button
                                             padding={ButtonPadding.PADDING_24}
                                             type={ButtonType.ROUNDED} >
