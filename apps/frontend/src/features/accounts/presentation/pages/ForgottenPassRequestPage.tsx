@@ -8,7 +8,7 @@ import AlertStore from '../../../../core/presentation/stores/AlertStore';
 
 import { InputAdornment } from '@mui/material';
 import Input from '../../../../core/presentation/components/Input';
-import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
+import Svg from '../../../../core/presentation/components/Svg';
 import Button, { ButtonType } from '../../../../core/presentation/components/Button';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
@@ -91,12 +91,8 @@ function ForgottenPassRequestPage({ alertStore, accountSessionStore }: Props) {
         return (
             <>
                 <AuthBlockLayout
-                    title = { (
-                        <div className = { 'FlexRow' }>
-                            <Svg className = { 'IconEmail' } size = { SvgSize.CUSTOM } svg = { MailOutlineIcon } />
-                            Check your email
-                        </div>
-                    ) }
+                    confirmationTitle = { 'Check your email' }
+                    confirmationTitleSvg = { MailOutlineIcon }
                     subtitle = { 'We send you link where you can set your new password' }
                     content = { (
                         <Input

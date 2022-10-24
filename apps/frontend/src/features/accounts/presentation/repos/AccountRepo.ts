@@ -11,6 +11,7 @@ export default interface AccountRepo {
     confirmBitcoinAddress(): Promise < void >;
     changePassword(token: string, accountId: string, oldPassword: string, newPassword: string): Promise < void > ;
     forgottenPassword(email: string): Promise < void >
+    sendVerificationEmail(): Promise < void >
     fetchSessionAccounts(): Promise < { accountEntity: AccountEntity, userEntity: UserEntity, adminEntity: AdminEntity, superAdminEntity: SuperAdminEntity } >;
 
 }

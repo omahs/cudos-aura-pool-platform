@@ -6,6 +6,12 @@
     margin-bottom: 16px;
 }
 
+.AuthBlockLayout .Title .IconConfirmationTitle {
+    width: 28px; height: 28px;
+    flex: 0 0 auto;
+    margin-right: 10px;
+}
+
 .AuthBlockLayout .Subtitle {
     color: var(--color-gray-025);
     font-size: 16px;

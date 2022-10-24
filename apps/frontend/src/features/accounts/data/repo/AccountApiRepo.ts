@@ -37,6 +37,10 @@ export default class AccountStorageRepo implements AccountRepo {
         return this.accountApi.forgottenPassword(email);
     }
 
+    async sendVerificationEmail(): Promise < void > {
+        return this.accountApi.sendVerificationEmail();
+    }
+
     async fetchSessionAccounts(): Promise < { accountEntity: AccountEntity; userEntity: UserEntity; adminEntity: AdminEntity; superAdminEntity: SuperAdminEntity; } > {
         return this.accountApi.fetchSessionAccounts();
     }

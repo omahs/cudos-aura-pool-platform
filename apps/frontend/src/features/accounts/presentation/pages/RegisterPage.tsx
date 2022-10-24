@@ -225,7 +225,8 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
         async function onClickCreateAccount() {
             // prepare a signed tx for register
             await accountSessionStore.register(email, password, name, cudosWalletAddress, '');
-            navigate(AppRoutes.LOGIN);
+            await accountSessionStore.login(email, password, cudosWalletAddress, '');
+            navigate(AppRoutes.HOME);
         }
 
         return (
@@ -256,7 +257,7 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
                             </Button>
                         </Actions>
                         <Actions className = { 'StartRight' } >
-                            <Button disabled = { personalInfo === S.INT_FALSE }>Create Account</Button>
+                            <Button disabled = { personalInfo === S.INT_FALSE } onClick = { onClickCreateAccount }>Create Account</Button>
                         </Actions>
                     </div>
                 ) } />
