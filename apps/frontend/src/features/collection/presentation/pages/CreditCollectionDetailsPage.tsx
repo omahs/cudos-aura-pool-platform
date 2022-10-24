@@ -7,7 +7,7 @@ import PageAdminHeader from '../../../header/presentation/components/PageAdminHe
 
 import '../styles/page-credit-collection-details-page.css';
 import BorderShadowPaddingContainer from '../../../../core/presentation/components/BorderShadowPaddingContainer';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import CollectionDetailsForm from '../components/credit-collection/CollectionDetailsForm';
@@ -40,7 +40,10 @@ type Props = {
 
 function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSuccessModalStore, appStore, bitcoinStore }: Props) {
     const { collectionId } = useParams();
-    const [step, setStep] = useState(CreditCollectionDetailsSteps.ADD_NFTS);
+    const location = useLocation();
+
+    const isOriginAddNfts = location.pathname.includes(AppRoutes.CREDIT_COLLECTION_NFTS);
+    const [step, setStep] = useState(isOriginAddNfts === false ? CreditCollectionDetailsSteps.COLLECTION_DETAILS : CreditCollectionDetailsSteps.ADD_NFTS);
     const collectionEntity = creditCollectionStore.collectionEntity;
 
     useEffect(() => {
@@ -57,30 +60,41 @@ function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSu
         { name: 'Create Collection' },
     ]
 
-    const navSteps = [
-        {
-            navNumber: 1,
-            navName: 'Collection Details',
-            isActive: step === CreditCollectionDetailsSteps.COLLECTION_DETAILS,
-        },
-        {
-            navNumber: 2,
-            navName: 'Add NFTs',
-            isActive: step === CreditCollectionDetailsSteps.ADD_NFTS,
-        },
-        {
-            navNumber: 3,
-            navName: 'Finish',
-            isActive: step === CreditCollectionDetailsSteps.FINISH,
-        },
-    ]
+    const navSteps = isOriginAddNfts === false
+        ? [
+            {
+                navNumber: 1,
+                navName: 'Collection Details',
+                isActive: step === CreditCollectionDetailsSteps.COLLECTION_DETAILS,
+            },
+            {
+                navNumber: 2,
+                navName: 'Add NFTs',
+                isActive: step === CreditCollectionDetailsSteps.ADD_NFTS,
+            },
+            {
+                navNumber: 3,
+                navName: 'Finish',
+                isActive: step === CreditCollectionDetailsSteps.FINISH,
+            },
+        ]
+        : [
+            {
+                navNumber: 1,
+                navName: 'Add NFTs',
+                isActive: step === CreditCollectionDetailsSteps.ADD_NFTS,
+            },
+            {
+                navNumber: 2,
+                navName: 'Finish',
+                isActive: step === CreditCollectionDetailsSteps.FINISH,
+            },
+        ]
 
     async function onClickSendForApproval() {
         await creditCollectionStore.onClickSendForApproval();
         creditCollectionSuccessModalStore.showSignal();
     }
-
-    creditCollectionSuccessModalStore.showSignal();
 
     return (
         <PageLayoutComponent
@@ -95,7 +109,7 @@ function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSu
 
             <div className = { 'PageContent AppContent' } >
                 <Breadcrumbs crumbs={crumbs} />
-                <BorderShadowPaddingContainer>
+                <BorderShadowPaddingContainer className={'FlexColumn BorderContainer'}>
                     {collectionEntity !== null
                         && (<>
                             {step === CreditCollectionDetailsSteps.COLLECTION_DETAILS && (
@@ -137,7 +151,7 @@ function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSu
                     <div className={'FormContainer FlexColumn'}>
                         <NavRow className={'FormNav'} navSteps={navSteps} />
                         <AddNftsForm
-                            onClickBack={() => setStep(CreditCollectionDetailsSteps.COLLECTION_DETAILS)}/>
+                            onClickBack={isOriginAddNfts === true ? () => setStep(CreditCollectionDetailsSteps.COLLECTION_DETAILS) : () => navigate(-1)}/>
                     </div>
                     <div className={'PreviewAndFinishContainer FlexColumn'}>
                         <div className={'PreviewContainer'}>
@@ -162,17 +176,21 @@ function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSu
     }
 
     function Finish() {
+        console.log(isOriginAddNfts);
         return (
             <>
-                <div className={'Grid FormAndPreviewContainer'}>
+                <div className={`${isOriginAddNfts === false ? 'Grid' : 'FlexColumn'} FormAndPreviewContainer`}>
                     <div className={'FormContainer FlexColumn'}>
                         <NavRow className={'FormNav'} navSteps={navSteps} />
                         <FinishCreditCollection
+                            hashingPower={collectionEntity.hashPower}
+                            addedNftCount={creditCollectionStore.getAddedNftCount()}
+                            isOriginAddNfts={isOriginAddNfts}
                             onClickBack={() => setStep(CreditCollectionDetailsSteps.ADD_NFTS)}
                             onClickSendForApproval={onClickSendForApproval}
                         />
                     </div>
-                    <CollectionCreditSidePreview size={CollectionCreditSidePreviewSize.FULL}/>
+                    {isOriginAddNfts === false && (<CollectionCreditSidePreview />)}
                 </div>
             </>
         )

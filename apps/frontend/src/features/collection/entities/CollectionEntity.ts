@@ -124,4 +124,16 @@ export default class CollectionEntity {
 
         return `$${this.price.multipliedBy(cudosInUsd).toFixed(1)}K`
     }
+
+    getMaintenanceFeesDisplay(): string {
+        const fees = this.maintenanceFees.eq(new BigNumber(S.NOT_EXISTS)) === true ? new BigNumber(0) : this.maintenanceFees;
+
+        return fees.toFixed(2);
+    }
+
+    getRoyaltiesDisplay(): string {
+        const royalties = this.royalties === S.NOT_EXISTS ? 0 : this.maintenanceFees;
+
+        return royalties.toFixed(2);
+    }
 }
