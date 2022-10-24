@@ -11,6 +11,13 @@ export type NavStep = {
     navNumber: number;
     navName: string;
     isActive: boolean;
+    isDone: boolean,
+}
+
+export function createNavStep(navNumber: number, navName: string, isActive: boolean, isDone: boolean) {
+    return {
+        navNumber, navName, isActive, isDone,
+    }
 }
 
 export default function NavRow({ className, navSteps }: Props) {
@@ -21,7 +28,9 @@ export default function NavRow({ className, navSteps }: Props) {
                     key={navStep.navNumber}
                     className={`FlexColumn NavItem ${S.CSS.getActiveClassName(navStep.isActive === true)}`}>
                     <div className={'NavNumber B3 FlexRow'}>{navStep.navNumber}</div>
-                    <div className={'B3 SemiBold'}>{navStep.navName}</div>
+                    <div className={'NavName B3 SemiBold'}>
+                        <div>{navStep.navName}</div>
+                    </div>
                 </div>)
             })}
             <div className={'HorizontalSeparator'} />

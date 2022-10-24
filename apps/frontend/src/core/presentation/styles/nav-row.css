@@ -20,6 +20,12 @@
     z-index: 2;
 }
 
+.NavBar .NavItem .NavName {
+    width: 0;
+    display: flex; justify-content: center;
+    white-space: nowrap;
+}
+
 .NavBar .NavItem.Active {
     color: #000;
 }
