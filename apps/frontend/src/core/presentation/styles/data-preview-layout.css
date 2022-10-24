@@ -1,9 +1,10 @@
 .DataPreviewLayout .DataPreviewKey {
     color: var(--color-gray-025);
+    white-space: nowrap;
     margin-right: 16px;
 }
 
 .DataPreviewLayout .DataPreviewValue {
     text-align: right;
-    align-self: flex-end;
+    margin-left: auto;
 }

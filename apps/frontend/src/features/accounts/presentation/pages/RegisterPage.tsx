@@ -256,7 +256,7 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
                             </Button>
                         </Actions>
                         <Actions className = { 'StartRight' } >
-                            <Button>Create Account</Button>
+                            <Button disabled = { personalInfo === S.INT_FALSE }>Create Account</Button>
                         </Actions>
                     </div>
                 ) } />
