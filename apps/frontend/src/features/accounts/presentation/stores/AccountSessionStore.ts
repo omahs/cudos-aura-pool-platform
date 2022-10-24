@@ -128,6 +128,10 @@ export default class AccountSessionStore {
         await this.accountRepo.sendVerificationEmail();
     }
 
+    async creditAdminSettings(adminEntity: AdminEntity, accountEntity: AccountEntity): Promise < void > {
+        await this.accountRepo.creditAdminSettings(adminEntity, accountEntity);
+    }
+
     async loadSessionAccountsAndSync() {
         const { accountEntity, userEntity, adminEntity, superAdminEntity } = await this.accountRepo.fetchSessionAccounts();
         runInAction(() => {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/border-shadow-padding-container.css';
+import '../styles/styled-container.css';
 
 export enum ContainerWidth {
     SMALL = 'WidthSmall',
