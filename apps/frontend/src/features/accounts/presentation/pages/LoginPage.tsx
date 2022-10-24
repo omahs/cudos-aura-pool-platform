@@ -9,13 +9,12 @@ import AlertStore from '../../../../core/presentation/stores/AlertStore';
 import { InputAdornment } from '@mui/material';
 import Input from '../../../../core/presentation/components/Input';
 import Svg from '../../../../core/presentation/components/Svg';
-import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
-import Button from '../../../../core/presentation/components/Button';
+import Button, { ButtonType } from '../../../../core/presentation/components/Button';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import PageAdminHeader from '../../../header/presentation/components/PageAdminHeader';
-import BorderShadowPaddingContainer, { ContainerWidth } from '../../../../core/presentation/components/BorderShadowPaddingContainer';
+import AuthBlockLayout from '../components/AuthBlockLayout';
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -35,7 +34,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
     const [showPassword, setShowPassword] = useState(false);
 
     function onClickForgottenPassword() {
-
+        navigate(AppRoutes.FORGOTTEN_PASS_REQUEST);
     }
 
     function onClickRegister() {
@@ -65,48 +64,49 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
 
             <div className = { 'PageContent AppContent' } >
 
-                <BorderShadowPaddingContainer containerWidth = { ContainerWidth.SMALL } >
-                    <div className={'Title H2 Bold'}>Log in</div>
-                    <div className={'Subtitle'}>Fill your credentials in order to access your account</div>
-
-                    <div className = { 'InputsCnt' } >
-                        <Input
-                            label={'Email'}
-                            placeholder={'Email'}
-                            InputProps={{
-                                endAdornment: <InputAdornment position="end" >
-                                    <Svg svg={AlternateEmailIcon}/>
-                                </InputAdornment>,
-                            }}
-                            value={email}
-                            onChange={setEmail} />
-                        <Input
-                            label={'Password'}
-                            placeholder={'Password'}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end" >
-                                        <Svg className={'Clickable'} svg={showPassword === false ? VisibilityOffIcon : VisibilityIcon} onClick={onClickShowPassword}/>
-                                    </InputAdornment>
-                                ),
-                            }}
-                            value={password}
-                            onChange={setPassword}
-                            type={showPassword === false ? 'password' : 'text'} />
-                    </div>
-
-                    <div className={'ForgottenPassword B2 SemiBold Clickable'} onClick={onClickForgottenPassword}>Forgotten Password?</div>
-
-                    <Actions className = { 'LoginActions' } layout={ActionsLayout.LAYOUT_COLUMN_FULL} height={ActionsHeight.HEIGHT_48}>
-                        <Button onClick={onClickLogin}>
-                            {logging === true ? <LoadingIndicator /> : 'Login'}
-                        </Button>
-                    </Actions>
-
-                    <div className={'BottomAction B2 Clickable'} onClick={onClickRegister}>
-                        You don’t have account? <span className = { 'Bold' }>Request Admin Account</span>
-                    </div>
-                </BorderShadowPaddingContainer>
+                <AuthBlockLayout
+                    title = { 'Log in' }
+                    subtitle = { 'Fill your credentials in order to access your account' }
+                    inputs = { (
+                        <>
+                            <Input
+                                label={'Email'}
+                                placeholder={'Email'}
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="end" >
+                                        <Svg svg={AlternateEmailIcon}/>
+                                    </InputAdornment>,
+                                }}
+                                value={email}
+                                onChange={setEmail} />
+                            <Input
+                                label={'Password'}
+                                placeholder={'Password'}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end" >
+                                            <Svg className={'Clickable'} svg={showPassword === false ? VisibilityOffIcon : VisibilityIcon} onClick={onClickShowPassword}/>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                value={password}
+                                onChange={setPassword}
+                                type={showPassword === false ? 'password' : 'text'} />
+                        </>
+                    ) }
+                    subInputsAction = { (
+                        <div className={'B2 SemiBold Clickable'} onClick={onClickForgottenPassword}>Forgotten Password?</div>
+                    ) }
+                    actions = { (
+                        <>
+                            <Button onClick={ logging === true ? null : onClickLogin } >
+                                {logging === true ? <LoadingIndicator /> : 'Login'}
+                            </Button>
+                            <Button type = { ButtonType.TEXT_INLINE } onClick={ onClickRegister } >
+                                <span className = { 'Regular' } > You don’t have account?</span>&nbsp;Request Admin Account
+                            </Button>
+                        </>
+                    ) } />
 
             </div>
 
