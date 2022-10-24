@@ -31,6 +31,7 @@ export default class CreditCollectionNftsPageStore {
 
     collectionEntity: CollectionEntity;
     nftEntities: NftEntity[];
+    addedOrEdittedNftEntities: NftEntity[];
     selectedNftEntity: NftEntity;
 
     defaultHashAndPriceValues: number;
@@ -56,6 +57,7 @@ export default class CreditCollectionNftsPageStore {
     nullate() {
         this.collectionEntity = null;
         this.nftEntities = [];
+        this.addedOrEdittedNftEntities = [];
         this.selectedNftEntity = null;
         this.tempIdGenerator = null;
 
@@ -66,13 +68,18 @@ export default class CreditCollectionNftsPageStore {
 
     async fetch(collectionId: string) {
         this.tempIdGenerator = new TempIdGenerator();
-        this.collectionEntity = await this.collectionRepo.fetchCollectionById(collectionId);
-        const nftFilter = new NftFilterModel();
-        nftFilter.collectionId = collectionId;
-        nftFilter.count = Number.MAX_SAFE_INTEGER;
 
-        const { nftEntities } = await this.nftRepo.fetchNftsByFilter(nftFilter);
-        this.nftEntities = nftEntities;
+        if (collectionId !== undefined) {
+            this.collectionEntity = await this.collectionRepo.fetchCollectionById(collectionId);
+            const nftFilter = new NftFilterModel();
+            nftFilter.collectionId = collectionId;
+            nftFilter.count = Number.MAX_SAFE_INTEGER;
+
+            const { nftEntities } = await this.nftRepo.fetchNftsByFilter(nftFilter);
+            this.nftEntities = nftEntities;
+        } else {
+            this.collectionEntity = new CollectionEntity();
+        }
 
         this.selectedNftEntity = this.initNewNftEntity();
     }
@@ -169,9 +176,14 @@ export default class CreditCollectionNftsPageStore {
         if (this.selectedNftEntity.id !== S.Strings.NOT_EXISTS) {
             const existingNftEntity = this.nftEntities.find((nftEntity: NftEntity) => nftEntity.id === this.selectedNftEntity.id)
             existingNftEntity.copyDeepFrom(this.selectedNftEntity);
+
+            if (this.addedOrEdittedNftEntities.find((nftEntity: NftEntity) => nftEntity.id === this.selectedNftEntity.id) === undefined) {
+                this.addedOrEdittedNftEntities.push(this.selectedNftEntity);
+            }
         } else {
             this.selectedNftEntity.id = this.tempIdGenerator.generateNewId();
             this.nftEntities.push(this.selectedNftEntity);
+            this.addedOrEdittedNftEntities.push(this.selectedNftEntity);
         }
 
         this.selectedNftEntity = this.initNewNftEntity();
@@ -227,5 +239,9 @@ export default class CreditCollectionNftsPageStore {
 
     getSelectedNftExpirationDateDisplay() {
         return new Date(this.selectedNftEntity.expiryDate);
+    }
+
+    getAddedNftCount() {
+        return this.addedOrEdittedNftEntities.length;
     }
 }
