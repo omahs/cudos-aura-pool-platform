@@ -104,9 +104,16 @@ export default class AccountSessionStore {
         }
     }
 
-    // TODO: use session token for password change
-    async changePassword(password: string, passwordRepeat: string): Promise < void > {
-        // await this.accountRepo.changePassword(this.userEntity.name, token, password, passwordRepeat);
+    async editPassword(token: string, pass: string): Promise < void > {
+        this.accountRepo.changePassword(token, '', '', pass);
+    }
+
+    async changePassword(oldPass: string, newPass: string): Promise < void > {
+        await this.accountRepo.changePassword('', this.accountEntity.accountId, oldPass, newPass);
+    }
+
+    async forgottenPassword(email: string): Promise < void > {
+        await this.accountRepo.forgottenPassword(email);
     }
 
     async loadSessionAccountsAndSync() {

@@ -1,3 +1,6 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
+
 export const enum CollectionStatus {
     QUEUED = 'queued',
     APPROVED = 'approved',
@@ -6,11 +9,22 @@ export const enum CollectionStatus {
     DELETED = 'deleted',
 }
 
-export type CollectionFilters = {
-    denom_id: string;
-    creator_id: number;
-    status: CollectionStatus;
-};
+export class CollectionFilters {
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ required: false })
+        denom_id: string;
+
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty({ required: false })
+        creator_id: number;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ required: false })
+        status: CollectionStatus;
+}
 
 export type MarketplaceCollectionFilters = {
     denom_id: string;

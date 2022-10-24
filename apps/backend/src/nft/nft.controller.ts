@@ -12,6 +12,7 @@ import {
     Query,
     NotFoundException,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import RoleGuard from '../auth/guards/role.guard';
 import { Role } from '../user/roles';
 import { CreateNFTDto } from './dto/create-nft.dto';
@@ -28,8 +29,8 @@ import { CheckStatusDto } from './dto/check-status.dto';
 import { CollectionService } from '../collection/collection.service';
 import { CollectionStatus } from '../collection/utils';
 import { Collection } from '../collection/collection.model';
-import { filter } from 'rxjs';
 
+@ApiTags('NFT')
 @Controller('nft')
 export class NFTController {
     constructor(
@@ -40,7 +41,7 @@ export class NFTController {
 
   @Get()
     async findAll(
-    @Query(ParseNftQueryPipe) filters: Partial<NftFilters>,
+    @Query(ParseNftQueryPipe) filters: NftFilters,
     ): Promise<NFT[]> {
         const result = await this.nftService.findAll(filters);
 
@@ -72,15 +73,10 @@ export class NFTController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<NFT> {
-      const nft = await this.nftService.findOne(id);
-
-      if (!nft) {
-          throw new NotFoundException();
-      }
-
       return this.nftService.findOne(id);
   }
 
+  @ApiBearerAuth('access-token')
   @UseGuards(RoleGuard([Role.FARM_ADMIN]))
   @Post()
   async create(
@@ -98,6 +94,7 @@ export class NFTController {
       return this.nftService.createOne(createNFTDto, req.user.id);
   }
 
+  @ApiBearerAuth('access-token')
   @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Put(':id')
   async update(
@@ -107,6 +104,7 @@ export class NFTController {
       return this.nftService.updateOne(id, updateNFTDto);
   }
 
+  @ApiBearerAuth('access-token')
   @UseGuards(RoleGuard([Role.SUPER_ADMIN]))
   @Patch(':id/status')
   async updateStatus(
@@ -116,6 +114,7 @@ export class NFTController {
       return this.nftService.updateStatus(id, updateNftStatusDto.status);
   }
 
+  @ApiBearerAuth('access-token')
   @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<NFT> {

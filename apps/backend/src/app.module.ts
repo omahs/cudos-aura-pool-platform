@@ -14,7 +14,7 @@ import { GraphqlModule } from './graphql/graphql.module';
 
 @Module({
     imports: [
-   	    AuthModule,
+        AuthModule,
         UserModule,
         FarmModule,
         CollectionModule,

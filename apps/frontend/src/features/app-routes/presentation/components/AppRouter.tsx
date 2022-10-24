@@ -28,6 +28,8 @@ import CreditMiningFarmDetailsPage from '../../../mining-farm/presentation/pages
 import MiningFarmAnalyticsPage from '../../../mining-farm/presentation/pages/MiningFarmAnalyticsPage';
 import CreditCollectionDetailsPage from '../../../collection/presentation/pages/CreditCollectionDetailsPage';
 import CreditCollectionNftsPage from '../../../collection/presentation/pages/CreditCollectionNftsPage';
+import ForgottenPassRequestPage from '../../../accounts/presentation/pages/ForgottenPassRequestPage';
+import ForgottenPassEditPage from '../../../accounts/presentation/pages/ForgottenPassEditPage';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -99,6 +101,8 @@ function AppRouter({ accountSessionStore }: Props) {
                     {/* Auth */}
                     <Route path = { AppRoutes.LOGIN } element = { <LoginPage /> } />
                     <Route path = { AppRoutes.REGISTER } element = { <RegisterPage /> } />
+                    <Route path = { AppRoutes.FORGOTTEN_PASS_REQUEST } element = { <ForgottenPassRequestPage /> } />
+                    <Route path = { AppRoutes.FORGOTTEN_PASS_EDIT } element = { <ForgottenPassEditPage /> } />
 
                     {/* profile */}
                     { accountSessionStore.isUser() === true && (

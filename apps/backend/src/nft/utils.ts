@@ -1,3 +1,6 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsOptional } from 'class-validator';
+
 export const enum NftStatus {
     QUEUED = 'queued',
     APPROVED = 'approved',
@@ -7,12 +10,22 @@ export const enum NftStatus {
     MINTED = 'minted',
 }
 
-export type NftFilters = {
-    limit: number;
-    creator_id: number;
-    collection_id: number;
-    status: NftStatus;
-};
+export class NftFilters {
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ required: false })
+        creator_id: number;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ required: false })
+        collection_id: number;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ required: false })
+        status: NftStatus;
+}
 
 export type MarketplaceNftFilters = {
     denom_ids: string[];

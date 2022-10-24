@@ -12,6 +12,7 @@ import {
     Request,
     UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { CollectionService } from './collection.service';
@@ -25,6 +26,7 @@ import { UpdateCollectionStatusDto } from './dto/update-collection-status.dto';
 import { CollectionFilters } from './utils';
 import { ParseCollectionQueryPipe } from './pipes/collection-query.pipe';
 
+@ApiTags('Collection')
 @Controller('collection')
 export class CollectionController {
     constructor(
@@ -34,7 +36,7 @@ export class CollectionController {
 
   @Get()
     async findAll(
-    @Query(ParseCollectionQueryPipe) filters: Partial<CollectionFilters>,
+    @Query(ParseCollectionQueryPipe) filters: CollectionFilters,
     ): Promise<Collection[]> {
         return this.collectionService.findAll(filters);
     }
@@ -49,6 +51,7 @@ export class CollectionController {
       return this.nftService.findByCollectionId(id);
   }
 
+  @ApiBearerAuth('access-token')
   @UseGuards(RoleGuard([Role.FARM_ADMIN]))
   @Post()
   async create(
@@ -58,6 +61,7 @@ export class CollectionController {
       return this.collectionService.createOne(createCollectionDto, req.user.id);
   }
 
+  @ApiBearerAuth('access-token')
   @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Put(':id')
   async update(
@@ -67,6 +71,7 @@ export class CollectionController {
       return this.collectionService.updateOne(id, updateCollectionDto);
   }
 
+  @ApiBearerAuth('access-token')
   @UseGuards(RoleGuard([Role.SUPER_ADMIN]))
   @Patch(':id/status')
   async updateStatus(
@@ -79,6 +84,7 @@ export class CollectionController {
       );
   }
 
+  @ApiBearerAuth('access-token')
   @UseGuards(RoleGuard([Role.FARM_ADMIN]), IsCreatorGuard)
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<Collection> {

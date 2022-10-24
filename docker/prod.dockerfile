@@ -13,11 +13,13 @@ RUN npm run build:prod
 
 FROM node:16-buster
 
-ARG WORKING_DIR="/usr/local/cudos-aura-platform"
+ARG WORKING_DIR="/usr/local/cudos-aura-platform"  
 
 WORKDIR ${WORKING_DIR}
 
 COPY --from=builder "/usr/src/cudos-aura-platform/dist" ./
+
+COPY --from=builder "/usr/src/cudos-aura-platform/apps/backend/database/" ./apps/backend/database
 
 COPY --from=builder "/usr/src/cudos-aura-platform/package.json" ./
 
@@ -30,4 +32,4 @@ USER node
 
 RUN npm i --omit=dev
 
-CMD ["/bin/bash", "-c", "node ./apps/backend/main.js"] 
+CMD ["/bin/bash", "-c", "npx sequelize db:migrate --config=./apps/backend/database/config/config.js --migrations-path=./apps/backend/database/migrations && node ./apps/backend/main.js"] 

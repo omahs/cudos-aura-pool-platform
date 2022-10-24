@@ -9,7 +9,8 @@ export default interface AccountRepo {
     register(email: string, password: string, name: string, cudosWalletAddress: string, signedTx: any): Promise < void >;
     logout(): Promise < void >;
     confirmBitcoinAddress(): Promise < void >;
-    changePassword(username: string, token: string, newPassword: string, newPasswordRepeat: string): Promise < void > ;
+    changePassword(token: string, accountId: string, oldPassword: string, newPassword: string): Promise < void > ;
+    forgottenPassword(email: string): Promise < void >
     fetchSessionAccounts(): Promise < { accountEntity: AccountEntity, userEntity: UserEntity, adminEntity: AdminEntity, superAdminEntity: SuperAdminEntity } >;
 
 }

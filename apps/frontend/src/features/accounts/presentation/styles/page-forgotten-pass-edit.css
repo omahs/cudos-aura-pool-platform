@@ -1,10 +1,15 @@
-.PageRegister {
+.PageForgottenPassEdit {
     background:url("/assets/vectors/auth-bg.svg");
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center bottom;
 }
 
-.PageRegister .PageContent {
+.PageForgottenPassEdit .PageContent {
     padding: 100px var(--page-spacing-h);
+}
+
+.PageForgottenPassEdit .IconCheck {
+    width: 28px; height: 28px;
+    margin-right: 10px;
 }

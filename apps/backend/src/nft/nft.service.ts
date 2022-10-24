@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { v4 as uuid } from 'uuid';
 import { CreateNFTDto } from './dto/create-nft.dto';
@@ -42,7 +42,13 @@ export class NFTService {
     }
 
     async findOne(id: string): Promise<NFT> {
-        return this.nftModel.findByPk(id);
+        const nft = this.nftModel.findByPk(id);
+
+        if (!nft) {
+            throw new NotFoundException()
+        }
+
+        return nft
     }
 
     async createOne(
@@ -63,7 +69,7 @@ export class NFTService {
         id: string,
         updateNFTDto: Partial<UpdateNFTDto>,
     ): Promise<NFT> {
-        const [count, [nft]] = await this.nftModel.update(updateNFTDto, {
+        const [count, [nft]] = await this.nftModel.update({ ...updateNFTDto, status: NftStatus.QUEUED }, {
             where: { id },
             returning: true,
         });
