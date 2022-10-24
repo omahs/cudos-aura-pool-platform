@@ -35,6 +35,10 @@ export default class AccountSessionStore {
         makeAutoObservable(this);
     }
 
+    isLoggedIn(): boolean {
+        return this.accountEntity !== null;
+    }
+
     isUser(): boolean {
         if (this.accountEntity === null) {
             return false;
@@ -69,6 +73,10 @@ export default class AccountSessionStore {
         }
 
         return false;
+    }
+
+    isEmailVerified(): boolean {
+        return this.accountEntity?.isEmailVerified() || false;
     }
 
     hasApprovedMiningFarm(): boolean {
@@ -114,6 +122,10 @@ export default class AccountSessionStore {
 
     async forgottenPassword(email: string): Promise < void > {
         await this.accountRepo.forgottenPassword(email);
+    }
+
+    async sendVerificationEmail(): Promise < void > {
+        await this.accountRepo.sendVerificationEmail();
     }
 
     async loadSessionAccountsAndSync() {

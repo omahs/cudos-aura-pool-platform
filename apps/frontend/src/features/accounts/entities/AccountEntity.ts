@@ -43,6 +43,10 @@ export default class AccountEntity {
         return this.type === AccountType.SUPER_ADMIN;
     }
 
+    isEmailVerified(): boolean {
+        return this.emailVerified === S.INT_TRUE;
+    }
+
     formatDateJoined(): string {
         return moment(new Date(this.timestampRegister)).format(ProjectUtils.MOMENT_FORMAT_DATE);
     }

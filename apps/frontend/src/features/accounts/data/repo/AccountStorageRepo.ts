@@ -150,6 +150,10 @@ export default class AccountStorageRepo implements AccountRepo {
 
     }
 
+    async sendVerificationEmail(): Promise < void > {
+
+    }
+
     async fetchSessionAccounts(): Promise < { accountEntity: AccountEntity; userEntity: UserEntity; adminEntity: AdminEntity; superAdminEntity: SuperAdminEntity; } > {
         return {
             accountEntity: AccountEntity.fromJson(this.storageHelper.sessionAccount),

@@ -18,6 +18,8 @@ export default class AppRoutes {
     static REGISTER = '/register';
     static FORGOTTEN_PASS_REQUEST = '/forgotten-pass-request'
     static FORGOTTEN_PASS_EDIT = '/forgotten-pass-edit'
+    static EMAIL_VERIFICATION_REQUEST = '/email-verification-request'
+    static EMAIL_VERIFICATION_CONFIRMATION = '/email-verification-confirmation'
 
     // profile
     static USER_PROFILE = '/profile';

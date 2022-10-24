@@ -29,6 +29,10 @@ export default class AccountApi {
         return null;
     }
 
+    async sendVerificationEmail(): Promise < void > {
+        return null;
+    }
+
     async fetchSessionAccounts(): Promise < { accountEntity: AccountEntity; userEntity: UserEntity; adminEntity: AdminEntity; superAdminEntity: SuperAdminEntity; } > {
         return null;
     }
