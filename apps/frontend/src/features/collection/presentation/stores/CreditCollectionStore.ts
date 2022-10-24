@@ -8,10 +8,26 @@ import NftEntity from '../../../nft/entities/NftEntity';
 import NftRepo from '../../../nft/presentation/repos/NftRepo';
 import NftFilterModel from '../../../nft/utilities/NftFilterModel';
 
+class TempIdGenerator {
+    lastId: number;
+
+    constructor() {
+        this.lastId = 0;
+    }
+
+    generateNewId(): string {
+        this.lastId -= 1;
+
+        return this.lastId.toString();
+    }
+}
+
 export default class CreditCollectionNftsPageStore {
     accountSessionStore: AccountSessionStore;
     collectionRepo: CollectionRepo;
     nftRepo: NftRepo;
+
+    tempIdGenerator: TempIdGenerator;
 
     collectionEntity: CollectionEntity;
     nftEntities: NftEntity[];
@@ -41,6 +57,7 @@ export default class CreditCollectionNftsPageStore {
         this.collectionEntity = null;
         this.nftEntities = [];
         this.selectedNftEntity = null;
+        this.tempIdGenerator = null;
 
         this.defaultHashAndPriceValues = S.INT_FALSE;
         this.hashPowerPerNft = S.NOT_EXISTS;
@@ -48,6 +65,7 @@ export default class CreditCollectionNftsPageStore {
     }
 
     async fetch(collectionId: string) {
+        this.tempIdGenerator = new TempIdGenerator();
         this.collectionEntity = await this.collectionRepo.fetchCollectionById(collectionId);
         const nftFilter = new NftFilterModel();
         nftFilter.collectionId = collectionId;
@@ -134,8 +152,28 @@ export default class CreditCollectionNftsPageStore {
         this.selectedNftEntity.expiryDate = Date.now();
     }
 
+    onClickEditNft = (nftEntityId: string) => {
+        this.selectedNftEntity = this.nftEntities.find((nftEntity: NftEntity) => nftEntity.id === nftEntityId).cloneDeep();
+    }
+
+    // TODO: implement
+    onClickSendForApproval = async () => {
+        return null;
+    }
+
+    onClickDeleteNft = (nftEntityId: string) => {
+        this.nftEntities = this.nftEntities.filter((nftEntity: NftEntity) => nftEntity.id !== nftEntityId);
+    }
+
     onClickAddToCollection = () => {
-        this.nftEntities.push(this.selectedNftEntity);
+        if (this.selectedNftEntity.id !== S.Strings.NOT_EXISTS) {
+            const existingNftEntity = this.nftEntities.find((nftEntity: NftEntity) => nftEntity.id === this.selectedNftEntity.id)
+            existingNftEntity.copyDeepFrom(this.selectedNftEntity);
+        } else {
+            this.selectedNftEntity.id = this.tempIdGenerator.generateNewId();
+            this.nftEntities.push(this.selectedNftEntity);
+        }
+
         this.selectedNftEntity = this.initNewNftEntity();
     }
 

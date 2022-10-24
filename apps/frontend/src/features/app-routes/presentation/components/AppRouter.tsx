@@ -104,7 +104,7 @@ function AppRouter({ accountSessionStore }: Props) {
                     { accountSessionStore.isUser() === true && (
                         <Route path = { AppRoutes.USER_PROFILE } element = { <UserProfilePage /> } />
                     ) }
-                    
+
                     {/* admin */}
                     { accountSessionStore.isAdmin() === true && accountSessionStore.hasApprovedMiningFarm() === true && (
                         <>
@@ -112,6 +112,7 @@ function AppRouter({ accountSessionStore }: Props) {
                             <Route path = { AppRoutes.MINING_FARM_ANALYTICS } element = { <MiningFarmAnalyticsPage /> } />
                             <Route path = { `${AppRoutes.CREDIT_COLLECTION_NFTS}/:collectionId` } element = { <CreditCollectionNftsPage /> } />
                             <Route path = { `${AppRoutes.CREDIT_COLLECTION_DETAILS}/:collectionId` } element = { <CreditCollectionDetailsPage /> } />
+                            <Route path = { `${AppRoutes.CREDIT_COLLECTION_DETAILS}` } element = { <CreditCollectionDetailsPage /> } />
                         </>
                     ) }
                 </Routes>
