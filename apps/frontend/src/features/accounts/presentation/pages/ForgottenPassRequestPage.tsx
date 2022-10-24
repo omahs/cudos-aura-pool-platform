@@ -58,7 +58,7 @@ function ForgottenPassRequestPage({ alertStore, accountSessionStore }: Props) {
             <AuthBlockLayout
                 title = { 'Forgotten Password' }
                 subtitle = { 'Check your email and update your password.' }
-                inputs = { (
+                content = { (
                     <Input
                         label={'Email'}
                         placeholder={'Email'}
@@ -98,7 +98,7 @@ function ForgottenPassRequestPage({ alertStore, accountSessionStore }: Props) {
                         </div>
                     ) }
                     subtitle = { 'We send you link where you can set your new password' }
-                    inputs = { (
+                    content = { (
                         <Input
                             label={'Email'}
                             placeholder={'Email'}

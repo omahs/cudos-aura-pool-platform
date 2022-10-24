@@ -1,3 +1,7 @@
+.AuthBlockLayout .Prefix {
+    margin-bottom: 48px;
+}
+
 .AuthBlockLayout .Title {
     margin-bottom: 16px;
 }
@@ -8,7 +12,7 @@
     margin-bottom: 40px;
 }
 
-.AuthBlockLayout .InputsCnt {
+.AuthBlockLayout .ContentCnt {
     display: flex; flex-direction: column;
     gap: 24px;
 }
@@ -19,5 +23,9 @@
 }
 
 .AuthBlockLayout .BlockActions {
+    margin-top: 24px;
+}
+
+.AuthBlockLayout .Suffix {
     margin-top: 24px;
 }

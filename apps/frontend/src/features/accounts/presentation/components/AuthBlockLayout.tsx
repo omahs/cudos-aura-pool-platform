@@ -5,23 +5,29 @@ import BorderShadowPaddingContainer, { ContainerWidth } from '../../../../core/p
 import '../styles/auth-block-layout.css';
 
 type Props = {
+    prefix?: React.ReactNode;
     title: React.ReactNode | string;
     subtitle: React.ReactNode | string;
-    inputs?: React.ReactNode;
+    content?: React.ReactNode;
     subInputsAction?: React.ReactNode;
-    actions: React.ReactNode;
+    actions?: React.ReactNode;
+    suffix?: React.ReactNode;
 }
 
-export default function AuthBlockLayout({ title, subtitle, inputs, subInputsAction, actions }: Props) {
+export default function AuthBlockLayout({ prefix, title, subtitle, content, subInputsAction, actions, suffix }: Props) {
 
     return (
         <BorderShadowPaddingContainer className = { 'AuthBlockLayout' } containerWidth = { ContainerWidth.SMALL } >
+            { prefix !== null && (
+                <div className = { 'Prefix' } > { prefix } </div>
+            ) }
+
             <div className={'Title H2 Bold'}>{ title }</div>
             <div className={'Subtitle'}>{ subtitle }</div>
 
-            { inputs !== null && (
-                <div className = { 'InputsCnt' } >
-                    { inputs }
+            { content !== null && (
+                <div className = { 'ContentCnt' } >
+                    { content }
                 </div>
             ) }
 
@@ -29,15 +35,24 @@ export default function AuthBlockLayout({ title, subtitle, inputs, subInputsActi
                 <div className = { 'SubInputsAction FlexColumn' } >{ subInputsAction }</div>
             ) }
 
-            <Actions className = { 'BlockActions' } layout={ActionsLayout.LAYOUT_COLUMN_FULL} height={ActionsHeight.HEIGHT_48}>
-                { actions }
-            </Actions>
+            { actions !== null && (
+                <Actions className = { 'BlockActions' } layout={ActionsLayout.LAYOUT_COLUMN_FULL} height={ActionsHeight.HEIGHT_48}>
+                    { actions }
+                </Actions>
+            ) }
+
+            { suffix !== null && (
+                <div className = { 'Suffix' } > { suffix } </div>
+            ) }
         </BorderShadowPaddingContainer>
     )
 
 }
 
 AuthBlockLayout.defaultProps = {
-    inputs: null,
+    prefix: null,
+    content: null,
     subInputsAction: null,
+    actions: null,
+    suffix: null,
 };

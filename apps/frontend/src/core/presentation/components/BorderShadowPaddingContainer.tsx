@@ -3,32 +3,38 @@ import React from 'react';
 import '../styles/border-shadow-padding-container.css';
 
 export enum ContainerWidth {
-    SMALL,
-    MEDIUM,
-    LARGE,
+    SMALL = 'WidthSmall',
+    MEDIUM = 'WidthMedium',
+    LARGE = 'WidthLarge',
+}
+
+export enum ContainerBackground {
+    WHITE = 'BgWhite',
+    GRAY = 'BgGray',
+}
+
+export enum ContainerPadding {
+    PADDING_48 = 'Padding48',
+    PADDING_24 = 'Padding24',
+    PADDING_16 = 'Padding16',
 }
 
 type Props = {
     className?: string;
     containerWidth?: ContainerWidth,
+    containerBackground?: ContainerBackground,
+    containerPadding?: ContainerPadding,
+    containerShadow?: boolean,
 }
 
-export default function BorderShadowPaddingContainer({ className, containerWidth, children }: React.PropsWithChildren < Props >) {
+export default function BorderShadowPaddingContainer({ className, containerWidth, containerBackground, containerPadding, containerShadow, children }: React.PropsWithChildren < Props >) {
 
-    function cssBoxWidth() {
-        switch (containerWidth) {
-            case ContainerWidth.SMALL:
-                return 'WidthSmall';
-            case ContainerWidth.MEDIUM:
-                return 'WidthMedium';
-            case ContainerWidth.LARGE:
-            default:
-                return 'WidthLarge';
-        }
+    function cssContainerShadow() {
+        return containerShadow === true ? 'Shadow' : '';
     }
 
     return (
-        <div className={`BorderShadowPaddingContainer ${cssBoxWidth()} ${className}`}>
+        <div className={`BorderShadowPaddingContainer ${containerWidth} ${containerBackground} ${containerPadding} ${cssContainerShadow()} ${className}`}>
             {children}
         </div>
     )
@@ -36,5 +42,8 @@ export default function BorderShadowPaddingContainer({ className, containerWidth
 
 BorderShadowPaddingContainer.defaultProps = {
     className: '',
-    boxWidth: ContainerWidth.LARGE,
+    containerWidth: ContainerWidth.LARGE,
+    containerBackground: ContainerBackground.WHITE,
+    containerPadding: ContainerPadding.PADDING_48,
+    containerShadow: false,
 }

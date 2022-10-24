@@ -67,7 +67,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
                 <AuthBlockLayout
                     title = { 'Log in' }
                     subtitle = { 'Fill your credentials in order to access your account' }
-                    inputs = { (
+                    content = { (
                         <>
                             <Input
                                 label={'Email'}

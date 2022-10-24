@@ -39,7 +39,7 @@ function BitcoinConfirmPage({ accountSessionStore }: Props) {
                 <AuthBlockLayout
                     title = { 'Confirm bitcoin address' }
                     subtitle = { 'Fill your bitcoin address' }
-                    inputs = { (
+                    content = { (
                         <Input
                             label={'Bitcoin address'}
                             placeholder={'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'}

@@ -52,7 +52,7 @@ function ForgottenPassEditPage({ alertStore, accountSessionStore }: Props) {
             <AuthBlockLayout
                 title = { 'Set new password' }
                 subtitle = { 'Check your email and update your password.' }
-                inputs = { (
+                content = { (
                     <>
                         <Input
                             label={'New Password'}
