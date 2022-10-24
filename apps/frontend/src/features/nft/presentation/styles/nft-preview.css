@@ -7,7 +7,11 @@
     width: 100%; height: 0; padding-bottom: 100%;
     background-size: contain; 
     border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
+
 .NftPreview .CollectionName, .NftPreview .HashPower, .NftPreview .Priceheading{
     color: #717070;
 
@@ -17,3 +21,15 @@
     fill: gradient(45deg, #4C80E9 14.64%, #91D2F5 85.36%);
     gap: 10px;
 }
+
+.NftPreview .NftPreviewImage.Empty {
+    background: var(--color-gray-060);
+}
+
+.NftPreview .NftPreviewImage.Empty .EmptyNftImageIcon {
+    width: 50px; height: 50px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+}   

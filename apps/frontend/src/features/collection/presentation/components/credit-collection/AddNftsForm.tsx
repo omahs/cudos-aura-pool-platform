@@ -19,16 +19,14 @@ import S from '../../../../../core/utilities/Main';
 
 type Props = {
     onClickBack: () => void
-    onClickNextStep: () => void
     creditCollectionStore?: CreditCollectionStore;
     bitcoinStore?: BitcoinStore;
 }
 
-function AddNftsForm({ onClickBack, onClickNextStep, creditCollectionStore, bitcoinStore }: Props) {
+function AddNftsForm({ onClickBack, creditCollectionStore, bitcoinStore }: Props) {
     const [editRoyaltiesDisabled, setEditRoyaltiesDisabled] = useState(true);
     const [editMaintenanceFeeDisabled, setEditMaintenanceFeeDisabled] = useState(true);
 
-    const nftEntities = creditCollectionStore.nftEntities;
     const selectedNftEntity = creditCollectionStore.selectedNftEntity;
 
     return (

@@ -13,13 +13,17 @@ import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
 import CollectionDetailsForm from '../components/credit-collection/CollectionDetailsForm';
 import CollectionCreditSidePreview, { CollectionCreditSidePreviewSize } from '../components/credit-collection/CollectionCreditSidePreview';
 import AddNftsForm from '../components/credit-collection/AddNftsForm';
-import FinishCreditForm from '../components/credit-collection/FinishCreditForm';
+import FinishCreditCollection from '../components/credit-collection/FinishCreditCollection';
 import NavRow from '../../../../core/presentation/components/NavRow';
 import CollectionAddNftsTable from '../components/credit-collection/CollectionAddNftsTable';
 import CreditCollectionStore from '../stores/CreditCollectionStore';
 import CreditCollectionSuccessModal from '../components/credit-collection/CreditCollectionSuccessModal';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import BitcoinStore from '../../../bitcoin-data/presentation/stores/BitcoinStore';
+import NftPreview from '../../../nft/presentation/components/NftPreview';
+import Actions, { ActionsLayout } from '../../../../core/presentation/components/Actions';
+import Button from '../../../../core/presentation/components/Button';
+import CreditCollectionSuccessModalStore from '../stores/CreditCollectionSuccessModalStore';
 
 enum CreditCollectionDetailsSteps {
     COLLECTION_DETAILS = 1,
@@ -29,13 +33,15 @@ enum CreditCollectionDetailsSteps {
 
 type Props = {
     creditCollectionStore?: CreditCollectionStore;
+    creditCollectionSuccessModalStore?: CreditCollectionSuccessModalStore;
     appStore?: AppStore;
     bitcoinStore?: BitcoinStore;
 }
 
-function CreditCollectionDetailsPage({ creditCollectionStore, appStore, bitcoinStore }: Props) {
+function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSuccessModalStore, appStore, bitcoinStore }: Props) {
     const { collectionId } = useParams();
     const [step, setStep] = useState(CreditCollectionDetailsSteps.ADD_NFTS);
+    const collectionEntity = creditCollectionStore.collectionEntity;
 
     useEffect(() => {
         appStore.useLoading(async () => {
@@ -69,6 +75,13 @@ function CreditCollectionDetailsPage({ creditCollectionStore, appStore, bitcoinS
         },
     ]
 
+    async function onClickSendForApproval() {
+        await creditCollectionStore.onClickSendForApproval();
+        creditCollectionSuccessModalStore.showSignal();
+    }
+
+    creditCollectionSuccessModalStore.showSignal();
+
     return (
         <PageLayoutComponent
             modals = {
@@ -83,36 +96,16 @@ function CreditCollectionDetailsPage({ creditCollectionStore, appStore, bitcoinS
             <div className = { 'PageContent AppContent' } >
                 <Breadcrumbs crumbs={crumbs} />
                 <BorderShadowPaddingContainer>
-                    {creditCollectionStore.collectionEntity !== null
+                    {collectionEntity !== null
                         && (<>
-                            <div className={'Grid FormAndPreviewContainer'}>
-                                <div className={'FormContainer FlexColumn'}>
-                                    <NavRow className={'FormNav'} navSteps={navSteps} />
-
-                                    {step === CreditCollectionDetailsSteps.COLLECTION_DETAILS && (
-                                        <CollectionDetailsForm onClickNextStep={() => setStep(CreditCollectionDetailsSteps.ADD_NFTS)} />
-                                    )}
-                                    {step === CreditCollectionDetailsSteps.ADD_NFTS && (
-                                        <AddNftsForm
-                                            onClickBack={() => setStep(CreditCollectionDetailsSteps.COLLECTION_DETAILS)}
-                                            onClickNextStep={() => setStep(CreditCollectionDetailsSteps.FINISH)}/>
-                                    )}
-                                    {step === CreditCollectionDetailsSteps.FINISH && (
-                                        <FinishCreditForm />
-                                    )}
-                                </div>
-                                {step === CreditCollectionDetailsSteps.COLLECTION_DETAILS && (
-                                    <CollectionCreditSidePreview size={CollectionCreditSidePreviewSize.SMALL}/>
-                                )}
-                                {step === CreditCollectionDetailsSteps.ADD_NFTS && (
-                                    <CollectionCreditSidePreview />
-                                )}
-                                {step === CreditCollectionDetailsSteps.FINISH && (
-                                    <CollectionCreditSidePreview />
-                                )}
-                            </div>
+                            {step === CreditCollectionDetailsSteps.COLLECTION_DETAILS && (
+                                <CollectionDetailsStep />
+                            )}
                             {step === CreditCollectionDetailsSteps.ADD_NFTS && (
-                                <CollectionAddNftsTable />
+                                <AddNftsStep />
+                            )}
+                            {step === CreditCollectionDetailsSteps.FINISH && (
+                                <Finish />
                             )}
                         </>)}
                 </BorderShadowPaddingContainer>
@@ -122,6 +115,68 @@ function CreditCollectionDetailsPage({ creditCollectionStore, appStore, bitcoinS
 
         </PageLayoutComponent>
     )
+
+    function CollectionDetailsStep() {
+        return (
+            <>
+                <div className={'Grid FormAndPreviewContainer'}>
+                    <div className={'FormContainer FlexColumn'}>
+                        <NavRow className={'FormNav'} navSteps={navSteps} />
+                        <CollectionDetailsForm onClickNextStep={() => setStep(CreditCollectionDetailsSteps.ADD_NFTS)} />
+                    </div>
+                    <CollectionCreditSidePreview size={CollectionCreditSidePreviewSize.SMALL}/>
+                </div>
+            </>
+        )
+    }
+
+    function AddNftsStep() {
+        return (
+            <div className={'FlexColumn AddNftStep'}>
+                <div className={'Grid FormAndPreviewContainer'}>
+                    <div className={'FormContainer FlexColumn'}>
+                        <NavRow className={'FormNav'} navSteps={navSteps} />
+                        <AddNftsForm
+                            onClickBack={() => setStep(CreditCollectionDetailsSteps.COLLECTION_DETAILS)}/>
+                    </div>
+                    <div className={'PreviewAndFinishContainer FlexColumn'}>
+                        <div className={'PreviewContainer'}>
+                            <NftPreview
+                                nftEntity={creditCollectionStore.selectedNftEntity}
+                                collectionName={collectionEntity.name}
+                                disabled={true} />
+                        </div>
+                        <div className={'FinishContainer FlexColumn'}>
+                            <div className={'B1'}>If you’re done with adding NFTs to this collection preview the details and send for approval to the Super Admin. Once the collection is approved you’ll be notified on your email and it will be listed in the Marketplace.</div>
+                            <Actions layout={ActionsLayout.LAYOUT_COLUMN_FULL}>
+                                <Button
+                                    onClick={() => setStep(CreditCollectionDetailsSteps.FINISH)}
+                                >Preview & Send</Button>
+                            </Actions>
+                        </div>
+                    </div>
+                </div>
+                <CollectionAddNftsTable />
+            </div>
+        )
+    }
+
+    function Finish() {
+        return (
+            <>
+                <div className={'Grid FormAndPreviewContainer'}>
+                    <div className={'FormContainer FlexColumn'}>
+                        <NavRow className={'FormNav'} navSteps={navSteps} />
+                        <FinishCreditCollection
+                            onClickBack={() => setStep(CreditCollectionDetailsSteps.ADD_NFTS)}
+                            onClickSendForApproval={onClickSendForApproval}
+                        />
+                    </div>
+                    <CollectionCreditSidePreview size={CollectionCreditSidePreviewSize.FULL}/>
+                </div>
+            </>
+        )
+    }
 
 }
 
