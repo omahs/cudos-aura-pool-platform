@@ -7,7 +7,7 @@ import '../../styles/collection-credit-side-preview.css';
 import S from '../../../../../core/utilities/Main';
 import DataPreviewLayout, { createDataPreview } from '../../../../../core/presentation/components/DataPreviewLayout';
 import ProjectUtils from '../../../../../core/utilities/ProjectUtils';
-import BorderShadowPaddingContainer, { ContainerPadding } from '../../../../../core/presentation/components/BorderShadowPaddingContainer';
+import StyledContainer, { ContainerPadding } from '../../../../../core/presentation/components/StyledContainer';
 
 export enum CollectionCreditSidePreviewSize {
     SMALL = 1,
@@ -39,7 +39,7 @@ function CollectionCreditSidePreview({ size, creditCollectionStore }: Props) {
         <div className={'CollectionCreditSidePreview FlexColumn'}>
             <div className={'H3 Bold'}>Collection Preview</div>
             <div className={'B1'}>This is how your collection details view would look like in AuraPool</div>
-            <BorderShadowPaddingContainer
+            <StyledContainer
                 className = { 'PreviewBorderContainer FlexColumn' }
                 containerShadow = { false }
                 containerPadding = { ContainerPadding.PADDING_16 } >
@@ -66,7 +66,7 @@ function CollectionCreditSidePreview({ size, creditCollectionStore }: Props) {
                 <div className={'H3 Bold'}>{collectionEntity.name || 'No Name'}</div>
                 <div className={'B3'}>{collectionEntity.description || 'No Description'}</div>
                 {size === CollectionCreditSidePreviewSize.FULL && (<DataPreviewLayout dataPreviews={createDataPreviews()}/>)}
-            </BorderShadowPaddingContainer>
+            </StyledContainer>
         </div>
     )
 

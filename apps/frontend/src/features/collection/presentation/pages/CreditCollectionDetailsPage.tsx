@@ -6,7 +6,7 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 import PageAdminHeader from '../../../header/presentation/components/PageAdminHeader';
 
 import '../styles/page-credit-collection-details-page.css';
-import BorderShadowPaddingContainer from '../../../../core/presentation/components/BorderShadowPaddingContainer';
+import StyledContainer from '../../../../core/presentation/components/StyledContainer';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import AppRoutes from '../../../app-routes/entities/AppRoutes';
 import Breadcrumbs from '../../../../core/presentation/components/Breadcrumbs';
@@ -109,7 +109,7 @@ function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSu
 
             <div className = { 'PageContent AppContent' } >
                 <Breadcrumbs crumbs={crumbs} />
-                <BorderShadowPaddingContainer className={'FlexColumn BorderContainer'}>
+                <StyledContainer className={'FlexColumn BorderContainer'}>
                     {collectionEntity !== null
                         && (<>
                             {step === CreditCollectionDetailsSteps.COLLECTION_DETAILS && (
@@ -122,7 +122,7 @@ function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSu
                                 <Finish />
                             )}
                         </>)}
-                </BorderShadowPaddingContainer>
+                </StyledContainer>
             </div>
 
             <PageFooter />

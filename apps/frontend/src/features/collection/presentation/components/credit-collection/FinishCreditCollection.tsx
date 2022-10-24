@@ -5,7 +5,7 @@ import Button, { ButtonType } from '../../../../../core/presentation/components/
 import Svg from '../../../../../core/presentation/components/Svg';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import '../../styles/finish-credit-collection.css';
-import BorderShadowPaddingContainer, { ContainerBackground, ContainerPadding } from '../../../../../core/presentation/components/BorderShadowPaddingContainer';
+import StyledContainer, { ContainerBackground, ContainerPadding } from '../../../../../core/presentation/components/StyledContainer';
 import DataPreviewLayout, { createDataPreview } from '../../../../../core/presentation/components/DataPreviewLayout';
 import S from '../../../../../core/utilities/Main';
 
@@ -31,7 +31,7 @@ function FinishCreditCollection({ hashingPower, addedNftCount, isOriginAddNfts, 
             {isOriginAddNfts === true && (
                 <DataPreviewLayout dataPreviews={dataPreviews}/>
             )}
-            <BorderShadowPaddingContainer
+            <StyledContainer
                 containerBackground={ContainerBackground.GRAY}
                 className = { 'InstructionsBox' }
                 containerShadow = { false }
@@ -48,7 +48,7 @@ function FinishCreditCollection({ hashingPower, addedNftCount, isOriginAddNfts, 
                             <li>Once Aura Pool verifies and approves this NFT will go on sale immediately. </li>
                         </>}
                 </ul>
-            </BorderShadowPaddingContainer>
+            </StyledContainer>
             <Actions layout={ActionsLayout.LAYOUT_ROW_ENDS} className={'ButtonsRow'}>
                 <Button type={ButtonType.TEXT_INLINE} onClick={onClickBack}>
                     <Svg svg={ArrowBackIcon} />

@@ -27,20 +27,20 @@ type Props = {
     containerShadow?: boolean,
 }
 
-export default function BorderShadowPaddingContainer({ className, containerWidth, containerBackground, containerPadding, containerShadow, children }: React.PropsWithChildren < Props >) {
+export default function StyledContainer({ className, containerWidth, containerBackground, containerPadding, containerShadow, children }: React.PropsWithChildren < Props >) {
 
     function cssContainerShadow() {
         return containerShadow === true ? 'Shadow' : '';
     }
 
     return (
-        <div className={`BorderShadowPaddingContainer ${containerWidth} ${containerBackground} ${containerPadding} ${cssContainerShadow()} ${className}`}>
+        <div className={`StyledContainer ${containerWidth} ${containerBackground} ${containerPadding} ${cssContainerShadow()} ${className}`}>
             {children}
         </div>
     )
 }
 
-BorderShadowPaddingContainer.defaultProps = {
+StyledContainer.defaultProps = {
     className: '',
     containerWidth: ContainerWidth.LARGE,
     containerBackground: ContainerBackground.WHITE,

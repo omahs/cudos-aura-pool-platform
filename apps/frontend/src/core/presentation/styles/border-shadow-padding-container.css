@@ -1,43 +1,43 @@
-.BorderShadowPaddingContainer {
+.StyledContainer {
     box-sizing: border-box;
     margin: 0 auto;
     border:1px solid var(--color-gray-090);
     border-radius: var(--border-radius);
 }
 
-.BorderShadowPaddingContainer.WidthSmall {
+.StyledContainer.WidthSmall {
     width: 525px;
 }
 
-.BorderShadowPaddingContainer.WidthMedium {
+.StyledContainer.WidthMedium {
     width: 720px;
 }
 
-.BorderShadowPaddingContainer.WidthLarge {
+.StyledContainer.WidthLarge {
     width: 100%;
     /* flex: 1 1 auto; STRETCHES IT VERTICALLY WHEN IN FLEX COLUMN */
 }
 
-.BorderShadowPaddingContainer.BgWhite {
+.StyledContainer.BgWhite {
     background: #fff;
 }
 
-.BorderShadowPaddingContainer.BgGray {
+.StyledContainer.BgGray {
     background: var(--color-gray-090);
 }
 
-.BorderShadowPaddingContainer.Padding48 {
+.StyledContainer.Padding48 {
     padding: 48px;
 }
 
-.BorderShadowPaddingContainer.Padding24 {
+.StyledContainer.Padding24 {
     padding: 24px;
 }
 
-.BorderShadowPaddingContainer.Padding16 {
+.StyledContainer.Padding16 {
     padding: 16px;
 }
 
-.BorderShadowPaddingContainer.Shadow {
+.StyledContainer.Shadow {
     box-shadow: var(--box-shadow);
 }

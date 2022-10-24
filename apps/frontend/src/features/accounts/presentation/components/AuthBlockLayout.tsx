@@ -3,7 +3,7 @@ import React from 'react';
 import { SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import Actions, { ActionsHeight, ActionsLayout } from '../../../../core/presentation/components/Actions';
-import BorderShadowPaddingContainer, { ContainerWidth } from '../../../../core/presentation/components/BorderShadowPaddingContainer';
+import StyledContainer, { ContainerWidth } from '../../../../core/presentation/components/StyledContainer';
 import Svg, { SvgSize } from '../../../../core/presentation/components/Svg';
 
 import '../styles/auth-block-layout.css';
@@ -25,7 +25,7 @@ type Props = {
 export default function AuthBlockLayout({ prefix, title, confirmationTitle, confirmationTitleSvg, subtitle, content, subInputsAction, actions, suffix }: Props) {
 
     return (
-        <BorderShadowPaddingContainer className = { 'AuthBlockLayout' } containerWidth = { ContainerWidth.SMALL } >
+        <StyledContainer className = { 'AuthBlockLayout' } containerWidth = { ContainerWidth.SMALL } >
             { prefix !== null && (
                 <div className = { 'Prefix' } > { prefix } </div>
             ) }
@@ -62,7 +62,7 @@ export default function AuthBlockLayout({ prefix, title, confirmationTitle, conf
             { suffix !== null && (
                 <div className = { 'Suffix' } > { suffix } </div>
             ) }
-        </BorderShadowPaddingContainer>
+        </StyledContainer>
     )
 
 }

@@ -13,7 +13,6 @@ import { InputAdornment } from '@mui/material';
 import Input from '../../../../core/presentation/components/Input';
 import Svg from '../../../../core/presentation/components/Svg';
 import Button, { ButtonType } from '../../../../core/presentation/components/Button';
-import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
 import PageFooter from '../../../footer/presentation/components/PageFooter';
 import PageAdminHeader from '../../../header/presentation/components/PageAdminHeader';

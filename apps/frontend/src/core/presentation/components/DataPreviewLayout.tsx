@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BorderShadowPaddingContainer, { ContainerBackground, ContainerPadding } from './BorderShadowPaddingContainer';
+import StyledContainer, { ContainerBackground, ContainerPadding } from './StyledContainer';
 
 import '../styles/data-preview-layout.css';
 
@@ -29,7 +29,7 @@ export function createDataPreview(key: string, value: React.ReactNode | string):
 export default function DataPreviewLayout({ dataPreviews, gap, containerBackground, children }: React.PropsWithChildren < Props >) {
 
     return (
-        <BorderShadowPaddingContainer
+        <StyledContainer
             className = { `DataPreviewLayout ${gap} FlexColumn` }
             containerShadow = { false }
             containerBackground = { containerBackground }
@@ -43,7 +43,7 @@ export default function DataPreviewLayout({ dataPreviews, gap, containerBackgrou
                 )
             }) }
             {children}
-        </BorderShadowPaddingContainer>
+        </StyledContainer>
     )
 
 }

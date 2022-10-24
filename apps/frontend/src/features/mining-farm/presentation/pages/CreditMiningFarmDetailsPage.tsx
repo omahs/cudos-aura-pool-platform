@@ -13,7 +13,7 @@ import AccountSessionStore from '../../../accounts/presentation/stores/AccountSe
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import StepReview from '../components/credit-farm/StepReview';
 import StepSuccess from '../components/credit-farm/StepSuccess';
-import BorderShadowPaddingContainer, { ContainerWidth } from '../../../../core/presentation/components/BorderShadowPaddingContainer';
+import StyledContainer, { ContainerWidth } from '../../../../core/presentation/components/StyledContainer';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
 import S from '../../../../core/utilities/Main';
 import AnimationContainer from '../../../../core/presentation/components/AnimationContainer';
@@ -70,7 +70,7 @@ function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, account
                 ) }
 
                 { creditMiningFarmDetailsPageStore.miningFarmEntity !== null && (
-                    <BorderShadowPaddingContainer className={'FormContainer FlexColumn'} containerWidth = { ContainerWidth.MEDIUM } >
+                    <StyledContainer className={'FormContainer FlexColumn'} containerWidth = { ContainerWidth.MEDIUM } >
 
                         <div className = { 'NavRow' } >
                             { creditMiningFarmDetailsPageStore.isStepSuccess() === false && (
@@ -91,7 +91,7 @@ function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, account
                             <StepSuccess />
                         </AnimationContainer>
 
-                    </BorderShadowPaddingContainer>
+                    </StyledContainer>
                 ) }
 
             </div>

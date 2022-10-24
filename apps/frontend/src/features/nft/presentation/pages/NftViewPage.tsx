@@ -30,7 +30,7 @@ import SvgCudos from '../../../../core/presentation/vectors/cudos-logo.svg';
 import '../styles/page-nft-view-component.css';
 import { CHAIN_DETAILS } from '../../../../core/utilities/Constants';
 import DataPreviewLayout, { createDataPreview, DataRowsGap } from '../../../../core/presentation/components/DataPreviewLayout';
-import { ContainerBackground } from '../../../../core/presentation/components/BorderShadowPaddingContainer';
+import { ContainerBackground } from '../../../../core/presentation/components/StyledContainer';
 
 type Props = {
     walletStore?: WalletStore;
