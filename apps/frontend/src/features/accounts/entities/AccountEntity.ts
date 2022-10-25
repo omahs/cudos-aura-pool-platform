@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import moment from 'moment';
 
 import S from '../../../core/utilities/Main';
@@ -29,6 +30,15 @@ export default class AccountEntity {
         this.email = '';
         this.timestampLastLogin = -1;
         this.timestampRegister = -1;
+
+        makeAutoObservable(this);
+    }
+
+    deepClone(): AccountEntity {
+        const accountEntity = Object.assign(new AccountEntity(), this);
+        accountEntity.type = this.type;
+
+        return accountEntity;
     }
 
     isUser(): boolean {

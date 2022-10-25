@@ -27,11 +27,11 @@ import BitcoinConfirmPage from '../../../accounts/presentation/pages/BitcoinConf
 import CreditMiningFarmDetailsPage from '../../../mining-farm/presentation/pages/CreditMiningFarmDetailsPage';
 import MiningFarmAnalyticsPage from '../../../mining-farm/presentation/pages/MiningFarmAnalyticsPage';
 import CreditCollectionDetailsPage from '../../../collection/presentation/pages/CreditCollectionDetailsPage';
-import CreditCollectionNftsPage from '../../../collection/presentation/pages/CreditCollectionNftsPage';
 import ForgottenPassRequestPage from '../../../accounts/presentation/pages/ForgottenPassRequestPage';
 import ForgottenPassEditPage from '../../../accounts/presentation/pages/ForgottenPassEditPage';
 import EmailVerificationRequestPage from '../../../accounts/presentation/pages/EmailVerificationRequestPage';
 import EmailVerificationConfirmationPage from '../../../accounts/presentation/pages/EmailVerificationConfirmationPage';
+import CreditAccountSettings from '../../../accounts/presentation/pages/CreditAccountSettings';
 
 type Props = {
     accountSessionStore?: AccountSessionStore,
@@ -127,6 +127,7 @@ function AppRouter({ accountSessionStore }: Props) {
                         <Route path = { `${AppRoutes.CREDIT_COLLECTION_NFTS}/:collectionId` } element = { <CreditCollectionDetailsPage /> } />
                         <Route path = { `${AppRoutes.CREDIT_COLLECTION_DETAILS}/:collectionId` } element = { <CreditCollectionDetailsPage /> } />
                         <Route path = { `${AppRoutes.CREDIT_COLLECTION_DETAILS}` } element = { <CreditCollectionDetailsPage /> } />
+                        <Route path = { `${AppRoutes.CREDIT_ACCOUNT_SETTINGS}` } element = { <CreditAccountSettings /> } />
                     </>
                     {/* ) } */}
                 </Routes>
