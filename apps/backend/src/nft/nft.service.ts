@@ -114,7 +114,7 @@ export class NFTService {
       const res = await axios.get(
         `${process.env.App_Public_API}/cosmos/tx/v1beta1/txs/${txHash}`,
       );
-      console.log(res.data.tx_response.code, typeof res.data.tx_response.code);
+
       if (res.data.tx_response.code !== 0) {
         throw new NotFoundException();
       }
