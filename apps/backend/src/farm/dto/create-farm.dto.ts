@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsOptional, IsString, IsArray} from 'class-validator'; 
+import { IsNotEmpty, IsNumber, IsOptional, IsString, IsArray } from 'class-validator';
 
 export class CreateFarmDto {
   @IsString()
@@ -47,21 +47,21 @@ export class CreateFarmDto {
 
   @IsNumber()
   @IsNotEmpty()
-  @ApiProperty({ required: true, example: 100.01 , description: "Total farm hashrate of all miners"})
-  total_farm_hashrate: number;
+  @ApiProperty({ required: true, example: 100.01, description: 'Total farm hashrate of all miners' })
+      total_farm_hashrate: number;
 
   @IsArray()
   @IsNotEmpty()
-  @ApiProperty({ required: true, example: ["Bitmain","Canaan","MicroBT","Bitfury"] ,  type: [String], description: "Manifacturer of miners"})
-      manifacturer: string[];
+  @ApiProperty({ required: true, example: ['Bitmain', 'Canaan', 'MicroBT', 'Bitfury'], type: [String], description: 'Manufacturers of miners' })
+      manufacturers: string[];
 
   @IsArray()
   @IsNotEmpty()
-  @ApiProperty({ required: true, example: ["AntMiner S19","AntMiner S19 Pro"] ,  type: [String], description: "Miner types/models"})
+  @ApiProperty({ required: true, example: ['AntMiner S19', 'AntMiner S19 Pro'], type: [String], description: 'Miner types/models' })
       miner_types: string[];
 
   @IsArray()
   @IsNotEmpty()
-  @ApiProperty({ required: true, example: ["Oil","Solar"] ,  type: [String], description: "Energy source for the miners"})
+  @ApiProperty({ required: true, example: ['Oil', 'Solar'], type: [String], description: 'Energy source for the miners' })
       energy_source: string[];
 }

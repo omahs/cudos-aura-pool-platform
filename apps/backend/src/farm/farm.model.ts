@@ -9,7 +9,7 @@ import {
     PrimaryKey,
     Unique,
     AutoIncrement,
-    DataType
+    DataType,
 } from 'sequelize-typescript';
 import { Collection } from '../collection/collection.model';
 import { User } from '../user/user.model';
@@ -28,70 +28,70 @@ export class Farm extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column
-    id: number;
+        id: number;
 
     @AllowNull(false)
     @Column
-    name: string;
+        name: string;
 
     @Column
-    description: string;
-
-    @AllowNull(false)
-    @Column
-    sub_account_name: string;
+        description: string;
 
     @AllowNull(false)
     @Column
-    location: string;
+        sub_account_name: string;
 
     @AllowNull(false)
     @Column
-    address_for_receiving_rewards_from_pool: string;
-//@TODO add default address_for_receiving_rewards_from_pool
-    @AllowNull(false)
-    @Column
-    leftover_reward_payout_address: string;
-//@TODO add default address_for_receiving_rewards_from_pool
-    @AllowNull(false)
-    @Column
-    maintenance_fee_payout_address: string;
+        location: string;
 
     @AllowNull(false)
     @Column
-    maintenance_fee_in_btc: number;
+        address_for_receiving_rewards_from_pool: string;
+    // @TODO add default address_for_receiving_rewards_from_pool
+    @AllowNull(false)
+    @Column
+        leftover_reward_payout_address: string;
+    // @TODO add default address_for_receiving_rewards_from_pool
+    @AllowNull(false)
+    @Column
+        maintenance_fee_payout_address: string;
 
     @AllowNull(false)
     @Column
-    total_farm_hashrate: number;
+        maintenance_fee_in_btc: number;
+
+    @AllowNull(false)
+    @Column
+        total_farm_hashrate: number;
 
     @AllowNull(false)
     @Column({ type: DataType.ARRAY(DataType.STRING) })
-    manifacturer: string[];
+        manufacturers: string[];
 
     @AllowNull(false)
     @Column({ type: DataType.ARRAY(DataType.STRING) })
-    miner_types: string[];
+        miner_types: string[];
 
     @AllowNull(false)
     @Column({ type: DataType.ARRAY(DataType.STRING) })
-    energy_source: string[];
+        energy_source: string[];
 
     @AllowNull(false)
     @Column(DataType.ENUM('queued', 'approved', 'rejected'))
-    status: FarmStatus;
+        status: FarmStatus;
 
     @AllowNull(false)
     @Column
     @ForeignKey(() => User)
-    creator_id: number;
+        creator_id: number;
 
     @BelongsTo(() => User)
-    creator: User;
+        creator: User;
 
     @HasMany(() => Collection)
-    collections: Collection[];
+        collections: Collection[];
 
     @Column
-    deleted_at: Date;
+        deleted_at: Date;
 }
