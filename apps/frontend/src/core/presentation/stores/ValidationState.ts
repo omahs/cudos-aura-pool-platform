@@ -1,9 +1,9 @@
-import { checkValidAddress, isValidAddress } from 'cudosjs';
-import { makeAutoObservable, observable } from 'mobx';
+import { isValidAddress } from 'cudosjs';
+import { makeAutoObservable } from 'mobx';
 import S from '../../utilities/Main';
 import { validate } from 'bitcoin-address-validation';
 
-class InputValidation {
+export class InputValidation {
     errorMessage: string;
     isError: boolean;
     showError: boolean;
@@ -40,6 +40,7 @@ class InputValidation {
 
     static matchStringsValidation(secondString: string, errorMessage?: string): InputValidation {
         const validation = new InputValidation();
+
         validation.setErrorMessage(errorMessage);
         validation.checkValidInput = (value) => value === secondString;
 
@@ -161,7 +162,7 @@ export default class ValidationState {
             return element.isError === true;
         });
 
-        return validation !== null;
+        return validation !== undefined;
     }
 
     setShowErrors = (showErrors: boolean) => {

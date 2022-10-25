@@ -45,7 +45,12 @@ type Props = {
 
 function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }: Props) {
     const navigate = useNavigate();
+
     const validationState = useRef(new ValidationState()).current;
+    const validationName = useRef(validationState.addEmptyValidation('Empty name')).current;
+    const validationEmail = useRef(validationState.addEmailValidation('Invalid email')).current;
+    const validationPass = useRef(validationState.addPasswordValidation('Invalid password')).current;
+    const validationConfirmPass = useRef(validationState.addPasswordValidation('Invalid password')).current;
 
     const [step, setStep] = useState(RegisterStep.ACCOUNT_DETAILS);
     const [name, setName] = useState('');
@@ -133,7 +138,7 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
                             label={'Full Name'}
                             placeholder={'John Doe'}
                             value={name}
-                            inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
+                            inputValidation={validationName}
                             onChange={setName} />
                         <Input
                             label={'Email'}
@@ -143,7 +148,7 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
                                     <Svg svg={AlternateEmailIcon}/>
                                 </InputAdornment>,
                             }}
-                            inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
+                            inputValidation={validationEmail}
                             value={email}
                             onChange={setEmail} />
                         <Input
@@ -156,8 +161,8 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
                             }}
                             value={password}
                             inputValidation={[
-                                useRef(validationState.addPasswordValidation('Invalid password')).current,
-                                validationState.addMatchStringsValidation(repeatPassword, 'Passwords don\'t match.'),
+                                validationPass,
+                                // validationState.addMatchStringsValidation(repeatPassword, 'Passwords don\'t match.'),
                             ]}
                             onChange={setPassword}
                             type={showPassword === false ? 'password' : 'text'} />
@@ -170,8 +175,8 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
                                 </InputAdornment>,
                             }}
                             inputValidation={[
-                                useRef(validationState.addPasswordValidation('Invalid password')).current,
-                                validationState.addMatchStringsValidation(password, 'Passwords don\'t match.'),
+                                validationConfirmPass,
+                                // validationState.addMatchStringsValidation(password, 'Passwords don\'t match.'),
                             ]}
                             value={repeatPassword}
                             onChange={setRepeatPassword}

@@ -1,11 +1,12 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react';
 
 import S from '../../utilities/Main';
+import { InputValidation } from '../stores/ValidationState';
 
 import { TextField, TextFieldProps } from '@mui/material';
 import '../styles/input.css';
-import { InputValidation } from '../stores/ValidationState';
+import { runInAction } from 'mobx';
 
 export enum InputType {
     INTEGER,
@@ -27,8 +28,13 @@ type Props = TextFieldProps & {
 }
 
 const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly, onChange, stretch, gray, defaultOnChangeParameter, inputValidation, ...props }: Props, ref) => {
+
+    const changed = useRef(false);
+
     /* listeners */
     function onChangeHandler(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        changed.current = true;
+
         switch (inputType) {
             case InputType.INTEGER:
                 if (filterInteger(event.target.value) === false) {
@@ -60,6 +66,18 @@ const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly,
                 inputValidation.forEach((validation) => validation.onChange(props.value));
             } else if (inputValidation !== null) {
                 inputValidation.onChange(props.value);
+            }
+        }
+
+        if (changed.current === true) {
+            if (inputValidation !== null) {
+                if (Array.isArray(inputValidation)) {
+                    inputValidation.forEach((validation) => {
+                        validation.showError = true;
+                    });
+                } else {
+                    inputValidation.showError = true;
+                }
             }
         }
     }, [props.value]);

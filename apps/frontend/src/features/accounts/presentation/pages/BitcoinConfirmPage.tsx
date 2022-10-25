@@ -20,6 +20,7 @@ type Props = {
 
 function BitcoinConfirmPage({ accountSessionStore }: Props) {
     const validationState = useRef(new ValidationState()).current;
+    const validationBitcoin = useRef(validationState.addBitcoinAddressValidation('Invalid address')).current;
 
     const [loading, setLoading] = useState(false);
     const [bitcoinAddress, setBitcoinAddress] = useState('');
@@ -50,7 +51,7 @@ function BitcoinConfirmPage({ accountSessionStore }: Props) {
                             label={'Bitcoin address'}
                             placeholder={'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'}
                             value={bitcoinAddress}
-                            inputValidation={useRef(validationState.addBitcoinAddressValidation('Invalid address')).current}
+                            inputValidation={validationBitcoin}
                             onChange={setBitcoinAddress} />
                     ) }
                     actions = { (
