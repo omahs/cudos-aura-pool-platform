@@ -59,7 +59,6 @@ const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly,
             if (Array.isArray(inputValidation)) {
                 inputValidation.forEach((validation) => validation.onChange(props.value));
             } else if (inputValidation !== null) {
-                console.log('fewfwef')
                 inputValidation.onChange(props.value);
             }
         }
@@ -89,7 +88,20 @@ const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly,
                 return inputValidation.errorMessage;
             }
         }
+
         return S.Strings.EMPTY;
+    }
+
+    function shouldShowError(): boolean {
+        if (inputValidation !== null) {
+            if (Array.isArray(inputValidation)) {
+                return inputValidation.find((validation) => validation.showError === true) !== undefined;
+            }
+
+            return inputValidation.showError;
+        }
+
+        return false;
     }
 
     const cssClassStretch = S.CSS.getClassName(stretch, 'InputStretch');
@@ -99,8 +111,8 @@ const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly,
         <div ref = { ref } className={`Input ${className} ${cssClassStretch} ${cssClassGray} ${S.CSS.getClassName(readOnly, 'ReadOnly')}`}>
             <TextField
                 {...props}
-                error={isErrorPresent()}
-                helperText={getErrorMessage()}
+                error={shouldShowError() && isErrorPresent()}
+                helperText={shouldShowError() ? getErrorMessage() : '' }
                 hiddenLabel = { false }
                 onChange={onChange !== null && readOnly !== true ? onChangeHandler : undefined}
                 margin='dense'

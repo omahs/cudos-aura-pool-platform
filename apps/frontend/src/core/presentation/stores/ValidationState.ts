@@ -6,11 +6,14 @@ import { validate } from 'bitcoin-address-validation';
 class InputValidation {
     errorMessage: string;
     isError: boolean;
+    showError: boolean;
+
     checkValidInput: (value: any) => boolean;
 
     constructor() {
         this.errorMessage = S.Strings.EMPTY;
         this.isError = false;
+        this.showError = false;
         this.checkValidInput = null;
 
         makeAutoObservable(this);
@@ -35,9 +38,9 @@ class InputValidation {
         return validation;
     }
 
-    static matchStringsValidation(errorMessage: string, secondString: string): InputValidation {
+    static matchStringsValidation(secondString: string, errorMessage?: string): InputValidation {
         const validation = new InputValidation();
-
+        console.log(secondString)
         validation.setErrorMessage(errorMessage);
         validation.checkValidInput = (value) => value === secondString;
 
@@ -115,7 +118,7 @@ export default class ValidationState {
     }
 
     addMatchStringsValidation(secondString: string, errorMessage?: string): InputValidation {
-        const inputValidation = InputValidation.matchStringsValidation(errorMessage, secondString);
+        const inputValidation = InputValidation.matchStringsValidation(secondString, errorMessage);
 
         this.inputValidations.push(inputValidation);
 
@@ -155,10 +158,16 @@ export default class ValidationState {
     }
 
     getIsErrorPresent(): boolean {
-        const validation = this.inputValidations.values.array.find((element) => {
+        const validation = this.inputValidations.find((element) => {
             return element.isError === true;
         });
 
         return validation !== null;
+    }
+
+    setShowErrors = (showErrors: boolean) => {
+        this.inputValidations.forEach((element) => {
+            element.showError = showErrors;
+        })
     }
 }

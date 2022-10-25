@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
@@ -18,6 +18,7 @@ import AuthBlockLayout from '../components/AuthBlockLayout';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import '../styles/page-email-verification-request.css';
+import ValidationState from '../../../../core/presentation/stores/ValidationState';
 
 type Props = {
     alertStore?: AlertStore;
@@ -25,10 +26,15 @@ type Props = {
 }
 
 function EmailVerificationRequestPage({ alertStore, accountSessionStore }: Props) {
+    const validationState = useRef(new ValidationState()).current;
 
     const email = accountSessionStore.accountEntity.email;
 
     async function onClickResend() {
+        if (validationState.getIsErrorPresent() === true) {
+            validationState.setShowErrors(true);
+            return;
+        }
         await accountSessionStore.sendVerificationEmail();
         alertStore.show('We have resent the email.');
     }
@@ -52,6 +58,7 @@ function EmailVerificationRequestPage({ alertStore, accountSessionStore }: Props
                                     <Svg svg={AlternateEmailIcon}/>
                                 </InputAdornment>,
                             }}
+                            inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
                             gray = { true }
                             value={email}/>
                     ) }

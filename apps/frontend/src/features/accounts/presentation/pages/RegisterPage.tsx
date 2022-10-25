@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { inject, observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,6 +28,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import '../styles/page-register.css';
+import ValidationState from '../../../../core/presentation/stores/ValidationState';
 
 enum RegisterStep {
     ACCOUNT_DETAILS,
@@ -44,6 +45,8 @@ type Props = {
 
 function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }: Props) {
     const navigate = useNavigate();
+    const validationState = useRef(new ValidationState()).current;
+
     const [step, setStep] = useState(RegisterStep.ACCOUNT_DETAILS);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -107,6 +110,11 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
         }
 
         async function onClickRegister() {
+            if (validationState.getIsErrorPresent() === true) {
+                validationState.setShowErrors(true);
+                return;
+            }
+
             appStore.disableActions();
             moveToWalletDetails();
             await walletStore.connectKeplr();
@@ -125,6 +133,7 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
                             label={'Full Name'}
                             placeholder={'John Doe'}
                             value={name}
+                            inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
                             onChange={setName} />
                         <Input
                             label={'Email'}
@@ -134,6 +143,7 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
                                     <Svg svg={AlternateEmailIcon}/>
                                 </InputAdornment>,
                             }}
+                            inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
                             value={email}
                             onChange={setEmail} />
                         <Input
@@ -145,6 +155,10 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
                                 </InputAdornment>,
                             }}
                             value={password}
+                            inputValidation={[
+                                useRef(validationState.addPasswordValidation('Invalid password')).current,
+                                validationState.addMatchStringsValidation(repeatPassword, 'Passwords don\'t match.'),
+                            ]}
                             onChange={setPassword}
                             type={showPassword === false ? 'password' : 'text'} />
                         <Input
@@ -155,6 +169,10 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
                                     <Svg className={'Clickable'} svg={showRepeatPassword === false ? VisibilityOffIcon : VisibilityIcon} onClick={onClickShowRepeatPassword}/>
                                 </InputAdornment>,
                             }}
+                            inputValidation={[
+                                useRef(validationState.addPasswordValidation('Invalid password')).current,
+                                validationState.addMatchStringsValidation(password, 'Passwords don\'t match.'),
+                            ]}
                             value={repeatPassword}
                             onChange={setRepeatPassword}
                             type={showRepeatPassword === false ? 'password' : 'text'} />

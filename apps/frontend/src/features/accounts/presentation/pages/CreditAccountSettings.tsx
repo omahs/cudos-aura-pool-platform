@@ -23,6 +23,7 @@ type Props = {
 
 function CreditAccountSettings({ accountSessionStore }: Props) {
     const validationState = useRef(new ValidationState()).current;
+
     const [tempAccountEntity] = useState(accountSessionStore.accountEntity.deepClone() || null);
     const [tempAdminEntity] = useState(accountSessionStore.adminEntity.clone() || null);
     const [emailInputDisabled, setEmailInputDisabled] = useState(true);
@@ -33,6 +34,15 @@ function CreditAccountSettings({ accountSessionStore }: Props) {
         return accountSessionStore.accountEntity.email !== tempAccountEntity.email
         || accountSessionStore.accountEntity.name !== tempAccountEntity.name
         || accountSessionStore.adminEntity.cudosWalletAddress !== tempAdminEntity.cudosWalletAddress
+    }
+
+    function onClickSaveChanges() {
+        if (validationState.getIsErrorPresent() === true) {
+            validationState.setShowErrors(true);
+            return;
+        }
+
+        accountSessionStore.creditAdminSettings(tempAdminEntity, tempAccountEntity);
     }
 
     return (
@@ -48,7 +58,7 @@ function CreditAccountSettings({ accountSessionStore }: Props) {
                         {isFieldChanged() === true
                      && (<Actions>
                          <Button
-                             onClick={() => accountSessionStore.creditAdminSettings(adminEntity, tempAccountEntity)}
+                             onClick={onClickSaveChanges}
                          >Save Changes</Button>
                      </Actions>)}
                     </div>
@@ -59,12 +69,7 @@ function CreditAccountSettings({ accountSessionStore }: Props) {
                             <Input
                                 disabled={emailInputDisabled}
                                 value={tempAccountEntity.email}
-                                inputValidation={[
-                                    validationState.addEmptyValidation(),
-                                    validationState.addMatchStringsValidation(tempAccountEntity.name, 'Not matching'),
-                                    validationState.addEmailValidation('Invalid email'),
-                                    validationState.addBitcoinAddressValidation('not a cudos address'),
-                                ]}
+                                inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
                                 onChange={(value: string) => { tempAccountEntity.email = value }}
                             />
                             <Actions>
@@ -81,6 +86,7 @@ function CreditAccountSettings({ accountSessionStore }: Props) {
                             <Input
                                 disabled={ownerInputDisabled}
                                 value={tempAccountEntity.name}
+                                inputValidation={useRef(validationState.addEmptyValidation('Name can\'t be empty.')).current}
                                 onChange={(value: string) => { tempAccountEntity.name = value }}
                             />
                             <Actions>
@@ -97,6 +103,7 @@ function CreditAccountSettings({ accountSessionStore }: Props) {
                             <Input
                                 disabled={walletInputDisabled}
                                 value={tempAdminEntity.cudosWalletAddress}
+                                inputValidation={useRef(validationState.addCudosAddressValidation('Not a cudos address')).current}
                                 onChange={(value: string) => { tempAdminEntity.cudosWalletAddress = value }}
                             />
                             <Actions>

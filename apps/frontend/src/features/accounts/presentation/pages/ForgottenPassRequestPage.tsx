@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
@@ -19,6 +19,7 @@ import AuthBlockLayout from '../components/AuthBlockLayout';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import '../styles/page-forgotten-pass-request.css';
+import ValidationState from '../../../../core/presentation/stores/ValidationState';
 
 type Props = {
     alertStore?: AlertStore;
@@ -27,11 +28,17 @@ type Props = {
 
 function ForgottenPassRequestPage({ alertStore, accountSessionStore }: Props) {
     const navigate = useNavigate();
+    const validationState = useRef(new ValidationState()).current;
+
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [showResendStep, setShowResendStep] = useState(false);
 
     async function onClickSendNewPassword() {
+        if (validationState.getIsErrorPresent() === true) {
+            validationState.setShowErrors(true);
+            return;
+        }
         setLoading(true);
         await accountSessionStore.forgottenPassword(email);
         setShowResendStep(true);
@@ -43,6 +50,11 @@ function ForgottenPassRequestPage({ alertStore, accountSessionStore }: Props) {
     }
 
     async function onClickResend() {
+        if (validationState.getIsErrorPresent() === true) {
+            validationState.setShowErrors(true);
+            return;
+        }
+
         setLoading(true);
         await accountSessionStore.forgottenPassword(email);
         alertStore.show('We have resent the email.');
@@ -67,6 +79,7 @@ function ForgottenPassRequestPage({ alertStore, accountSessionStore }: Props) {
                                 <Svg svg={AlternateEmailIcon}/>
                             </InputAdornment>,
                         }}
+                        inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
                         value={email}
                         onChange={setEmail} />
                 ) }
@@ -103,6 +116,7 @@ function ForgottenPassRequestPage({ alertStore, accountSessionStore }: Props) {
                                     <Svg svg={AlternateEmailIcon}/>
                                 </InputAdornment>,
                             }}
+                            inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
                             gray = { true }
                             value={email}/>
                     ) }

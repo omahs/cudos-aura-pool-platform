@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
@@ -19,20 +19,27 @@ import AuthBlockLayout from '../components/AuthBlockLayout';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import '../styles/page-forgotten-pass-edit.css';
+import ValidationState from '../../../../core/presentation/stores/ValidationState';
 
 type Props = {
     alertStore?: AlertStore;
     accountSessionStore?: AccountSessionStore;
 }
 
-function ForgottenPassEditPage({ alertStore, accountSessionStore }: Props) {
+function ForgottenPassEditPage({ accountSessionStore }: Props) {
     const navigate = useNavigate();
+    const validationState = useRef(new ValidationState()).current;
+
     const [loading, setLoading] = useState(false);
     const [pass, setPass] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
     const [showUpdatedStep, setShowUpdatedStep] = useState(false);
 
     async function onClickSendNewPassword() {
+        if (validationState.getIsErrorPresent() === true) {
+            validationState.setShowErrors(true);
+            return;
+        }
         setLoading(true);
         await accountSessionStore.editPassword('token', pass);
         setShowUpdatedStep(true);
@@ -62,6 +69,10 @@ function ForgottenPassEditPage({ alertStore, accountSessionStore }: Props) {
                                     <Svg svg={AlternateEmailIcon}/>
                                 </InputAdornment>,
                             }}
+                            inputValidation={[
+                                useRef(validationState.addEmailValidation('Invalid email')).current,
+                                validationState.addMatchStringsValidation(confirmPass, 'Passwords don\'t match.'),
+                            ]}
                             value={pass}
                             onChange={setPass} />
                         <Input
@@ -72,6 +83,10 @@ function ForgottenPassEditPage({ alertStore, accountSessionStore }: Props) {
                                     <Svg svg={AlternateEmailIcon}/>
                                 </InputAdornment>,
                             }}
+                            inputValidation={[
+                                useRef(validationState.addEmailValidation('Invalid email')).current,
+                                validationState.addMatchStringsValidation(pass, 'Passwords don\'t match.'),
+                            ]}
                             value={confirmPass}
                             onChange={setConfirmPass} />
                     </>

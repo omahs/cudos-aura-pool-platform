@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
@@ -20,6 +20,7 @@ import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import '../styles/page-login.css';
+import ValidationState from '../../../../core/presentation/stores/ValidationState';
 
 type Props = {
     alertStore?: AlertStore;
@@ -28,6 +29,8 @@ type Props = {
 
 function LoginPage({ alertStore, accountSessionStore }: Props) {
     const navigate = useNavigate();
+    const validationState = useRef(new ValidationState()).current;
+
     const [email, setEmail] = useState('');
     const [logging, setLogging] = useState(false);
     const [password, setPassword] = useState('');
@@ -46,12 +49,16 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
     }
 
     async function onClickLogin() {
+        if (validationState.getIsErrorPresent() === true) {
+            validationState.setShowErrors(true);
+            return;
+        }
+
         setLogging(true);
         try {
             await accountSessionStore.login(email, password, '', null);
             navigate(AppRoutes.HOME);
         } catch (e) {
-            console.log(e);
             alertStore.show('Wrong username/password');
         }
         setLogging(false);
@@ -77,6 +84,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
                                         <Svg svg={AlternateEmailIcon}/>
                                     </InputAdornment>,
                                 }}
+                                inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
                                 value={email}
                                 onChange={setEmail} />
                             <Input
@@ -89,6 +97,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
                                         </InputAdornment>
                                     ),
                                 }}
+                                inputValidation={useRef(validationState.addPasswordValidation('Invalid email')).current}
                                 value={password}
                                 onChange={setPassword}
                                 type={showPassword === false ? 'password' : 'text'} />
