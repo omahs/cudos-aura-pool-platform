@@ -123,6 +123,7 @@ export class NFTService {
       const mintNFTObj = data[0].events.find(
         (el) => el.type === 'marketplace_mint_nft',
       );
+      // TODO: get the proper uuid from the memo of the transaction
       tokenId = mintNFTObj.attributes.find((el) => el.key === 'nft_id').value;
     } catch (err) {
       throw new NotFoundException();
