@@ -45,6 +45,7 @@ export class FarmService {
         const farm = this.farmModel.create({
             ...createFarmDto,
             creator_id,
+            status: FarmStatus.QUEUED,
         });
 
         return farm;
@@ -76,7 +77,7 @@ export class FarmService {
         return farm;
     }
 
-    async updateStatus(id: number,status: FarmStatus,): Promise<Farm> {
+    async updateStatus(id: number, status: FarmStatus): Promise<Farm> {
         const [count, [farm]] = await this.farmModel.update(
             {
                 status,
