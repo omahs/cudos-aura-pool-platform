@@ -111,9 +111,14 @@ export class NFTService {
     let tokenId;
 
     try {
-      const res = await axios.post(
+      const res = await axios.get(
         `${process.env.App_Public_API}/cosmos/tx/v1beta1/txs/${txHash}`,
       );
+      console.log(res.data.tx_response.code, typeof res.data.tx_response.code);
+      if (res.data.tx_response.code !== 0) {
+        throw new NotFoundException();
+      }
+
       const data = JSON.parse(res.data.tx_response.raw_log);
       const mintNFTObj = data[0].events.find(
         (el) => el.type === 'marketplace_mint_nft',
