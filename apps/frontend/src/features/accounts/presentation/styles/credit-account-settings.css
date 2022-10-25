@@ -1,5 +1,5 @@
 .CreditAccountSettings .PageContent {
-    justify-content: center;
+    padding: 100px var(--page-spacing-h);
 }
 
 .CreditAccountSettings .PageContent .EditForm {

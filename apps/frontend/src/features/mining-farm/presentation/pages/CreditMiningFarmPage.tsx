@@ -31,7 +31,9 @@ import Input from '../../../../core/presentation/components/Input';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AddIcon from '@mui/icons-material/Add';
 import SvgGridNoContent from '../../../../core/presentation/vectors/grid-no-content.svg';
-import '../styles/page-mining-farm-credit-component.css';
+import SvgNoFarms from '../../../../public/assets/vectors/no-farm.svg';
+import SettingsIcon from '@mui/icons-material/Settings';
+import '../styles/page-mining-farm-credit.css';
 
 type Props = {
     appStore?: AppStore
@@ -72,6 +74,10 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
         navigate(AppRoutes.CREDIT_COLLECTION_DETAILS);
     }
 
+    function onClickAccountSettings() {
+        navigate(AppRoutes.CREDIT_ACCOUNT_SETTINGS);
+    }
+
     return (
         <PageLayoutComponent
             modals = {
@@ -82,129 +88,153 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
             className = { 'PageMiningFarmCredit' } >
             <PageHeader />
 
-            { miningFarmEntity === null && (
+            { creditMiningFarmPageStore.inited === false && (
                 <LoadingIndicator />
             ) }
 
-            { miningFarmEntity !== null && (
-                <div className={'PageContent AppContent'} >
-                    { farmId !== undefined && (
-                        <Breadcrumbs crumbs={crumbs}/>
-                    ) }
-                    <ProfileHeader coverPictureUrl={miningFarmEntity.coverImgUrl} profilePictureUrl={miningFarmEntity.profileImgUrl} />
-
-                    { accountSessionStore.isAdmin() === true && accountSessionStore.accountEntity.accountId === miningFarmEntity.accountId && (
-                        <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_RIGHT}>
-                            <Button
-                                onClick={onClickProfileImages}
-                                color={ButtonColor.SCHEME_3} >
-                                <Svg size = { SvgSize.CUSTOM } svg={BorderColorIcon} />
-                                Profile images
-                            </Button>
-                            <Button
-                                onClick={onClickEditProfile}
-                                color={ButtonColor.SCHEME_3} >
-                                <Svg size = { SvgSize.CUSTOM } svg={BorderColorIcon} />
-                                Edit Profile
-                            </Button>
-                        </Actions>
-                    ) }
-                    <div className={'H2'}>{miningFarmEntity.name}</div>
-                    <div className={'Grid GridColumns2'}>
-                        <div className={'FarmDescription'}>{miningFarmEntity.description}</div>
-                        <div className={'BorderContainer'}>
-                            {/* TODO: use real data */}
-                            <div className={'FlexRow FarmInfoRow'}>
-                                <div className={'FarmInfoLabel'}>Total Hashrate</div>
-                                <div className={'FarmInfoValue'}>102.000 EH/s</div>
-                            </div>
-                            <div className={'FlexRow FarmInfoRow'}>
-                                <div className={'FarmInfoLabel'}>Hashrate (1h average)</div>
-                                <div className={'FarmInfoValue'}>80.345 EH/s</div>
-                            </div>
-                            <div className={'FlexRow FarmInfoRow'}>
-                                <div className={'FarmInfoLabel'}>Active Workers</div>
-                                <div className={'FarmInfoValue'}>1023</div>
-                            </div>
-                            <div className={'FlexRow FarmInfoRow'}>
-                                <div className={'FarmInfoLabel'}>Collections Owned</div>
-                                <div className={'FarmInfoValue'}>2</div>
-                            </div>
-                            <div className={'FlexRow FarmInfoRow'}>
-                                <div className={'FarmInfoLabel'}>NFTs Owned</div>
-                                <div className={'FarmInfoValue'}>1400</div>
-                            </div>
-                            <div className={'FlexRow FarmInfoRow'}>
-                                <div className={'FarmInfoLabel'}>Total NFTs Sold</div>
-                                <div className={'FarmInfoValue'}>735</div>
-                            </div>
+            <div className={'PageContent AppContent'} >
+                { miningFarmEntity === null && (
+                    <div className = { 'NoFarmCnt FlexSingleCenter' } >
+                        <div className = { 'NoFarmLayout FlexColumn' } >
+                            <Svg className = { 'SvgNoFarm' } svg = { SvgNoFarms } />
+                            <div className = { 'Title H3 Bold' } >No Farm Profile</div>
+                            <div className = { 'Subtitle' } > Looks like you haven’t registered your farm yet. </div>
+                            <Actions>
+                                <Button onClick = { onClickEditProfile } >
+                                    <Svg svg = { AddIcon } />
+                                    Register Farm
+                                </Button>
+                            </Actions>
                         </div>
                     </div>
-                    <div className={'CollectionsOwnedHeader FlexRow'}>
-                        <div className={'H2'}>Collections Owned</div>
-                        <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_CENTER}>
-                            <Button onClick={onClickCreateCollection} >
-                                <Svg svg={AddIcon}/>
+                ) }
+
+                { miningFarmEntity !== null && (
+                    <>
+                        { farmId !== undefined && (
+                            <Breadcrumbs crumbs={crumbs}/>
+                        ) }
+                        <ProfileHeader coverPictureUrl={miningFarmEntity.coverImgUrl} profilePictureUrl={miningFarmEntity.profileImgUrl} />
+
+                        { accountSessionStore.isAdmin() === true && accountSessionStore.accountEntity.accountId === miningFarmEntity.accountId && (
+                            <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_RIGHT}>
+                                <Button
+                                    onClick={onClickProfileImages}
+                                    color={ButtonColor.SCHEME_3} >
+                                    <Svg size = { SvgSize.CUSTOM } svg={BorderColorIcon} />
+                                    Profile images
+                                </Button>
+                                <Button
+                                    onClick={onClickEditProfile}
+                                    color={ButtonColor.SCHEME_3} >
+                                    <Svg size = { SvgSize.CUSTOM } svg={BorderColorIcon} />
+                                    Edit Farm Details
+                                </Button>
+                                <Button
+                                    onClick={onClickAccountSettings}
+                                    color={ButtonColor.SCHEME_3} >
+                                    <Svg size = { SvgSize.CUSTOM } svg={SettingsIcon} />
+                                    Account settings
+                                </Button>
+                            </Actions>
+                        ) }
+                        <div className={'H2'}>{miningFarmEntity.name}</div>
+                        <div className={'Grid GridColumns2'}>
+                            <div className={'FarmDescription'}>{miningFarmEntity.description}</div>
+                            <div className={'BorderContainer'}>
+                                {/* TODO: use real data */}
+                                <div className={'FlexRow FarmInfoRow'}>
+                                    <div className={'FarmInfoLabel'}>Total Hashrate</div>
+                                    <div className={'FarmInfoValue'}>102.000 EH/s</div>
+                                </div>
+                                <div className={'FlexRow FarmInfoRow'}>
+                                    <div className={'FarmInfoLabel'}>Hashrate (1h average)</div>
+                                    <div className={'FarmInfoValue'}>80.345 EH/s</div>
+                                </div>
+                                <div className={'FlexRow FarmInfoRow'}>
+                                    <div className={'FarmInfoLabel'}>Active Workers</div>
+                                    <div className={'FarmInfoValue'}>1023</div>
+                                </div>
+                                <div className={'FlexRow FarmInfoRow'}>
+                                    <div className={'FarmInfoLabel'}>Collections Owned</div>
+                                    <div className={'FarmInfoValue'}>2</div>
+                                </div>
+                                <div className={'FlexRow FarmInfoRow'}>
+                                    <div className={'FarmInfoLabel'}>NFTs Owned</div>
+                                    <div className={'FarmInfoValue'}>1400</div>
+                                </div>
+                                <div className={'FlexRow FarmInfoRow'}>
+                                    <div className={'FarmInfoLabel'}>Total NFTs Sold</div>
+                                    <div className={'FarmInfoValue'}>735</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={'CollectionsOwnedHeader FlexRow'}>
+                            <div className={'H2'}>Collections Owned</div>
+                            <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_ROW_CENTER}>
+                                <Button onClick={onClickCreateCollection} >
+                                    <Svg svg={AddIcon}/>
                                 Create Collection
-                            </Button>
-                        </Actions>
-                    </div>
-                    <DataGridLayout
-                        header = { (
-                            <div className={'GridFilterHeader'}>
-                                <div className={'LeftHeaderPart FlexRow'}>
-                                    <Input
-                                        className={'SearchBar'}
-                                        value = {collectionFilterModel.searchString}
-                                        onChange = { creditMiningFarmPageStore.onChangeSearchWord }
-                                        placeholder = {'Search Collections name'}
-                                        InputProps={{
-                                            startAdornment: <InputAdornment position="start" >
-                                                <Svg svg={SearchIcon} />
-                                            </InputAdornment>,
-                                        }} />
+                                </Button>
+                            </Actions>
+                        </div>
+                        <DataGridLayout
+                            header = { (
+                                <div className={'GridFilterHeader'}>
+                                    <div className={'LeftHeaderPart FlexRow'}>
+                                        <Input
+                                            className={'SearchBar'}
+                                            value = {collectionFilterModel.searchString}
+                                            onChange = { creditMiningFarmPageStore.onChangeSearchWord }
+                                            placeholder = {'Search Collections name'}
+                                            InputProps={{
+                                                startAdornment: <InputAdornment position="start" >
+                                                    <Svg svg={SearchIcon} />
+                                                </InputAdornment>,
+                                            }} />
+                                        <Select
+                                            label={'Hashing Power'}
+                                            onChange={creditMiningFarmPageStore.onChangeHashPowerFilter}
+                                            value={collectionFilterModel.hashPowerFilter} >
+                                            <MenuItem value = { CollectionHashPowerFilter.NONE } >All </MenuItem>
+                                            <MenuItem value = { CollectionHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
+                                            <MenuItem value = { CollectionHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
+                                            <MenuItem value = { CollectionHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
+                                        </Select>
+                                    </div>
+                                    <div></div>
                                     <Select
-                                        label={'Hashing Power'}
-                                        onChange={creditMiningFarmPageStore.onChangeHashPowerFilter}
-                                        value={collectionFilterModel.hashPowerFilter} >
-                                        <MenuItem value = { CollectionHashPowerFilter.NONE } >All </MenuItem>
-                                        <MenuItem value = { CollectionHashPowerFilter.BELOW_1000_EH } > Below 1000 EH/s </MenuItem>
-                                        <MenuItem value = { CollectionHashPowerFilter.BELOW_2000_EH } > Below 2000 EH/s </MenuItem>
-                                        <MenuItem value = { CollectionHashPowerFilter.ABOVE_2000_EH } > Above 2000 EH/s </MenuItem>
+                                        onChange={creditMiningFarmPageStore.onChangeSortKey}
+                                        value={collectionFilterModel.sortKey} >
+                                        <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
+                                        <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
                                     </Select>
                                 </div>
-                                <div></div>
-                                <Select
-                                    onChange={creditMiningFarmPageStore.onChangeSortKey}
-                                    value={collectionFilterModel.sortKey} >
-                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_NAME } > Name </MenuItem>
-                                    <MenuItem value = { CollectionFilterModel.SORT_KEY_PRICE } > Price </MenuItem>
-                                </Select>
-                            </div>
-                        ) }>
+                            ) }>
 
-                        { creditMiningFarmPageStore.collectionEntities === null && (
-                            <LoadingIndicator />
-                        ) }
+                            { creditMiningFarmPageStore.collectionEntities === null && (
+                                <LoadingIndicator />
+                            ) }
 
-                        { creditMiningFarmPageStore.collectionEntities !== null && (
-                            <GridView
-                                gridViewState={creditMiningFarmPageStore.gridViewState}
-                                defaultContent={<EmptyGridContent/>} >
-                                { creditMiningFarmPageStore.collectionEntities.map((collectionEntity: CollectionEntity, index: number) => {
-                                    return (
-                                        <CollectionPreview
-                                            key={index}
-                                            collectionEntity={collectionEntity}
-                                            miningFarmName={creditMiningFarmPageStore.getMiningFarmName(collectionEntity.farmId)} />
-                                    )
-                                }) }
-                            </GridView>
-                        ) }
+                            { creditMiningFarmPageStore.collectionEntities !== null && (
+                                <GridView
+                                    gridViewState={creditMiningFarmPageStore.gridViewState}
+                                    defaultContent={<EmptyGridContent/>} >
+                                    { creditMiningFarmPageStore.collectionEntities.map((collectionEntity: CollectionEntity, index: number) => {
+                                        return (
+                                            <CollectionPreview
+                                                key={index}
+                                                collectionEntity={collectionEntity}
+                                                miningFarmName={creditMiningFarmPageStore.getMiningFarmName(collectionEntity.farmId)} />
+                                        )
+                                    }) }
+                                </GridView>
+                            ) }
 
-                    </DataGridLayout>
-                </div>
-            ) }
+                        </DataGridLayout>
+                    </>
+                ) }
+            </div>
 
             <PageFooter />
         </PageLayoutComponent>

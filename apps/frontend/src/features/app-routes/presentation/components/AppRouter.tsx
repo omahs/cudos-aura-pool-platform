@@ -68,9 +68,9 @@ function AppRouter({ accountSessionStore }: Props) {
                     return <BitcoinConfirmPage />
                 }
 
-                if (accountSessionStore.hasApprovedMiningFarm() === false) {
-                    return <CreditMiningFarmDetailsPage />
-                }
+                // if (accountSessionStore.hasApprovedMiningFarm() === false) {
+                //     return <CreditMiningFarmDetailsPage />
+                // }
 
                 return <CreditMiningFarmPage />;
             }

@@ -3,6 +3,28 @@
     padding: 24px var(--page-spacing-h);
 }
 
+.PageMiningFarmCredit .NoFarmCnt {
+    flex: 1 1 auto;
+}
+
+.PageMiningFarmCredit .NoFarmCnt .NoFarmLayout {
+    align-items: center;
+}
+
+.PageMiningFarmCredit .NoFarmCnt .NoFarmLayout .SvgNoFarm {
+    margin-bottom: 40px;
+}
+
+.PageMiningFarmCredit .NoFarmCnt .NoFarmLayout .Title {
+    margin-bottom: 16px;
+}
+
+.PageMiningFarmCredit .NoFarmCnt .NoFarmLayout .Subtitle {
+    color: var(--color-gray-030);
+    font-size: 16px;
+    margin-bottom: 48px;
+}
+
 .PageMiningFarmCredit .CollectionsOwnedHeader {
     justify-content: space-between;
 }

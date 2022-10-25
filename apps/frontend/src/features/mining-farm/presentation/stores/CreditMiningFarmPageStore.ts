@@ -14,6 +14,7 @@ export default class CreditMiningFarmPageStore {
     gridViewState: GridViewState;
     collectionFilterModel: CollectionFilterModel;
 
+    inited: boolean;
     miningFarmEntity: MiningFarmEntity;
     collectionEntities: CollectionEntity[];
     miningFarmEntitiesMap: Map < string, MiningFarmEntity >;
@@ -25,6 +26,7 @@ export default class CreditMiningFarmPageStore {
         this.gridViewState = new GridViewState(this.fetch, 3, 4, 6);
         this.collectionFilterModel = new CollectionFilterModel();
 
+        this.inited = false;
         this.miningFarmEntity = null;
         this.collectionEntities = null;
         this.miningFarmEntitiesMap = null;
@@ -35,16 +37,12 @@ export default class CreditMiningFarmPageStore {
     async init(farmId = '') {
         if (farmId === '') {
             this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmBySessionAccountId();
+            this.collectionFilterModel.markSessionAccount();
         } else {
             this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmById(farmId);
+            this.collectionFilterModel.farmId = this.miningFarmEntity.id;
         }
-        this.collectionFilterModel.farmId = this.miningFarmEntity.id;
-        await this.fetch();
-    }
 
-    async initByAccountId() {
-        this.miningFarmEntity = await this.miningFarmRepo.fetchMiningFarmBySessionAccountId();
-        this.collectionFilterModel.farmId = this.miningFarmEntity.id;
         await this.fetch();
     }
 
@@ -69,6 +67,7 @@ export default class CreditMiningFarmPageStore {
             this.collectionEntities = collectionEntities;
             this.gridViewState.setTotalItems(total);
             this.gridViewState.setIsLoading(false);
+            this.inited = true;
         });
     }
 
