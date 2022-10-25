@@ -219,7 +219,7 @@ function CreditMiningFarmPage({ appStore, creditMiningFarmPageStore, accountSess
                             { creditMiningFarmPageStore.collectionEntities !== null && (
                                 <GridView
                                     gridViewState={creditMiningFarmPageStore.gridViewState}
-                                    defaultContent={<EmptyGridContent/>} >
+                                    defaultContent={creditMiningFarmPageStore.collectionEntities ? <EmptyGridContent/> : null} >
                                     { creditMiningFarmPageStore.collectionEntities.map((collectionEntity: CollectionEntity, index: number) => {
                                         return (
                                             <CollectionPreview
