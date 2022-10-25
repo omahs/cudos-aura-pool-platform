@@ -106,7 +106,6 @@ const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly,
 
     const cssClassStretch = S.CSS.getClassName(stretch, 'InputStretch');
     const cssClassGray = S.CSS.getClassName(gray, 'InputGray');
-
     return (
         <div ref = { ref } className={`Input ${className} ${cssClassStretch} ${cssClassGray} ${S.CSS.getClassName(readOnly, 'ReadOnly')}`}>
             <TextField

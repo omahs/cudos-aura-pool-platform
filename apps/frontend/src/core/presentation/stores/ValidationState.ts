@@ -33,14 +33,13 @@ class InputValidation {
         const validation = new InputValidation();
 
         validation.setErrorMessage(errorMessage);
-        validation.checkValidInput = (value) => value !== S.Strings.EMPTY;
+        validation.checkValidInput = (value) => value !== null && value !== undefined && value !== S.Strings.EMPTY;
 
         return validation;
     }
 
     static matchStringsValidation(secondString: string, errorMessage?: string): InputValidation {
         const validation = new InputValidation();
-        console.log(secondString)
         validation.setErrorMessage(errorMessage);
         validation.checkValidInput = (value) => value === secondString;
 

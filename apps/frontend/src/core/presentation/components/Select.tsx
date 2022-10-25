@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Select as MuiSelect, SelectProps, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
+import { Select as MuiSelect, SelectProps, InputLabel, FormControl, SelectChangeEvent, FormHelperText } from '@mui/material';
 import SvgArrowDown from '@mui/icons-material/ArrowDownward';
 import '../styles/select.css';
+import { InputValidation } from '../stores/ValidationState';
+import { observer } from 'mobx-react-lite';
 
 type Props = SelectProps & {
     className?: string;
@@ -9,9 +11,11 @@ type Props = SelectProps & {
     label?: string;
     innerLabel?: string;
     readOnly?: boolean;
+    error?: boolean;
+    inputValidation?: InputValidation | InputValidation[],
 }
 
-export default function Select({ className, margin, onChange, innerLabel, label, readOnly, ...props }: Props) {
+function Select({ className, margin, onChange, innerLabel, label, readOnly, error, inputValidation, ...props }: Props) {
 
     const [open, setOpen] = useState(false);
 
@@ -26,6 +30,34 @@ export default function Select({ className, margin, onChange, innerLabel, label,
             document.removeEventListener('scroll', onUnpreventableScroll);
         }
     });
+
+    useEffect(() => {
+        if (inputValidation !== null) {
+            if (props.multiple === undefined || props.multiple === false) {
+                if (props.value !== null) {
+                    const value = props.value;
+                    if (Array.isArray(inputValidation)) {
+                        inputValidation.forEach((validation) => validation.onChange(value));
+                    } else if (inputValidation !== null) {
+                        inputValidation.onChange(value);
+                    }
+
+                    return;
+                }
+            } else if (props.value.length !== 0) {
+                props.value.forEach((option) => {
+                    if (Array.isArray(inputValidation)) {
+                        inputValidation.forEach((validation) => validation.onChange(option.value));
+                    } else if (inputValidation !== null) {
+                        inputValidation.onChange(option.value);
+                    }
+                });
+                return;
+            }
+
+            inputValidation.onChange(null);
+        }
+    }, [props.value]);
 
     function onChangeHandler(e: SelectChangeEvent<unknown>) {
         if (onChange !== undefined) {
@@ -57,12 +89,52 @@ export default function Select({ className, margin, onChange, innerLabel, label,
         }, 0);
     }
 
+    function isErrorPresent(): boolean {
+        if (inputValidation !== null) {
+            if (Array.isArray(inputValidation)) {
+                return inputValidation.find((validation) => validation.isError === true) !== undefined;
+            }
+
+            return inputValidation.isError;
+        }
+
+        return false;
+    }
+
+    function getErrorMessage(): string {
+        if (inputValidation !== null) {
+
+            if (Array.isArray(inputValidation)) {
+                return inputValidation.filter((validation) => validation.isError === true && validation.errorMessage !== S.Strings.EMPTY)
+                    .map((validation) => validation.errorMessage).join(', ');
+            }
+
+            if (inputValidation.isError) {
+                return inputValidation.errorMessage;
+            }
+        }
+
+        return S.Strings.EMPTY;
+    }
+
+    function shouldShowError(): boolean {
+        if (inputValidation !== null) {
+            if (Array.isArray(inputValidation)) {
+                return inputValidation.find((validation) => validation.showError === true) !== undefined;
+            }
+
+            return inputValidation.showError;
+        }
+
+        return false;
+    }
+
     return (
         <div className = { `Select ${className}` }>
             <FormControl variant = 'standard' margin = { 'dense' }>
                 { label !== undefined && (
                     <InputLabel
-                        error = { props.error }
+                        error = { props.error || (shouldShowError() && isErrorPresent()) }
                         variant = { 'standard' }
                         margin = { 'dense' } >
                         { label }
@@ -83,8 +155,9 @@ export default function Select({ className, margin, onChange, innerLabel, label,
                             paper: 'AppSelectPaper',
                         },
                     }}
-                    variant = { 'standard' } />
 
+                    variant = { 'standard' } />
+                {shouldShowError() && isErrorPresent() && (<FormHelperText>{getErrorMessage()}</FormHelperText>)}
             </FormControl>
         </div>
     )
@@ -94,4 +167,8 @@ Select.defaultProps = {
     className: '',
     onChange: undefined,
     readOnly: false,
+    error: false,
+    inputValidation: null,
 }
+
+export default observer(Select);

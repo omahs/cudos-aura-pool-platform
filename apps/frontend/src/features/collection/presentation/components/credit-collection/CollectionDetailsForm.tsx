@@ -1,7 +1,7 @@
 import Svg, { SvgSize } from '../../../../../core/presentation/components/Svg';
 import S from '../../../../../core/utilities/Main';
 import { inject, observer } from 'mobx-react';
-import React from 'react';
+import React, { useRef } from 'react';
 import CreditCollectionStore from '../../stores/CreditCollectionStore';
 import '../../styles/input-column-holder.css';
 import '../../styles/collection-details-form.css';
@@ -14,6 +14,7 @@ import Input, { InputType } from '../../../../../core/presentation/components/In
 import TextWithTooltip from '../../../../../core/presentation/components/TextWithTooltip';
 import InfoGrayBox from '../../../../../core/presentation/components/InfoGrayBox';
 import Checkbox from '../../../../../core/presentation/components/Checkbox';
+import ValidationState from '../../../../../core/presentation/stores/ValidationState';
 
 type Props = {
     onClickNextStep: () => void
@@ -22,6 +23,15 @@ type Props = {
 
 function CollectionDetailsForm({ onClickNextStep, creditCollectionStore }: Props) {
     const collectionEntity = creditCollectionStore.collectionEntity;
+    const validationState = useRef(new ValidationState()).current;
+
+    function onClickNextStepButton() {
+        if (validationState.getIsErrorPresent() === true) {
+            validationState.setShowErrors(true);
+            return;
+        }
+        onClickNextStep();
+    }
 
     return (
         <div className={'CollectionDetailsForm FlexColumn'}>
@@ -108,6 +118,7 @@ function CollectionDetailsForm({ onClickNextStep, creditCollectionStore }: Props
                 label={'Collection Name'}
                 placeholder={'Enter name...'}
                 value={collectionEntity.name}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
                 onChange={creditCollectionStore.onChangeCollectionName}
             />
             <div className={'InputColumnHolder'}>
@@ -121,6 +132,7 @@ function CollectionDetailsForm({ onClickNextStep, creditCollectionStore }: Props
             </div>
             <Input
                 label={'Hashing Power for collection'}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty hashing power')).current}
                 value={collectionEntity.hashRateDisplay()}
                 disabled={true}
             />
@@ -130,6 +142,7 @@ function CollectionDetailsForm({ onClickNextStep, creditCollectionStore }: Props
                     placeholder={'Enter royalties...'}
                     value={creditCollectionStore.getCollectionRoyaltiesInputValue()}
                     inputType={InputType.INTEGER}
+                    inputValidation={useRef(validationState.addEmptyValidation('Empty royalties')).current}
                     onChange={creditCollectionStore.onChangeCollectionRoyalties}
                 />
                 <div className={'InputInfoLabel'}>Suggested: 0%, 1%, 2%, 6%. Maxium: 10%.</div>
@@ -141,6 +154,7 @@ function CollectionDetailsForm({ onClickNextStep, creditCollectionStore }: Props
                     placeholder={'Enter royalties...'}
                     value={creditCollectionStore.getCollectionMaintenanceFeesInputValue()}
                     inputType={InputType.INTEGER}
+                    inputValidation={useRef(validationState.addEmptyValidation('Empty royalties')).current}
                     onChange={creditCollectionStore.onChangeMaintenanceFees}
                 />
                 <div className={'InputInfoLabel'}>Maintenance fee calculation formula:</div>
@@ -150,6 +164,7 @@ function CollectionDetailsForm({ onClickNextStep, creditCollectionStore }: Props
                 label={<TextWithTooltip text={'Set Payout Address'} tooltipText={'Set Payout Address'} />}
                 placeholder={'Enter address...'}
                 value={collectionEntity.payoutAddress}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty payout address')).current}
                 onChange={creditCollectionStore.onChangeCollectionPayoutAddress}
             />
             <Checkbox
@@ -161,17 +176,19 @@ function CollectionDetailsForm({ onClickNextStep, creditCollectionStore }: Props
                 label={<TextWithTooltip text={'Hashing Power per NFT'} tooltipText={'Paid monthly in BTC'} />}
                 placeholder={'Enter hash power...'}
                 value={creditCollectionStore.getHashPowerPerNft()}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty hashing power per nft')).current}
                 onChange={creditCollectionStore.onChangeHashPowerPerNft}
             />
             <Input
                 label={'Price per NFT'}
                 placeholder={'Enter price...'}
                 value={creditCollectionStore.getPricePerNft()}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty price per nft')).current}
                 onChange={creditCollectionStore.onChangePricePerNft}
             />
 
             <Actions layout={ActionsLayout.LAYOUT_COLUMN_RIGHT}>
-                <Button padding={ButtonPadding.PADDING_48} onClick={onClickNextStep}>NextStep</Button>
+                <Button padding={ButtonPadding.PADDING_48} onClick={onClickNextStepButton}>NextStep</Button>
             </Actions>
         </div>
     )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import '../../styles/step-farm-details.css';
 import Input, { InputType } from '../../../../../core/presentation/components/Input';
@@ -20,6 +20,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ImageEntity, { PictureType } from '../../../../upload-file/entities/ImageEntity';
 import CloseIcon from '@mui/icons-material/Close';
 import CreditMiningFarmDetailsPageStore from '../../stores/CreditMiningFarmDetailsPageStore';
+import ValidationState from '../../../../../core/presentation/stores/ValidationState';
 
 type Props = {
     alertStore?: AlertStore;
@@ -27,6 +28,8 @@ type Props = {
 }
 
 function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props) {
+    const validationState = useRef(new ValidationState()).current;
+
     const [selectedManufacturersOptions, setSelectedManufacturersOptions] = useState([]);
     const [selectedMindersOptions, setSelectedMinersOptions] = useState([]);
     const [selectedEnergySourceOptions, setSelectedEnergySourceOptions] = useState([]);
@@ -38,13 +41,20 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
     function onClickRemoveImage(imageEntityToRemove: ImageEntity) {
         const imageEntityIndex = imageEntities.findIndex((imageEntity: ImageEntity) => imageEntity.id === imageEntityToRemove.id);
         imageEntities.splice(imageEntityIndex, 1);
-        console.log(imageEntities);
     }
 
     // based onfilled farm entity properties
     // TODO
     function shouldButtonBeDisabled() {
         return false;
+    }
+
+    function onClickNextStep() {
+        if (validationState.getIsErrorPresent() === true) {
+            validationState.setShowErrors(true);
+            return;
+        }
+        creditMiningFarmDetailsPageStore.setStepReview();
     }
 
     return (
@@ -54,6 +64,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                 label={'Farm Name'}
                 placeholder={'e.g Cool Farm'}
                 value={miningFarmEntity.name}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
                 onChange={(string) => { miningFarmEntity.name = string }}
                 inputType={InputType.TEXT}
             />
@@ -68,6 +79,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                 label={'Legal Entity Name'}
                 placeholder={'e.g Cool Farm Inc.'}
                 value={miningFarmEntity.legalName}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
                 onChange={(string) => { miningFarmEntity.legalName = string }}
                 inputType={InputType.TEXT}
             />
@@ -82,6 +94,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                 label={'Primary Account Owner Email'}
                 placeholder={'examplemail@mail.com'}
                 value={miningFarmEntity.primaryAccountOwnerEmail}
+                inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
                 onChange={(string) => { miningFarmEntity.primaryAccountOwnerEmail = string }}
                 inputType={InputType.TEXT}
             />
@@ -92,9 +105,9 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                 onChange = { (d) => {
                     setSelectedManufacturersOptions(d);
                     miningFarmEntity.manufacturerIds = d.map((option) => option.value);
-                    console.log(miningFarmEntity);
                 }}
                 placeholder={'Select manufacturers...'}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty manufacturers')).current}
                 options = { ManufacturerEntity.getAllManufacturers().map((manufacturer: ManufacturerEntity) => {
                     return new AutocompleteOption(manufacturer.id, manufacturer.name);
                 })} />
@@ -107,6 +120,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                     miningFarmEntity.minerIds = d.map((option) => option.value);
                 }}
                 placeholder={'Select miners...'}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty miners')).current}
                 options = { MinerEntity.getAllMiners().map((miner: MinerEntity) => {
                     return new AutocompleteOption(miner.id, miner.name);
                 })} />
@@ -118,6 +132,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                     setSelectedEnergySourceOptions(d);
                     miningFarmEntity.energySourceIds = d.map((option) => option.value);
                 }}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty energy source')).current}
                 placeholder={'Select energy source...'}
                 options = { EnergySourceEntity.getAllEnergySources().map((energySource: EnergySourceEntity) => {
                     return new AutocompleteOption(energySource.id, energySource.name);
@@ -129,6 +144,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                 value={miningFarmEntity.machinesLocation}
                 onChange={(string) => { miningFarmEntity.machinesLocation = string }}
                 inputType={InputType.TEXT}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty address')).current}
                 InputProps={{
                     endAdornment: <InputAdornment position="end" >
                         <Svg svg={NearMeIcon}/>
@@ -143,6 +159,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                     setHashRateDisplay(string);
                     miningFarmEntity.parseHashRateFromString(string);
                 }}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty hashrate')).current}
                 inputType={InputType.TEXT}
             />
             <div className={'FlexRow HashRateInfo B2 SemiBold FullLine'}>
@@ -196,7 +213,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
             <Actions layout={ActionsLayout.LAYOUT_COLUMN_RIGHT} height={ActionsHeight.HEIGHT_48}>
                 <Button
                     disabled={shouldButtonBeDisabled()}
-                    onClick={creditMiningFarmDetailsPageStore.setStepReview}
+                    onClick={onClickNextStep}
                     radius={ButtonRadius.RADIUS_16}
                 >Next Step</Button>
             </Actions>

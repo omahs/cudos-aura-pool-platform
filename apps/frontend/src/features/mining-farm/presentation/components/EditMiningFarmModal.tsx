@@ -14,6 +14,7 @@ import UploaderComponent from '../../../../core/presentation/components/Uploader
 import ImageEntity, { PictureType } from '../../../upload-file/entities/ImageEntity';
 import AlertStore from '../../../../core/presentation/stores/AlertStore';
 import S from '../../../../core/utilities/Main';
+import ValidationState from '../../../../core/presentation/stores/ValidationState';
 
 type Props = {
     alertStore?: AlertStore;
@@ -22,12 +23,17 @@ type Props = {
 
 function EditMiningFarmModal({ alertStore, editMiningFarmModalStore }: Props) {
     const miningFarmEntity = editMiningFarmModalStore.miningFarmEntity;
+    const validationState = useRef(new ValidationState()).current;
 
     function onClickRemoveCoverImage() {
         editMiningFarmModalStore.changeCoverImage(S.Strings.EMPTY);
     }
 
     function onClickSaveChanges() {
+        if (validationState.getIsErrorPresent() === true) {
+            validationState.setShowErrors(true);
+            return;
+        }
         editMiningFarmModalStore.executeMiningFarmEditEdit();
         editMiningFarmModalStore.hide();
     }
@@ -93,6 +99,7 @@ function EditMiningFarmModal({ alertStore, editMiningFarmModalStore }: Props) {
                     inputType={InputType.TEXT}
                     label={'Farm Name'}
                     value={miningFarmEntity.name}
+                    inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
                     onChange={editMiningFarmModalStore.changeMiningFarmName}
                 />
                 <Input

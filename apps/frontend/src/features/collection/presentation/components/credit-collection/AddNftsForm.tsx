@@ -1,5 +1,5 @@
 import { inject, observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import '../../styles/add-nfts-form.css';
 import '../../styles/input-column-holder.css';
 import CreditCollectionStore from '../../stores/CreditCollectionStore';
@@ -17,6 +17,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import S from '../../../../../core/utilities/Main';
 import SingleDatepicker from '../../../../../core/presentation/components/SingleDatepicker';
+import ValidationState from '../../../../../core/presentation/stores/ValidationState';
 
 type Props = {
     onClickBack: () => void
@@ -27,8 +28,17 @@ type Props = {
 function AddNftsForm({ onClickBack, creditCollectionStore, bitcoinStore }: Props) {
     const [editRoyaltiesDisabled, setEditRoyaltiesDisabled] = useState(true);
     const [editMaintenanceFeeDisabled, setEditMaintenanceFeeDisabled] = useState(true);
+    const validationState = useRef(new ValidationState()).current;
 
     const selectedNftEntity = creditCollectionStore.selectedNftEntity;
+    function onClickAddToCollection() {
+        if (validationState.getIsErrorPresent() === true) {
+            validationState.setShowErrors(true);
+            return;
+        }
+
+        creditCollectionStore.onClickAddToCollection();
+    }
 
     return (
         <div className={'AddNftsForm FlexColumn'}>
@@ -76,6 +86,7 @@ function AddNftsForm({ onClickBack, creditCollectionStore, bitcoinStore }: Props
                 label={'NFT Name'}
                 placeholder={'Enter name...'}
                 value={selectedNftEntity.name}
+                inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
                 onChange={creditCollectionStore.onChangeSelectedNftName}
             />
             <div className={'InputColumnHolder'}>
@@ -84,6 +95,7 @@ function AddNftsForm({ onClickBack, creditCollectionStore, bitcoinStore }: Props
                     placeholder={'Enter hashing power...'}
                     value={creditCollectionStore.getHashPowerPerNft()}
                     inputType={InputType.INTEGER}
+                    inputValidation={useRef(validationState.addEmptyValidation('Empty hash power')).current}
                     onChange={creditCollectionStore.onChangeHashPowerPerNft}
                 />
                 <div className={'InputInfoLabel'}>Available TH/s: 80.000</div>
@@ -94,6 +106,7 @@ function AddNftsForm({ onClickBack, creditCollectionStore, bitcoinStore }: Props
                     label={'Price per NFT'}
                     placeholder={'Enter price...'}
                     value={creditCollectionStore.getPricePerNft()}
+                    inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
                     onChange={creditCollectionStore.onChangePricePerNft}
                 />
                 <div className={'InputInfoLabel'}>{bitcoinStore.getBitcoinPrice()} based on Today’s BTC Price </div>
@@ -111,6 +124,7 @@ function AddNftsForm({ onClickBack, creditCollectionStore, bitcoinStore }: Props
                     }
                     disabled={editRoyaltiesDisabled}
                     placeholder={'Enter royalties...'}
+                    inputValidation={useRef(validationState.addEmptyValidation('Empty royalties')).current}
                     value={creditCollectionStore.getSelectedNftRoyaltiesInputValue()}
                     inputType={InputType.INTEGER}
                     onChange={creditCollectionStore.onChangeSelectedNftRoyalties}
@@ -129,6 +143,7 @@ function AddNftsForm({ onClickBack, creditCollectionStore, bitcoinStore }: Props
                         </div>
                     }
                     // disabled={editMaintenanceFeeDisabled}
+                    inputValidation={useRef(validationState.addEmptyValidation('Empty maintenance fee')).current}
                     placeholder={'Enter Maintenance Fee...'}
                     value={creditCollectionStore.getSelectedNftMaintenanceFeeInputValue()}
                     inputType={InputType.INTEGER}
@@ -146,7 +161,7 @@ function AddNftsForm({ onClickBack, creditCollectionStore, bitcoinStore }: Props
                     <Svg svg={ArrowBackIcon} />
                     Back
                 </Button>
-                <Button onClick={creditCollectionStore.onClickAddToCollection}>
+                <Button onClick={onClickAddToCollection}>
                     Add to Collection
                 </Button>
             </Actions>
