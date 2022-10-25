@@ -14,7 +14,7 @@ import CollectionDetailsForm from '../components/credit-collection/CollectionDet
 import CollectionCreditSidePreview, { CollectionCreditSidePreviewSize } from '../components/credit-collection/CollectionCreditSidePreview';
 import AddNftsForm from '../components/credit-collection/AddNftsForm';
 import FinishCreditCollection from '../components/credit-collection/FinishCreditCollection';
-import NavRow from '../../../../core/presentation/components/NavRow';
+import NavRow, { createNavStep } from '../../../../core/presentation/components/NavRow';
 import CollectionAddNftsTable from '../components/credit-collection/CollectionAddNftsTable';
 import CreditCollectionStore from '../stores/CreditCollectionStore';
 import CreditCollectionSuccessModal from '../components/credit-collection/CreditCollectionSuccessModal';
@@ -62,33 +62,13 @@ function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSu
 
     const navSteps = isOriginAddNfts === false
         ? [
-            {
-                navNumber: 1,
-                navName: 'Collection Details',
-                isActive: step === CreditCollectionDetailsSteps.COLLECTION_DETAILS,
-            },
-            {
-                navNumber: 2,
-                navName: 'Add NFTs',
-                isActive: step === CreditCollectionDetailsSteps.ADD_NFTS,
-            },
-            {
-                navNumber: 3,
-                navName: 'Finish',
-                isActive: step === CreditCollectionDetailsSteps.FINISH,
-            },
+            createNavStep(1, 'Collection Details', step === CreditCollectionDetailsSteps.COLLECTION_DETAILS, false),
+            createNavStep(2, 'Add NFTs', step === CreditCollectionDetailsSteps.ADD_NFTS, false),
+            createNavStep(3, 'Finish', step === CreditCollectionDetailsSteps.FINISH, false),
         ]
         : [
-            {
-                navNumber: 1,
-                navName: 'Add NFTs',
-                isActive: step === CreditCollectionDetailsSteps.ADD_NFTS,
-            },
-            {
-                navNumber: 2,
-                navName: 'Finish',
-                isActive: step === CreditCollectionDetailsSteps.FINISH,
-            },
+            createNavStep(1, 'Add NFTs', step === CreditCollectionDetailsSteps.ADD_NFTS, false),
+            createNavStep(2, 'Finish', step === CreditCollectionDetailsSteps.FINISH, false),
         ]
 
     async function onClickSendForApproval() {

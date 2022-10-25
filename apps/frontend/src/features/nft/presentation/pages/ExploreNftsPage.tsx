@@ -108,7 +108,7 @@ function ExploreNftsPage({ appStore, exploreNftsPageStore }: Props) {
                         ) }
                         headerRight = { (
                             <Select
-                                label={'Sort by'}
+                                // label={'Sort by'}
                                 onChange={exploreNftsPageStore.onChangeSortKey}
                                 value={nftFilterModel.sortKey} >
                                 <MenuItem value = { NftFilterModel.SORT_KEY_NAME } > Name </MenuItem>

@@ -19,15 +19,15 @@ import PageAdminHeader from '../../../header/presentation/components/PageAdminHe
 import AuthBlockLayout from '../components/AuthBlockLayout';
 import AnimationContainer from '../../../../core/presentation/components/AnimationContainer';
 import Checkbox from '../../../../core/presentation/components/Checkbox';
-import NavRow from '../../../../core/presentation/components/NavRow';
+import NavRow, { createNavStep } from '../../../../core/presentation/components/NavRow';
 import Actions from '../../../../core/presentation/components/Actions';
+import DataPreviewLayout, { createDataPreview } from '../../../../core/presentation/components/DataPreviewLayout';
 
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import '../styles/page-register.css';
-import DataPreviewLayout, { createDataPreview } from '../../../../core/presentation/components/DataPreviewLayout';
 
 enum RegisterStep {
     ACCOUNT_DETAILS,
@@ -82,21 +82,9 @@ function RegisterPage({ appStore, alertStore, walletStore, accountSessionStore }
         return (
             <NavRow
                 navSteps = { [
-                    {
-                        navNumber: RegisterStep.ACCOUNT_DETAILS,
-                        navName: 'Account Details',
-                        isActive: isAccountDetailsStep(),
-                    },
-                    {
-                        navNumber: RegisterStep.WALLET_DETAILS,
-                        navName: 'Wallet Details',
-                        isActive: isWalletDetailsStep(),
-                    },
-                    {
-                        navNumber: RegisterStep.FINISH,
-                        navName: 'Finish',
-                        isActive: isFinishStep(),
-                    },
+                    createNavStep(RegisterStep.ACCOUNT_DETAILS, 'Account Details', isAccountDetailsStep(), isWalletDetailsStep() || isFinishStep()),
+                    createNavStep(RegisterStep.WALLET_DETAILS, 'Wallet Details', isWalletDetailsStep(), isFinishStep()),
+                    createNavStep(RegisterStep.FINISH, 'Finish', isFinishStep(), false),
                 ] } />
         )
     }
