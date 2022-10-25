@@ -17,9 +17,7 @@ import { User } from '../user/user.model';
 export const enum FarmStatus {
     QUEUED = 'queued',
     APPROVED = 'approved',
-    REJECTED = 'rejected',
-    ISSUED = 'issued',
-    DELETED = 'deleted',
+    REJECTED = 'rejected'
 }
 @Table({
     freezeTableName: true,
@@ -79,9 +77,8 @@ export class Farm extends Model {
     @Column({ type: DataType.ARRAY(DataType.STRING) })
     energy_source: string[];
 
-
     @AllowNull(false)
-    @Column(DataType.ENUM('queued', 'approved', 'rejected', 'deleted'))
+    @Column(DataType.ENUM('queued', 'approved', 'rejected'))
     status: FarmStatus;
 
     @AllowNull(false)
