@@ -62,12 +62,12 @@ function CreditCollectionDetailsPage({ creditCollectionStore, creditCollectionSu
 
     const navSteps = isOriginAddNfts === false
         ? [
-            createNavStep(1, 'Collection Details', step === CreditCollectionDetailsSteps.COLLECTION_DETAILS, false),
-            createNavStep(2, 'Add NFTs', step === CreditCollectionDetailsSteps.ADD_NFTS, false),
+            createNavStep(1, 'Collection Details', step === CreditCollectionDetailsSteps.COLLECTION_DETAILS, step === CreditCollectionDetailsSteps.ADD_NFTS || step === CreditCollectionDetailsSteps.FINISH),
+            createNavStep(2, 'Add NFTs', step === CreditCollectionDetailsSteps.ADD_NFTS, step === CreditCollectionDetailsSteps.FINISH),
             createNavStep(3, 'Finish', step === CreditCollectionDetailsSteps.FINISH, false),
         ]
         : [
-            createNavStep(1, 'Add NFTs', step === CreditCollectionDetailsSteps.ADD_NFTS, false),
+            createNavStep(1, 'Add NFTs', step === CreditCollectionDetailsSteps.ADD_NFTS, step === CreditCollectionDetailsSteps.FINISH),
             createNavStep(2, 'Finish', step === CreditCollectionDetailsSteps.FINISH, false),
         ]
 

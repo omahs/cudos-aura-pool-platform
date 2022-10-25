@@ -9,7 +9,6 @@ import '../styles/page-credit-mining-farm-details.css';
 import NavRow, { createNavStep, NavStep } from '../../../../core/presentation/components/NavRow';
 import StepFarmDetails from '../components/credit-farm/StepFarmDetails';
 import CreditMiningFarmDetailsPageState from '../stores/CreditMiningFarmDetailsPageStore';
-import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
 import AppStore from '../../../../core/presentation/stores/AppStore';
 import StepReview from '../components/credit-farm/StepReview';
 import StepSuccess from '../components/credit-farm/StepSuccess';
@@ -19,11 +18,10 @@ import AnimationContainer from '../../../../core/presentation/components/Animati
 
 type Props = {
     creditMiningFarmDetailsPageStore?: CreditMiningFarmDetailsPageState;
-    accountSessionStore?: AccountSessionStore;
     appStore?: AppStore;
 }
 
-function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, accountSessionStore, appStore }: Props) {
+function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, appStore }: Props) {
     useEffect(() => {
         appStore.useLoading(() => {
             creditMiningFarmDetailsPageStore.fetch();
@@ -31,7 +29,7 @@ function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, account
     }, []);
 
     const navSteps: NavStep[] = [
-        createNavStep(1, 'Farm Details', creditMiningFarmDetailsPageStore.isStepFarmDetails(), false),
+        createNavStep(1, 'Farm Details', creditMiningFarmDetailsPageStore.isStepFarmDetails(), creditMiningFarmDetailsPageStore.isStepReview()),
         createNavStep(2, 'Finish', creditMiningFarmDetailsPageStore.isStepReview(), false),
     ];
 
