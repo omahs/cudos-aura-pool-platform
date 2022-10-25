@@ -1,9 +1,11 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
+import { observer } from 'mobx-react';
 
 import S from '../../utilities/Main';
 
 import { TextField, TextFieldProps } from '@mui/material';
 import '../styles/input.css';
+import { InputValidation } from '../stores/ValidationState';
 
 export enum InputType {
     INTEGER,
@@ -21,9 +23,10 @@ type Props = TextFieldProps & {
     stretch?: boolean;
     gray?: boolean;
     defaultOnChangeParameter?: boolean,
+    inputValidation?: InputValidation | InputValidation[],
 }
 
-const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly, onChange, stretch, gray, defaultOnChangeParameter, ...props }: Props, ref) => {
+const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly, onChange, stretch, gray, defaultOnChangeParameter, inputValidation, ...props }: Props, ref) => {
     /* listeners */
     function onChangeHandler(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         switch (inputType) {
@@ -51,6 +54,44 @@ const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly,
         }
     }
 
+    useEffect(() => {
+        if (props.value !== undefined) {
+            if (Array.isArray(inputValidation)) {
+                inputValidation.forEach((validation) => validation.onChange(props.value));
+            } else if (inputValidation !== null) {
+                console.log('fewfwef')
+                inputValidation.onChange(props.value);
+            }
+        }
+    }, [props.value]);
+
+    function isErrorPresent(): boolean {
+        if (inputValidation !== null) {
+            if (Array.isArray(inputValidation)) {
+                return inputValidation.find((validation) => validation.isError === true) !== undefined;
+            }
+
+            return inputValidation.isError;
+        }
+
+        return false;
+    }
+
+    function getErrorMessage(): string {
+        if (inputValidation !== null) {
+
+            if (Array.isArray(inputValidation)) {
+                return inputValidation.filter((validation) => validation.isError === true && validation.errorMessage !== S.Strings.EMPTY)
+                    .map((validation) => validation.errorMessage).join(', ');
+            }
+
+            if (inputValidation.isError) {
+                return inputValidation.errorMessage;
+            }
+        }
+        return S.Strings.EMPTY;
+    }
+
     const cssClassStretch = S.CSS.getClassName(stretch, 'InputStretch');
     const cssClassGray = S.CSS.getClassName(gray, 'InputGray');
 
@@ -58,6 +99,8 @@ const Input = React.forwardRef(({ className, inputType, decimalLength, readOnly,
         <div ref = { ref } className={`Input ${className} ${cssClassStretch} ${cssClassGray} ${S.CSS.getClassName(readOnly, 'ReadOnly')}`}>
             <TextField
                 {...props}
+                error={isErrorPresent()}
+                helperText={getErrorMessage()}
                 hiddenLabel = { false }
                 onChange={onChange !== null && readOnly !== true ? onChangeHandler : undefined}
                 margin='dense'
@@ -77,9 +120,10 @@ Input.defaultProps = {
     stretch: false,
     gray: false,
     defaultOnChangeParameter: false,
+    inputValidation: null,
 }
 
-export default Input;
+export default (observer(Input));
 
 function filterInteger(value: string) {
     if (value.length === 0) {

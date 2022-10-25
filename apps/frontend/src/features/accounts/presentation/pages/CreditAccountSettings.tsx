@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import PageLayoutComponent from '../../../../core/presentation/components/PageLayoutComponent';
@@ -14,6 +14,7 @@ import Actions from '../../../../core/presentation/components/Actions';
 import Button from '../../../../core/presentation/components/Button';
 import Svg from '../../../../core/presentation/components/Svg';
 import '../styles/credit-account-settings.css';
+import ValidationState from '../../../../core/presentation/stores/ValidationState';
 
 type Props = {
     accountSessionStore?: AccountSessionStore;
@@ -21,7 +22,7 @@ type Props = {
 }
 
 function CreditAccountSettings({ accountSessionStore }: Props) {
-
+    const validationState = useRef(new ValidationState()).current;
     const [tempAccountEntity] = useState(accountSessionStore.accountEntity.deepClone() || null);
     const [tempAdminEntity] = useState(accountSessionStore.adminEntity.clone() || null);
     const [emailInputDisabled, setEmailInputDisabled] = useState(true);
@@ -58,6 +59,12 @@ function CreditAccountSettings({ accountSessionStore }: Props) {
                             <Input
                                 disabled={emailInputDisabled}
                                 value={tempAccountEntity.email}
+                                inputValidation={[
+                                    validationState.addEmptyValidation(),
+                                    validationState.addMatchStringsValidation(tempAccountEntity.name, 'Not matching'),
+                                    validationState.addEmailValidation('Invalid email'),
+                                    validationState.addBitcoinAddressValidation('not a cudos address'),
+                                ]}
                                 onChange={(value: string) => { tempAccountEntity.email = value }}
                             />
                             <Actions>
