@@ -6,7 +6,7 @@ import PageFooter from '../../../footer/presentation/components/PageFooter';
 import PageAdminHeader from '../../../header/presentation/components/PageAdminHeader';
 
 import '../styles/page-credit-mining-farm-details.css';
-import NavRow, { NavStep } from '../../../../core/presentation/components/NavRow';
+import NavRow, { createNavStep, NavStep } from '../../../../core/presentation/components/NavRow';
 import StepFarmDetails from '../components/credit-farm/StepFarmDetails';
 import CreditMiningFarmDetailsPageState from '../stores/CreditMiningFarmDetailsPageStore';
 import AccountSessionStore from '../../../accounts/presentation/stores/AccountSessionStore';
@@ -15,7 +15,6 @@ import StepReview from '../components/credit-farm/StepReview';
 import StepSuccess from '../components/credit-farm/StepSuccess';
 import StyledContainer, { ContainerWidth } from '../../../../core/presentation/components/StyledContainer';
 import LoadingIndicator from '../../../../core/presentation/components/LoadingIndicator';
-import S from '../../../../core/utilities/Main';
 import AnimationContainer from '../../../../core/presentation/components/AnimationContainer';
 
 type Props = {
@@ -32,16 +31,8 @@ function CreditMiningFarmDetailsPage({ creditMiningFarmDetailsPageStore, account
     }, []);
 
     const navSteps: NavStep[] = [
-        {
-            navNumber: 1,
-            navName: 'Farm Details',
-            isActive: creditMiningFarmDetailsPageStore.isStepFarmDetails(),
-        },
-        {
-            navNumber: 2,
-            navName: 'Finish',
-            isActive: creditMiningFarmDetailsPageStore.isStepReview(),
-        },
+        createNavStep(1, 'Farm Details', creditMiningFarmDetailsPageStore.isStepFarmDetails(), false),
+        createNavStep(2, 'Finish', creditMiningFarmDetailsPageStore.isStepReview(), false),
     ];
 
     function CreditHeading() {
