@@ -29,6 +29,8 @@ type Props = {
 function ForgottenPassRequestPage({ alertStore, accountSessionStore }: Props) {
     const navigate = useNavigate();
     const validationState = useRef(new ValidationState()).current;
+    const requestEmailValidation = useRef(validationState.addEmailValidation('Invalid email')).current;
+    const resendEmailValidation = useRef(validationState.addEmailValidation('Invalid email')).current;
 
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
@@ -79,7 +81,7 @@ function ForgottenPassRequestPage({ alertStore, accountSessionStore }: Props) {
                                 <Svg svg={AlternateEmailIcon}/>
                             </InputAdornment>,
                         }}
-                        inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
+                        inputValidation={requestEmailValidation}
                         value={email}
                         onChange={setEmail} />
                 ) }
@@ -116,7 +118,7 @@ function ForgottenPassRequestPage({ alertStore, accountSessionStore }: Props) {
                                     <Svg svg={AlternateEmailIcon}/>
                                 </InputAdornment>,
                             }}
-                            inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
+                            inputValidation={resendEmailValidation}
                             gray = { true }
                             value={email}/>
                     ) }

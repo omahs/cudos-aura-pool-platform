@@ -45,7 +45,9 @@ type Props = {
 function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
     const navigate = useNavigate();
     const validationState = useRef(new ValidationState()).current;
-
+    const validation1 = useRef(validationState.addEmptyValidation('Empty miners')).current;
+    const validation2 = useRef(validationState.addEmptyValidation('Empty miners')).current;
+    const validation3 = useRef(validationState.addEmptyValidation('Empty miners')).current;
     const [popoverOpen, setPopoverOpen] = useState(false);
     const [popoverAnchor, setPopupAnchor] = useState(null);
     const [inputValue, setInputValue] = useState('');
@@ -262,7 +264,7 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                             label = { 'input with error' }
                             error = { true }
                             value = { selectValue }
-                            inputValidation={useRef(validationState.addEmptyValidation('Empty miners')).current}
+                            inputValidation={validation1}
                             onChange = { setSelectValue } >
                             <MenuItem value = { 1 } >1</MenuItem>
                             <MenuItem value = { 2 } >2</MenuItem>
@@ -275,7 +277,7 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                                 new AutocompleteOption(1, 1),
                                 new AutocompleteOption(2, 2),
                             ] }
-                            inputValidation={useRef(validationState.addEmptyValidation('Empty miners')).current}
+                            inputValidation={validation2}
                             value = { autocompleteSingleValue }
                             onChange = { setAutocompleteSingleValue } />
                         <Autocomplete
@@ -303,7 +305,7 @@ function UiKitPage({ appStore, alertStore, exampleModalStore }: Props) {
                         <SingleDatepicker
                             label = { 'name of the field' }
                             selected = { singleDatepickerValue }
-                            inputValidation={useRef(validationState.addEmptyValidation('Empty miners')).current}
+                            inputValidation={validation3}
                             onChange = { setSingleDatepickerValue } />
                         <RangeDatepicker
                             label = { 'Name of the field range' }

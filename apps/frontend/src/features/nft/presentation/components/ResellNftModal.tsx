@@ -26,6 +26,7 @@ type Props = {
 function ResellNftModal({ resellNftModalStore }: Props) {
     const nftEntity = resellNftModalStore.nftEntity;
     const validationState = useRef(new ValidationState()).current;
+    const nftPriceValidation = useRef(validationState.addEmptyValidation('Empty price')).current;
 
     function onClickSubmitForSell() {
         if (validationState.getIsErrorPresent() === true) {
@@ -60,7 +61,7 @@ function ResellNftModal({ resellNftModalStore }: Props) {
                     onChange={resellNftModalStore.setPrice}
                     label={'Set NFT Price'}
                     placeholder={'0'}
-                    inputValidation={useRef(validationState.addEmptyValidation('Empty price')).current}
+                    inputValidation={nftPriceValidation}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end" > CUDOS </InputAdornment>

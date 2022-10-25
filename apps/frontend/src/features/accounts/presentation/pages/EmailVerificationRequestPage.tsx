@@ -27,6 +27,7 @@ type Props = {
 
 function EmailVerificationRequestPage({ alertStore, accountSessionStore }: Props) {
     const validationState = useRef(new ValidationState()).current;
+    const emailValidation = useRef(validationState.addEmailValidation('Invalid email')).current;
 
     const email = accountSessionStore.accountEntity.email;
 
@@ -58,7 +59,7 @@ function EmailVerificationRequestPage({ alertStore, accountSessionStore }: Props
                                     <Svg svg={AlternateEmailIcon}/>
                                 </InputAdornment>,
                             }}
-                            inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
+                            inputValidation={emailValidation}
                             gray = { true }
                             value={email}/>
                     ) }

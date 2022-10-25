@@ -30,6 +30,8 @@ type Props = {
 function LoginPage({ alertStore, accountSessionStore }: Props) {
     const navigate = useNavigate();
     const validationState = useRef(new ValidationState()).current;
+    const emailValidation = useRef(validationState.addEmailValidation('Invalid email')).current;
+    const passwordValidation = useRef(validationState.addPasswordValidation('Invalid email')).current;
 
     const [email, setEmail] = useState('');
     const [logging, setLogging] = useState(false);
@@ -84,7 +86,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
                                         <Svg svg={AlternateEmailIcon}/>
                                     </InputAdornment>,
                                 }}
-                                inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
+                                inputValidation={emailValidation}
                                 value={email}
                                 onChange={setEmail} />
                             <Input
@@ -97,7 +99,7 @@ function LoginPage({ alertStore, accountSessionStore }: Props) {
                                         </InputAdornment>
                                     ),
                                 }}
-                                inputValidation={useRef(validationState.addPasswordValidation('Invalid email')).current}
+                                inputValidation={passwordValidation}
                                 value={password}
                                 onChange={setPassword}
                                 type={showPassword === false ? 'password' : 'text'} />

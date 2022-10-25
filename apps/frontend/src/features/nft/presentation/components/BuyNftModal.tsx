@@ -25,6 +25,7 @@ type Props = {
 function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
     const nftEntity = buyNftModalStore.nftEntity;
     const validationState = useRef(new ValidationState()).current;
+    const rewardsRecipientAddress = useRef(validationState.addCudosAddressValidation('Invalid address')).current;
 
     function onClickResellNft() {
         resellNftModalStore.showSignal(buyNftModalStore.nftEntity, buyNftModalStore.cudosPrice, buyNftModalStore.collectionName);
@@ -69,7 +70,7 @@ function BuyNftModal({ resellNftModalStore, buyNftModalStore }: Props) {
                             value={buyNftModalStore.recipient}
                             onChange={buyNftModalStore.setRecipient}
                             label={'Set Rewards Recepient Address'}
-                            inputValidation={useRef(validationState.addCudosAddressValidation('Invalid address')).current}
+                            inputValidation={rewardsRecipientAddress}
                             placeholder={'e.g bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'} />
                         <Actions height={ActionsHeight.HEIGHT_48} layout={ActionsLayout.LAYOUT_COLUMN_FULL}>
                             <Button onClick={onClickPurchaseNft}>Complete Purchase</Button>

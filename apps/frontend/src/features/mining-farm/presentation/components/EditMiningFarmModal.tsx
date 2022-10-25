@@ -24,6 +24,7 @@ type Props = {
 function EditMiningFarmModal({ alertStore, editMiningFarmModalStore }: Props) {
     const miningFarmEntity = editMiningFarmModalStore.miningFarmEntity;
     const validationState = useRef(new ValidationState()).current;
+    const farmNameValidation = useRef(validationState.addEmptyValidation('Empty name')).current;
 
     function onClickRemoveCoverImage() {
         editMiningFarmModalStore.changeCoverImage(S.Strings.EMPTY);
@@ -99,7 +100,7 @@ function EditMiningFarmModal({ alertStore, editMiningFarmModalStore }: Props) {
                     inputType={InputType.TEXT}
                     label={'Farm Name'}
                     value={miningFarmEntity.name}
-                    inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
+                    inputValidation={farmNameValidation}
                     onChange={editMiningFarmModalStore.changeMiningFarmName}
                 />
                 <Input

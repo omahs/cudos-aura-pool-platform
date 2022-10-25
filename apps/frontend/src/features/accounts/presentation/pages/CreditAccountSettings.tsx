@@ -24,6 +24,10 @@ type Props = {
 function CreditAccountSettings({ accountSessionStore }: Props) {
     const validationState = useRef(new ValidationState()).current;
 
+    const accountEmailValidation = useRef(validationState.addEmailValidation('Invalid email')).current;
+    const accountNameValidation = useRef(validationState.addEmptyValidation('Name can\'t be empty.')).current;
+    const accountWalletValidation = useRef(validationState.addCudosAddressValidation('Not a cudos address')).current;
+
     const [tempAccountEntity] = useState(accountSessionStore.accountEntity.deepClone() || null);
     const [tempAdminEntity] = useState(accountSessionStore.adminEntity.clone() || null);
     const [emailInputDisabled, setEmailInputDisabled] = useState(true);
@@ -69,7 +73,7 @@ function CreditAccountSettings({ accountSessionStore }: Props) {
                             <Input
                                 disabled={emailInputDisabled}
                                 value={tempAccountEntity.email}
-                                inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
+                                inputValidation={accountEmailValidation}
                                 onChange={(value: string) => { tempAccountEntity.email = value }}
                             />
                             <Actions>
@@ -86,7 +90,7 @@ function CreditAccountSettings({ accountSessionStore }: Props) {
                             <Input
                                 disabled={ownerInputDisabled}
                                 value={tempAccountEntity.name}
-                                inputValidation={useRef(validationState.addEmptyValidation('Name can\'t be empty.')).current}
+                                inputValidation={accountNameValidation}
                                 onChange={(value: string) => { tempAccountEntity.name = value }}
                             />
                             <Actions>
@@ -103,7 +107,7 @@ function CreditAccountSettings({ accountSessionStore }: Props) {
                             <Input
                                 disabled={walletInputDisabled}
                                 value={tempAdminEntity.cudosWalletAddress}
-                                inputValidation={useRef(validationState.addCudosAddressValidation('Not a cudos address')).current}
+                                inputValidation={accountWalletValidation}
                                 onChange={(value: string) => { tempAdminEntity.cudosWalletAddress = value }}
                             />
                             <Actions>

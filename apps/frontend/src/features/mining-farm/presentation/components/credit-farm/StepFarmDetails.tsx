@@ -29,6 +29,15 @@ type Props = {
 
 function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props) {
     const validationState = useRef(new ValidationState()).current;
+    const farmNameValidation = useRef(validationState.addEmptyValidation('Empty name')).current;
+    const farmLegalNameValidation = useRef(validationState.addEmptyValidation('Empty name')).current;
+    const farmOwnerNameValidation = useRef(validationState.addEmptyValidation('Invalid name')).current;
+    const farmOwnerEmailValidation = useRef(validationState.addEmailValidation('Invalid email')).current;
+    const farmManufacturersValidation = useRef(validationState.addEmptyValidation('Empty manufacturers')).current;
+    const farmMinersValidation = useRef(validationState.addEmptyValidation('Empty miners')).current;
+    const farmEnergySourceseValidation = useRef(validationState.addEmptyValidation('Empty energy source')).current;
+    const farmLocationValidation = useRef(validationState.addEmptyValidation('Empty address')).current;
+    const farmHashrateValidation = useRef(validationState.addEmptyValidation('Empty hashrate')).current;
 
     const [selectedManufacturersOptions, setSelectedManufacturersOptions] = useState([]);
     const [selectedMindersOptions, setSelectedMinersOptions] = useState([]);
@@ -64,7 +73,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                 label={'Farm Name'}
                 placeholder={'e.g Cool Farm'}
                 value={miningFarmEntity.name}
-                inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
+                inputValidation={farmNameValidation}
                 onChange={(string) => { miningFarmEntity.name = string }}
                 inputType={InputType.TEXT}
             />
@@ -79,7 +88,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                 label={'Legal Entity Name'}
                 placeholder={'e.g Cool Farm Inc.'}
                 value={miningFarmEntity.legalName}
-                inputValidation={useRef(validationState.addEmptyValidation('Empty name')).current}
+                inputValidation={farmLegalNameValidation}
                 onChange={(string) => { miningFarmEntity.legalName = string }}
                 inputType={InputType.TEXT}
             />
@@ -87,6 +96,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                 label={'Primary Account Owner Full Name'}
                 placeholder={'e.g Steve Jones'}
                 value={miningFarmEntity.primaryAccountOwnerName}
+                inputValidation={farmOwnerNameValidation}
                 onChange={(string) => { miningFarmEntity.primaryAccountOwnerName = string }}
                 inputType={InputType.TEXT}
             />
@@ -94,7 +104,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                 label={'Primary Account Owner Email'}
                 placeholder={'examplemail@mail.com'}
                 value={miningFarmEntity.primaryAccountOwnerEmail}
-                inputValidation={useRef(validationState.addEmailValidation('Invalid email')).current}
+                inputValidation={farmOwnerEmailValidation}
                 onChange={(string) => { miningFarmEntity.primaryAccountOwnerEmail = string }}
                 inputType={InputType.TEXT}
             />
@@ -107,7 +117,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                     miningFarmEntity.manufacturerIds = d.map((option) => option.value);
                 }}
                 placeholder={'Select manufacturers...'}
-                inputValidation={useRef(validationState.addEmptyValidation('Empty manufacturers')).current}
+                inputValidation={farmManufacturersValidation}
                 options = { ManufacturerEntity.getAllManufacturers().map((manufacturer: ManufacturerEntity) => {
                     return new AutocompleteOption(manufacturer.id, manufacturer.name);
                 })} />
@@ -120,7 +130,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                     miningFarmEntity.minerIds = d.map((option) => option.value);
                 }}
                 placeholder={'Select miners...'}
-                inputValidation={useRef(validationState.addEmptyValidation('Empty miners')).current}
+                inputValidation={farmMinersValidation}
                 options = { MinerEntity.getAllMiners().map((miner: MinerEntity) => {
                     return new AutocompleteOption(miner.id, miner.name);
                 })} />
@@ -132,7 +142,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                     setSelectedEnergySourceOptions(d);
                     miningFarmEntity.energySourceIds = d.map((option) => option.value);
                 }}
-                inputValidation={useRef(validationState.addEmptyValidation('Empty energy source')).current}
+                inputValidation={farmEnergySourceseValidation}
                 placeholder={'Select energy source...'}
                 options = { EnergySourceEntity.getAllEnergySources().map((energySource: EnergySourceEntity) => {
                     return new AutocompleteOption(energySource.id, energySource.name);
@@ -144,7 +154,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                 value={miningFarmEntity.machinesLocation}
                 onChange={(string) => { miningFarmEntity.machinesLocation = string }}
                 inputType={InputType.TEXT}
-                inputValidation={useRef(validationState.addEmptyValidation('Empty address')).current}
+                inputValidation={farmLocationValidation}
                 InputProps={{
                     endAdornment: <InputAdornment position="end" >
                         <Svg svg={NearMeIcon}/>
@@ -159,7 +169,7 @@ function StepFarmDetails({ alertStore, creditMiningFarmDetailsPageStore }: Props
                     setHashRateDisplay(string);
                     miningFarmEntity.parseHashRateFromString(string);
                 }}
-                inputValidation={useRef(validationState.addEmptyValidation('Empty hashrate')).current}
+                inputValidation={farmHashrateValidation}
                 inputType={InputType.TEXT}
             />
             <div className={'FlexRow HashRateInfo B2 SemiBold FullLine'}>
