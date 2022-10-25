@@ -162,7 +162,7 @@ export default class ValidationState {
             return element.isError === true;
         });
 
-        return validation !== null;
+        return validation !== undefined;
     }
 
     setShowErrors = (showErrors: boolean) => {
